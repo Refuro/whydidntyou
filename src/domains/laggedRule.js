@@ -1,8 +1,13 @@
 // MAIN domain family: "lagged rule" source.
 // s[i] = g(s[i-k]) with probability p, otherwise a uniformly random symbol.
 // g is a derangement of the alphabet, so the marginal distribution is ~uniform:
-// order-0 (frequency) coding gains nothing, adjacent-context (order-1) coding gains
-// nothing when k > 1. The ONLY way to compress is to discover the lag k and the map g.
+// order-0 (frequency) coding gains nothing, and short-context models (order-1..6, PPM-style)
+// gain nothing because the dependency is at lag k in [12,40], outside the window they look at.
+// Long contexts can't learn it either: a 12+ symbol pattern essentially never repeats in 4000
+// symbols. The ONLY way to compress is to find the ONE sparse long-range dependency: test each
+// lag d for predictive power, find k, then learn the map g.
+// History: v1 used k in [2,7]; a frontier model cracked it on attempt 1 with stock PPM order 0-6
+// without ever identifying the lag (see prereg/laggedRule.md addendum 2026-11-03).
 import { mulberry32, randInt, derangement } from '../rng.js';
 
 export const name = 'laggedRule';
@@ -12,7 +17,7 @@ export function make(seed, opts = {}) {
   const p = opts.p ?? 0.85;
   const n = opts.n ?? 4000;
   const rng = mulberry32(seed * 7919 + 17);
-  const k = opts.k ?? 2 + randInt(rng, 6);      // lag in [2,7]
+  const k = opts.k ?? 12 + randInt(rng, 29);    // lag in [12,40]: outside the window stock context models look at
   const g = derangement(rng, A);
 
   const gen = (len, r) => {

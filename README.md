@@ -10,7 +10,9 @@ The premise came up while building a Dolby Vision driver for a Raspberry Pi 4 wi
 
 Consider calculus. If a model were given the same mathematics humans had before calculus, could it independently discover calculus? If not, why not? What is the gap between what the model attempts and the breakthrough? Not "did it pass or fail," but what was *missing* from its search — and whether that gap has a pattern that could be closed.
 
-`whydidntyou` is a harness for measuring that, rigorously enough to publish. It gives a model a problem whose answer provably does not exist in any training set (because you generate it from a secret rule), lets the model try as many times as it wants against an exact verifier, logs every attempt, and then — on failure — searches for the minimal content-free hint that flips failure to success, reveals the answer, asks the model why it never tried that, and checks that explanation against the log.
+`whydidntyou` is a harness for measuring that, rigorously enough to publish. It gives a model a problem whose specific answer cannot be in any training set (it is generated from a secret rule), lets the model try repeatedly against an exact verifier, logs every attempt, and then — on failure — measures which hints help relative to a no-hint control, reveals the answer, asks the model why it never tried that, and checks that explanation against the log for contradictions.
+
+What the harness can and cannot claim is stated in `docs/PLAN.md` §0–1. In short: it measures a model's search relative to a frozen library of known methods and explicit budgets. It cannot certify that a method was absent from a trained model's toolkit; that requires a model whose training data is fully controlled (Phase 4).
 
 The first domains are compression problems on purpose. That is where the question started, and compression has the cleanest possible verifier: discover the structure or you cannot shrink the data, and the oracle tells you exactly how far you are from the wall.
 
@@ -18,20 +20,20 @@ Zero dependencies. Node 18+. Calls the Anthropic API directly with `fetch`.
 
 ## Why synthetic domains
 
-Removing a real breakthrough (calculus, Huffman coding) from a model's training data is not possible without also removing the capability that would let it derive the breakthrough. So instead of erasing a known answer, we mint an unknown one: a generative process with a hidden rule, where compression is impossible without discovering the rule. Novelty is guaranteed by construction, and the oracle (the true process) gives an exact bits-per-symbol bound to measure against.
+Removing a real breakthrough (calculus, Huffman coding) from a model's training data is not possible without also removing the capability that would let it derive the breakthrough. So instead of erasing a known answer, we mint an unknown one: a generative process with a hidden rule, where compression is impossible without discovering the rule. The specific answer is new by construction; the *kind* of structure may be familiar, which is why every result is reported against a frozen baseline library rather than as discovery. The oracle (the true process) gives an expected bits-per-symbol floor to measure against.
 
 Two domain families ship:
 
 | family | hidden structure | the "key move" | role |
 |---|---|---|---|
-| `laggedRule` | `s[i] = g(s[i-k])` with noise; `k` in 2..7, `g` a derangement | test dependence at lags other than 1 | main |
-| `hiddenPeriod` | `s[i] = K[i mod L]` with noise; `L` in 11..30 | model as a function of *position*, not earlier symbols | **held out** for the transfer test |
+| `laggedRule` | `s[i] = g(s[i-k])` with noise; `k` in 12..40, `g` a derangement | find the one sparse long-range dependency, outside the window stock compressors look at | main |
+| `hiddenPeriod` | `s[i] = K[i mod L]` with noise; `L` in 200..400 | model as a function of *position*, not earlier symbols | **held out** for the transfer test |
 
-Both have a uniform marginal, so frequency coding and adjacent-context coding gain nothing. `npm run selftest` proves the wall: naive and order-1 solvers fail, a solver that knows the secret succeeds.
+Both have a uniform marginal, so frequency coding and context modeling gain nothing. `npm run selftest` proves the wall: naive, order-1 and PPM order-6 solvers all fail, a solver that knows the secret succeeds. (The first versions of both walls were too low — a frontier model cracked `laggedRule` v1 on attempt 1 with stock PPM without ever identifying the structure. The `prereg/` addenda record what changed and why.)
 
 ## Measurements (defined before running; see `prereg/`)
 
-Every number is a rate over many trials (seeds × repeats), reported with a 95% Wilson confidence interval.
+The unit of analysis is the independently generated world (seed). Repeats within a world measure noise and are averaged. Pre-registered contrasts are paired by world with bootstrap CIs; per-condition Wilson intervals over trials are shown for orientation only.
 
 | measurement | plain-language meaning | where |
 |---|---|---|
@@ -39,12 +41,12 @@ Every number is a rate over many trials (seeds × repeats), reported with a 95% 
 | **Attempts to discovery** | When it did crack it, how many attempts did that take? (median) | `report.js` |
 | **Distinct ideas per 10 attempts** | How many *different* ideas were in those attempts, as opposed to variations on the same idea? 10 = every attempt new; 2 = it mostly repeated itself. | `report.js`, `analyze.js` |
 | **Key-move coverage** | Did the decisive idea (pre-registered in `prereg/<domain>.md`) appear anywhere in the trajectory, even in a failed form? | `analyze.js --judge` |
-| **Minimal flip level** | On a ladder of hints ordered from vaguest to most pointed, which is the first one that reliably turns failure into success? Lower = the model was closer than it looked. `none` = no content-free hint was enough. | `hints.js` |
+| **Hint effect** | For each rung of a hint ladder, how much does success rate change compared with an equal-budget no-hint control? Selected on development worlds, confirmed on fresh ones. | `hints.js` |
 | **Self-report category** | After seeing the answer, does the model say it never thought of it, thought of it and dropped it, lacked the concept, or ran out of budget? | `postmortem.js` |
-| **Self-report agreement** | Does that claim match the log? ("I considered it" with zero attempts mentioning it = confabulation.) | `postmortem.js` cross-check |
+| **Self-report contradiction** | Is that claim contradicted by the log? ("I never considered it" when an attempt's code contains it.) Non-mention is not evidence either way. | `postmortem.js` cross-check |
 | **Transfer gain** | Does a scaffold built from `laggedRule` post-mortems raise discovery rate on the *held-out* `hiddenPeriod` family? Reported as a percentage-point difference with CI. | `report.js` contrasts |
 
-The transfer gain is the result that matters. A scaffold that helps only on the family it was tuned on is a leak, not a method.
+The transfer gain is the headline, with one caveat the reviewers made explicit: cross-family improvement shows a scaffold carries something general, not that it carries no strategy. The transfer family is chosen before any pilot and never opened during development.
 
 ## Setup
 
@@ -92,7 +94,7 @@ Scaffolds (`scaffolds/*.md`) are appended to the system prompt via `--scaffold` 
 
 - The lexical distinct-idea proxy under- and over-splits; it is a dashboard number. Publish the judged version.
 - "Content-free" hints are never perfectly content-free. Level 6 of the shipped ladder ("look further back") is borderline for `laggedRule`; treat a flip there as weak evidence and say so.
-- Frontier models may know generic context-mixing tricks that brute-force lags as a stock move. If `laggedRule` discovery rate is high out of the box, the wall is too low: widen `k`, make `g` position-dependent, or add a third family. The harness is designed for walls to be raised.
+- Passing the verifier is not the same as discovering the structure: a model can win with a generic method while holding a wrong hypothesis about the process (this happened on v1). For every success, also record whether the stated idea names the actual structure. The harness is designed for walls to be raised when a stock tool gets through; `selftest` is where you prove the new wall holds.
 - One model, one prompt template. Replicate across at least two model families before claiming anything about "LLMs".
 
 ## Layout

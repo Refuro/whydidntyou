@@ -25,17 +25,38 @@ for (const [cond, ts] of Object.entries(byCond)) {
 }
 console.table(rows);
 
-// paired contrasts: any condition pair on the same domain, e.g. scaffold vs baseline
-md.push('', '## Contrasts (difference in discovery rate, same domain)', '');
-const conds = Object.keys(byCond);
-for (let i = 0; i < conds.length; i++) for (let j = i + 1; j < conds.length; j++) {
-  const a = byCond[conds[i]], b = byCond[conds[j]]; if (a[0].domain !== b[0].domain) continue;
-  const pa = a.filter(t => t.success).length / a.length, pb = b.filter(t => t.success).length / b.length;
-  const se = Math.sqrt(pa * (1 - pa) / a.length + pb * (1 - pb) / b.length); const diff = pb - pa;
-  const line = `${conds[j]} − ${conds[i]} (${a[0].domain}): ${(100 * diff).toFixed(0)} percentage points, 95% CI [${(100 * (diff - 1.96 * se)).toFixed(0)}, ${(100 * (diff + 1.96 * se)).toFixed(0)}]`;
+// structure-parameter curve: discovery rate as a function of the hidden lag k (laggedRule) or period L (hiddenPeriod)
+const param = trials.some(t => t.secret && t.secret.k != null) ? 'k' : trials.some(t => t.secret && t.secret.L != null) ? 'L' : null;
+if (param) {
+  const byVal = {}; for (const t of trials) { const v = t.secret[param]; if (v == null) continue; (byVal[v] ||= []).push(t); }
+  md.push('', `## Discovery rate by hidden ${param}`, '', `| ${param} | trials | discovery rate (95% CI) | median attempts |`, '|---|---|---|---|');
+  console.log(`\ndiscovery rate by ${param}:`);
+  for (const v of Object.keys(byVal).map(Number).sort((a, b) => a - b)) {
+    const ts = byVal[v], n = ts.length, k = ts.filter(t => t.success).length, [lo, hi] = wilson(k, n);
+    const line = `${param}=${v}: ${k}/${n} = ${pct(k / n)} [${pct(lo)}–${pct(hi)}]  median attempts ${median(ts.filter(t => t.success).map(t => t.success)) ?? '—'}`;
+    console.log('  ' + line); md.push(`| ${v} | ${n} | ${k}/${n} = ${pct(k / n)} [${pct(lo)}–${pct(hi)}] | ${median(ts.filter(t => t.success).map(t => t.success)) ?? '—'} |`);
+  }
+}
+
+// Contrasts: only those pre-registered in the experiment config ("contrasts": [["baseline","scaffold"], ...]).
+// Paired by world (seed): per-seed success rate difference (mean over repeats), CI by bootstrap over seeds.
+// The world is the unit of analysis; repeats estimate within-world noise and are averaged, not counted.
+md.push('', '## Pre-registered contrasts (paired by world, bootstrap CI over worlds)', '');
+const contrasts = meta.config.contrasts || [];
+if (!contrasts.length) { md.push('_No contrasts pre-registered in the config; none computed._'); console.log('\n(no pre-registered contrasts)'); }
+for (const [ca, cb] of contrasts) {
+  const A = byCond[ca], B = byCond[cb]; if (!A || !B) { md.push(`- ${cb} − ${ca}: condition missing`); continue; }
+  const rate = (ts) => { const m = {}; for (const t of ts) (m[t.seed] ||= []).push(t.success ? 1 : 0); return Object.fromEntries(Object.entries(m).map(([s, v]) => [s, v.reduce((x, y) => x + y, 0) / v.length])); };
+  const ra = rate(A), rb = rate(B); const seeds = Object.keys(ra).filter(s => s in rb);
+  if (!seeds.length) { md.push(`- ${cb} − ${ca}: no shared worlds`); continue; }
+  const diffs = seeds.map(s => rb[s] - ra[s]); const mean = diffs.reduce((x, y) => x + y, 0) / diffs.length;
+  let rng = 12345; const rnd = () => { rng = (rng * 1664525 + 1013904223) >>> 0; return rng / 4294967296; };
+  const boots = []; for (let b = 0; b < 4000; b++) { let sum = 0; for (let k = 0; k < diffs.length; k++) sum += diffs[Math.floor(rnd() * diffs.length)]; boots.push(sum / diffs.length); }
+  boots.sort((x, y) => x - y); const lo = boots[Math.floor(0.025 * boots.length)], hi = boots[Math.floor(0.975 * boots.length)];
+  const line = `${cb} − ${ca} (${A[0].domain}): ${(100 * mean).toFixed(0)} percentage points, 95% bootstrap CI [${(100 * lo).toFixed(0)}, ${(100 * hi).toFixed(0)}], n=${seeds.length} worlds`;
   console.log(line); md.push(`- ${line}`);
 }
-md.push('', '_Discovery rate_ = share of trials that reached the success criterion within the attempt budget. CI = Wilson score interval. _Distinct ideas_ uses a lexical proxy; for publication, re-score with the LLM judge and a human spot-check (see README)._');
+md.push('', '_Discovery rate_ = share of trials that reached the success criterion within the attempt budget. CI = Wilson score interval over trials, which treats repeats as independent; for generalization to new worlds, use the world-paired contrasts and the per-world table. _Distinct ideas_ uses a lexical proxy; for publication, re-score with the LLM judge and a human spot-check (see README)._');
 const outPath = file.replace(/\.jsonl$/, '').replace('experiment-', 'report-') + '.md';
 writeFileSync(outPath, md.join('\n') + '\n');
 console.log(`\nreport -> ${outPath}`);

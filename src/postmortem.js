@@ -11,7 +11,7 @@ const a = parseArgs(process.argv.slice(2));
 if (!a.log) { console.error('usage: node src/postmortem.js --log runs/<run>.jsonl'); process.exit(1); }
 const lines = readFileSync(a.log, 'utf8').trim().split('\n').map(l => JSON.parse(l));
 const meta = lines.find(l => l.type === 'meta'); const attempts = lines.filter(l => l.type === 'attempt');
-const inst = getDomain(meta.domain).make(Number(meta.seed));
+const inst = getDomain(meta.domain).make(Number(meta.seed), meta.opts || {});
 
 const transcript = buildUserMessage(inst, attempts, { hint: meta.hint });
 const revealMsg = `${transcript}\n\n--- STOP. The experiment is over. Here is the actual answer. ---\n${inst.reveal}\n\nLook back over every attempt you made. Why didn't you try that? Be specific and concrete: did the idea never occur to you, did you consider it and dismiss it (when, and why), did you lack a concept needed to think of it, or did you spend your attempts elsewhere? Quote your own attempts where relevant. Then say what single sentence of advice, containing no information about this specific process, would have gotten you there.`;
@@ -32,14 +32,16 @@ const cls = await complete({ system: 'You are a careful annotator. Respond with 
 let parsed = null; try { parsed = JSON.parse(cls.match(/\{[\s\S]*\}/)[0]); } catch {}
 
 // Behavioral cross-check: did the key idea actually appear anywhere in the log?
-const ideas = attempts.map(x => (x.idea + ' ' + (x.assumption || '') + ' ' + (x.newObject || '')).toLowerCase());
-const probes = meta.domain === 'laggedRule' ? ['lag', 'earlier', 'back', 'offset', 'delay', 'k-th', 'steps before'] : ['period', 'position', 'mod', 'cycle', 'index', 'repeat every'];
-const mentioned = attempts.filter((_, i) => probes.some(p => ideas[i].includes(p))).map(x => x.attempt);
+// Behavioral cross-check over prose AND code. This detects mentions, not consideration: a model can
+// consider an idea without writing it down. So only an explicit contradiction counts as evidence.
+const text = attempts.map(x => (x.idea + ' ' + (x.assumption || '') + ' ' + (x.newObject || '') + ' ' + (x.code || '')).toLowerCase());
+const probes = meta.domain === 'laggedRule' ? ['lag', 'earlier symbol', 'offset', 'delay', 'symbols back', 'i-k', 'i - k', 's[i-', 'x[t-'] : ['period', 'position', 'i % ', 'i%', 'mod ', 'cycle', 'index'];
+const mentioned = attempts.filter((_, i) => probes.some(p => text[i].includes(p))).map(x => x.attempt);
 
-const rec = { type: 'postmortem', log: a.log, runId: meta.runId, domain: meta.domain, seed: meta.seed, model: meta.model, why, classification: parsed, raw_classification: cls, keyMoveMentionedInAttempts: mentioned, ts: new Date().toISOString() };
+const rec = { type: 'postmortem', log: a.log, runId: meta.runId, domain: meta.domain, seed: meta.seed, model: meta.model, why, classification: parsed, raw_classification: cls, keyMoveMentionedInAttempts: mentioned, contradiction: !!(parsed && parsed.category === 'never_considered' && mentioned.length), ts: new Date().toISOString() };
 appendFileSync('runs/postmortems.jsonl', JSON.stringify(rec) + '\n');
 console.log('--- model explanation ---\n' + why + '\n\n--- classification ---\n' + JSON.stringify(parsed, null, 2));
 console.log(`\n--- behavioral cross-check ---\nattempts whose stated idea touched the key move: ${mentioned.length ? mentioned.join(', ') : 'none'}`);
-if (parsed && parsed.category === 'considered_dismissed' && !mentioned.length) console.log('NOTE: model claims it considered the idea, but no attempt mentions it. Likely confabulation.');
-if (parsed && parsed.category === 'never_considered' && mentioned.length) console.log('NOTE: model claims it never considered the idea, but attempts ' + mentioned.join(',') + ' mention it. Likely confabulation.');
+if (parsed && parsed.category === 'considered_dismissed' && !mentioned.length) console.log('NOTE: model claims it considered the idea; no attempt (prose or code) mentions it. Unverifiable, not a contradiction.');
+if (parsed && parsed.category === 'never_considered' && mentioned.length) console.log('CONTRADICTION: model claims it never considered the idea, but attempts ' + mentioned.join(',') + ' contain it in prose or code.');
 console.log('\n-> runs/postmortems.jsonl');

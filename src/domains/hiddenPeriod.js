@@ -1,17 +1,19 @@
 // HELD-OUT domain family: "hidden period" source. Use this ONLY for the transfer test.
 // A secret key K of length L. s[i] = K[i mod L] with probability p, else uniform random.
-// Marginal is ~uniform; lag-based context modeling finds nothing unless the lag happens
-// to equal L. The key move here is position-dependence (i mod L), not symbol-dependence.
+// Marginal is ~uniform. The key move is position-dependence (i mod L), not symbol-dependence.
+// History: v1 used L in [11,30], p=0.85. Stock PPM order-6 scored 0.63 of baseline there (near the
+// 0.60 success line) because short periods recur ~130 times in 4000 symbols and long contexts
+// memorize them. v2 uses L in [200,400], p=0.8: PPM scores ~0.9, reference ~0.5 (see prereg addendum).
 import { mulberry32, randInt } from '../rng.js';
 
 export const name = 'hiddenPeriod';
 
 export function make(seed, opts = {}) {
   const A = opts.A ?? 8;
-  const p = opts.p ?? 0.85;
+  const p = opts.p ?? 0.8;
   const n = opts.n ?? 4000;
   const rng = mulberry32(seed * 6271 + 29);
-  const L = opts.L ?? 11 + randInt(rng, 20);      // period in [11,30]
+  const L = opts.L ?? 200 + randInt(rng, 201);    // period in [200,400]: few repeats in 4000 symbols, so context models can't memorize it
   const K = Array.from({ length: L }, () => randInt(rng, A));
 
   const gen = (len, r) => Array.from({ length: len }, (_, i) => (r() < p ? K[i % L] : randInt(r, A)));

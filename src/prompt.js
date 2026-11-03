@@ -13,21 +13,44 @@ Output format (strict):
 // The alphabet size is available as the global A.
 </code>`;
 
-export function buildUserMessage(inst, history, { hint = null, sampleLen = 1200 } = {}) {
-  const parts = [];
-  parts.push(inst.description);
-  parts.push(`\nHere are the first ${sampleLen} symbols of the sample sequence:\n${inst.sample.slice(0, sampleLen).join(' ')}`);
-  if (history.length) {
-    parts.push(`\nYour previous attempts (most recent last). Do not repeat an idea that already failed; the verifier result is exact.`);
-    for (const h of history) {
-      const res = h.result.ok ? `${h.result.bitsPerSym.toFixed(3)} bits/symbol (${(h.result.ratioToBaseline * 100).toFixed(0)}% of fixed-length)` : `FAILED at ${h.result.stage}: ${h.result.error}`;
-      parts.push(`- attempt ${h.attempt}: "${h.idea}" -> ${res}`);
-    }
-  }
+export function describeResult(r) {
+  if (r.ok) return `${r.bitsPerSym.toFixed(3)} bits/symbol (${(r.ratioToBaseline * 100).toFixed(0)}% of fixed-length)`;
+  if (r.stage === 'truncated') return `FAILED: your response was cut off at the output token limit before the code was complete. Write more compact code.`;
+  return `FAILED at ${r.stage}: ${r.error}`;
+}
+
+function problemText(inst, { hint, sampleLen }) {
+  const parts = [inst.description, `\nHere are the first ${sampleLen} symbols of the sample sequence:\n${inst.sample.slice(0, sampleLen).join(' ')}`];
   if (hint) parts.push(`\nHint: ${hint}`);
-  parts.push(`\nGoal: at most ${(inst.baselineBitsPerSym * 0.6).toFixed(2)} bits/symbol. Produce your next attempt now.`);
+  parts.push(`\nGoal: at most ${(inst.baselineBitsPerSym * 0.6).toFixed(2)} bits/symbol.`);
   return parts.join('\n');
 }
+
+// Memory modes — an experimental variable, state it in the prereg:
+//   full      multi-turn: the model sees all of its previous responses in full, each followed by the verifier result
+//   last-code single turn: idea+result list for all attempts, plus the full code of the most recent attempt
+//   summary   single turn: idea+result list only (no code)
+export function buildMessages(inst, history, { hint = null, sampleLen = 1200, memory = 'full' } = {}) {
+  const problem = problemText(inst, { hint, sampleLen });
+  const first = { role: 'user', content: [{ type: 'text', text: problem + '\n\nProduce your first attempt now.', cache_control: { type: 'ephemeral' } }] };
+  if (memory === 'full') {
+    const msgs = [first];
+    for (const h of history) {
+      msgs.push({ role: 'assistant', content: h.raw });
+      msgs.push({ role: 'user', content: `Verifier result for attempt ${h.attempt}: ${describeResult(h.result)}\n\nProduce your next attempt now.` });
+    }
+    return msgs;
+  }
+  const lines = history.map(h => `- attempt ${h.attempt}: "${h.idea}" -> ${describeResult(h.result)}`);
+  let text = problem;
+  if (history.length) text += `\n\nYour previous attempts (most recent last). The verifier result is exact.\n${lines.join('\n')}`;
+  if (memory === 'last-code' && history.length) { const h = history[history.length - 1]; text += `\n\nFull code of your most recent attempt (${h.attempt}):\n<code>\n${h.code || '(none)'}\n</code>`; }
+  text += `\n\nProduce your next attempt now.`;
+  return [{ role: 'user', content: text }];
+}
+
+// kept for postmortem.js (single-turn transcript)
+export function buildUserMessage(inst, history, opts = {}) { return buildMessages(inst, history, { ...opts, memory: 'summary' })[0].content; }
 
 export function parseResponse(text) {
   const grab = (tag) => { const m = text.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`)); return m ? m[1].trim() : null; };
