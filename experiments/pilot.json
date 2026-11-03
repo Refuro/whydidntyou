@@ -1,0 +1,12 @@
+{
+  "name": "pilot",
+  "attempts": 15,
+  "seeds": [1, 2, 3, 4, 5],
+  "repeats": 2,
+  "conditions": [
+    { "id": "baseline", "domain": "laggedRule" },
+    { "id": "scaffold", "domain": "laggedRule", "scaffold": "scaffolds/reframe.md" },
+    { "id": "heldout-baseline", "domain": "hiddenPeriod" },
+    { "id": "heldout-scaffold", "domain": "hiddenPeriod", "scaffold": "scaffolds/reframe.md" }
+  ]
+}
