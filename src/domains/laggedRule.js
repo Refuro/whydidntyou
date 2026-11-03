@@ -9,11 +9,14 @@
 // History: v1 used k in [2,7]; a frontier model cracked it on attempt 1 with stock PPM order 0-6
 // without ever identifying the lag (see prereg/laggedRule.md addendum 2026-11-03).
 import { mulberry32, randInt, derangement } from '../rng.js';
+import { assertSeed } from '../validate.js';
+import { createHash } from 'node:crypto';
 
 export const VERSION = 'laggedRule-v2';
 export const name = 'laggedRule';
 
 export function make(seed, opts = {}) {
+  assertSeed(seed);
   const A = opts.A ?? 8;
   const p = opts.p ?? 0.85;
   const n = opts.n ?? 4000;
@@ -45,6 +48,7 @@ export function make(seed, opts = {}) {
     family: name, generatorVersion: VERSION, seed, A, n,
     secret: { k, g, p },
     sample, test,
+    instanceDigest: createHash('sha256').update(JSON.stringify([name, VERSION, seed, opts, sample, test])).digest('hex'),
     baselineBitsPerSym: Math.ceil(Math.log2(A)),
     oracleBitsPerSym: oracleBits(test) / test.length,
     // What the model is told. Deliberately says nothing about lags, maps or noise.

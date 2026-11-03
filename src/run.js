@@ -19,7 +19,7 @@ export async function runAttempts({ domain, seed, attempts, hint = null, scaffol
   mkdirSync('runs', { recursive: true });
   const runId = `${domain}-s${seed}-${MOCK ? 'mock' : MODEL}${tag ? '-' + tag : ''}-${Date.now()}`;
   const logPath = `runs/${runId}.jsonl`;
-  const meta = { type: 'meta', schema: 3, runId, domain, generatorVersion: inst.generatorVersion, seed, model: MOCK ? 'mock' : MODEL, attempts: Number(attempts), maxAttempts: Number(attempts), hint, scaffold, memory, opts, system, secret: inst.secret, baseline: inst.baselineBitsPerSym, oracle: inst.oracleBitsPerSym, startedAt: new Date().toISOString() };
+  const meta = { type: 'meta', schema: 3, runId, domain, generatorVersion: inst.generatorVersion, seed, model: MOCK ? 'mock' : MODEL, attempts: Number(attempts), maxAttempts: Number(attempts), hint, scaffold, memory, opts, system, secret: inst.secret, instanceDigest: inst.instanceDigest, baseline: inst.baselineBitsPerSym, oracle: inst.oracleBitsPerSym, startedAt: new Date().toISOString() };
   appendFileSync(logPath, JSON.stringify(meta) + '\n');
   if (!quiet) console.log(`run ${runId}\n  secret=${JSON.stringify(inst.secret)} baseline=${inst.baselineBitsPerSym} oracle=${inst.oracleBitsPerSym.toFixed(3)} target<=${(inst.baselineBitsPerSym * 0.6).toFixed(2)}`);
 
@@ -32,7 +32,7 @@ export async function runAttempts({ domain, seed, attempts, hint = null, scaffol
     const parsed = parseResponse(raw);
     const truncated = usage && usage.stop_reason === 'max_tokens' && !/<\/code>/.test(raw);
     const result = truncated ? { ok: false, stage: 'truncated', error: `output hit the ${usage.output_tokens}-token limit before </code>` }
-      : parsed.code ? await evaluate(parsed.code, inst) : { ok: false, stage: 'parse', error: 'no <code> block in response' };
+      : parsed.code ? await evaluate(parsed.code, inst).catch(e => ({ ok: false, stage: 'verify', error: 'host boundary: ' + String(e && e.message || e).slice(0, 200) })) : { ok: false, stage: 'parse', error: 'no <code> block in response' };
     const rec = { type: 'attempt', attempt, messagesSent: messages, idea: parsed.idea, assumption: parsed.assumption, newObject: parsed.newObject, code: parsed.code, raw, result, feedbackText: describeResult(result), usage, ts: new Date().toISOString() };
     appendFileSync(logPath, JSON.stringify(rec) + '\n');
     history.push(rec);

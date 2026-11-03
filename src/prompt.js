@@ -10,7 +10,8 @@ Output format (strict):
 // plain JavaScript, no imports. Must define:
 //   function encode(symbols) -> string of '0'/'1'
 //   function decode(bits, n) -> array of n integers
-// The alphabet size is available as the global A.
+// The alphabet size is available as the global A. Environment: plain ECMAScript only (no Date, no console,
+// no require); recursion depth is limited to about 300 frames; memory 256 MB; a time budget per side.
 </code>`;
 
 export function describeResult(r) {

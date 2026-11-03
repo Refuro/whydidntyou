@@ -93,7 +93,19 @@ const memoryBomb = `
 function encode(s){ const a = []; for(;;) a.push(new Array(1e6).fill(1)); }
 function decode(){ return []; }`;
 const clockProbe = `
-function encode(s){ const t0 = Date.now(); let x = 0; for (let i = 0; i < 2e6; i++) x += i; return Date.now() === t0 ? '' : '1'; }
+function encode(s){ if (typeof Date !== 'undefined') return '1'; return ''; }
+function decode(){ return []; }`;
+// Review-5 reproductions: timing channel through retained Date aliases; recursion / deep nesting that
+// previously surfaced as a host-side RangeError and aborted the attempt loop.
+const timingChannel = `
+const clock = Date.prototype.constructor;
+function encode(s){ const target = s[0] * 1000 + 250; for(;;){ const phase = clock.now() % 2000; if (phase >= target && phase < target + 100) break; } return ''; }
+function decode(){ return [clock.now() % 2000 < 1000 ? 0 : 1]; }`;
+const recursion = `
+function encode(){ function f(){ return f() + 1; } return f(); }
+function decode(){ return []; }`;
+const deepNesting = `
+function encode(){ let a = []; for (let i = 0; i < 100000; i++) a = [a]; return JSON.stringify(a); }
 function decode(){ return []; }`;
 
 let failed = 0;
@@ -110,21 +122,25 @@ function encode(s){
        + has(() => typeof fetch !== 'undefined')
        + has(() => typeof globalThis.constructor.constructor('return this')().process !== 'undefined')
        + has(() => { const t = Date.now(); let x = 0; for (let i = 0; i < 1e6; i++) x += i; return Date.now() !== t; })
-       + has(() => typeof globalThis.constructor.constructor('return this')().getBuiltinModule !== 'undefined');
+       + has(() => typeof globalThis.constructor.constructor('return this')().getBuiltinModule !== 'undefined')
+       + has(() => typeof Date !== 'undefined')
+       + has(() => typeof __OrigDate !== 'undefined')
+       + has(() => typeof Object.getPrototypeOf(globalThis).constructor !== 'undefined' && typeof globalThis.constructor.constructor('return typeof Date')() !== 'undefined' && globalThis.constructor.constructor('return typeof Date')() !== 'undefined');
 }
 function decode(){ return []; }`;
 {
   const probe = await runSide(capabilityProbe, 'encode', { A: 8, dataJson: '[1,2,3]' }, 5000);
-  const expected = '0000000';
+  const expected = '0000000000';
   if (!probe.ok) { console.error(`FAIL: capability probe did not run: ${probe.stage}: ${probe.error}`); failed++; }
-  else if (probe.bits !== expected) { console.error(`FAIL: capability probe reports ${probe.bits}, expected ${expected} (process,require,console,fetch,escape->process,clock,getBuiltinModule)`); failed++; }
-  else console.log(`capability probe: ${probe.bits} (all seven capabilities absent; positive control ran)`);
+  else if (probe.bits !== expected) { console.error(`FAIL: capability probe reports ${probe.bits}, expected ${expected} (process,require,console,fetch,escape->process,Date.now moves,getBuiltinModule,Date exists,__OrigDate exists,Date via escape)`); failed++; }
+  else console.log(`capability probe: ${probe.bits} (all ten capabilities absent; positive control ran)`);
 }
-for (const [label, code] of [['zero-bit stash', sideChannel], ['shared host object', sharedHostObject], ['throwing proxy', hostileProxy], ['looping proxy', hostileWhile], ['console.log.constructor escape', consoleEscape], ['globalThis.constructor escape', ctorEscape], ['looping error getter', loopingErrorGetter], ['JSON.stringify trap', jsonTrap], ['promise loop', promiseLoop], ['file channel via require', fileChannel], ['network globals absent', netGlobals], ['sqlite channel (review 4)', sqliteChannel], ['kill parent (review 4)', killParent], ['env/process read', envRead], ['memory bomb', memoryBomb], ['clock frozen', clockProbe]]) {
+for (const [label, code] of [['zero-bit stash', sideChannel], ['shared host object', sharedHostObject], ['throwing proxy', hostileProxy], ['looping proxy', hostileWhile], ['console.log.constructor escape', consoleEscape], ['globalThis.constructor escape', ctorEscape], ['looping error getter', loopingErrorGetter], ['JSON.stringify trap', jsonTrap], ['promise loop', promiseLoop], ['file channel via require', fileChannel], ['network globals absent', netGlobals], ['sqlite channel (review 4)', sqliteChannel], ['kill parent (review 4)', killParent], ['env/process read', envRead], ['memory bomb', memoryBomb], ['clock absent', clockProbe], ['timing channel (review 5)', timingChannel], ['recursion (review 5)', recursion], ['deep nesting (review 5)', deepNesting]]) {
   let r; try { r = await evaluate(code, domains.laggedRule.make(1), { timeoutMs: 1500 }); } catch (e) { console.error(`FAIL: ${label}: evaluate() threw on the host: ${e.message}`); failed++; continue; }
   if (r.ok) { console.error(`FAIL: ${label} passed the verifier`); failed++; continue; }
   if (label === 'network globals absent' && !/decode returned 0 items/.test(r.error)) { console.error(`FAIL: ${label}: encode threw (${r.error}), so a network global WAS present`); failed++; continue; }
-  if (label === 'clock frozen' && !/decode returned 0 items/.test(r.error)) { console.error(`FAIL: ${label}: the clock advanced inside the sandbox`); failed++; continue; }
+  if (label === 'clock absent' && !/decode returned 0 items/.test(r.error)) { console.error(`FAIL: ${label}: Date exists inside the sandbox`); failed++; continue; }
+  if ((label.startsWith('recursion') || label.startsWith('deep nesting')) && /host boundary/.test(r.error)) { console.error(`FAIL: ${label}: reached the host boundary instead of failing inside the sandbox (${r.error})`); failed++; continue; }
   console.log(`regression [${label}]: blocked (${r.stage}: ${r.error.slice(0, 70)})`);
 }
 {

@@ -4,6 +4,7 @@
 // Contrasts in the config: ["a","b"] (requires identical generator options) or
 // {"a":"...","b":"...","sharedWorld":true} to declare that differing options share the world's other draws.
 import { readFileSync, writeFileSync } from 'node:fs';
+import { validateTrial, assertSeed } from './validate.js';
 
 const file = process.argv[2];
 if (!file) { console.error('usage: node src/report.js runs/experiment-<name>.jsonl'); process.exit(1); }
@@ -20,6 +21,8 @@ const J = (o) => JSON.stringify(o || {});
 if (!Array.isArray(cfg.conditions) || !cfg.conditions.length) refuse('config has no conditions');
 if (!Array.isArray(cfg.seeds) || !cfg.seeds.length || !cfg.seeds.every(Number.isInteger)) refuse('config seeds must be a non-empty integer array');
 if (new Set(cfg.seeds).size !== cfg.seeds.length) refuse('config seeds contain duplicates (the same world would count twice)');
+try { cfg.seeds.forEach(assertSeed); } catch (e) { refuse(e.message); }
+if (typeof meta.batchId !== 'string' || !meta.batchId || typeof meta.model !== 'string' || !meta.model) refuse('batch header lacks batchId/model');
 if (new Set(cfg.conditions.map(c => c.id)).size !== cfg.conditions.length) refuse('config condition ids are not unique');
 if (!(Number.isInteger(cfg.attempts) && cfg.attempts >= 1 && Number.isInteger(cfg.repeats) && cfg.repeats >= 1)) refuse('config attempts/repeats must be positive integers');
 const MISSING = cfg.missingPolicy ?? 'refuse'; if (!['refuse', 'exploratory'].includes(MISSING)) refuse(`config missingPolicy must be "refuse" or "exploratory" (got ${JSON.stringify(MISSING)})`);
@@ -27,26 +30,14 @@ if (cfg.generatorVersions != null && (typeof cfg.generatorVersions !== 'object' 
 const condById = Object.fromEntries(cfg.conditions.map(c => [c.id, c]));
 for (const ct of cfg.contrasts || []) { if (!Array.isArray(ct) && ct.sharedWorld !== undefined && typeof ct.sharedWorld !== 'boolean') refuse(`contrast ${ct.a}/${ct.b}: sharedWorld must be a strict boolean`); }
 
-// ---- manifest validation: every trial must match the config exactly
-const seen = new Set(); const genVersions = {};
+// ---- manifest validation: every trial must match the config exactly (shared contract in validate.js)
+const seen = new Set(); const genVersions = {}; const digests = {};
 for (const t of trials) {
-  const c = condById[t.condition]; if (!c) refuse(`trial condition "${t.condition}" not in config`);
-  if (t.batchId !== meta.batchId) refuse(`trial batch ${t.batchId} != file batch ${meta.batchId}`);
-  if (!cfg.seeds.includes(t.seed)) refuse(`trial seed ${t.seed} not in config seeds`);
-  if (!(Number.isInteger(t.repeat) && t.repeat >= 0 && t.repeat < cfg.repeats)) refuse(`trial repeat ${t.repeat} outside [0,${cfg.repeats})`);
-  if (t.domain !== c.domain) refuse(`trial ${t.condition}/${t.seed}/${t.repeat}: domain ${t.domain} contradicts config ${c.domain}`);
-  if (J(t.opts) !== J(c.opts)) refuse(`trial ${t.condition}/${t.seed}/${t.repeat}: options ${J(t.opts)} contradict config ${J(c.opts)}`);
-  if (t.memory !== (c.memory || cfg.memory || 'full')) refuse(`trial ${t.condition}/${t.seed}/${t.repeat}: memory ${t.memory} contradicts config`);
-  if (t.model !== meta.model) refuse(`trial model ${t.model} != batch model ${meta.model}`);
+  try { validateTrial(t, cfg, meta, condById); } catch (e) { refuse(e.message); }
   const k = `${t.condition}|${t.seed}|${t.repeat}`; if (seen.has(k)) refuse(`duplicate trial ${k}`); seen.add(k);
-  if (typeof t.generatorVersion !== 'string' || !t.generatorVersion) refuse(`trial ${k}: generatorVersion missing`);
   (genVersions[t.domain] ||= new Set()).add(t.generatorVersion);
-  // outcome validation: one success event, used identically everywhere
-  if (t.maxAttempts !== cfg.attempts) refuse(`trial ${k}: maxAttempts ${t.maxAttempts} != config ${cfg.attempts}`);
-  if (!(t.success === null || (Number.isInteger(t.success) && t.success >= 1 && t.success <= cfg.attempts))) refuse(`trial ${k}: success must be null or an integer in [1,${cfg.attempts}] (got ${JSON.stringify(t.success)})`);
-  if (!Number.isInteger(t.attemptsUsed) || t.attemptsUsed < 1 || t.attemptsUsed > cfg.attempts) refuse(`trial ${k}: attemptsUsed invalid`);
-  if (t.success !== null && t.attemptsUsed !== t.success) refuse(`trial ${k}: success at ${t.success} but attemptsUsed ${t.attemptsUsed}`);
-  if (t.success === null && t.attemptsUsed !== cfg.attempts) refuse(`trial ${k}: failed trial did not exhaust its budget (${t.attemptsUsed}/${cfg.attempts}); incomplete trials are not analyzable`);
+  // distinct seeds must generate distinct instances within a condition (seed aliasing / generator collisions)
+  const dk = `${t.condition}|${t.instanceDigest}`; if (digests[dk] != null && digests[dk] !== t.seed) refuse(`condition ${t.condition}: seeds ${digests[dk]} and ${t.seed} generated the identical instance (${t.instanceDigest.slice(0, 12)}…); they are one world, not two`); digests[dk] = t.seed;
 }
 for (const [d, v] of Object.entries(genVersions)) {
   if (v.size !== 1) refuse(`domain ${d} has mixed generator versions ${[...v].join(',')}`);

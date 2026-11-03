@@ -5,11 +5,14 @@
 // 0.60 success line) because short periods recur ~130 times in 4000 symbols and long contexts
 // memorize them. v2 uses L in [200,400], p=0.8: PPM scores ~0.9, reference ~0.5 (see prereg addendum).
 import { mulberry32, randInt } from '../rng.js';
+import { assertSeed } from '../validate.js';
+import { createHash } from 'node:crypto';
 
 export const VERSION = 'hiddenPeriod-v2';
 export const name = 'hiddenPeriod';
 
 export function make(seed, opts = {}) {
+  assertSeed(seed);
   const A = opts.A ?? 8;
   const p = opts.p ?? 0.8;
   const n = opts.n ?? 4000;
@@ -32,6 +35,7 @@ export function make(seed, opts = {}) {
     family: name, generatorVersion: VERSION, seed, A, n,
     secret: { L, K, p },
     sample, test,
+    instanceDigest: createHash('sha256').update(JSON.stringify([name, VERSION, seed, opts, sample, test])).digest('hex'),
     baselineBitsPerSym: Math.ceil(Math.log2(A)),
     oracleBitsPerSym: oracleBits(test) / test.length,
     description:

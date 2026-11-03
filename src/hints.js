@@ -3,7 +3,7 @@
 // Every arm gets the same attempt budget and repeat count; arms are interleaved in a seeded random
 // order so time-of-day / provider drift is not confounded with treatment. No early stopping.
 //   node src/hints.js --domain laggedRule --seed 1 --attempts 6 --repeats 5 [--k 36] [--memory full] [--ladder file] [--order-seed 7]
-import { readFileSync, appendFileSync } from 'node:fs';
+import { readFileSync, appendFileSync, mkdirSync } from 'node:fs';
 import { runAttempts, parseArgs } from './run.js';
 import { MODEL, MOCK } from './llm.js';
 
@@ -30,6 +30,7 @@ for (let i = jobs.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)
 const batchId = `hints-${a.domain}-s${a.seed ?? 1}-${Date.now()}`;
 import { createHash } from 'node:crypto';
 const out = { type: 'hint-effects', batchId, estimand: 'prompted-restart', domain: a.domain, seed: a.seed ?? 1, opts, memory, model: MOCK ? 'mock' : MODEL, ladder: ladderPath, attempts, repeats, orderSeed, executionOrder: jobs.map(j => `${j.arm.id}#${j.r}`), results: [] };
+mkdirSync('runs', { recursive: true });
 // Immutable batch header BEFORE the first job; every partial record references its digest.
 const header = { type: 'hint-batch-header', batchId, estimand: 'prompted-restart', domain: a.domain, seed: a.seed ?? 1, opts, memory, model: MOCK ? 'mock' : MODEL, ladder: ladderPath, ladderContent: ladder, arms: arms.map(x => ({ id: x.id, category: x.category, hint: x.hint })), attempts, repeats, orderSeed, schedule: jobs.map(j => `${j.arm.id}#${j.r}`), ts: new Date().toISOString() };
 const headerDigest = createHash('sha256').update(JSON.stringify(header)).digest('hex');
