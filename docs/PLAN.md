@@ -1,131 +1,134 @@
-# Plan v2: measuring method and representation synthesis relative to a known toolkit
+# Plan v3: controlled measurement of solver behavior relative to a reference library and a documented training distribution
 
-Status: DRAFT v2 for second review. Supersedes `docs/archive/PLAN-v1.md` in response to `docs/archive/REVIEW-v1-response.md`. Nothing in Phase 2 or 4 has been run. Section numbers are new; the v1 review's section references point at the archived file.
+Status: DRAFT v3 for a third, verification-focused review. Supersedes v2 (`docs/archive/PLAN-v2.md`) in response to `docs/archive/REVIEW-v2-response.md`. Nothing in Phase 2 or 4 has been run.
 
-## 0. What changed from v1, in one paragraph
+## 0. What v3 claims, and what it explicitly does not
 
-v1 claimed to measure "invention" with a four-level ladder and synthetic tasks. The review showed that no black-box synthetic task can certify that a method or representation was absent from a trained model's toolkit, and that every proposed novelty check could be passed by instantiating a known representation (e.g. searching for a homomorphism into a small group). v2 therefore makes two claims instead of one. **Claim A (Phases 1–2):** frontier models do or do not exceed a *frozen, pre-registered library of known solvers* under explicit budgets, on tasks whose specific parameters are new. **Claim B (Phase 4):** a model whose training corpus we generated in full, and which therefore has a *known* toolkit, does or does not solve tasks that require a representation absent from that corpus. Claim B is the only one that speaks to invention. The ladder (parameter search / method selection / method synthesis / representation synthesis) is kept as vocabulary and never as a measured quantity.
+Three propositions are kept separate everywhere in this project:
 
-## 1. Axes of measurement (replaces the ladder as the primary result)
+- **(P-exposure)** no document in the audited training corpus explicitly demonstrates the target solution family;
+- **(P-language)** the submitted solution's behavior lies outside a formally specified restricted language L0;
+- **(P-capability)** the target capability was absent from the trained model before testing.
 
-Every trial is scored on four independent axes.
+P-exposure and P-language can be established. **P-capability is not implied by them and is not claimed anywhere in this project.** A model can learn, during training, a procedure that no training document spells out.
 
-1. **Validity.** Task performance on a sealed evaluation set; for invariant tasks, a validated conserved quantity with demonstrated predictive utility (scored separately from the classifier).
-2. **Relationship to the frozen baseline library.** Does the submitted solution's behavior match a library solver's (parameter fitting), compose library primitives, or use a representation outside the library's registered solver language? Determined by (a) running the library on the same instance and comparing accuracy, and (b) blind code audit against the library's primitive list.
-3. **Resources.** Model tokens, candidate evaluations executed, wall-clock, number of labeled examples used.
-4. **Reuse.** Whether the constructed representation, frozen after the trial, helps on independently generated systems.
+**Claim A (Phases 1–2):** on a specified task distribution and under specified budgets, frontier models do or do not match an independently challenged, frozen solver portfolio; results are reported as performance and resource comparisons plus a semantic analysis of the submitted programs.
 
-A result is stated as: "under budget B, model M achieved validity V on family F, with relationship R to library L; the representation did / did not reuse on fresh systems." Nothing is labeled "invention" in Phases 1–2.
+**Claim B (Phase 4):** a model trained from random initialization on a fully documented, hash-pinned synthetic corpus satisfying P-exposure for a withheld solution family does or does not produce solutions satisfying P-language on withheld-family tasks, compared causally with a matched model whose corpus includes that family. Reported as controlled exposure and generalization, never as invention.
 
-## 2. The frozen baseline library (new; required before any Phase 2 model run)
+The four-level ladder (parameter search / method selection / method synthesis / representation synthesis) is retained only as informal vocabulary in the discussion section.
 
-A registered set of solvers, each with a stated primitive language and compute budget, run on every evaluation instance *before* models see it. For the invariant family:
+## 1. Axes of measurement
 
-- modular linear algebra over symbol counts (solves D0–D1 by nullspace);
-- finite-group homomorphism search into a registered list of small groups (Z_m, S3, Q8, D4, A4), with and without quotient coarsening;
-- rewrite normalization / finite-state (transducer) synthesis up to a registered state bound;
-- a small composition grammar over registered transformations (run-length, local normalization, symbol merge) × the solvers above;
-- brute-force reachability (BFS) with the sandbox's time budget, as the trivial baseline.
+1. **Validity.** Task performance on sealed evaluation pairs; for invariant tasks, a validated conserved quantity, scored by a fixed prediction rule, separately from the model's own classifier.
+2. **Relationship to the reference portfolio** — two separate reports: (a) *performance* vs the portfolio (§2) on the same worlds; (b) *semantic analysis* of the submitted program: L0 membership (§4.2 defines L0 semantically; membership is decided by witness pairs, not by inspection), primitives used, and whether a registered portfolio member's behavior matches it on challenge pairs. Accuracy equality is never taken as method identity.
+3. **Resources.** Model tokens, sandbox executions, wall-clock, labeled examples used.
+4. **Reuse** — one of three registered kinds, never conflated: (R1) additional sealed pairs in the same world; (R2) transport under a supplied symbol/algebra isomorphism to a fresh world; (R3) a frozen *constructor* (procedure) re-fitting a quantity from a fresh world's rules under a registered adaptation budget, compared against fitting from scratch. The literal fitted quantity is expected to fail on fresh worlds and that failure is not reported as a failure of abstraction.
 
-Each solver reports accuracy on the sealed pairs and runtime. **If a library solver reaches the success criterion on a family, that family is classified "within library" and is reported as such; it is not promoted to a novelty claim.** Models are compared to the library's best, not to chance.
+## 2. The reference portfolio
 
-## 3. Phase 2 — hidden-invariant pair classification (synthetic; Claim A)
+Membership (each with a registered primitive language and compute budget; one total budget per member, stated):
+1. modular linear algebra over symbol counts;
+2. finite-group homomorphism search into Z_m, S3, Q8, D4, A4, with and without quotient coarsening;
+3. **finite-monoid constraint synthesis** (SAT/SMT/CSP over symbol images or a bounded multiplication table, with closure, associativity, identity, rule equations and labeled examples as constraints);
+4. **joint coarse-feature classifier** over the tuple of all registered quotients and count features (not each separately);
+5. finite-state inference that tracks the full string-product state (bound justified against the algebra size: ≤ q^q states for a transformation monoid on q points), plus rewrite normalization / canonical forms;
+6. **constraint-guided search in a registered program grammar** driven by relations and counterexamples (not pure enumeration);
+7. nuisance-feature classifiers (length, histogram difference, edit distance, LCS, positional agreement, short-pattern counts) and bounded bidirectional search, as scored baselines;
+8. brute-force BFS under the sandbox budget.
 
-### 3.1 Task semantics (fixes v1 F3)
-The task is **pair classification on a stated promise distribution**, not reachability. Positives: pairs connected by a random rule walk (reachable by construction). Negatives: pairs with different invariant value (unreachable by construction). The distribution is documented; claims are restricted to it. Unreachable same-invariant pairs are *not* in the distribution and the paper says so.
+Two portfolio scores are reported: **oracle portfolio** (best member per world chosen with sealed labels — labeled as an oracle) and **implementable selector** (member chosen from public rules and training pairs only). Members are never modified using sealed scores. Before freezing, a solver author who did not design the generator attacks development worlds under the registered budgets; the portfolio is frozen only after that challenge. Coverage table, all evaluated worlds, failure modes and resource curves are published. A general-distribution result and any library-resistant challenge set are reported separately. A null comparison is not evidence of non-superiority unless a registered equivalence margin is met.
 
-### 3.2 Generator soundness (fixes v1 F2)
-Only invariant families with **compositional conservation** are admitted in v2: those expressible as a monoid homomorphism from strings to a finite monoid (count vectors mod m; group-valued products; products in small non-commutative monoids). For these, `I(u)=I(v)` for each rule implies `I(xuy)=I(xvy)` for all contexts, and this is verified by exhaustive check over all rule applications in all contexts up to the rule-length bound. Position-weighted and pattern-count invariants (v1 D2) and transformed-state invariants (v1 D4) are **excluded** until a sound construction with exhaustive verification exists.
+## 3. Phase 2 — hidden-invariant pair classification (Claim A)
 
-### 3.3 Families (replaces the "dial"; ordered only by library coverage, not by claimed difficulty)
-- **F-count**: count vector mod m with hidden weights. Within library (linear algebra). Serves as the sanity floor.
-- **F-abelian**: product in Z_m^r with hidden symbol images. Within library.
-- **F-nonabelian**: product in a registered small non-abelian group with hidden symbol images. Expected within library (homomorphism search); the experiment measures whether models match or exceed it, and at what resource cost.
-- **F-monoid**: product in a small non-group monoid (e.g. a transformation monoid on 3–4 points) with hidden images. Partially outside the registered group list; the library's transducer synthesis is the relevant comparator.
-- **F-sealed**: one further compositional family, chosen now and documented in a sealed file (`prereg/sealed/`), never opened during development. This is the transfer family for Claim A.
+### 3.1 Task semantics
+Pair classification on a stated promise distribution: positives from random rule walks (connected by construction); negatives with different invariant value (disconnected by construction). Same-invariant disconnected pairs are outside the distribution and the paper says so. Two distributions are reported: **natural sampling** and a **quotient-challenge** distribution (§3.4), each with its own sealed pairs.
 
-### 3.4 Negative sampler (fixes the quotient leak)
-Negatives are drawn so that every proper quotient of the invariant mislabels at least 30% of them. For a group-valued invariant, this means sampling negative pairs concentrated on value pairs that agree under the abelianization (and under each registered proper quotient) but differ under the full invariant. The 95% success criterion is checked against the best quotient classifier for every instance; if any quotient exceeds 90%, the instance is regenerated.
+### 3.2 Generator soundness and verification
+Admitted families are monoid homomorphisms from strings to a finite monoid M: count vectors mod m; products in finite abelian groups; products in registered non-abelian groups; products in small transformation monoids. **Conservation is proved, not sampled:** verify M's closure, identity and associativity exhaustively on its table; define I as the fold of symbol images; check every rule equation I(u)=I(v) in M. The homomorphism property then gives I(xuy)=I(xvy) for all contexts. No short-context cutoff is used as a proof. Two sound extensions are admitted only with their augmented summaries: alternating weighted sums carrying (length parity, alternating sum), and fixed-pattern counts carrying (count, prefix, suffix, capped length); rules must preserve the full summary, and these families are audited for rule coverage and shortcut creation before use.
 
-### 3.5 Leakage audit (pre-model; required)
-On an audit corpus of ≥2,000 worlds per family, independent of development worlds:
-1. Predict family from metadata/format only (must be at chance); from canonicalized rule statistics; from labeled-pair statistics. Report confusion matrices. Metadata leakage is fixed; structural recognizability is reported as "library coverage", not hidden.
-2. Predict pair labels from nuisance features (length, histogram difference, edit distance, LCS, positional agreement, short-pattern counts). Pre-registered equivalence margin: upper 95% bound below 55% on fresh worlds, uncertainty over worlds. Count features are intended signal for F-count/F-abelian and are reported as such.
-3. Run the library with rules-only, examples-only, both.
-4. Presentation interventions: symbol renaming, rule order, equivalence written as two directed rules (notation only), walk length, pair sampler.
+Per world, an **identifiability audit** reports: number of inequivalent representations consistent with the exposed rules and training pairs; reachable-state occupancy; rule coverage; the reference solver's information requirement. Worlds where a valid invariant is not recoverable from the evidence are flagged, not silently included.
 
-### 3.6 Prompt conditions
-Two task-prompt paraphrases. Two output conditions: **unrestricted** (classifier only) and **quantity-requested** (classifier plus `quantity(state)`, scored by a fixed prediction rule). The request is an intervention and is reported as one.
+### 3.3 Families and the sealed transfer family
+F-count, F-abelian, F-nonabelian, F-monoid as in v2. **F-sealed is chosen and committed by an independent custodian** (not the author; the reviewer is asked to act as custodian or to nominate one), as a hash of a specification file the author does not see until the confirmatory run. If no custodian is available, designer knowledge is disclosed and the family, sampler, portfolio and scaffold are frozen before any confirmatory outcome is observed, with commit hashes and timestamps listed in the paper.
 
-### 3.7 Measurements (same harness)
-Validity on sealed pairs; library relationship (§1.2); resources; reuse of the frozen `quantity` on fresh systems of the same family and of F-sealed; hint effects vs no-hint and neutral controls (§5); post-mortem category with contradiction check (§5); observable computation category (candidate testing / constraint solving / mixed / unobserved), blind-annotated.
+### 3.4 Negative sampling (replaces v2's universal quotient requirement, which is infeasible for e.g. C2×C2×C2)
+1. **Feasibility first.** For each admitted algebra, solve the finite feasibility problem: support points are unequal value pairs (nonidentity differences for groups), constraints are registered quotients (normal subgroups) or congruences (monoids). Report infeasible cases; do not regenerate indefinitely.
+2. **Witness pairs.** For separation from count-based representations, include balanced pairs with identical symbol histograms and different labels (e.g. `…ab…` vs `…ba…` under non-commuting images). This is a certificate that histogram-only classifiers are bounded on the challenge distribution; the bound is computed, not assumed.
+3. **Joint coarse-feature check.** The quotient-challenge distribution is validated against the joint classifier over all registered coarse features (§2.4), with a registered maximum accuracy (e.g. ≤ 70% on challenge negatives); thresholds are stated at a single denominator.
+4. **Nuisance matching.** Positive/negative challenge pairs are matched on length, histogram distance, edit distance and LCS; the nuisance audit (§3.5) is re-run after conditioning.
+5. **Calibration vs sealed.** Instance acceptance uses calibration pairs; sealed evaluation pairs are generated afterwards and never used for acceptance.
 
-## 4. Phase 4 — controlled-toolkit model (new; Claim B)
+### 3.5 Leakage audit (as v2, unchanged in substance)
+Metadata-only, canonicalized-rule and labeled-pair predictors of family; nuisance-feature predictors of label with a registered equivalence margin (upper 95% bound < 55% on fresh worlds); portfolio with rules-only / examples-only / both; presentation interventions. Structural recognizability is reported as portfolio coverage, not hidden.
 
-### 4.1 Rationale
-The only way to know a solver's toolkit is to have built its training data. Phase 4 trains a small model from scratch on a fully synthetic corpus in the invariant-game world, with a specified toolkit, and tests whether it solves tasks that need a representation absent from the corpus.
+### 3.6 Prompt and output conditions
+Two paraphrases. Unrestricted vs quantity-requested output; the request is an intervention and is reported as one.
 
-### 4.2 Corpus
-Generated, not scraped. Contents: rule systems with worked solutions in a fixed formal notation; solutions use only the **in-toolkit** families (F-count, F-abelian); explanations, verifications, and failed attempts in the same notation; no group-valued, non-abelian, or monoid-valued object appears anywhere (enforced by a grammar filter over every document and by a held-out string-match audit). Size: 1–5B tokens, generated deterministically from a seed so the corpus itself is reproducible and auditable.
+## 4. Phase 4 — controlled exposure and generalization (Claim B)
 
-### 4.3 Model and training
-Decoder-only transformer, 20–150M parameters, trained on a single consumer GPU (the author's RTX 4080 SUPER, 16 GB): hours to ~2 days per run at these sizes, which permits replicates. Three model sizes × three seeds minimum. Training code is standard (nanoGPT-class); the contribution is the corpus and the evaluation, not the architecture.
+### 4.1 What is withheld
+The withheld family is **non-commutative structure**: no training document contains a solution, trace, explanation or failed attempt whose quantity is order-sensitive. (v2's wording "no group-valued object" was wrong: abelian groups are in-toolkit.) In-toolkit families: F-count and F-abelian.
 
-### 4.4 Evaluation
-- **In-toolkit control:** held-out F-count/F-abelian systems. Must be solved at high rate or the model is below floor and Phase 4 is reported as floor-limited.
-- **Out-of-toolkit test:** F-nonabelian / F-monoid systems. Success requires a validated conserved quantity (Axis 1) that is provably not expressible in the in-toolkit language (checked by the same quotient/linear-algebra tests used in §3.4).
-- **Reuse:** a frozen out-of-toolkit quantity re-applied to fresh systems.
-- **Ablations:** corpus with the out-of-toolkit family present (positive control); corpus with "look for a conserved quantity" strategy text removed (does the meta-strategy matter?).
+### 4.2 L0 and its certificate
+L0 is defined **semantically**: quantities that depend on the input only through its symbol histogram, q(s)=f(count(s)), with f ranging over the in-toolkit expression grammar. A proof by induction over the grammar establishes that every L0 expression is invariant under symbol permutation within a string. **Certificate that a submitted quantity is outside L0:** two strings with identical histograms and different outputs (`ab` vs `ba` suffices when images do not commute). **Certificate that a task requires information beyond L0 at the threshold:** balanced label conflicts within histogram classes in the sealed pairs, giving a computed accuracy ceiling for every L0 classifier. Neither certificate speaks to P-capability.
 
-### 4.5 What Claim B can and cannot say
-It can say: a model with a known toolkit did / did not construct a representation outside it, at this scale, in this world. It cannot say anything about frontier models. The two claims are reported side by side; neither is extrapolated to the other.
+### 4.3 Corpus and exposure audit
+- Solutions, traces, explanations and failed attempts are **emitted from a typed AST** in a fixed formal notation and rendered to text; the AST grammar for in-toolkit documents cannot express order-sensitive quantities. No post-hoc text filtering is relied on.
+- Generic transition-table evaluators (`state = T[state][sym]`) are **excluded from in-toolkit documents**, since they evaluate non-commutative products regardless of the tables shown. Sequence-processing competence is taught by registered documents that are disclosed as part of the exposure intervention.
+- Input rule systems in in-toolkit documents are themselves in-toolkit (commutative) and are audited.
+- The exact delivered token stream, tokenizer, generator code, configuration, curriculum and packing rules are hashed; random initialization; no fine-tuning, validation-driven selection, or test-time examples outside the audit. Unique underlying worlds and structural equivalence classes are reported, not only token counts.
+- Audit levels: generation/syntax (every document parsed and certified), semantics (L0 proof + search for alternate encodings in inputs and labels), actual exposure (hashes), interpretation (P-exposure and P-language only).
 
-## 5. Interventions and process measures (fixes v1 F4 and the hint selection bias)
+### 4.4 Interface frozen before any training
+Executable output language (restricted; its primitives disclosed as exposure), tokenizer, context length sufficient for the full task prompt plus attempt history, interaction protocol, verifier. If the output language cannot express order-sensitive programs, P-language success is impossible by construction and the experiment is void; the language therefore includes general bounded loops and tables, and their presence in training documents is part of the audited exposure.
 
-- **Hints:** every rung vs equal-budget no-hint and neutral-instruction controls, equal repeats, no early stopping. Rungs are labeled *content-free*, *strategy* (e.g. "ask what stays the same"), or *solution-family*. Selected on development worlds, confirmed on fresh worlds; only confirmed effects are reported.
-- **Post-mortems:** the model receives the reveal and its full attempt history (not a summary). Self-reports are coded; "contradiction" is recorded only when a claim is contradicted by prose or code in the log. Non-mention is "unverifiable".
-- **Observable computation:** logged from the sandbox (candidate evaluations executed, constraint-solver calls if the model uses a provided one) and blind-annotated; never interpreted as cognition.
-- **Scaffold transfer:** the scaffold is built from F-count/F-abelian/F-nonabelian development worlds only, frozen, and tested on fresh worlds of those families and on F-sealed. The result is "transfer to a family held out from development"; the caveat that strategy can transfer without answers is stated.
+### 4.5 Staged execution with registered gates
+1. Audit the generator; produce the L0 proof and witness certificates.
+2. Overfit a tiny diagnostic set to catch interface bugs.
+3. **Benchmark throughput** (tokens/s, peak memory) at the intended context length, precision and optimizer on the actual GPU before choosing token budgets. The v2 "hours to two days" figure is withdrawn; the plan uses measured numbers.
+4. Train one small **target-withheld** model and one **matched target-exposed** model (same tokens, steps, architecture, decoding, budgets; data replaced, not added).
+5. **Gates**, set before inspecting withheld-family results, per retained seed, on ≥100 fresh development worlds per control family: ≥90% world-level success with 95% lower bound >80%; ≥99% syntactically valid submissions. Controls: (C1) in-family synthesis on unseen F-count/F-abelian worlds with new presentations and the same prompt burden; (C2) the target-exposed model must solve unseen withheld-family worlds; (C3) representation-supplied diagnostic — the withheld model is given the missing representation and tested on fresh cases (diagnoses execution vs representation; does not establish prior absence).
+6. Only if gates pass: the size × seed grid, with every seed reported individually (three seeds are three models, not a population) and corpus generation either fixed or independently replicated, stated.
 
-## 6. Phase 1 (laggedRule / hiddenPeriod) — reclassified
+A failed diagnostic run is engineering evidence, not a negative result.
 
-Phase 1 is retained as the **search-breadth control** (the k-curve) and as the harness test bed. All runs to date are exploratory; a confirmatory k-curve is frozen at the tag `confirm-phase1`. The real winning program is a registered library member for this family. Phase 1 is reported under Axes 1–3 only.
+## 5. Interventions and process measures
 
-## 7. Phase 3 (vintage model) — demoted to an appendix
+- **Hints:** prompted-restart estimand by default (hint present from attempt 1 in a fresh run), named as such; a continuation estimand (fork the identical failed history into randomized arms) is a separate experiment. Arms interleaved in a seeded random order within world; equal budgets; both controls reported; selected on development worlds, confirmed on fresh worlds; rung categories (content-free / strategy / solution-family) registered.
+- **Post-mortems:** descriptive only. The model receives its full original record. A judge with the full record extracts one verbatim behavioral claim and rates it supported / contradicted / unverifiable with quoted evidence. Categories are multi-label with "unknown". No causal endpoint. Solver, responder and judge model identities are recorded separately.
+- **Observable computation:** counters in the execution interface (sandbox executions, candidate evaluations where the model uses a provided tester); coverage limits stated; blind descriptive annotation with mixed/unknown.
+- **Scaffold transfer:** developed on F-count/F-abelian/F-nonabelian development worlds, frozen, tested on fresh worlds and on F-sealed; reported as instance transfer plus family transfer with the strategy-leak caveat.
 
-Retained only as a conditional case study of **method reconstruction** (optimal prefix coding with a fully specified contract), gated on: (a) contamination audit with named, unnamed-algorithm, and formula probes in independent sessions, base and instruction-tuned separately; (b) the architecture-matched modern twin as comparator; (c) interface, revealed-method, and near-target reasoning controls; (d) a restricted executable language or audited translation so JavaScript fluency is not a confound. Entropy recovery is dropped as a concept-invention endpoint (Gibbs 1902 precursor; underspecified target). A null result is "this checkpoint under this protocol".
+## 6. Phase 1 — search-breadth control
+Unchanged: the k-curve. All existing runs are exploratory. The confirmatory k-curve is frozen at tag `confirm-phase1` (to be created at the commit that freezes `experiments/kcurve.json`; the tag's hash is reported).
 
-## 8. Design and statistics
+## 7. Phase 3 — appendix, gated (unchanged from v2)
 
-- **Unit of analysis:** the independently generated world. Repeats within a world estimate within-world variation and are averaged.
-- **Sample:** ≥32–40 worlds per primary condition for Claim A; repeats second. Power simulated for the hierarchical design from pilot estimates before the confirmatory run.
-- **Contrasts:** pre-registered in the experiment config, paired by world, bootstrap CI over worlds. No automatic all-pairs testing. Multiplicity handled by naming ≤3 primary contrasts.
-- **Effort metrics:** success-by-budget curves; censored time-to-success; no conditional medians.
-- **Annotation:** two qualified reviewers examine *every* claimed out-of-library solution; blind to model, family, outcome; rubric with "unknown"; agreement reported.
-- **Models:** ≥2 frontier families for Claim A; ≥3 sizes × 3 seeds for Claim B.
+## 8. Statistics and reporting
+- Unit: world. Repeats averaged within world. Effort: success-by-budget curves and censored time-to-success; no conditional medians.
+- **One primary contrast** per experiment; secondaries Bonferroni-adjusted (implemented in `report.js`: primary at 95%, secondaries widened). Intervals: paired world bootstrap; degenerate cases (no discordant worlds) are reported as such, never as zero uncertainty. Per-condition population intervals are not reported.
+- World identity validated by (domain, seed, generator options, generator version); contrasts across different options declare the shared-draw assumption; missing and incomplete worlds are reported with the registered exclusion/retry policy; mixed or resumed batches are refused by the reporter.
+- Sample: ≥32–40 worlds per primary condition; power simulated from pilot estimates for the hierarchical design.
+- Annotation: two qualified reviewers on every claimed out-of-L0 solution; blind to model and outcome (family cannot be blinded when code reveals it — stated); control artifacts included.
 
-## 9. Pre-registration checklist (frozen per phase, before the confirmatory run)
-
-Generator versions and rejection rules; families and sealed transfer family; structural train/test splits; exact model revisions, prompts, sample exposure, memory mode, output cap, retries, timeout/truncation/parse policies; library membership, budgets, and the criterion for declaring a baseline inadequate; primary endpoints and ≤3 contrasts with effect sizes; clustering model and multiplicity; development vs sealed sets; annotation rubrics and blinding; hint eligibility, continuation vs restart, confirmation criteria; Phase 3 gates; Phase 4 corpus seed, grammar filter, and audit procedure.
+## 9. Pre-registration checklist — as v2, plus: L0 proof and grammar; witness-pair construction; portfolio challenge report; custodian commitment hash; exposure hashes; gate thresholds; estimand names for every intervention; primary/secondary contrast designation.
 
 ## 10. Order of work
+1. Phase 1 confirmatory k-curve.
+2. Phase 2 generator (homomorphism families, proof-based verification, identifiability audit, feasible challenge sampler); selftest proves conservation and bounds.
+3. Portfolio implemented; independent challenger; freeze. Leakage audit.
+4. Phase 2 development pilot; hints and post-mortems; scaffold frozen; custodian seals F-sealed.
+5. Phase 2 confirmatory grid, two frontier models.
+6. Phase 4 stages 1–3 (audit, diagnostic overfit, throughput benchmark) — no large training until these pass.
+7. Phase 4 matched pair at one small size; gates; then grid if warranted.
+8. Phase 3 if gated in.
+9. Write-up: Claim A and Claim B with the three propositions stated separately.
 
-1. Confirmatory k-curve (Phase 1), already runnable.
-2. Phase 2 generator for compositional families only, with exhaustive conservation verification and the quotient-aware negative sampler; selftest proves it. Seal F-sealed.
-3. Baseline library implemented and run on an audit corpus; leakage audit; library coverage table.
-4. Phase 2 pilot (3 worlds × 2 repeats × 4 families, one model), development only.
-5. Hint and post-mortem development on pilot worlds; scaffold frozen.
-6. Phase 2 confirmatory grid, two models, F-sealed transfer.
-7. Phase 4 corpus generator and grammar filter; in-toolkit control run; then out-of-toolkit runs and ablations.
-8. Phase 3 appendix if the gates pass.
-9. Write-up: Claim A and Claim B side by side.
-
-## 11. Questions for the second review
-
-1. Is "beyond the frozen library under budget" a claim a serious venue will accept as the primary result, and what library members are missing from §2?
-2. Is restricting Phase 2 to monoid-homomorphism invariants too narrow to be interesting, and is there a sound way to readmit order-sensitive families with exhaustive verification?
-3. Does the quotient-aware negative sampler (§3.4) close the coarse-invariant leak, or does it introduce a new fingerprint (e.g. negatives now have a characteristic structure)?
-4. Phase 4: is a 20–150M model trained on 1–5B synthetic tokens capable enough that an out-of-toolkit null is informative, and what in-toolkit control performance should be the gate? What corpus design choices most threaten the "absent from training" guarantee?
-5. Is the grammar filter + string audit sufficient to establish absence of the out-of-toolkit representation from the corpus, or can the representation be implicitly present (e.g. via worked solutions whose structure encodes a non-abelian product without naming it)?
-6. Which of the remaining process measures (§5) would you drop entirely as un-interpretable, and which would you keep?
-7. Rewrite the hostile referee paragraph for v2. What still stands?
+## 11. Questions for the third review (verification-focused)
+1. Re-verify the four repaired files against your v2 reproductions: shared host objects, hostile proxies, hint memory forwarding and interleaving, post-mortem full history and judge-based assessment, reporter batch/world validation and multiplicity. Try to break the sandbox again.
+2. Is the L0 definition in §4.2 and its two certificates correct and sufficient for the P-language claim as stated?
+3. Does §3.4 now specify a feasible sampler? Give a family where it still fails.
+4. Are the Phase 4 gates and the three controls sufficient to interpret a null as "this protocol, these checkpoints"? What is still missing?
+5. Would you act as custodian for F-sealed (receive a specification, return its hash)? If not, propose a procedure.
+6. Rewrite the hostile paragraph for v3.

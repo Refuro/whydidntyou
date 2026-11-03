@@ -21,7 +21,7 @@ Order-0, order-1 and PPM order-6 approaches cannot beat 3 bits/symbol (confirmed
 - P1: Most failed runs will contain KM1 but not KM2 — the model checks adjacent context and concludes "no structure".
 - P2: Across failed runs, the distinct-idea count will be <= 1/3 of the attempt count (frame lock + diversity collapse).
 - P3: The minimal content-free hint that flips failure will be one that says to look further back / measure more things, not one that says to drop an assumption.
-- P4: "Why didn't you try that" answers will mostly say `considered_dismissed`, but the log will show the lag idea never appeared (confabulation).
+- P4 (reworded 2026-11-03 after review 2; original wording retained in git history): post-revelation self-reports will mostly claim the idea was considered and dismissed; a judge with the full record will rate most such claims `unverifiable`, and `contradicted` only where the claim is a concrete behavioral statement refuted by the model's own code. Self-reports are descriptive; nothing causal is inferred from them.
 
 ## Confounds to watch
 - The model may know "context mixing / PPM" generically and brute-force lags as a stock move. If so, KM2 comes for free and this domain is too easy; raise k's range or make g position-dependent.

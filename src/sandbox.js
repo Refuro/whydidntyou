@@ -1,43 +1,60 @@
-// Verifier. Encoder and decoder run in SEPARATE vm contexts: the decoder receives only the
-// submitted program text, the counted bitstring, n and A. It cannot see the encoder's state
-// or the original data, so the only channel between them is the bits we count.
-// (node:vm is an isolation convenience, not a security boundary; this is a non-adversarial
-// setting with a regression test for the obvious side channel. Do not run untrusted code here.)
-// Contract the model must satisfy:
-//   encode(symbols: number[]) -> string of '0'/'1' characters
-//   decode(bits: string, n: number) -> number[]   (n = number of symbols)
+// Verifier. Encoder and decoder run in SEPARATE vm contexts, each with its own intrinsics
+// (nothing from the host is injected except the alphabet size and a no-op console), and every
+// value crossing the boundary is serialized INSIDE the timed context and parsed as plain data on
+// the host. The only channel from encoder to decoder is the counted bitstring.
+// node:vm is an isolation convenience, not a security boundary (Node docs say so). This harness is
+// for non-adversarial model outputs; regression tests cover the known side channels. Do not run
+// hostile code here without a process-level sandbox.
+//   encode(symbols: number[]) -> string of '0'/'1'
+//   decode(bits: string, n: number) -> number[]
 import vm from 'node:vm';
 
-function freshContext(A) {
-  return vm.createContext({ A, Math, Array, Number, String, Object, JSON, Map, Set, parseInt, parseFloat, isFinite, isNaN, console: { log() {} } });
+const PRELUDE = (code) => `
+"use strict";
+${code}
+;(function(){
+  if (typeof encode !== 'function' || typeof decode !== 'function') throw new Error('encode/decode not defined as functions');
+  globalThis.__encode = encode; globalThis.__decode = decode;
+})();`;
+
+function fresh(A) {
+  // createContext with a plain object: the context gets its OWN Math/Array/Object/JSON, not the host's.
+  return vm.createContext({ A, console: { log() {} } });
 }
-function load(code, ctx, timeoutMs) {
-  vm.runInContext(code + '\n;this.__encode=typeof encode==="function"?encode:null;this.__decode=typeof decode==="function"?decode:null;', ctx, { timeout: timeoutMs });
-}
+function runTimed(ctx, src, timeoutMs) { return vm.runInContext(src, ctx, { timeout: timeoutMs }); }
 
 export function evaluate(code, inst, { timeoutMs = 10000 } = {}) {
   const A = inst.A, data = inst.test;
-  // --- encode side
-  const encCtx = freshContext(A);
-  try { load(code, encCtx, timeoutMs); } catch (e) { return { ok: false, stage: 'load', error: String(e && e.message || e) }; }
-  if (!encCtx.__encode || !encCtx.__decode) return { ok: false, stage: 'load', error: 'encode/decode not defined as functions' };
+
+  // --- encoder context
+  const enc = fresh(A);
+  try { runTimed(enc, PRELUDE(code), timeoutMs); } catch (e) { return { ok: false, stage: 'load', error: msg(e) }; }
   let bits;
-  try { encCtx.__data = data.slice(); bits = vm.runInContext('__encode(__data)', encCtx, { timeout: timeoutMs }); }
-  catch (e) { return { ok: false, stage: 'encode', error: String(e && e.message || e) }; }
+  try {
+    enc.__dataJson = JSON.stringify(data);
+    // Coerce to string inside the context; the host receives a primitive string.
+    bits = runTimed(enc, 'String(__encode(JSON.parse(__dataJson)))', timeoutMs);
+  } catch (e) { return { ok: false, stage: 'encode', error: msg(e) }; }
   if (typeof bits !== 'string' || /[^01]/.test(bits)) return { ok: false, stage: 'encode', error: 'encode must return a string containing only 0 and 1' };
 
-  // --- decode side: a fresh context that has never seen the data or the encoder's variables
-  const decCtx = freshContext(A);
-  try { load(code, decCtx, timeoutMs); } catch (e) { return { ok: false, stage: 'load', error: String(e && e.message || e) }; }
+  // --- decoder context: fresh intrinsics, has never seen the data or the encoder's globals
+  const dec = fresh(A);
+  try { runTimed(dec, PRELUDE(code), timeoutMs); } catch (e) { return { ok: false, stage: 'load', error: msg(e) }; }
+  let backJson;
+  try {
+    dec.__bits = bits; dec.__n = data.length;
+    // Serialize inside the context: proxies/getters are exercised under the timeout, not on the host.
+    backJson = runTimed(dec, 'JSON.stringify(Array.from(__decode(__bits, __n), x => Number(x)))', timeoutMs);
+  } catch (e) { return { ok: false, stage: 'decode', error: msg(e) }; }
   let back;
-  try { decCtx.__bits = bits; decCtx.__n = data.length; back = vm.runInContext('__decode(__bits, __n)', decCtx, { timeout: timeoutMs }); }
-  catch (e) { return { ok: false, stage: 'decode', error: String(e && e.message || e) }; }
+  try { back = JSON.parse(backJson); } catch { return { ok: false, stage: 'decode', error: 'decode result was not serializable' }; }
   if (!Array.isArray(back) || back.length !== data.length) return { ok: false, stage: 'verify', error: `decode returned ${Array.isArray(back) ? back.length : typeof back} items, expected ${data.length}` };
   for (let i = 0; i < back.length; i++) if (back[i] !== data[i]) return { ok: false, stage: 'verify', error: `round trip mismatch at index ${i}: got ${back[i]}, expected ${data[i]}` };
 
   const bps = bits.length / data.length;
   return { ok: true, bits: bits.length, bitsPerSym: bps, baseline: inst.baselineBitsPerSym, oracle: inst.oracleBitsPerSym, ratioToBaseline: bps / inst.baselineBitsPerSym, ratioToOracle: bps / inst.oracleBitsPerSym };
 }
+function msg(e) { return String(e && e.message || e).slice(0, 500); }
 
 export const SUCCESS_RATIO = 0.6;
 export function isSuccess(r) { return r.ok && r.ratioToBaseline <= SUCCESS_RATIO; }

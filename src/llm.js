@@ -42,7 +42,8 @@ const canned = [
 ];
 function mockComplete({ system, messages }) {
   const lc = messages[messages.length - 1].content; const last = typeof lc === 'string' ? lc : lc.map(b => b.text || '').join('\n');
-  if (/why didn't you|why did you not/i.test(last)) return 'I assumed the dependency, if any, would be on the immediately preceding symbol, so I never tested other lags. I considered the symbols to be independent after seeing a flat histogram.';
+  if (/The experiment is over|why didn't you|why did you not/i.test(last)) return 'I assumed the dependency, if any, would be on the immediately preceding symbol, so I never tested other lags. I considered the symbols to be independent after seeing a flat histogram.';
+  if (/SELF-REPORT:/.test(last)) return '{"claim":"I never tested lags beyond 1","assessment":"unverifiable","evidence":"","categories":["never_considered"]}';
   if (/Classify/i.test(last)) return '{"category":"never_considered","evidence":"says it never tested other lags"}';
   if (/Assign each idea/i.test(last)) return JSON.stringify({ assignments: [] });
   const c = canned[mockCalls++ % canned.length];

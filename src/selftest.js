@@ -34,12 +34,30 @@ function encode(s){stash=s.slice();return '';}
 function decode(b,n){return stash||(typeof __data!=='undefined'?__data:[]);}`;
 
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 const sonnetLagBank = readFileSync('baselines/sonnet55-lagbank-2026-11-03.js', 'utf8');
+const SONNET_LAGBANK_SHA256 = '79d3ac622fc5bdabef0bf25ec49f457b4228655beaa81c9716aec1c8e528191a';
+
+// Review-2 reproductions: shared host object as a channel; decoder returning a hostile proxy.
+const sharedHostObject = `
+function encode(s){ Math.__reviewStash = s.slice(); return ''; }
+function decode(bits, n){ return Math.__reviewStash; }`;
+const hostileProxy = `
+function encode(s){ return ''; }
+function decode(bits, n){ return new Proxy([], { get(t, p){ if (p === 'length') throw new Error('boom'); return t[p]; } }); }`;
+const hostileWhile = `
+function encode(s){ return ''; }
+function decode(bits, n){ return new Proxy([], { get(t, p){ if (p === 'length') { for(;;){} } return t[p]; } }); }`;
 
 let failed = 0;
+for (const [label, code] of [['zero-bit stash', sideChannel], ['shared host object', sharedHostObject], ['throwing proxy', hostileProxy], ['looping proxy', hostileWhile]]) {
+  let r; try { r = evaluate(code, domains.laggedRule.make(1), { timeoutMs: 1500 }); } catch (e) { console.error(`FAIL: ${label}: evaluate() threw on the host: ${e.message}`); failed++; continue; }
+  if (r.ok) { console.error(`FAIL: ${label} passed the verifier`); failed++; } else console.log(`regression [${label}]: blocked (${r.stage}: ${r.error.slice(0, 60)})`);
+}
 {
-  const r = evaluate(sideChannel, domains.laggedRule.make(1));
-  if (r.ok) { console.error('FAIL: zero-bit side channel passed the verifier'); failed++; } else console.log(`side-channel regression: blocked (${r.stage}: ${r.error})`);
+  const h = createHash('sha256').update(sonnetLagBank).digest('hex');
+  console.log(`baseline sonnet55-lagbank sha256=${h.slice(0, 16)}…`);
+  if (SONNET_LAGBANK_SHA256 !== 'PINNED_AT_FIRST_RUN' && h !== SONNET_LAGBANK_SHA256) { console.error('FAIL: baseline program hash changed'); failed++; }
 }
 for (const [name, d] of Object.entries(domains)) {
   const inst = d.make(1);
@@ -49,7 +67,10 @@ for (const [name, d] of Object.entries(domains)) {
   });
   console.log(`\n[${name}] seed=1 secret=${JSON.stringify(inst.secret)} baseline=${inst.baselineBitsPerSym} oracle=${inst.oracleBitsPerSym.toFixed(3)}`);
   console.table(rows);
-  const ref = rows.find(r => r.label === 'reference'), o1 = rows.find(r => r.label === 'order1'), pp = rows.find(r => r.label === 'ppm-order6');
+  const ref = rows.find(r => r.label === 'reference'), o1 = rows.find(r => r.label === 'order1'), pp = rows.find(r => r.label === 'ppm-order6'), sl = rows.find(r => r.label === 'sonnet-lagbank(real win)');
+  if (sl.error) { console.error('FAIL: real winning program did not run: ' + sl.error); failed++; }
+  if (name === 'laggedRule' && !sl.success) { console.error('FAIL: real winning program should still succeed on laggedRule seed 1 (k=13)'); failed++; }
+  if (name === 'hiddenPeriod' && sl.success) { console.error('FAIL: real laggedRule winner should NOT succeed on hiddenPeriod (held-out wall too low)'); failed++; }
   if (!ref.success) { console.error('FAIL: reference solver should succeed'); failed++; }
   if (o1.success) { console.error('FAIL: order-1 solver should NOT succeed (wall not high enough)'); failed++; }
   if (pp.success) { console.error('FAIL: PPM order-6 solver should NOT succeed (wall not high enough)'); failed++; }

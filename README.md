@@ -20,7 +20,7 @@ Zero dependencies. Node 18+. Calls the Anthropic API directly with `fetch`.
 
 ## Why synthetic domains
 
-Removing a real breakthrough (calculus, Huffman coding) from a model's training data is not possible without also removing the capability that would let it derive the breakthrough. So instead of erasing a known answer, we mint an unknown one: a generative process with a hidden rule, where compression is impossible without discovering the rule. The specific answer is new by construction; the *kind* of structure may be familiar, which is why every result is reported against a frozen baseline library rather than as discovery. The oracle (the true process) gives an expected bits-per-symbol floor to measure against.
+Removing a real breakthrough (calculus, Huffman coding) from a model's training data is not possible without also removing the capability that would let it derive the breakthrough. So instead of erasing a known answer, we mint an unknown one: a generative process with a hidden rule, built so that compressing well requires modeling the structure that rule creates (checked against a registered set of known compressors in `selftest`, not asserted). The specific answer is new by construction; the *kind* of structure may be familiar, which is why every result is reported against a frozen baseline library rather than as discovery. The oracle (the true process) gives an expected bits-per-symbol floor to measure against.
 
 Two domain families ship:
 
@@ -38,7 +38,7 @@ The unit of analysis is the independently generated world (seed). Repeats within
 | measurement | plain-language meaning | where |
 |---|---|---|
 | **Discovery rate** | Out of N independent tries at this kind of problem, how often did the model crack it within the attempt budget? | `report.js` |
-| **Attempts to discovery** | When it did crack it, how many attempts did that take? (median) | `report.js` |
+| **Success by budget** | What share of trials were solved within 1, 3, 6, 9… attempts? Reported as a curve, never as a median over successes (which rewards models that only solve easy worlds). | `report.js` |
 | **Distinct ideas per 10 attempts** | How many *different* ideas were in those attempts, as opposed to variations on the same idea? 10 = every attempt new; 2 = it mostly repeated itself. | `report.js`, `analyze.js` |
 | **Key-move coverage** | Did the decisive idea (pre-registered in `prereg/<domain>.md`) appear anywhere in the trajectory, even in a failed form? | `analyze.js --judge` |
 | **Hint effect** | For each rung of a hint ladder, how much does success rate change compared with an equal-budget no-hint control? Selected on development worlds, confirmed on fresh ones. | `hints.js` |
@@ -82,7 +82,7 @@ Scaffolds (`scaffolds/*.md`) are appended to the system prompt via `--scaffold` 
 ## Protocol for a publishable run
 
 1. **Pre-register.** `prereg/<domain>.md` holds the key moves, success criterion, and falsifiable predictions. Write them before the first real run; never edit after, only append dated addenda.
-2. **Baseline.** Pilot config: 5 seeds × 2 repeats × 15 attempts per condition. Scale to ≥10 seeds × 3 repeats for the paper; CIs shrink with trials, not attempts.
+2. **Baseline.** Pilot configs are development only. For a confirmatory run, ≥32–40 independent worlds per primary condition (the world is the unit of analysis; repeats measure within-world noise and come second). One primary contrast; secondaries Bonferroni-adjusted.
 3. **Post-mortem every failed baseline trial.** Collect the categories and the "generic advice" sentences.
 4. **Hint ladder on a subset** (≥5 instances, ≥3 repeats per level). Report the distribution of minimal flip levels, not a single number.
 5. **Build one scaffold** from steps 3–4. Freeze it.
