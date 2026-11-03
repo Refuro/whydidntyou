@@ -1,2 +1,30 @@
-{ "name": "smoke", "attempts": 3, "seeds": [1, 2], "repeats": 1,
-  "conditions": [ { "id": "baseline", "domain": "laggedRule" }, { "id": "scaffold", "domain": "laggedRule", "scaffold": "scaffolds/reframe.md" } ] }
+{
+  "name": "smoke",
+  "attempts": 3,
+  "seeds": [
+    1,
+    2
+  ],
+  "repeats": 1,
+  "conditions": [
+    {
+      "id": "baseline",
+      "domain": "laggedRule"
+    },
+    {
+      "id": "scaffold",
+      "domain": "laggedRule",
+      "scaffold": "scaffolds/reframe.md"
+    }
+  ],
+  "generatorVersions": {
+    "laggedRule": "laggedRule-v2"
+  },
+  "missingPolicy": "exploratory",
+  "contrasts": [
+    [
+      "baseline",
+      "scaffold"
+    ]
+  ]
+}

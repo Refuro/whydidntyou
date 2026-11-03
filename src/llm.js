@@ -12,19 +12,21 @@ loadDotEnv();
 
 export const MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-5-5';
 export const MOCK = process.env.LLM_MOCK === '1';
-let lastUsage = null;
+let lastUsage = null; let lastModel = null;
+export function getLastModel() { return lastModel; }
 // token usage of the most recent real API call (null in mock mode)
 export function getLastUsage() { return lastUsage; }
 
 export const MAX_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS || 16000);
-export async function complete({ system, messages, maxTokens = MAX_TOKENS, temperature = 1 }) {
+export async function complete({ system, messages, maxTokens = MAX_TOKENS, temperature = 1, model = MODEL }) {
+  lastModel = model;
   if (MOCK) return mockComplete({ system, messages });
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) throw new Error('ANTHROPIC_API_KEY not set (put it in .env or the environment), or set LLM_MOCK=1');
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
-    body: JSON.stringify({ model: MODEL, max_tokens: maxTokens, temperature, system, messages }),
+    body: JSON.stringify({ model, max_tokens: maxTokens, temperature, system, messages }),
   });
   if (!res.ok) throw new Error(`API ${res.status}: ${await res.text()}`);
   const json = await res.json();
@@ -43,7 +45,7 @@ const canned = [
 function mockComplete({ system, messages }) {
   const lc = messages[messages.length - 1].content; const last = typeof lc === 'string' ? lc : lc.map(b => b.text || '').join('\n');
   if (/The experiment is over|why didn't you|why did you not/i.test(last)) return 'I assumed the dependency, if any, would be on the immediately preceding symbol, so I never tested other lags. I considered the symbols to be independent after seeing a flat histogram.';
-  if (/SELF-REPORT:/.test(last)) return '{"claim":"I never tested lags beyond 1","assessment":"unverifiable","evidence":"","categories":["never_considered"]}';
+  if (/SELF-REPORT:/.test(last)) return '{"claim":"I never tested other lags","assessment":"unverifiable","evidenceAttempt":null,"evidence":"","categories":["never_considered"]}';
   if (/Classify/i.test(last)) return '{"category":"never_considered","evidence":"says it never tested other lags"}';
   if (/Assign each idea/i.test(last)) return JSON.stringify({ assignments: [] });
   const c = canned[mockCalls++ % canned.length];

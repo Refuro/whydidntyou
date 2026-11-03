@@ -10,6 +10,7 @@
 // without ever identifying the lag (see prereg/laggedRule.md addendum 2026-11-03).
 import { mulberry32, randInt, derangement } from '../rng.js';
 
+export const VERSION = 'laggedRule-v2';
 export const name = 'laggedRule';
 
 export function make(seed, opts = {}) {
@@ -41,7 +42,7 @@ export function make(seed, opts = {}) {
   };
 
   return {
-    family: name, seed, A, n,
+    family: name, generatorVersion: VERSION, seed, A, n,
     secret: { k, g, p },
     sample, test,
     baselineBitsPerSym: Math.ceil(Math.log2(A)),

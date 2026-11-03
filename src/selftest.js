@@ -1,6 +1,6 @@
 // Checks the scorer with code that knows the secret, and with naive code that doesn't.
 import { domains } from './domains/index.js';
-import { evaluate, isSuccess } from './sandbox.js';
+import { evaluate, isSuccess, runSide } from './sandbox.js';
 
 const naive = `
 function encode(s){const W=Math.ceil(Math.log2(A));return s.map(x=>x.toString(2).padStart(W,'0')).join('');}
@@ -48,11 +48,84 @@ function decode(bits, n){ return new Proxy([], { get(t, p){ if (p === 'length') 
 const hostileWhile = `
 function encode(s){ return ''; }
 function decode(bits, n){ return new Proxy([], { get(t, p){ if (p === 'length') { for(;;){} } return t[p]; } }); }`;
+// Review-3 reproductions: host escape via Function constructor; hangs outside the vm timeout.
+const consoleEscape = `
+const host = console.log.constructor('return globalThis')();
+function encode(s){ host.__v3Review = s.slice(); return ''; }
+function decode(){ const s = host.__v3Review; delete host.__v3Review; return s; }`;
+const ctorEscape = `
+const host = globalThis.constructor.constructor('return globalThis')();
+function encode(s){ host.__v3b = s.slice(); return ''; }
+function decode(){ return host.__v3b; }`;
+const loopingErrorGetter = `
+function encode(s){ const e = {}; Object.defineProperty(e, 'message', { get(){ for(;;){} } }); throw e; }
+function decode(){ return []; }`;
+const jsonTrap = `
+JSON.stringify = function(){ return { toString(){ for(;;){} } }; };
+function encode(s){ return ''; }
+function decode(){ return []; }`;
+const promiseLoop = `
+function encode(s){ Promise.resolve().then(() => { for(;;){} }); throw new Error('x'); }
+function decode(){ return []; }`;
+const fileChannel = `
+let fs; try { fs = process.binding('fs'); } catch {}
+function encode(s){ try { require('fs').writeFileSync('/tmp/_ch', JSON.stringify(s)); } catch(e) {} return ''; }
+function decode(){ try { return JSON.parse(require('fs').readFileSync('/tmp/_ch','utf8')); } catch(e) { return []; } }`;
+const netGlobals = `
+function encode(s){ if (typeof fetch === 'function' || typeof WebSocket === 'function') throw new Error('network globals present'); return ''; }
+function decode(){ return []; }`;
+
+// Review-4 reproductions (these opened channels through Node's own doors; a WASM sandbox has no doors).
+const sqliteChannel = `
+const p = console.log.constructor('return process')();
+const { DatabaseSync } = p.getBuiltinModule('node:sqlite');
+const db = new DatabaseSync('review-v4-channel.sqlite');
+function encode(s){ db.exec('CREATE TABLE IF NOT EXISTS channel (id INTEGER PRIMARY KEY, payload TEXT)'); db.prepare('INSERT OR REPLACE INTO channel VALUES (1, ?)').run(JSON.stringify(s)); return ''; }
+function decode(){ return JSON.parse(db.prepare('SELECT payload FROM channel WHERE id=1').get().payload); }`;
+const killParent = `
+const p = console.log.constructor('return process')();
+function encode(){ p.kill(p.ppid, 'SIGTERM'); return ''; }
+function decode(){ return []; }`;
+const envRead = `
+function encode(s){ const p = globalThis.constructor.constructor('return this')(); return typeof p.process === 'undefined' ? '' : '1'; }
+function decode(){ return []; }`;
+const memoryBomb = `
+function encode(s){ const a = []; for(;;) a.push(new Array(1e6).fill(1)); }
+function decode(){ return []; }`;
+const clockProbe = `
+function encode(s){ const t0 = Date.now(); let x = 0; for (let i = 0; i < 2e6; i++) x += i; return Date.now() === t0 ? '' : '1'; }
+function decode(){ return []; }`;
 
 let failed = 0;
-for (const [label, code] of [['zero-bit stash', sideChannel], ['shared host object', sharedHostObject], ['throwing proxy', hostileProxy], ['looping proxy', hostileWhile]]) {
-  let r; try { r = evaluate(code, domains.laggedRule.make(1), { timeoutMs: 1500 }); } catch (e) { console.error(`FAIL: ${label}: evaluate() threw on the host: ${e.message}`); failed++; continue; }
-  if (r.ok) { console.error(`FAIL: ${label} passed the verifier`); failed++; } else console.log(`regression [${label}]: blocked (${r.stage}: ${r.error.slice(0, 60)})`);
+
+// POSITIVE CONTROL: a program that REPORTS the sandbox's capabilities as bits. This distinguishes
+// "capability denied" from "program failed for another reason": the probe must run and return
+// exactly the expected bit pattern. Order: process, require, console, fetch, Function-escape-to-process, clock-moves, fs-via-any-route.
+const capabilityProbe = `
+function has(f){ try { return f() ? '1' : '0'; } catch (e) { return '0'; } }
+function encode(s){
+  return has(() => typeof process !== 'undefined')
+       + has(() => typeof require !== 'undefined')
+       + has(() => typeof console !== 'undefined')
+       + has(() => typeof fetch !== 'undefined')
+       + has(() => typeof globalThis.constructor.constructor('return this')().process !== 'undefined')
+       + has(() => { const t = Date.now(); let x = 0; for (let i = 0; i < 1e6; i++) x += i; return Date.now() !== t; })
+       + has(() => typeof globalThis.constructor.constructor('return this')().getBuiltinModule !== 'undefined');
+}
+function decode(){ return []; }`;
+{
+  const probe = await runSide(capabilityProbe, 'encode', { A: 8, dataJson: '[1,2,3]' }, 5000);
+  const expected = '0000000';
+  if (!probe.ok) { console.error(`FAIL: capability probe did not run: ${probe.stage}: ${probe.error}`); failed++; }
+  else if (probe.bits !== expected) { console.error(`FAIL: capability probe reports ${probe.bits}, expected ${expected} (process,require,console,fetch,escape->process,clock,getBuiltinModule)`); failed++; }
+  else console.log(`capability probe: ${probe.bits} (all seven capabilities absent; positive control ran)`);
+}
+for (const [label, code] of [['zero-bit stash', sideChannel], ['shared host object', sharedHostObject], ['throwing proxy', hostileProxy], ['looping proxy', hostileWhile], ['console.log.constructor escape', consoleEscape], ['globalThis.constructor escape', ctorEscape], ['looping error getter', loopingErrorGetter], ['JSON.stringify trap', jsonTrap], ['promise loop', promiseLoop], ['file channel via require', fileChannel], ['network globals absent', netGlobals], ['sqlite channel (review 4)', sqliteChannel], ['kill parent (review 4)', killParent], ['env/process read', envRead], ['memory bomb', memoryBomb], ['clock frozen', clockProbe]]) {
+  let r; try { r = await evaluate(code, domains.laggedRule.make(1), { timeoutMs: 1500 }); } catch (e) { console.error(`FAIL: ${label}: evaluate() threw on the host: ${e.message}`); failed++; continue; }
+  if (r.ok) { console.error(`FAIL: ${label} passed the verifier`); failed++; continue; }
+  if (label === 'network globals absent' && !/decode returned 0 items/.test(r.error)) { console.error(`FAIL: ${label}: encode threw (${r.error}), so a network global WAS present`); failed++; continue; }
+  if (label === 'clock frozen' && !/decode returned 0 items/.test(r.error)) { console.error(`FAIL: ${label}: the clock advanced inside the sandbox`); failed++; continue; }
+  console.log(`regression [${label}]: blocked (${r.stage}: ${r.error.slice(0, 70)})`);
 }
 {
   const h = createHash('sha256').update(sonnetLagBank).digest('hex');
@@ -61,10 +134,10 @@ for (const [label, code] of [['zero-bit stash', sideChannel], ['shared host obje
 }
 for (const [name, d] of Object.entries(domains)) {
   const inst = d.make(1);
-  const rows = [['naive', naive], ['order1', order1], ['ppm-order6', ppm], ['sonnet-lagbank(real win)', sonnetLagBank], ['reference', d.referenceCode(inst)]].map(([label, code]) => {
-    const r = evaluate(code, inst);
-    return { label, ...(r.ok ? { bps: r.bitsPerSym.toFixed(3), ratio: r.ratioToBaseline.toFixed(3), success: isSuccess(r) } : { error: `${r.stage}: ${r.error}` }) };
-  });
+  const rows = []; for (const [label, code] of [['naive', naive], ['order1', order1], ['ppm-order6', ppm], ['sonnet-lagbank(real win)', sonnetLagBank], ['reference', d.referenceCode(inst)]]) {
+    const r = await evaluate(code, inst, { timeoutMs: 60000 });
+    rows.push({ label, ...(r.ok ? { bps: r.bitsPerSym.toFixed(3), ratio: r.ratioToBaseline.toFixed(3), success: isSuccess(r) } : { error: `${r.stage}: ${r.error}` }) });
+  }
   console.log(`\n[${name}] seed=1 secret=${JSON.stringify(inst.secret)} baseline=${inst.baselineBitsPerSym} oracle=${inst.oracleBitsPerSym.toFixed(3)}`);
   console.table(rows);
   const ref = rows.find(r => r.label === 'reference'), o1 = rows.find(r => r.label === 'order1'), pp = rows.find(r => r.label === 'ppm-order6'), sl = rows.find(r => r.label === 'sonnet-lagbank(real win)');

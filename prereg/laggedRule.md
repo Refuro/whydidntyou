@@ -76,3 +76,10 @@ Design: experiments/kcurve.json fixes k explicitly per condition (k in {12,16,20
 - P6 is reworded: the "look further" rung has a larger effect than other rungs vs the no-hint control on fresh worlds.
 - Unit of analysis is the world (seed). Contrasts are pre-registered in the experiment config and paired by world.
 - Interpretation rule stands: laggedRule measures search within a known technique. It is not evidence about invention.
+
+## Addendum 2026-11-03 (e) — after review 3
+
+Verifier replaced by process isolation (see docs/PLAN.md §12). Logs are schema 2 (archived prompts). The three exploratory runs
+in runs/exploratory/ predate schema 2 and the process-isolated verifier; their bit counts were produced by the shared-context
+verifier. The real winning program is re-scored by selftest under the new verifier and still scores 0.995 bps on seed 1, so those
+runs' scores stand as exploratory observations, but no confirmatory claim rests on them.

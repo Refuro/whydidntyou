@@ -1,0 +1,921 @@
+{
+  "node": "v22.23.4",
+  "platform": "win32",
+  "work": "C:\\Users\\Refur\\SonyTv\\whydidntyou-review\\v4-probes-LlvUzo",
+  "sourceHashes": {
+    "docs/PLAN.md": "e300417a6a5418b8d03262c57dd4c49fa37d5a613e38b94e06dfc54cb8c3798d",
+    "docs/REVIEW-PROMPT-v4.md": "9c7bb2b23b3a8517772156f6524f14ecf487b8d5fc27c9702ddaed7c02aa303d",
+    "src/analyze.js": "cea62c0810d323a81b77910bdb1aacf45e1942b7c09a087071089915f73a183c",
+    "src/experiment.js": "0b684acf25904f41b6cd226bfc8abb86d58e8a4887bc36bdd58359d44e170ede",
+    "src/hints.js": "ede87e2feda946fbeeebe63987c2b48b5611101015ecfc459e03f27ef31f8653",
+    "src/ideas.js": "3ad0dc15d5f019c512228bb5567a102d9a3ca1be778840e95bc7f3f32f8bd358",
+    "src/llm.js": "5a6fab7b76b27ea38dec0e8d256ba60762c066ccf7e7055aeca5f78b25a86f01",
+    "src/postmortem.js": "776716744e29a1245b210b03a57de1d2ff3d2257727994d8a030e3105927969c",
+    "src/prompt.js": "ddb0db5434b8947b906101f3eae36d8d83b40b6a5d2309aa35aa458ba64535e0",
+    "src/report.js": "4e880ad80d7cbdd1d4b4bed1fbee5f40f59f15fe00d3320b605e4bcc61c3663e",
+    "src/rng.js": "5b722e903533c1fa621f6163816c596d5c9e64d0330782a66a43f527af0165fe",
+    "src/run.js": "ebde73ffcdbc0879c37441c2e5b598ac51351978706b02f69c3ef0a506f59141",
+    "src/runner.js": "26b5b94ece9c81e82dfc1716c4d0f1e3843b1f50227c3ae57ea02b59a977cc75",
+    "src/sandbox.js": "485db1acb82a8698e5d59cadac9a858008cad79b8967a09f553f15eaf1081add",
+    "src/selftest.js": "969c40e0d045373084ae7646a35be39abdfb34aa8fe19856bedb196d2a21a60f",
+    "src/domains/hiddenPeriod.js": "683458b0c75e80f0276811f5c4fa41efc43c3b60f571d25fc05ef28476e06424",
+    "src/domains/index.js": "66ac507758c21c8714f478ccb92e74ba61f989ed9324d444ff02342bcff2a0c4",
+    "src/domains/laggedRule.js": "ea1989b1b7dede722550fe54573abb7ab8df2feb839b51e6e1ba03cef32bd303"
+  },
+  "cases": [
+    {
+      "id": "selftest/shipped",
+      "pass": true,
+      "exit": 0,
+      "stdout": "regression [zero-bit stash]: blocked (verify: decode returned 0 items, expected 4000)\nregression [shared host object]: blocked (decode: decode returned a non-array)\nregression [throwing proxy]: blocked (decode: boom)\nregression [looping proxy]: blocked (decode: Script execution timed out after 1500ms)\nregression [console.log.constructor escape]: blocked (decode: decode returned a non-array)\nregression [globalThis.constructor escape]: blocked (decode: decode returned a non-array)\nregression [looping error getter]: blocked (encode: [object Object])\nregression [JSON.stringify trap]: blocked (verify: decode returned 0 items, expected 4000)\nregression [promise loop]: blocked (encode: x)\nregression [file channel via require]: blocked (verify: decode returned 0 items, expected 4000)\nregression [network globals absent]: blocked (verify: decode returned 0 items, expected 4000)\nbaseline sonnet55-lagbank sha256=79d3ac622fc5bdab…\n\n[laggedRule] seed=1 secret={\"k\":13,\"g\":[1,4,3,0,7,2,5,6],\"p\":0.85} baseline=3 oracle=0.945\n┌─────────┬────────────────────────────┬─────────┬─────────┬─────────┐\n│ (index) │ label                      │ bps     │ ratio   │ success │\n├─────────┼────────────────────────────┼─────────┼─────────┼─────────┤\n│ 0       │ 'naive'                    │ '3.000' │ '1.000' │ false   │\n│ 1       │ 'order1'                   │ '3.660' │ '1.220' │ false   │\n│ 2       │ 'ppm-order6'               │ '3.611' │ '1.204' │ false   │\n│ 3       │ 'sonnet-lagbank(real win)' │ '0.995' │ '0.332' │ true    │\n│ 4       │ 'reference'                │ '1.404' │ '0.468' │ true    │\n└─────────┴────────────────────────────┴─────────┴─────────┴─────────┘\n\n[hiddenPeriod] seed=1 secret={\"L\":391,\"K\":[6,2,2,1,0,4,2,7,7,6,2,4,4,4,2,0,5,2,0,6,5,7,4,3,5,6,7,6,6,7,6,2,3,0,1,0,6,5,0,4,3,6,0,3,4,4,2,5,4,2,3,4,2,2,4,5,5,5,3,5,4,7,2,0,4,7,6,1,7,3,1,2,6,7,4,1,6,7,5,2,4,3,7,4,6,6,7,1,5,1,3,4,3,3,4,4,4,6,0,7,1,6,3,3,0,2,3,2,4,4,1,1,5,1,7,3,1,7,4,4,3,6,6,0,3,3,3,1,1,6,4,4,7,0,3,2,2,2,6,1,3,6,3,3,5,2,0,0,0,7,0,6,2,0,1,0,7,4,1,0,3,1,0,7,2,3,4,2,4,3,6,2,2,5,7,2,6,1,5,5,5,2,4,5,0,0,7,0,1,0,3,3,0,3,4,3,4,3,4,1,1,5,2,5,3,0,2,6,6,5,5,7,7,1,4,0,5,3,1,1,7,1,4,2,6,1,0,4,1,3,5,1,3,1,3,2,0,5,0,7,4,0,3,4,1,1,4,1,2,7,7,7,2,1,0,1,2,0,1,0,1,2,0,5,3,0,1,3,0,5,4,6,2,6,7,7,4,0,1,0,0,5,0,4,5,2,2,3,4,5,6,6,3,6,5,7,0,5,0,1,0,4,6,6,3,2,6,1,3,7,3,1,4,5,3,1,1,7,7,2,5,6,3,5,0,5,5,7,7,6,3,7,1,7,0,2,7,6,7,2,1,4,0,0,1,2,5,0,3,6,4,7,5,3,0,7,0,6,5,3,4,1,5,7,7,2,1,7,5,0,5,1,7,0,6,2,2,7,4,7,4,7,1,4,7,3,6,7,4,6,7],\"p\":0.8} baseline=3 oracle=1.449\n┌─────────┬────────────────────────────┬─────────┬─────────┬─────────┐\n│ (index) │ label                      │ bps     │ ratio   │ success │\n├─────────┼────────────────────────────┼─────────┼─────────┼─────────┤\n│ 0       │ 'naive'                    │ '3.000' │ '1.000' │ false   │\n│ 1       │ 'order1'                   │ '3.551' │ '1.184' │ false   │\n│ 2       │ 'ppm-order6'               │ '2.880' │ '0.960' │ false   │\n│ 3       │ 'sonnet-lagbank(real win)' │ '2.558' │ '0.853' │ false   │\n│ 4       │ 'reference'                │ '1.522' │ '0.507' │ true    │\n└─────────┴────────────────────────────┴─────────┴─────────┴─────────┘\n\nselftest OK\n",
+      "stderr": ""
+    },
+    {
+      "id": "legacy/harness-rerun",
+      "pass": null,
+      "exit": 1,
+      "stdoutFile": "C:\\Users\\Refur\\SonyTv\\whydidntyou-review\\v4-probes-LlvUzo\\legacy-rerun.log",
+      "stderr": "file:///C:/Users/Refur/LLMBreakthroughs/docs/archive/review-v3-checks/REVIEW-CHECKS-v3.mjs:122\r\nemit('postmortem/full-raw-history',responseText.includes('RAW_SENTINEL')&&responseText.includes('CODE_SENTINEL')&&judgeText.includes('RAW_SENTINEL')&&judgeText.includes('CODE_SENTINEL'),{responseHasRaw:responseText.includes('RAW_SENTINEL'),responseHasCode:responseText.includes('CODE_SENTINEL'),judgeHasRaw:judgeText.includes('RAW_SENTINEL'),judgeHasCode:judgeText.includes('CODE_SENTINEL'),responseHasVerifier:responseText.includes('VERIFIER_SENTINEL'),judgeHasVerifier:judgeText.includes('VERIFIER_SENTINEL'),responseHasOriginalScaffold:responseText.includes('ORIGINAL_SCAFFOLD_SENTINEL')});\r\n                                                ^\r\n\r\nTypeError: Cannot read properties of undefined (reading 'includes')\r\n    at file:///C:/Users/Refur/LLMBreakthroughs/docs/archive/review-v3-checks/REVIEW-CHECKS-v3.mjs:122:49\r\n\r\nNode.js v22.23.4\r\n",
+      "note": "Use schema-2 cases below for behavioral conclusions, not blanket legacy-schema refusals."
+    },
+    {
+      "id": "sandbox/original-stash",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "verify",
+          "error": "decode returned 0 items, expected 4000"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/shared-Math",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "decode returned a non-array"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/throwing-decoder-proxy",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "probe"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/looping-decoder-proxy",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "Script execution timed out after 200ms"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/console-host-channel",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "decode returned a non-array"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/context-constructor-channel",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "decode returned a non-array"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/thrown-message-getter",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "[object Object]"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/replaced-JSON-serializer",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "verify",
+          "error": "decode returned 0 items, expected 4000"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/promise-timeout",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "verify",
+          "error": "decode returned 0 items, expected 4000"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/thrown-tostringtag-getter",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "process killed after 1700ms (hard timeout)"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/error-descriptor-proxy",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "process killed after 1700ms (hard timeout)"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/terminate-evaluator-parent",
+      "pass": false,
+      "exit": 1,
+      "supervisorTimeout": false,
+      "observed": null,
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/inherited-environment",
+      "pass": false,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "CANARY:v4-inherited-test-marker"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/permission-fs-write",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "FS:ERR_ACCESS_DENIED"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/loopback-network-channel",
+      "pass": null,
+      "exit": 0,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "broker unavailable EACCES connect EACCES 127.0.0.1:57316"
+        },
+        "success": false
+      },
+      "control": "{\"code\":\"EACCES\",\"message\":\"connect EACCES 127.0.0.1:57316\"}",
+      "brokerError": "",
+      "note": "No isolation claim from connection failure; inspect the control."
+    },
+    {
+      "id": "report/paired-known",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-paired-known.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/forged-domain",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: domain hiddenPeriod contradicts config laggedRule",
+      "lines": []
+    },
+    {
+      "id": "report/forged-opts",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: options {\"k\":40} contradict config {}",
+      "lines": []
+    },
+    {
+      "id": "report/forged-memory",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: memory summary contradicts config",
+      "lines": []
+    },
+    {
+      "id": "report/forged-model",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial model wrong != batch model mock",
+      "lines": []
+    },
+    {
+      "id": "report/forged-batchId",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial batch other != file batch batch",
+      "lines": []
+    },
+    {
+      "id": "report/forged-repeat",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial repeat 10 outside [0,1)",
+      "lines": []
+    },
+    {
+      "id": "report/forged-seed",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial seed 999 not in config seeds",
+      "lines": []
+    },
+    {
+      "id": "report/forged-condition",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial condition \"unknown\" not in config",
+      "lines": []
+    },
+    {
+      "id": "report/mixed-generator-version",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: domain laggedRule has mixed generator versions laggedRule-v2,wrong",
+      "lines": []
+    },
+    {
+      "id": "report/missing-all-generator-versions",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-missing-all-generator-versions.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=undefined.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/uniform-wrong-generator-version",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-uniform-wrong-generator-version.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=forged.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/duplicate-trial",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: duplicate trial a|1|0",
+      "lines": []
+    },
+    {
+      "id": "report/mixed-meta",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: expected exactly one experiment-meta record, found 2",
+      "lines": []
+    },
+    {
+      "id": "report/unequal-repeats",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-unequal-repeats.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 2 repeats × 3 attempts = 8 trials. Present: 6. Missing: 2 — a/s2/r1, b/s2/r1.",
+        "| a | laggedRule | 2 / 2 | 1 | 50% / 50% | 1 |",
+        "| seed 1 | 2/2 | 0/2 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): -50 pp, 95% CI [-100, 0]; n=2 paired worlds; worlds with incomplete repeats: 2",
+        "| a | 13 | 2 | 50% / 50% |"
+      ]
+    },
+    {
+      "id": "report/both-arms-missing",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-both-arms-missing.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 2. Missing: 2 — a/s2/r0, b/s2/r0.",
+        "| a | laggedRule | 1 / 2 | 1 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 0/1 |",
+        "| seed 2 | — | — |",
+        "- PRIMARY: b − a: only 1 paired world(s); no interval computed",
+        "| a | 13 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/zero-differences",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-zero-differences.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 0/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, interval withheld: every world difference is identical (0); a percentile bootstrap is degenerate at n=2. No discordant worlds observed.; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/constant-nonzero",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-constant-nonzero.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 1/1 |",
+        "- PRIMARY: b − a (laggedRule): 100 pp, interval withheld: every world difference is identical (1); a percentile bootstrap is degenerate at n=2. All 2 worlds differ in the same direction by 1; direction is consistent but the magnitude's uncertainty is not estimable from this sample.; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/options-undeclared",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-options-undeclared.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a: REFUSED — generator options differ ({} vs {\"k\":40}) and the config does not declare {\"sharedWorld\": true}",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/options-declared",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-options-declared.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds; pairing relies on the declared shared-world coupling across options",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/options-string-false",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-options-string-false.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds; pairing relies on the declared shared-world coupling across options",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/negative-success",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-negative-success.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/success-beyond-budget",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-success-beyond-budget.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/string-success",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-string-success.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/duplicate-config-seeds",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-duplicate-config-seeds.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 3 worlds × 1 repeats × 3 attempts = 6 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 3 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 67 pp, 95% CI [0, 100]; n=3 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/wrong-attempt-budget",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-wrong-attempt-budget.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/missingness-policy-not-enforced",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-missingness-policy-not-enforced.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 2. Missing: 2 — a/s2/r0, b/s2/r0.",
+        "| a | laggedRule | 1 / 2 | 1 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 0/1 |",
+        "| seed 2 | — | — |",
+        "- PRIMARY: b − a: only 1 paired world(s); no interval computed",
+        "| a | 13 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/secondary-exploratory",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-secondary-exploratory.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 3 conditions × 2 worlds × 1 repeats × 3 attempts = 6 trials. Present: 6. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "| seed 1 | 0/1 | 1/1 | 1/1 |",
+        "| seed 2 | 0/1 | 0/1 | 0/1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "- exploratory: c − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "sandbox/sqlite-file-channel",
+      "pass": false,
+      "exit": 0,
+      "observed": {
+        "result": {
+          "ok": true,
+          "bits": 0,
+          "bitsPerSym": 0,
+          "baseline": 3,
+          "oracle": 0.9453294751321976,
+          "ratioToBaseline": 0,
+          "ratioToOracle": 0
+        },
+        "success": true
+      },
+      "stderr": "",
+      "databaseExists": true
+    },
+    {
+      "id": "sandbox/loopback-control",
+      "pass": null,
+      "stdout": "{\"code\":\"EACCES\",\"message\":\"connect EACCES 127.0.0.1:57316\"}",
+      "exit": 0
+    },
+    {
+      "id": "postmortem/judge-routing",
+      "pass": true,
+      "models": [
+        "review-solver",
+        "review-judge"
+      ],
+      "loggedModels": {
+        "solver": "review-solver",
+        "responder": "review-solver",
+        "judge": "review-judge"
+      }
+    },
+    {
+      "id": "postmortem/full-memory-archive",
+      "pass": true,
+      "responderSystem": "ARCHIVED_SYSTEM_SENTINEL\nARCHIVED_SCAFFOLD_SENTINEL",
+      "hasEarlyRaw": true,
+      "hasLastVerifier": true,
+      "judgeHasEarlyVerifier": true
+    },
+    {
+      "id": "postmortem/judge-complete-archive",
+      "pass": false,
+      "judgeHasOriginalSystem": false,
+      "judgeHasOriginalTask": false
+    },
+    {
+      "id": "postmortem/valid-quote",
+      "pass": true,
+      "assessment": "supported",
+      "problems": []
+    },
+    {
+      "id": "postmortem/fabricated-claim",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "claim is not a verbatim substring of the self-report"
+      ]
+    },
+    {
+      "id": "postmortem/fabricated-evidence",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "evidence is not a verbatim substring of attempt 1"
+      ]
+    },
+    {
+      "id": "postmortem/nonexistent-attempt",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "evidenceAttempt 999 does not exist"
+      ]
+    },
+    {
+      "id": "postmortem/invalid-category",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "categories invalid"
+      ]
+    },
+    {
+      "id": "postmortem/invalid-assessment",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "assessment not in enum"
+      ]
+    },
+    {
+      "id": "postmortem/summary-full-history",
+      "pass": false,
+      "hasEarlyRaw": false,
+      "hasSummary": true,
+      "stdout": [
+        "NOTE: this run used memory=summary; the responder now sees the full record, which the solver did not. Reported as such."
+      ]
+    },
+    {
+      "id": "postmortem/last-code-full-history",
+      "pass": false,
+      "hasEarlyRaw": false,
+      "hasSummary": true,
+      "stdout": [
+        "NOTE: this run used memory=last-code; the responder now sees the full record, which the solver did not. Reported as such."
+      ]
+    },
+    {
+      "id": "postmortem/changed-code-whitespace",
+      "pass": false,
+      "assessment": "supported",
+      "problems": [],
+      "original": "function f(){ return\ntrue; }",
+      "acceptedQuote": "return true;"
+    },
+    {
+      "id": "postmortem/unverifiable-evidence-validation",
+      "pass": false,
+      "assessment": "unverifiable",
+      "problems": [],
+      "storedEvidence": "FABRICATED_EVIDENCE"
+    },
+    {
+      "id": "postmortem/incomplete",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: expected exactly one meta and one end record (found 1, 0)"
+    },
+    {
+      "id": "postmortem/successful",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: run succeeded at attempt 2; post-mortems are for failed runs"
+    },
+    {
+      "id": "postmortem/wrong-secret",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: regenerated secret does not match the logged secret"
+    },
+    {
+      "id": "postmortem/wrong-version",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: generator version changed (old -> laggedRule-v2); the reveal would describe a different instance"
+    },
+    {
+      "id": "postmortem/missing-attempt",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: end record says 2 attempts, log has 1"
+    },
+    {
+      "id": "postmortem/duplicate-meta",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: expected exactly one meta and one end record (found 2, 1)"
+    },
+    {
+      "id": "postmortem/nonconsecutive",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: attempt records not consecutive at index 0"
+    },
+    {
+      "id": "postmortem/contradictory-success-log",
+      "pass": false,
+      "exit": 0,
+      "requests": 2
+    },
+    {
+      "id": "postmortem/record-order",
+      "pass": false,
+      "exit": 0,
+      "requests": 2
+    },
+    {
+      "id": "hints/fractional",
+      "pass": true,
+      "exit": 1,
+      "stderr": "attempts and repeats must be finite positive integers"
+    },
+    {
+      "id": "hints/infinite",
+      "pass": true,
+      "exit": 1,
+      "stderr": "attempts and repeats must be finite positive integers"
+    },
+    {
+      "id": "hints/invalid-category",
+      "pass": true,
+      "exit": 1,
+      "stderr": "ladder entry rung1 has category \"borderline\"; allowed: control, content-free, strategy, solution-family, unlabeled"
+    },
+    {
+      "id": "hints/provenance-and-forwarding",
+      "pass": true,
+      "exit": 0,
+      "batchId": "hints-laggedRule-s1-1793741933720",
+      "memory": [
+        "summary",
+        "summary",
+        "summary"
+      ],
+      "lags": [
+        36,
+        36,
+        36
+      ],
+      "summary": [
+        {
+          "id": "control-nohint",
+          "category": "control",
+          "hint": null,
+          "assigned": 1,
+          "completed": 1,
+          "failed": 0,
+          "wins": 0,
+          "n": 1
+        },
+        {
+          "id": "control-neutral",
+          "category": "control",
+          "hint": "Take your time and think carefully before each attempt.",
+          "assigned": 1,
+          "completed": 1,
+          "failed": 0,
+          "wins": 0,
+          "n": 1
+        },
+        {
+          "id": "rung1",
+          "category": "content-free",
+          "hint": "Think carefully.",
+          "assigned": 1,
+          "completed": 1,
+          "failed": 0,
+          "wins": 0,
+          "n": 1
+        }
+      ],
+      "partialKeys": [
+        "batchId",
+        "domain",
+        "seed",
+        "opts",
+        "memory",
+        "model",
+        "ladder",
+        "orderSeed",
+        "arm",
+        "hint",
+        "repeat",
+        "result",
+        "ts"
+      ]
+    },
+    {
+      "id": "experiment/refuse-existing-batch",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: runs/experiment-review-existing.jsonl already exists. Each batch gets its own file; rename the old one or change \"name\"."
+    },
+    {
+      "id": "formal/conflict-mass-and-sampling",
+      "pass": true,
+      "balancedConflictMass": 0.2,
+      "actualCeiling": 0.7,
+      "claimedEquality": 0.9,
+      "allDistinctClassProbability100ofMillion": 0.9950620676879723,
+      "distributionCeilingWithEachClassBalanced": 0.5,
+      "empiricalCeilingIfClassesDistinct": 1
+    },
+    {
+      "id": "run/exact-request-archive",
+      "pass": true,
+      "exit": 0,
+      "observed": {
+        "exactSystem": true,
+        "exactMessages": true,
+        "schema": 2,
+        "attempts": 2
+      },
+      "stderr": ""
+    },
+    {
+      "id": "hints/partial-failure-counts",
+      "pass": true,
+      "exit": 0,
+      "summary": [
+        {
+          "id": "control-nohint",
+          "assigned": 1,
+          "completed": 1,
+          "failed": 0
+        },
+        {
+          "id": "control-neutral",
+          "assigned": 1,
+          "completed": 1,
+          "failed": 0
+        },
+        {
+          "id": "rung1",
+          "assigned": 1,
+          "completed": 0,
+          "failed": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,458 @@
+{
+  "node": "v22.23.4",
+  "platform": "win32",
+  "work": "C:\\Users\\Refur\\SonyTv\\whydidntyou-review\\v3-probes-48lSlm",
+  "sourceHashes": {
+    "docs/PLAN.md": "776c38177f470d55c57109bf81b30d6b88392d7189cfad9a2ee95181ea1ed0e9",
+    "src/sandbox.js": "9dab774c0617559535a1cb8491ff0391c0cee136b8f11a465a22224d6e346ecd",
+    "src/report.js": "21558e06bd1eb74396f17641903d19fb454dd032797010616602844783180577",
+    "src/hints.js": "146926942f1906d27996d9d435d25d7e5172a51524228cd4a610ca20950a474b",
+    "src/postmortem.js": "065eeeb7e37523560f0f0cb6ebcb8f6efaa9eac6419ffa33dd51e460dd8558bf",
+    "src/llm.js": "8bdb81d7768d26189d830283f3784a6f63470d7c4798211690ad1ec914efbdab",
+    "src/prompt.js": "ddb0db5434b8947b906101f3eae36d8d83b40b6a5d2309aa35aa458ba64535e0"
+  },
+  "cases": [
+    {
+      "id": "sandbox/original-stash",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "verify",
+          "error": "decode returned 0 items, expected 4000"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/shared-Math",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "undefined is not iterable (cannot read property Symbol(Symbol.iterator))"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/throwing-decoder-proxy",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "probe"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/looping-decoder-proxy",
+      "pass": true,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "Script execution timed out after 200ms"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/console-host-channel",
+      "pass": false,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": true,
+          "bits": 0,
+          "bitsPerSym": 0,
+          "baseline": 3,
+          "oracle": 0.9453294751321976,
+          "ratioToBaseline": 0,
+          "ratioToOracle": 0
+        },
+        "success": true
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/context-constructor-channel",
+      "pass": false,
+      "exit": 0,
+      "supervisorTimeout": false,
+      "observed": {
+        "result": {
+          "ok": true,
+          "bits": 0,
+          "bitsPerSym": 0,
+          "baseline": 3,
+          "oracle": 0.9453294751321976,
+          "ratioToBaseline": 0,
+          "ratioToOracle": 0
+        },
+        "success": true
+      },
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/thrown-message-getter",
+      "pass": false,
+      "exit": null,
+      "supervisorTimeout": true,
+      "observed": null,
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/replaced-JSON-serializer",
+      "pass": false,
+      "exit": null,
+      "supervisorTimeout": true,
+      "observed": null,
+      "stderr": ""
+    },
+    {
+      "id": "sandbox/promise-timeout",
+      "pass": false,
+      "exit": null,
+      "supervisorTimeout": true,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "verify",
+          "error": "decode returned 0 items, expected 4000"
+        },
+        "success": false
+      },
+      "stderr": ""
+    },
+    {
+      "id": "report/paired-known",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-paired-known.jsonl. Conditions: 2. Configured: 2 worlds × 1 repeats × 3 attempts. Trials present: 4 of 4 expected.",
+        "| a | laggedRule | 2 | 2 | 0% | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95.0% CI [0, 100], n=2 worlds. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "report/mixed-batches",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: expected exactly one experiment-meta record, found 2. This file holds resumed or mixed batches; split it or add an explicit batch id.",
+      "lines": []
+    },
+    {
+      "id": "report/duplicate-trial",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: duplicate trial key a|1|0",
+      "lines": []
+    },
+    {
+      "id": "report/config-cross-domain",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-config-cross-domain.jsonl. Conditions: 2. Configured: 2 worlds × 1 repeats × 3 attempts. Trials present: 2 of 4 expected.",
+        "| a | laggedRule | 1 | 1 | 0% | 0% / 0% | 1 |",
+        "- b − a: REFUSED, different domains (laggedRule vs hiddenPeriod) cannot be paired by seed"
+      ]
+    },
+    {
+      "id": "report/row-domain-mismatch",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-row-domain-mismatch.jsonl. Conditions: 2. Configured: 2 worlds × 1 repeats × 3 attempts. Trials present: 4 of 4 expected.",
+        "| a | laggedRule | 2 | 2 | 0% | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 100 pp, 95.0% CI [100, 100], n=2 worlds. DEGENERATE: every world difference is 1; the percentile interval is not informative at n=2 — report as \"no discordant worlds observed\", not as zero uncertainty. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "report/row-options-mismatch",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-row-options-mismatch.jsonl. Conditions: 2. Configured: 2 worlds × 1 repeats × 3 attempts. Trials present: 4 of 4 expected.",
+        "| a | laggedRule | 2 | 2 | 0% | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 100 pp, 95.0% CI [100, 100], n=2 worlds. DEGENERATE: every world difference is 1; the percentile interval is not informative at n=2 — report as \"no discordant worlds observed\", not as zero uncertainty. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "report/generator-version-mismatch",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-generator-version-mismatch.jsonl. Conditions: 2. Configured: 2 worlds × 1 repeats × 3 attempts. Trials present: 4 of 4 expected.",
+        "| a | laggedRule | 2 | 2 | 0% | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 100 pp, 95.0% CI [100, 100], n=2 worlds. DEGENERATE: every world difference is 1; the percentile interval is not informative at n=2 — report as \"no discordant worlds observed\", not as zero uncertainty. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "report/undeclared-options-pairing",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-undeclared-options-pairing.jsonl. Conditions: 2. Configured: 2 worlds × 1 repeats × 3 attempts. Trials present: 4 of 4 expected.",
+        "| a | laggedRule | 2 | 2 | 0% | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 100 pp, 95.0% CI [100, 100], n=2 worlds. DEGENERATE: every world difference is 1; the percentile interval is not informative at n=2 — report as \"no discordant worlds observed\", not as zero uncertainty. Paired by: shared seed with DIFFERENT options ({} vs {\"k\":40}); pairing assumes the generator shares the world's other draws across these options."
+      ]
+    },
+    {
+      "id": "report/zero-differences",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-zero-differences.jsonl. Conditions: 2. Configured: 2 worlds × 1 repeats × 3 attempts. Trials present: 4 of 4 expected.",
+        "| a | laggedRule | 2 | 2 | 0% | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, 95.0% CI [0, 0], n=2 worlds. DEGENERATE: every world difference is 0; the percentile interval is not informative at n=2 — report as \"no discordant worlds observed\", not as zero uncertainty. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "report/constant-nonzero-differences",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-constant-nonzero-differences.jsonl. Conditions: 2. Configured: 2 worlds × 1 repeats × 3 attempts. Trials present: 4 of 4 expected.",
+        "| a | laggedRule | 2 | 2 | 0% | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 100 pp, 95.0% CI [100, 100], n=2 worlds. DEGENERATE: every world difference is 1; the percentile interval is not informative at n=2 — report as \"no discordant worlds observed\", not as zero uncertainty. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "report/unequal-repeats",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-unequal-repeats.jsonl. Conditions: 2. Configured: 2 worlds × 2 repeats × 3 attempts. Trials present: 6 of 8 expected.",
+        "| a | laggedRule | 2 | 1 | 50% | 67% / 67% | 1 |",
+        "- PRIMARY: b − a (laggedRule): -50 pp, 95.0% CI [-100, 0], n=2 worlds, 1 world(s) with incomplete repeats. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "report/both-arms-missing-world",
+      "pass": false,
+      "exit": 0,
+      "containsConfiguredMissingWorld": false,
+      "lines": [
+        "File: runs/experiment-both-arms-missing-world.jsonl. Conditions: 2. Configured: 2 worlds × 1 repeats × 3 attempts. Trials present: 2 of 4 expected.",
+        "- PRIMARY: b − a (laggedRule): 0 pp, 95.0% CI [0, 0], n=1 worlds. DEGENERATE: every world difference is 0; the percentile interval is not informative at n=1 — report as \"no discordant worlds observed\", not as zero uncertainty. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "report/invalid-repeat-indices",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "lines": [
+        "File: runs/experiment-invalid-repeat-indices.jsonl. Conditions: 2. Configured: 2 worlds × 2 repeats × 3 attempts. Trials present: 4 of 8 expected.",
+        "| a | laggedRule | 1 | 1 | 100% | 100% / 100% | 1 |",
+        "- PRIMARY: b − a (laggedRule): -100 pp, 95.0% CI [-100, -100], n=1 worlds. DEGENERATE: every world difference is -1; the percentile interval is not informative at n=1 — report as \"no discordant worlds observed\", not as zero uncertainty. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "hints/options-and-coverage",
+      "pass": true,
+      "exit": 0,
+      "memory": [
+        "summary",
+        "summary",
+        "summary",
+        "summary",
+        "summary",
+        "summary",
+        "summary",
+        "summary"
+      ],
+      "lags": [
+        36,
+        36,
+        36,
+        36,
+        36,
+        36,
+        36,
+        36
+      ],
+      "executionOrder": [
+        "rung2#1",
+        "control-neutral#1",
+        "rung1#0",
+        "control-nohint#0",
+        "control-nohint#1",
+        "rung2#0",
+        "rung1#1",
+        "control-neutral#0"
+      ],
+      "categories": [
+        "control",
+        "control",
+        "strategy",
+        "content-free"
+      ]
+    },
+    {
+      "id": "hints/order-seed",
+      "pass": true,
+      "executionOrder": [
+        "rung1#1",
+        "rung2#0",
+        "control-neutral#1",
+        "rung1#0",
+        "control-nohint#1",
+        "rung2#1",
+        "control-nohint#0",
+        "control-neutral#0"
+      ]
+    },
+    {
+      "id": "hints/fractional-repeats",
+      "pass": false,
+      "exit": 0,
+      "declaredRepeats": 1.5,
+      "actualJobs": 8,
+      "actualPerArm": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "id": "postmortem/incomplete",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: run is incomplete (no end record)"
+    },
+    {
+      "id": "postmortem/successful",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: run succeeded at attempt 1; post-mortems are for failed runs"
+    },
+    {
+      "id": "postmortem/wrong-secret",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: regenerated instance does not match the logged secret (generator changed since this run)"
+    },
+    {
+      "id": "postmortem/full-raw-history",
+      "pass": true,
+      "responseHasRaw": true,
+      "responseHasCode": true,
+      "judgeHasRaw": true,
+      "judgeHasCode": true,
+      "responseHasVerifier": true,
+      "judgeHasVerifier": false,
+      "responseHasOriginalScaffold": false
+    },
+    {
+      "id": "postmortem/judge-model-forwarding",
+      "pass": false,
+      "requested": "review-judge",
+      "actualRequests": [
+        "review-responder",
+        "review-responder"
+      ],
+      "loggedJudge": "review-judge"
+    },
+    {
+      "id": "postmortem/quote-and-schema-validation",
+      "pass": false,
+      "accepted": {
+        "claim": "FABRICATED_CLAIM",
+        "assessment": "contradicted",
+        "evidence": "attempt 999: FABRICATED_EVIDENCE",
+        "categories": [
+          "invalid-category"
+        ]
+      },
+      "judgeError": null
+    },
+    {
+      "id": "postmortem/end-count-validation",
+      "pass": false,
+      "exit": 0,
+      "requests": 2
+    },
+    {
+      "id": "report/secondary-family-multiplicity",
+      "pass": true,
+      "exit": 0,
+      "lines": [
+        "- PRIMARY: b − a (laggedRule): 25 pp, 95.0% CI [0, 75], n=4 worlds. Paired by: identical generator options.",
+        "- secondary: c − a (laggedRule): 50 pp, 97.5% CI [0, 100], n=4 worlds. Paired by: identical generator options.",
+        "- secondary: d − a (laggedRule): 75 pp, 97.5% CI [25, 100], n=4 worlds. Paired by: identical generator options."
+      ]
+    },
+    {
+      "id": "hints/partial-api-failure",
+      "pass": true,
+      "exit": 0,
+      "jobs": 4,
+      "errors": 1,
+      "partialRecordsAdded": 4,
+      "summary": [
+        {
+          "id": "control-nohint",
+          "n": 1
+        },
+        {
+          "id": "control-neutral",
+          "n": 1
+        },
+        {
+          "id": "rung1",
+          "n": 1
+        },
+        {
+          "id": "rung2",
+          "n": 0
+        }
+      ]
+    },
+    {
+      "id": "formal/histogram-conflict-ceilings",
+      "pass": true,
+      "withinPairHistogramEqualityOnly": 1,
+      "matchedPairFeatureConflict": 0.5,
+      "balancedConflictMassPointOneCeiling": 0.95
+    },
+    {
+      "id": "selftest/shipped-regressions-and-real-winner",
+      "pass": true,
+      "exit": 0,
+      "stdout": "regression [zero-bit stash]: blocked (verify: decode returned 0 items, expected 4000)\nregression [shared host object]: blocked (decode: undefined is not iterable (cannot read property Symbol(Symbo)\nregression [throwing proxy]: blocked (decode: boom)\nregression [looping proxy]: blocked (decode: Script execution timed out after 1500ms)\nbaseline sonnet55-lagbank sha256=79d3ac622fc5bdab…\n\n[laggedRule] seed=1 secret={\"k\":13,\"g\":[1,4,3,0,7,2,5,6],\"p\":0.85} baseline=3 oracle=0.945\n┌─────────┬────────────────────────────┬─────────┬─────────┬─────────┐\n│ (index) │ label                      │ bps     │ ratio   │ success │\n├─────────┼────────────────────────────┼─────────┼─────────┼─────────┤\n│ 0       │ 'naive'                    │ '3.000' │ '1.000' │ false   │\n│ 1       │ 'order1'                   │ '3.660' │ '1.220' │ false   │\n│ 2       │ 'ppm-order6'               │ '3.611' │ '1.204' │ false   │\n│ 3       │ 'sonnet-lagbank(real win)' │ '0.995' │ '0.332' │ true    │\n│ 4       │ 'reference'                │ '1.404' │ '0.468' │ true    │\n└─────────┴────────────────────────────┴─────────┴─────────┴─────────┘\n\n[hiddenPeriod] seed=1 secret={\"L\":391,\"K\":[6,2,2,1,0,4,2,7,7,6,2,4,4,4,2,0,5,2,0,6,5,7,4,3,5,6,7,6,6,7,6,2,3,0,1,0,6,5,0,4,3,6,0,3,4,4,2,5,4,2,3,4,2,2,4,5,5,5,3,5,4,7,2,0,4,7,6,1,7,3,1,2,6,7,4,1,6,7,5,2,4,3,7,4,6,6,7,1,5,1,3,4,3,3,4,4,4,6,0,7,1,6,3,3,0,2,3,2,4,4,1,1,5,1,7,3,1,7,4,4,3,6,6,0,3,3,3,1,1,6,4,4,7,0,3,2,2,2,6,1,3,6,3,3,5,2,0,0,0,7,0,6,2,0,1,0,7,4,1,0,3,1,0,7,2,3,4,2,4,3,6,2,2,5,7,2,6,1,5,5,5,2,4,5,0,0,7,0,1,0,3,3,0,3,4,3,4,3,4,1,1,5,2,5,3,0,2,6,6,5,5,7,7,1,4,0,5,3,1,1,7,1,4,2,6,1,0,4,1,3,5,1,3,1,3,2,0,5,0,7,4,0,3,4,1,1,4,1,2,7,7,7,2,1,0,1,2,0,1,0,1,2,0,5,3,0,1,3,0,5,4,6,2,6,7,7,4,0,1,0,0,5,0,4,5,2,2,3,4,5,6,6,3,6,5,7,0,5,0,1,0,4,6,6,3,2,6,1,3,7,3,1,4,5,3,1,1,7,7,2,5,6,3,5,0,5,5,7,7,6,3,7,1,7,0,2,7,6,7,2,1,4,0,0,1,2,5,0,3,6,4,7,5,3,0,7,0,6,5,3,4,1,5,7,7,2,1,7,5,0,5,1,7,0,6,2,2,7,4,7,4,7,1,4,7,3,6,7,4,6,7],\"p\":0.8} baseline=3 oracle=1.449\n┌─────────┬────────────────────────────┬─────────┬─────────┬─────────┐\n│ (index) │ label                      │ bps     │ ratio   │ success │\n├─────────┼────────────────────────────┼─────────┼─────────┼─────────┤\n│ 0       │ 'naive'                    │ '3.000' │ '1.000' │ false   │\n│ 1       │ 'order1'                   │ '3.551' │ '1.184' │ false   │\n│ 2       │ 'ppm-order6'               │ '2.880' │ '0.960' │ false   │\n│ 3       │ 'sonnet-lagbank(real win)' │ '2.558' │ '0.853' │ false   │\n│ 4       │ 'reference'                │ '1.522' │ '0.507' │ true    │\n└─────────┴────────────────────────────┴─────────┴─────────┴─────────┘\n\nselftest OK\n",
+      "stderr": ""
+    }
+  ]
+}

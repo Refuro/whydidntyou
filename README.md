@@ -16,7 +16,7 @@ What the harness can and cannot claim is stated in `docs/PLAN.md` §0–1. In sh
 
 The first domains are compression problems on purpose. That is where the question started, and compression has the cleanest possible verifier: discover the structure or you cannot shrink the data, and the oracle tells you exactly how far you are from the wall.
 
-Zero dependencies. Node 18+. Calls the Anthropic API directly with `fetch`.
+One dependency (`quickjs-emscripten`, the WASM-hosted interpreter that runs submitted programs). Node 20+. Calls the Anthropic API directly with `fetch`.
 
 ## Why synthetic domains
 
@@ -51,8 +51,9 @@ The transfer gain is the headline, with one caveat the reviewers made explicit: 
 ## Setup
 
 ```bash
+npm install
 cp .env.example .env     # add your ANTHROPIC_API_KEY
-npm run selftest         # verifies the scorer and the wall; no API needed
+npm run selftest         # verifies the sandbox, the scorer and the wall; no API needed
 ```
 
 To exercise the whole pipeline without spending anything: `LLM_MOCK=1` before any command (canned responses).

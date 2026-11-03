@@ -6,6 +6,7 @@
 // memorize them. v2 uses L in [200,400], p=0.8: PPM scores ~0.9, reference ~0.5 (see prereg addendum).
 import { mulberry32, randInt } from '../rng.js';
 
+export const VERSION = 'hiddenPeriod-v2';
 export const name = 'hiddenPeriod';
 
 export function make(seed, opts = {}) {
@@ -28,7 +29,7 @@ export function make(seed, opts = {}) {
   };
 
   return {
-    family: name, seed, A, n,
+    family: name, generatorVersion: VERSION, seed, A, n,
     secret: { L, K, p },
     sample, test,
     baselineBitsPerSym: Math.ceil(Math.log2(A)),
