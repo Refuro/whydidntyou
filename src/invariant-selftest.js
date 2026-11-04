@@ -11,7 +11,7 @@ export async function invariantSelftest({seeds=[1,2],quiet=false}={}){
     const scores={};
     for(const [name,code]of [['reference',referenceCode(inst)],['countNullspace',countNullspaceCode(publicWorld)],['bfs',bfsCode(publicWorld)]]){
       const pairs=name==='bfs'?inst.calibrationPairs.filter(p=>p.scale==='large'):inst.calibrationPairs;
-      const result=await evaluate(code,inst,{evaluationPairs:pairs,purpose:'wall-selftest',timeoutMs:WALL_BUDGETS[name].totalSandboxMs});
+      const result=await evaluate(code,inst,{evaluationPairs:pairs,purpose:'wall-selftest',outputCondition:name==='reference'?'quantity-requested':'unrestricted',timeoutMs:WALL_BUDGETS[name].totalSandboxMs});
       if(!result.ok)throw new Error(name+' did not return valid predictions: '+JSON.stringify({seed,opts,result}));
       scores[name]={accuracy:result.accuracy,success:isSuccess(result),smallAccuracy:result.smallAccuracy,largeAccuracy:result.largeAccuracy};
       if(name==='reference'&&(!isSuccess(result)||!result.quantity.conservation.proved||!result.quantity.partitionsAgree))throw new Error('reference/proof wall failure');

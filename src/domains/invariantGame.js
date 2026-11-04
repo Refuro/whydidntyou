@@ -4,11 +4,14 @@ import {mulberry32,randInt,shuffle} from '../rng.js';
 import {algebraFor,validateMonoid,fold,generatedSubmonoid,words,representationSignature} from '../algebra.js';
 import {reachabilityContract} from '../verifiers/reachability.js';
 
-export const VERSION='invariantGame-v1-b2';
+export const VERSION='invariantGame-v1-b2.1';
 export const name='invariantGame';
 export const REGISTRATION=Object.freeze({alphabetMin:2,alphabetMax:4,maxRuleLength:3,trainingPairs:200,calibrationPairs:80,representationClass:'all symbol images into the same ambient monoid; kernels equivalent up to rooted transition-graph isomorphism',maxAssignments:1_000_000,calibration:'40 small (length 4–10), 40 large (length 96–128); balanced labels; half the noncommutative negatives are order witnesses',sealed:'not built until B3'});
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
 export class ConstructionDefect extends Error{constructor(seed,reason){super(`seed ${seed}: ${reason}`);this.name='ConstructionDefect';this.seed=seed;this.reason=reason;}}
+export function assertIdentifiable(seed,audit){
+  if(!audit.recoverable){const defect=new ConstructionDefect(seed,'non-identifiable');defect.audit=audit;throw defect;}
+}
 export function applications(state,rules,maxLength=Infinity){
   const out=[];
   for(const rule of rules)for(const direction of [1,-1]){
@@ -94,13 +97,14 @@ export function make(seed,opts={}){
   const trainingPairs=pairs(secret,alphabet,rules,mulberry32(seed^0x517cc1b7),200,false,witness,seed);
   const calibrationPairs=[...pairs(secret,alphabet,rules,mulberry32(seed^0x137a92ef),40,false,witness,seed),...pairs(secret,alphabet,rules,mulberry32(seed^0xa124b679),40,true,witness,seed)];
   const audit=identifiabilityAudit(secret,alphabet,rules,trainingPairs);
+  assertIdentifiable(seed,audit);
   const rulesText=rules.map((r,i)=>`${i+1}. ${r.u||'ε'} ↔ ${r.v||'ε'}`).join('\n');
   const content={family:classifiedFamily,requestedFamily:family,generatorVersion:VERSION,A,alphabet,rules,trainingPairs,calibrationPairs,secret};
   return {...content,seed,contract:reachabilityContract,rulesText,sealedPairs:null,sealedStatus:'pending B3',quantity:state=>fold(state,secret),conservationProof,submonoid,identifiabilityAudit:audit,noncommutativityWitness:witness,worldDigest:hash(content),instanceDigest:hash({seed,content}),description:'Decide whether a and b are connected by the exposed reversible rewrites, on the stated promise distribution.'};
 }
-export function referenceCode(inst,{functionalQuantity=false}={}){
+export function referenceCode(inst,{functionalQuantity=false,includeQuantity=true}={}){
   const spec=JSON.stringify({table:inst.secret.table,identity:inst.secret.identity,images:inst.secret.images});
-  return `const spec=${spec}; function product(s){let v=spec.identity;for(const a of s)v=spec.table[v][spec.images[a]];return v;} function reachable(a,b){return product(a)===product(b);}`+(functionalQuantity?'function quantity(s){return product(s);}':'const quantityFold=spec;');
+  return `const spec=${spec}; function product(s){let v=spec.identity;for(const a of s)v=spec.table[v][spec.images[a]];return v;} function reachable(a,b){return product(a)===product(b);}`+(includeQuantity?(functionalQuantity?'function quantity(s){return product(s);}':'const quantityFold=spec;'):'');
 }
 // The only view intended for solver prompts/constructors. Proof certificates, secret
 // invariant values, decoy annotations, calibration data and administrative IDs stay out.
