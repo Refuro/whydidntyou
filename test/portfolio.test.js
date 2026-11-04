@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {make as historical,publicEvidence} from '../src/domains/invariantGame-b2.js';
 import {make} from '../src/domains/invariantGame.js';
-import {MEMBERS,REGISTRATION,fitPublic,scorePrepared,runPortfolio} from '../src/portfolio/run.js';
+import {MEMBERS,REGISTRATION,fitPublic,scorePrepared,runPortfolio} from '../src/portfolio/run-b4.js';
 import {rewriteSearch,SEARCH_CURVES} from '../src/portfolio/bfs.js';
 const variants=[{family:'F-count'},{family:'F-abelian'},...['S3','Q8','D4','A4'].map(algebra=>({family:'F-nonabelian',algebra})),...[3,4].map(points=>({family:'F-monoid',points}))];
 

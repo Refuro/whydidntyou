@@ -3,14 +3,15 @@ import {properCongruences} from '../invariant-features.js';
 export class BudgetExceeded extends Error{}
 export function counter(limit){
   const counts={operations:0,assignments:0,ruleChecks:0,exampleChecks:0,transitions:0,counterexamples:0};
-  return {counts,tick:(kind,n=1)=>{if(counts.operations+n>limit)throw new BudgetExceeded('primitive-operation budget exhausted');counts[kind]=(counts[kind]??0)+n;counts.operations+=n;}};
+  return {counts,tick:(kind,n=1)=>{if(counts.operations+n>limit)throw new BudgetExceeded('member-specific search budget exhausted');counts[kind]=(counts[kind]??0)+n;counts.operations+=n;}};
 }
 const cyclic=m=>({name:'C'+m,identity:0,table:Array.from({length:m},(_,a)=>Array.from({length:m},(_,b)=>(a+b)%m)),generators:[1]});
-export function templates({monoids=false,quotients=false}={}){
+export function templates({monoids=false,quotients=false,meter}={}){
   const full=[...[2,3,4,5,6].map(cyclic),algebraFor('F-count'),algebraFor('F-abelian'),...['S3','Q8','D4','A4'].map(algebra=>algebraFor('F-nonabelian',{algebra})),...(monoids?[3,4].map(points=>algebraFor('F-monoid',{points})):[])];
+  meter?.tick('catalogueTableCells',full.reduce((n,s)=>n+s.table.length**2,0));
   if(!quotients)return full;
   const out=[],seen=new Set();
-  for(const spec of full)for(const q of properCongruences(spec)){
+  for(const spec of full)for(const q of properCongruences(spec,meter)){
     const representatives=[...new Set(q)].map(c=>q.indexOf(c)),table=representatives.map(a=>representatives.map(b=>q[spec.table[a][b]])),key=JSON.stringify(table);
     if(!seen.has(key)){seen.add(key);out.push({name:spec.name+'/quotient-'+out.length,table,identity:q[spec.identity],generators:[...new Set(spec.generators.map(g=>q[g]))]});}
   }
@@ -39,7 +40,7 @@ export function imageSearch(view,{catalog=templates(),csp=false,examples=view.tr
   return null;
 }
 export function positionalSearch(view,meter){
-  for(const table of templates({monoids:true})){
+  for(const table of templates({monoids:true,meter})){
     const generators=table.points&&view.alphabet.length===2?[table.generators[0],table.generators[2]]:table.generators,spec={table:table.table,identity:table.identity,images:{},name:table.name};
     function visit(i){
       if(i===view.alphabet.length){meter.tick('assignments');return fits(spec,view,view.trainingPairs,meter)?structuredClone(spec):null;}
@@ -50,4 +51,4 @@ export function positionalSearch(view,meter){
   }
   return null;
 }
-export const foldModel=spec=>({predict:(a,b)=>fold(a,spec)===fold(b,spec),spec});
+export const foldModel=spec=>({state:{kind:'fold',spec},predict:(a,b)=>fold(a,spec)===fold(b,spec),spec});

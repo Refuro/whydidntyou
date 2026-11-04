@@ -10,6 +10,7 @@ import {checkWorld} from '../check-invariant-world.js';
 import {readRecords} from '../durable.js';
 import {digest,sourceIdentity} from '../source-identity.js';
 
+export const EXPORT_VERSION='sealed-matched-padded-v2-public-v2';
 export const REPO_ROOT=fileURLToPath(new URL('../../',import.meta.url));
 export const DEFAULT_HOST_ROOT=join(REPO_ROOT,'runs','challenge-host');
 const hex64=x=>typeof x==='string'&&/^[0-9a-f]{64}$/.test(x);
@@ -17,7 +18,8 @@ const keys=(x,expected,where)=>{
   if(!x||typeof x!=='object'||Array.isArray(x)||Object.keys(x).sort().join('|')!==expected.toSorted().join('|'))throw new Error(where+': unexpected or missing public fields');
 };
 export function validatePublicWorld(world){
-  keys(world,['alphabet','rules','rulesText','trainingPairs','sealedPairs','worldDigest'],'world');
+  keys(world,['alphabet','rules','rulesText','trainingPairs','worldDigest','exportVersion'],'world');
+  if(world.exportVersion!==EXPORT_VERSION)throw new Error('historical or unknown export version');
   const a=world.alphabet;
   if(!Array.isArray(a)||a.length<2||a.length>4||new Set(a).size!==a.length||a.some(s=>typeof s!=='string'||!/^[a-z]$/.test(s)))throw new Error('invalid public alphabet');
   const word=s=>typeof s==='string'&&[...s].every(c=>a.includes(c));
@@ -25,8 +27,8 @@ export function validatePublicWorld(world){
   for(const r of world.rules){keys(r,['u','v'],'rule');if(!word(r.u)||!word(r.v)||r.u.length>3||r.v.length>3||r.u===r.v)throw new Error('invalid public rule words');}
   const text=world.rules.map((r,i)=>`${i+1}. ${r.u||'ε'} ↔ ${r.v||'ε'}`).join('\n');
   if(world.rulesText!==text)throw new Error('rulesText differs from public rules');
-  if(!Array.isArray(world.trainingPairs)||world.trainingPairs.length!==200||!Array.isArray(world.sealedPairs)||world.sealedPairs.length!==200)throw new Error('public world must contain 200 training and 200 sealed pairs');
-  for(const [pairs,labeled]of [[world.trainingPairs,true],[world.sealedPairs,false]])for(const p of pairs){
+  if(!Array.isArray(world.trainingPairs)||world.trainingPairs.length!==200)throw new Error('public world must contain 200 training pairs');
+  for(const [pairs,labeled]of [[world.trainingPairs,true]])for(const p of pairs){
     keys(p,labeled?['a','b','label']:['a','b'],labeled?'training pair':'sealed pair');
     if(!word(p.a)||!word(p.b)||labeled&&typeof p.label!=='boolean')throw new Error('invalid public pair');
   }
@@ -34,8 +36,8 @@ export function validatePublicWorld(world){
   return world;
 }
 export function publicWorld(inst){
-  // Deliberately project sealed pairs; labels, scale and certificates stay with the host.
-  const world={...publicEvidence(inst),sealedPairs:inst.sealedPairs.map(({a,b})=>({a,b})),worldDigest:inst.worldDigest};
+  // No sealed rows are exported. Fit sees publicEvidence only, without this envelope.
+  const world={...publicEvidence(inst),worldDigest:inst.worldDigest,exportVersion:EXPORT_VERSION};
   return validatePublicWorld(world);
 }
 export const publicBytes=world=>JSON.stringify(validatePublicWorld(world),null,2)+'\n';
@@ -62,6 +64,7 @@ export function loadLedger(path,expectedHash){
   return {path:absolute,hash,header:records[0],entries:summary.entries};
 }
 export function regenerateWorld(ledger,entry){
+  if(ledger.header.samplerVersion!=='sealed-matched-padded-v2')throw new Error('historical leaking sampler ledger refused');
   if(!entry.constructionValid||entry.disposition!=='accepted')throw new Error('world is not accepted in the host construction ledger');
   let world;
   try{const p=ledger.header.proposals[entry.index],inst=make(p.seed,p.opts);world=sealWorld(inst,constructSealed(inst));}
@@ -72,7 +75,7 @@ export function regenerateWorld(ledger,entry){
 }
 export function loadPublicDirectory(publicDir,{hostRoot=DEFAULT_HOST_ROOT}={}){
   const path=hostIndexPath(publicDir,hostRoot),records=readRecords(path),index=records[0];
-  if(records.length!==1||index?.type!=='challenge-host-index'||index.version!==1||index.publicDirectory!==canonicalPath(publicDir)||index.sourceHash!==sourceIdentity()||!Array.isArray(index.ledgers)||!Array.isArray(index.worlds)||!index.worlds.length)throw new Error('invalid, moved or source-mismatched challenge host index');
+  if(records.length!==1||index?.type!=='challenge-host-index'||index.version!==2||index.exportVersion!==EXPORT_VERSION||index.publicDirectory!==canonicalPath(publicDir)||index.sourceHash!==sourceIdentity()||!Array.isArray(index.ledgers)||!Array.isArray(index.worlds)||!index.worlds.length)throw new Error('invalid, moved or source-mismatched challenge host index');
   const ledgers=index.ledgers.map(l=>loadLedger(l.path,l.hash));
   const expected=ledgers.flatMap((l,ledger)=>l.entries.filter(e=>e.constructionValid).map(e=>({ledger,proposalIndex:e.index,worldDigest:e.worldDigest})));
   if(expected.length!==index.worlds.length)throw new Error('host index omits accepted worlds');

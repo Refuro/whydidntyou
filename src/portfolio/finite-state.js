@@ -15,7 +15,7 @@ export function finiteStateModel(view,meter,{choicesPerQ=4096}={}){
       }
       delete images[alphabet[depth]];return null;
     };
-    const found=visit(0);if(found){const frozen={...found};return {statesBound:size,points:q,images:frozen,predict:(a,b)=>{
+    const found=visit(0);if(found){const frozen={...found};return {state:{kind:'finite-state',points:q,images:frozen},statesBound:size,points:q,images:frozen,predict:(a,b)=>{
       const run=s=>{let state=identity;for(const c of s)state=state.map(x=>actions[frozen[c]][x]);return state.join(',');};return run(a)===run(b);
     }};}
   }

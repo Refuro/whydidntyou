@@ -4,7 +4,7 @@ import {randomBytes} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
 import {durableAppend} from '../durable.js';
 import {digest,sourceIdentity} from '../source-identity.js';
-import {DEFAULT_HOST_ROOT,canonicalPath,hostIndexPath,loadLedger,regenerateWorld,publicWorld,publicBytes,loadPublicDirectory} from './challenge-public.js';
+import {EXPORT_VERSION,DEFAULT_HOST_ROOT,canonicalPath,hostIndexPath,loadLedger,regenerateWorld,publicWorld,publicBytes,loadPublicDirectory} from './challenge-public.js';
 
 export function writePublicWorld(file,world){writeFileSync(file,publicBytes(world),{flag:'wx'});}
 export function exportPublic(ledgerFiles,{out,hostRoot=DEFAULT_HOST_ROOT,onProgress=null}={}){
@@ -37,7 +37,7 @@ export function exportPublic(ledgerFiles,{out,hostRoot=DEFAULT_HOST_ROOT,onProgr
     if(existsSync(output))rmdirSync(output); // Only the verified empty destination; never recursive.
     renameSync(stage,output);published=true;
     mkdirSync(dirname(indexPath),{recursive:true});
-    durableAppend(indexPath,{type:'challenge-host-index',version:1,publicDirectory:canonicalPath(output),sourceHash,ledgers:identities,worlds},{exclusive:true});
+    durableAppend(indexPath,{type:'challenge-host-index',version:2,exportVersion:EXPORT_VERSION,publicDirectory:canonicalPath(output),sourceHash,ledgers:identities,worlds},{exclusive:true});
     return {out:output,worlds:worlds.length,idempotent:false};
   }finally{
     // stage is the exact random sibling allocated above; never delete a caller-supplied tree.

@@ -23,5 +23,5 @@ export function rewriteSearch(a,b,rules,budget,{bidirectional=false}={}){
 export function canonicalModel(view,{maxSteps=128,maxPositions=16384}={}){
   const rules=view.rules.map(({u,v})=>u.length>v.length||u.length===v.length&&u>v?[u,v]:[v,u]);
   const normalize=word=>{let used=0;for(let step=0;step<maxSteps;step++){let changed=false;for(const [from,to]of rules){for(let i=0;i<=word.length-from.length;i++){if(++used>maxPositions)return word;if(word.slice(i,i+from.length)===from){word=word.slice(0,i)+to+word.slice(i+from.length);changed=true;break;}}if(changed)break;}if(!changed)break;}return word;};
-  return {predict:(a,b)=>normalize(a)===normalize(b)};
+  return {state:{kind:'canonical',rules:view.rules,maxSteps,maxPositions},predict:(a,b)=>normalize(a)===normalize(b)};
 }

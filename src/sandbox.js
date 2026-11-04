@@ -30,6 +30,37 @@ const PRELUDE = `
 })();`; // 64 KB: below the WASM stack, so native recursion (JSON, parse) overflows INSIDE the sandbox; allows ~300 JS frames
 const INTRINSICS = { ...DefaultIntrinsics, Date: false };
 
+// Reuse the interpreter module, never a runtime, context, or submission state.
+let pairModule,pairModuleColdMs;
+export async function initializePairSandbox(){
+  const started=performance.now(),cold=!pairModule;pairModule??=newQuickJSWASMModule();await pairModule;
+  const actualMs=performance.now()-started;if(cold)pairModuleColdMs=actualMs;
+  return {actualMs,coldStartEstimateMs:pairModuleColdMs};
+}
+export async function runPairStage(code,input,timeoutMs){
+  const started=performance.now();let rt,vm;
+  try{
+    const expected=input.op==='fit'?['op','publicEvidence']:input.op==='predict'?['a','b','op','state']:[];
+    if(!expected.length||Object.keys(input).sort().join('|')!==expected.join('|'))throw new Error('invalid stage input');
+    if(typeof code!=='string'||code.length>2_000_000)throw new Error('invalid program size');
+    const Q=await pairModule; if(!Q)throw new Error('pair sandbox not initialized');
+    rt=Q.newRuntime();rt.setMemoryLimit(MEMORY_LIMIT);rt.setMaxStackSize(STACK_LIMIT);
+    rt.setInterruptHandler(shouldInterruptAfterDeadline(Date.now()+timeoutMs));
+    vm=rt.newContext({intrinsics:INTRINSICS});
+    for(const [s,file]of [[PRELUDE,'prelude.js'],[code,'submission.js']]){
+      const r=vm.evalCode(s,file);if(r.error){r.error.dispose();return {ok:false,error:'program failed to load'};}r.value.dispose();
+    }
+    const h=vm.newString(JSON.stringify(input));vm.setProp(vm.global,'__stageInput',h);h.dispose();
+    const r=vm.evalCode(`(function(){try{const x=JSON.parse(__stageInput);delete globalThis.__stageInput;const value=x.op==='fit'?fit(x.publicEvidence):predict(x.state,x.a,x.b);if(typeof value!==(x.op==='fit'?'string':'boolean'))return JSON.stringify({ok:false,error:'fit must return a string; predict must return a boolean'});return JSON.stringify({ok:true,value,counters:typeof memberCounters==='object'?memberCounters:null});}catch(e){return JSON.stringify({ok:false,error:String(e).slice(0,300)});}})()`,'stage.js');
+    if(r.error){r.error.dispose();return {ok:false,error:'stage failed within time/memory budget'};}
+    let out;try{out=vm.getString(r.value);}finally{r.value.dispose();}
+    const result=JSON.parse(out);
+    if(performance.now()-started>timeoutMs)return {ok:false,error:'stage wall-clock budget exhausted'};
+    return result;
+  }catch(e){return {ok:false,error:String(e?.message??e).slice(0,300)};}
+  finally{try{vm?.dispose();}catch{}try{rt?.dispose();}catch{}}
+}
+
 const WRAP = (mode) => `
 (function(){
   function msg(e){ try { if (e && typeof e === 'object') { const d = Object.getOwnPropertyDescriptor(e, 'message'); if (d && 'value' in d && typeof d.value === 'string') return d.value.slice(0, 300); return Object.prototype.toString.call(e).slice(0, 100); } return String(e).slice(0, 300); } catch { return 'unprintable error'; } }

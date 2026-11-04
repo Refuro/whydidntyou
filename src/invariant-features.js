@@ -1,12 +1,13 @@
 import {fold} from './algebra.js';
 const cache=new Map();
 // Enumerate the congruence lattice by joining one pair and closing under left/right multiplication.
-export function properCongruences({table}){
-  const key=JSON.stringify(table);if(cache.has(key))return cache.get(key);
+export function properCongruences({table},meter){
+  const key=JSON.stringify(table);if(!meter&&cache.has(key))return cache.get(key);
   const n=table.length,normalize=p=>{const ids=new Map();return p.map(x=>{if(!ids.has(x))ids.set(x,ids.size);return ids.get(x);});};
   const close=(partition,a,b)=>{
+    meter?.tick('congruenceClosures');
     const parent=partition.map((_,i)=>i),root=i=>{while(parent[i]!==i){parent[i]=parent[parent[i]];i=parent[i];}return i;};
-    const merge=(a,b)=>{a=root(a);b=root(b);if(a===b)return false;parent[b]=a;return true;};
+    const merge=(a,b)=>{meter?.tick('congruenceMergeTests');a=root(a);b=root(b);if(a===b)return false;parent[b]=a;return true;};
     for(let i=0;i<n;i++)for(let j=0;j<i;j++)if(partition[i]===partition[j])merge(i,j);merge(a,b);
     let changed=true;while(changed){changed=false;for(let i=0;i<n;i++)for(let j=0;j<i;j++)if(root(i)===root(j))for(let k=0;k<n;k++){changed=merge(table[i][k],table[j][k])||changed;changed=merge(table[k][i],table[k][j])||changed;}}
     return normalize(parent.map((_,i)=>root(i)));
