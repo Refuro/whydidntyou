@@ -90,3 +90,14 @@ test('A5 repeat strata never inflate the number of independent worlds',async()=>
  const report=reportBatch(f.out),markdown=readFileSync(report.out,'utf8');assert.match(markdown,/a \/ 0 \| PRIMARY/);assert.match(markdown,/a \/ 1 \| EXPLORATORY/);assert.match(markdown,/estimated-M_C reference/);
  assert.ok(report.analysis.conditions.every(c=>c.diagnostics.eligiblePopulation.proposed===1&&c.diagnostics.eligiblePopulation.eligible===1));
 });
+
+
+test('R1 reviewer compression-result-contract-confusion refuses at batch, report and postmortem boundaries',async()=>{
+ const cfg=config();cfg.attempts=1;const f=await fixture({cfg}),execution=f.records[1],rows=read(execution.log),meta=rows[0];
+ const result={ok:true,bits:meta.n*meta.baseline,bitsPerSym:meta.baseline,baseline:meta.baseline,oracle:meta.oracle,ratioToBaseline:1,ratioToOracle:meta.baseline/meta.oracle,contract:'reachability',accuracy:1};
+ rows[1].result=result;rows[1].feedbackText='synthetic contract confusion';rows.at(-1).success=1;rows.at(-1).budgetExhausted=false;
+ write(execution.log,rows);f.records.at(-1).outcome='success';f.records.at(-1).success=1;f.records.at(-1).budgetExhausted=false;write(f.out,f.records);
+ assert.throws(()=>validateRunLog(rows),/contract|foreign/);assert.throws(()=>validateBatch(f.records),/contract|foreign/);assert.throws(()=>reportBatch(f.out),/contract|foreign/);
+ const {validatePostmortemBatch}=await import('../src/postmortem-binding.js');
+ assert.throws(()=>validatePostmortemBatch(execution.log,{meta},f.out),/contract|foreign/);
+});

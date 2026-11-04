@@ -9,7 +9,7 @@ export function sealWorld(inst,sealed){
   const worldDigest=worldHash({generatorWorldDigest:inst.worldDigest,sealedPairs:sealed.pairs,naturalSealedPairs:sealed.naturalPairs});
   return {...inst,generatorWorldDigest:inst.worldDigest,worldDigest,instanceDigest:worldHash({seed:inst.seed,worldDigest}),sealedPairs:sealed.pairs,naturalSealedPairs:sealed.naturalPairs,sealedStatus:'constructed',sealedConstruction:sealed};
 }
-export function buildCorpus(path,proposals){
+export function buildCorpus(path,proposals,{retainWorlds=true,onProgress=null}={}){
   if(existsSync(path))throw new Error('construction ledger already exists');
   if(proposals.some(p=>p.opts?.images!==undefined))throw new Error('registered corpus forbids image overrides');
   mkdirSync(dirname(path),{recursive:true});
@@ -24,7 +24,8 @@ export function buildCorpus(path,proposals){
     const audit=inst?.identifiabilityAudit??defect?.audit??null;
     const entry={type:'construction',index,seed:p.seed,requestedFamily,effectiveClassification:inst?.family??defect?.effectiveClassification??null,assignmentSpace:audit?.assignmentsEnumerated??defect?.assignmentSpace??null,consistentAssignments:audit?.consistentAssignments??null,kernelClasses:audit?.inequivalentRepresentations??null,audit,eligible:inst!==null,constructionValid:world!==null,disposition:world?'accepted':'construction-defect',reason,worldDigest:world?.worldDigest??null};
     durableAppend(path,entry);
-    if(world)accepted.push({world,entry});
+    if(world)accepted.push(retainWorlds?{world,entry}:{seed:p.seed,opts:p.opts??{},entry});
+    onProgress?.({index:index+1,total:proposals.length,accepted:accepted.length});
   }
   const summary=constructionSummary(readRecords(path));return {accepted,summary};
 }

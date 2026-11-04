@@ -47,3 +47,12 @@ for(const defect of ['partial-final-record','changed-source','changed-config','o
   assert.equal(readRecords(f.out+'.disposition.json')[0].status,'abandoned');
   await assert.rejects(resumeExperiment(f.out),/already abandoned/);
 });
+
+
+test('B3 resume retains an unreceived request and advances only to its authorized retry index',async()=>{
+ const outputDir=mkdtempSync(join(tmpdir(),'llm-resume-dispatch-')),out=join(outputDir,'experiment-resume.jsonl'),config={...cfg(),seeds:[1]};let calls=0;
+ await assert.rejects(runExperiment(config,{outputDir,quiet:true,transport:async()=>{calls++;throw new Error('offline transport interruption');},onBoundary:name=>{if(name==='before-execution-record')throw new Error('process interruption');}}));
+ const header=readRecords(out)[0],id=header.executionPlans['a|1|0'][0],path=join(outputDir,id+'.jsonl'),original=readFileSync(path,'utf8');
+ const r=await resumeExperiment(out,{quiet:true,transport:async()=>{calls++;return {raw:'offline',usage:null};}}),t=validateBatch(r.records).terminals[0];
+ assert.equal(t.chain.length,2);assert.equal(t.chain[0].runId,id);assert.equal(t.chain[1].executionIndex,1);assert.equal(readFileSync(path,'utf8'),original);assert.equal(calls,3);assert.equal(t.resources.requests,3);
+});
