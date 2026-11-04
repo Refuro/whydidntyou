@@ -43,11 +43,23 @@ export function hypergeometricUpperBound(M,n,count,alpha=.05) {
   while(lo<hi){const mid=lo+Math.ceil((hi-lo)/2);if(hypergeometricLogCdf(M,n,mid,count)>=logAlpha-1e-12)lo=mid;else hi=mid-1;}
   return lo;
 }
-export function nullBounds({n,successes,unresolved,alpha=.05,M=2**32}) {
+export const POPULATION_APPROXIMATION=Object.freeze({maxN:100,minEligiblePopulation:1_000_000,printedProbabilityUnit:.0001}); // two decimal places in percent
+export function eligiblePopulationDiagnostic({M,n,count,alpha,eligibilityCounts,referenceUpper}) {
+  if(eligibilityCounts===undefined)return null;
+  const {proposed,eligible}=eligibilityCounts;
+  integer(proposed,'proposed');integer(eligible,'eligible');
+  if(proposed>M||eligible>proposed||eligible<n)throw new Error('eligibility counts must satisfy n <= eligible <= proposed <= M');
+  if(proposed===0)return {proposed,eligible,estimatedM:null,upper:null,reason:'no proposals available for estimation'};
+  const estimatedM=Math.round(M*eligible/proposed);
+  if(estimatedM===0)return {proposed,eligible,estimatedM,upper:null,reason:'no eligible seeds observed'};
+  const upper=hypergeometricUpperBound(estimatedM,n,count,alpha)/estimatedM;
+  return {proposed,eligible,estimatedM,upper,differenceFromRegistered:Math.abs(upper-referenceUpper),withinPrintedPrecision:Math.abs(upper-referenceUpper)<POPULATION_APPROXIMATION.printedProbabilityUnit,withinRegisteredRange:n<=POPULATION_APPROXIMATION.maxN&&estimatedM>=POPULATION_APPROXIMATION.minEligiblePopulation,meaning:'plug-in diagnostic from proposal/eligible counts; estimating M_C does not establish its true value or a lower bound'};
+}
+export function nullBounds({n,successes,unresolved,alpha=.05,M=2**32,eligibilityCounts}) {
   integer(n,'n');integer(successes,'successes');integer(unresolved,'unresolved');significance(alpha);
   if(successes+unresolved>n)throw new Error('successes + unresolved exceeds n');
   const resolved=n-unresolved,count=successes+unresolved,K=hypergeometricUpperBound(M,n,count,alpha);
-  return {n,resolved,unresolved,successes,alpha,confidence:100*(1-alpha)+'%',gate:{passed:n>0&&unresolved===0,reason:n===0?'no assigned worlds':unresolved?'unresolved assigned outcomes':'all assigned outcomes resolved'},registered:{method:'hypergeometric inversion',M,count,K,upper:K/M},conservative:K/M,binomialApproximation:upperBound(n,count,alpha),resolvedOnly:resolved?hypergeometricUpperBound(M,resolved,successes,alpha)/M:null,resolvedOnlyBinomialApproximation:resolved?upperBound(resolved,successes,alpha):null,resolvedOnlyAssumption:'available only with resolved evidence; assumes resolution independent of potential outcome and the registered sampling design',conservativeMeaning:'one-sided '+100*(1-alpha)+'% upper bound allowing every unresolved slot-procedure outcome to be a success'};
+  return {n,resolved,unresolved,successes,alpha,confidence:100*(1-alpha)+'%',gate:{passed:n>0&&unresolved===0,reason:n===0?'no assigned worlds':unresolved?'unresolved assigned outcomes':'all assigned outcomes resolved'},registered:{method:'hypergeometric inversion reference',M,count,K,upper:K/M,interpretation:'registered finite-population approximation; K is an inversion index, not a fixed-K identity for provider randomness'},conservative:K/M,binomialApproximation:upperBound(n,count,alpha),resolvedOnly:resolved?hypergeometricUpperBound(M,resolved,successes,alpha)/M:null,resolvedOnlyBinomialApproximation:resolved?upperBound(resolved,successes,alpha):null,resolvedOnlyAssumption:'available only with resolved evidence; assumes resolution independent of potential outcome and the registered sampling approximation',conservativeMeaning:'nominal one-sided '+100*(1-alpha)+'% registered reference allowing every unresolved slot-procedure outcome to be a success; no exact fixed-K coverage claim for stochastic decoding',populationApproximation:{...POPULATION_APPROXIMATION,withinRegisteredN:n<=POPULATION_APPROXIMATION.maxN,assumption:'eligibility is deterministic in the seed; M_C is a fixed subset size, assumed >= 10^6 for n <= 100'},eligiblePopulation:eligiblePopulationDiagnostic({M,n,count,alpha,eligibilityCounts,referenceUpper:K/M}),providerRandomness:{assumption:'one independent Bernoulli slot-procedure draw per seed under the registered protocol with provider randomness',zeroSuccessUpperBound:n>0&&count===0?upperBound(n,0,alpha):null,justification:'under uniform subset sampling and independent provider draws, the mean of products gives P(zero) <= (1 - mean p)^n; this argument applies only to fully resolved zero-success observations'}};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  const a={};for(let i=2;i<process.argv.length;i+=2)a[process.argv[i].slice(2)]=Number(process.argv[i+1]);
