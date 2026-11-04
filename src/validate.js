@@ -2,7 +2,11 @@
 // before a record is appended and by the READERS (report.js, postmortem.js) before a record is trusted.
 // Presence and type first, then consistency. No coercion anywhere: inputs are normalized once at the
 // command line (normalizeRunInput) and stored fields are asserted as stored.
-import { isSuccess } from './sandbox.js';
+import { isSuccess, validateResult } from './result-contract.js';
+export { validateResult } from './result-contract.js';
+import { validateSeedSource } from './seed-manifest.js';
+import { getDomain } from './domains/index.js';
+import { parseResponse } from './prompt.js';
 import { createHash } from 'node:crypto';
 import { resourceValue, validateUsage, validateResources } from './resources.js';
 
@@ -51,7 +55,7 @@ export function validateOpts(o) {
 
 // PRF-style expansion: computational approximation to sampling distinct 32-bit seeds.
 export function drawSeeds(master, n) {
-  if (typeof master !== 'string' || !/^(0|[1-9][0-9]{0,63})$/.test(master) || !isInt(n) || n < 1 || n > 100000) fail('drawSeeds: master must be canonical decimal text (1–64 digits), n an integer in [1,100000]');
+  if (typeof master !== 'string' || !/^(0|[1-9][0-9]{0,77})$/.test(master) || !isInt(n) || n < 1 || n > 100000) fail('drawSeeds: master must be canonical decimal text (1–78 digits), n an integer in [1,100000]');
   const out = [], seen = new Set();
   for (let counter = 0; out.length < n; counter++) {
     const digest = createHash('sha256').update(`whydidntyou-seed-draw-v2|${master}|${counter}`).digest();
@@ -74,7 +78,7 @@ export function validateConfig(cfg, domainVersions /* {domain: currentVersion} o
   const mp = cfg.missingPolicy ?? 'refuse'; if (!MISSING_POLICIES.includes(mp)) fail(`config missingPolicy must be ${MISSING_POLICIES.join('|')} (got ${JSON.stringify(cfg.missingPolicy)})`);
   // Seed draw: confirmatory batches (missingPolicy refuse) must have their seed list produced by the registered draw
   // procedure (SHA-256 expansion of a string master; computational sampling assumption).
-  if (cfg.seedDraw != null) { if (!isPlainObj(cfg.seedDraw) || typeof cfg.seedDraw.master !== 'string' || !isInt(cfg.seedDraw.n) || cfg.seedDraw.n !== cfg.seeds.length) fail('config seedDraw must be {master: string, n} with n equal to the seed count'); const drawn = drawSeeds(cfg.seedDraw.master, cfg.seedDraw.n); if (JSON.stringify(drawn) !== JSON.stringify(cfg.seeds)) fail('config seeds do not equal the registered draw from seedDraw.master'); }
+  if (cfg.seedDraw != null) { if (!isPlainObj(cfg.seedDraw) || typeof cfg.seedDraw.master !== 'string' || !isInt(cfg.seedDraw.n) || cfg.seedDraw.n !== cfg.seeds.length) fail('config seedDraw must be {master: string, n} with n equal to the seed count'); validateSeedSource(cfg.seedDraw); const drawn = drawSeeds(cfg.seedDraw.master, cfg.seedDraw.n); if (JSON.stringify(drawn) !== JSON.stringify(cfg.seeds)) fail('config seeds do not equal the registered draw from seedDraw.master'); }
   else if (mp === 'refuse') fail('confirmatory config (missingPolicy refuse) must declare seedDraw {master, n}; hand-picked seeds are exploratory only');
   if (cfg.memory != null && !MEMORY_MODES.includes(cfg.memory)) fail('config memory invalid');
   if (cfg.generatorVersions != null && !isPlainObj(cfg.generatorVersions)) fail('config generatorVersions must be an object');
@@ -99,20 +103,6 @@ export function validateConfig(cfg, domainVersions /* {domain: currentVersion} o
   return { missingPolicy: mp };
 }
 
-export function validateResult(r, where, ref /* {n, baseline, oracle} */) {
-  if (!isPlainObj(r) || typeof r.ok !== 'boolean') fail(`${where}: result missing or ok not boolean`);
-  if (r.ok) {
-    for (const f of ['bits', 'bitsPerSym', 'baseline', 'oracle', 'ratioToBaseline', 'ratioToOracle']) if (typeof r[f] !== 'number' || !Number.isFinite(r[f])) fail(`${where}: successful result lacks finite ${f}`);
-    if (!isInt(r.bits) || r.bits < 0) fail(`${where}: bits must be a non-negative integer`);
-    if (ref) { // arithmetic is derived from authoritative counts, never trusted from the record
-      const close = (x, y) => Math.abs(x - y) <= 1e-9 * Math.max(1, Math.abs(y));
-      if (r.baseline !== ref.baseline || !close(r.oracle, ref.oracle)) fail(`${where}: baseline/oracle differ from the instance`);
-      if (!close(r.bitsPerSym, r.bits / ref.n)) fail(`${where}: bitsPerSym != bits/n`);
-      if (!close(r.ratioToBaseline, r.bitsPerSym / ref.baseline) || !close(r.ratioToOracle, r.bitsPerSym / ref.oracle)) fail(`${where}: ratios do not follow from bitsPerSym`);
-    }
-  }
-  else { if (!RESULT_STAGES.includes(r.stage)) fail(`${where}: failed result stage ${JSON.stringify(r.stage)} not in ${RESULT_STAGES.join('|')}`); if (typeof r.error !== 'string') fail(`${where}: failed result lacks error string`); }
-}
 export function validateMessages(msgs, where) {
   if (!Array.isArray(msgs) || !msgs.length) fail(`${where}: messagesSent missing`);
   msgs.forEach((m, i) => { if (!isPlainObj(m) || !['user', 'assistant'].includes(m.role)) fail(`${where}: message ${i} role invalid`); const c = m.content; const okText = typeof c === 'string' && c.length > 0; const okBlocks = Array.isArray(c) && c.length > 0 && c.every(b => isPlainObj(b) && b.type === 'text' && typeof b.text === 'string'); if (!okText && !okBlocks) fail(`${where}: message ${i} content invalid`); });
@@ -136,7 +126,7 @@ export function validateMeta(meta) {
   if (meta.scaffold !== null && !isHex64(meta.scaffoldHash)) fail('meta.scaffoldHash missing for a scaffold run');
   if (meta.slot !== null) { const s = meta.slot; if (!isPlainObj(s) || !isStr(s.batchId) || !isStr(s.condition) || s.seed !== meta.seed || !isInt(s.repeat) || s.repeat < 0 || !isInt(s.executionIndex) || s.executionIndex < 0 || s.executionIndex > 2 || s.runId !== meta.runId) fail('meta.slot invalid'); }
 }
-export function validateAttempt(x, i, meta, where = `attempt ${i + 1}`) {
+export function validateAttempt(x, i, meta, where = `attempt ${i + 1}`, inst = meta?.domain ? getDomain(meta.domain).make(meta.seed, meta.opts) : meta) {
   if (!isPlainObj(x) || x.type !== 'attempt') fail(`${where}: not an attempt record`);
   if (x.attempt !== i + 1) fail(`${where}: attempt number ${x.attempt} is not ${i + 1}`);
   validateMessages(x.messagesSent, where); validateUsage(x.usage);
@@ -147,9 +137,14 @@ export function validateAttempt(x, i, meta, where = `attempt ${i + 1}`) {
   if (x.status !== 'received') fail(`${where}: status must be dispatched|received`);
   if (typeof x.raw !== 'string') fail(`${where}: raw missing`); if (typeof x.feedbackText !== 'string' || !x.feedbackText) fail(`${where}: feedbackText missing`);
   if (typeof x.idea !== 'string') fail(`${where}: idea missing`); if (!(x.code === null || typeof x.code === 'string')) fail(`${where}: code must be null or string`);
-  validateMessages(x.messagesSent, where); validateResult(x.result, where, meta ? { n: meta.n, baseline: meta.baseline, oracle: meta.oracle } : null);
+  validateMessages(x.messagesSent, where); validateResult(x.result, where, inst ?? undefined);
+  const parsed=parseResponse(x.raw);
+  if(x.code!==parsed.code)fail(`${where}: code differs from parsed response`);
+  const truncated=x.usage?.stop_reason==='max_tokens'&&!/<\/code>/.test(x.raw);
+  if(!parsed.code && (x.result.ok||!['parse','truncated'].includes(x.result.stage)))fail(`${where}: execution result without parsed code`);
+  if((x.result.stage==='truncated')!==truncated||x.result.stage==='parse'&&(!!parsed.code||truncated))fail(`${where}: impossible parse/result combination`);
 }
-export function validateEnd(end, meta, attempts) {
+export function validateEnd(end, meta, attempts, inst=getDomain(meta.domain).make(meta.seed,meta.opts)) {
   if (!isPlainObj(end) || end.type !== 'end') fail('end record missing');
   if (!RUN_STATUS.includes(end.status)) fail(`end.status must be ${RUN_STATUS.join('|')}`);
   if (!('success' in end)) fail('end.success missing (must be null or an integer)');
@@ -162,7 +157,7 @@ export function validateEnd(end, meta, attempts) {
   if (end.maxAttempts !== meta.maxAttempts) fail(`end.maxAttempts ${end.maxAttempts} != meta.maxAttempts ${meta.maxAttempts}`);
   if (typeof end.budgetExhausted !== 'boolean') fail('end.budgetExhausted must be a strict boolean');
   // the ONE success event, derived from validated attempt results
-  const first = attempts.findIndex(x => isSuccess(x.result)); const derivedSuccess = first < 0 ? null : first + 1;
+  const first = attempts.findIndex(x => isSuccess(x.result, inst)); const derivedSuccess = first < 0 ? null : first + 1;
   if (end.success !== derivedSuccess) fail(`end.success ${JSON.stringify(end.success)} contradicts attempt results (derived ${derivedSuccess})`);
   if (derivedSuccess !== null && attempts.length !== derivedSuccess) fail('attempts continue after the first success (early stopping violated)');
   if (end.status === 'completed') {
@@ -185,7 +180,7 @@ export function validateRunLog(lines) {
   const attempts = lines.slice(1, hasEnd ? -1 : undefined);
   if (!hasEnd && attempts.at(-1)?.status !== 'dispatched') fail('unterminated log must end in a dispatched request');
   const end = hasEnd ? lines.at(-1) : { type: 'end', status: 'interrupted', success: null, attemptsUsed: attempts.length - 1, requestsDispatched: attempts.length, maxAttempts: meta.maxAttempts, budgetExhausted: false, reason: 'process ended with an unreceived dispatched request', inferred: true };
-  validateMeta(meta); attempts.forEach((x, i) => validateAttempt(x, i, meta)); validateEnd(end, meta, attempts);
+  validateMeta(meta); const inst=getDomain(meta.domain).make(meta.seed,meta.opts); attempts.forEach((x, i) => validateAttempt(x, i, meta, undefined, inst)); validateEnd(end, meta, attempts, inst);
   return { meta, attempts, end };
 }
 

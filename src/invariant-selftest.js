@@ -13,10 +13,10 @@ export async function invariantSelftest({seeds=[1,2],quiet=false}={}){
       const pairs=name==='bfs'?inst.calibrationPairs.filter(p=>p.scale==='large'):inst.calibrationPairs;
       const result=await evaluate(code,inst,{evaluationPairs:pairs,purpose:'wall-selftest',outputCondition:name==='reference'?'quantity-requested':'unrestricted',timeoutMs:WALL_BUDGETS[name].totalSandboxMs});
       if(!result.ok)throw new Error(name+' did not return valid predictions: '+JSON.stringify({seed,opts,result}));
-      scores[name]={accuracy:result.accuracy,success:isSuccess(result),smallAccuracy:result.smallAccuracy,largeAccuracy:result.largeAccuracy};
-      if(name==='reference'&&(!isSuccess(result)||!result.quantity.conservation.proved||!result.quantity.partitionsAgree))throw new Error('reference/proof wall failure');
-      if(name==='bfs'&&isSuccess(result))throw new Error('bounded BFS crossed large-state wall');
-      if(name==='countNullspace'&&isSuccess(result)!==inst.submonoid.commutative)throw new Error('count nullspace wall disagrees with family');
+      scores[name]={accuracy:result.accuracy,success:isSuccess(result,inst),smallAccuracy:result.smallAccuracy,largeAccuracy:result.largeAccuracy};
+      if(name==='reference'&&(!isSuccess(result,inst)||!result.quantity.conservation.proved||!result.quantity.partitionsAgree))throw new Error('reference/proof wall failure');
+      if(name==='bfs'&&isSuccess(result,inst))throw new Error('bounded BFS crossed large-state wall');
+      if(name==='countNullspace'&&isSuccess(result,inst)!==inst.submonoid.commutative)throw new Error('count nullspace wall disagrees with family');
     }
     const row={seed,...opts,worldDigest:inst.worldDigest,recoverable:inst.identifiabilityAudit.recoverable,scores};rows.push(row);if(!quiet)console.log(JSON.stringify(row));
   }

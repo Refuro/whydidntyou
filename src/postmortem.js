@@ -21,8 +21,8 @@ let meta, attempts, end; try { ({ meta, attempts, end } = validateRunLog(lines))
 if (end.status !== 'completed') refuse(`run status ${end.status}; post-mortems are for completed runs`);
 if (end.success !== null) refuse(`run succeeded at attempt ${end.success}; post-mortems are for failed runs`);
 if (!end.budgetExhausted) refuse('run did not exhaust its budget; not a completed failed trial');
-attempts.forEach(x => { if (isSuccess(x.result)) refuse(`attempt ${x.attempt} meets the success criterion but the end record says failure`); });
 const inst = getDomain(meta.domain).make(meta.seed, meta.opts);
+attempts.forEach(x => { if (isSuccess(x.result,inst)) refuse(`attempt ${x.attempt} meets the success criterion but the end record says failure`); });
 if (inst.generatorVersion !== meta.generatorVersion) refuse(`generator version changed (${meta.generatorVersion} -> ${inst.generatorVersion})`);
 if (inst.instanceDigest !== meta.instanceDigest || inst.worldDigest !== meta.worldDigest) refuse('regenerated digests do not match the logged ones');
 if (meta.n !== inst.n || meta.baseline !== inst.baselineBitsPerSym || Math.abs(meta.oracle - inst.oracleBitsPerSym) > 1e-9) refuse('log reference values differ from the regenerated instance');

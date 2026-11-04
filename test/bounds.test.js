@@ -7,8 +7,8 @@ test('A5: invalid counts and significance refuse; endpoints and no evidence are 
   for(const v of [{n:100,successes:-1,unresolved:0},{n:100,successes:0,unresolved:101},{n:100.5,successes:0,unresolved:0},{n:100,successes:0,unresolved:0,alpha:2}])assert.throws(()=>nullBounds(v));
   for(const alpha of [0,1,NaN,Infinity])assert.throws(()=>upperBound(10,1,alpha));
   assert.equal(binomCdf(10,0,0),1);assert.equal(binomCdf(10,10,1),1);assert.equal(binomCdf(10,9,1),0);
-  assert.equal(nullBounds({n:0,successes:0,unresolved:0}).resolvedOnly,null);
-  assert.equal(nullBounds({n:100,successes:0,unresolved:100}).resolvedOnly,null);
+  assert.equal(nullBounds({n:0,successes:0,unresolved:0}).diagnostics.resolvedOnly,null);
+  assert.equal(nullBounds({n:100,successes:0,unresolved:100}).diagnostics.resolvedOnly,null);
   assert.equal(nullBounds({n:1,successes:0,unresolved:0,alpha:.1}).confidence,'90%');
   assert.ok(Math.abs(upperBound(100,10)-.163717623275814)<1e-12);
 });

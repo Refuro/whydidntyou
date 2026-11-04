@@ -78,8 +78,11 @@ export function identifiabilityAudit(spec,alphabet,rules,trainingPairs){
     consistentAssignments++;representations.add(representationSignature(candidate,alphabet));
   }
   const generated=generatedSubmonoid(spec,spec.images),occupied=new Set(trainingPairs.flatMap(p=>[fold(p.a,spec),fold(p.b,spec)]));
-  const ruleCoverage=Object.fromEntries(rules.map(r=>[r.id,trainingPairs.reduce((sum,p)=>sum+(p.certificate.path||[]).filter(s=>s.rule===r.id).length,0)]));
-  return {representationClass:REGISTRATION.representationClass,assignmentsEnumerated:total,consistentAssignments,inequivalentRepresentations:representations.size,referenceConsistent:representations.has(reference),recoverable:representations.size===1&&representations.has(reference),flag:representations.size===1&&representations.has(reference)?null:'invariant not uniquely recoverable in registered representation class',reachableStateOccupancy:{occupied:occupied.size,generated:generated.elements.length,fraction:occupied.size/generated.elements.length},ruleCoverage,referenceInformation:'oracle solver uses the secret table and symbol images; identifiability uses only public rules and 200 labels'};
+  return {representationClass:REGISTRATION.representationClass,assignmentsEnumerated:total,consistentAssignments,inequivalentRepresentations:representations.size,referenceConsistent:representations.has(reference),recoverable:representations.size===1&&representations.has(reference),flag:representations.size===1&&representations.has(reference)?null:'invariant not uniquely recoverable in registered representation class',reachableStateOccupancy:{occupied:occupied.size,generated:generated.elements.length,fraction:occupied.size/generated.elements.length},referenceInformation:'oracle solver uses the secret table and symbol images; identifiability uses only public rules and 200 labels'};
+}
+export function privateRuleCoverage(rules,pairs){
+  if(pairs.some(p=>!p.certificate||p.label&&!Array.isArray(p.certificate.path)))return {status:'unavailable',reason:'private path certificates missing'};
+  return {status:'available',counts:Object.fromEntries(rules.map(r=>[r.id,pairs.reduce((sum,p)=>sum+(p.certificate.path||[]).filter(s=>s.rule===r.id).length,0)]))};
 }
 export function make(seed,opts={}){
   assertSeed(seed);for(const k of Object.keys(opts))if(!['family','A','algebra','points','modulus','images'].includes(k))throw new Error('unregistered invariant option '+k);

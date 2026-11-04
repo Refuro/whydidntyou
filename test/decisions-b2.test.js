@@ -15,10 +15,10 @@ test('D1 primary contrast uses only repeat 0 even when later repeats reverse the
 });
 test('D2 both population references are reported from explicit proposal/eligible counts',()=>{
   const r=nullBounds({n:40,successes:2,unresolved:3,eligibilityCounts:{proposed:1000,eligible:500}});
-  assert.equal(r.registered.M,2**32);assert.equal(r.eligiblePopulation.estimatedM,2**31);
-  assert.equal(r.eligiblePopulation.upper,hypergeometricUpperBound(2**31,40,5)/(2**31));
-  assert.equal(r.eligiblePopulation.withinPrintedPrecision,true);assert.match(r.eligiblePopulation.meaning,/does not establish/);
-  assert.match(r.registered.interpretation,/not a fixed-K identity/);
+  assert.equal(r.diagnostics.registered.M,2**32);assert.equal(r.diagnostics.eligiblePopulation.estimatedM,2**31);
+  assert.equal(r.diagnostics.eligiblePopulation.upper,hypergeometricUpperBound(2**31,40,5)/(2**31));
+  assert.equal(r.diagnostics.eligiblePopulation.withinPrintedPrecision,true);assert.match(r.diagnostics.eligiblePopulation.meaning,/does not establish/);
+  assert.match(r.diagnostics.registered.interpretation,/not a fixed-K identity/);
   for(const counts of [{proposed:1,eligible:2},{proposed:100,eligible:39},{proposed:Infinity,eligible:40},{proposed:100.5,eligible:40}])assert.throws(()=>nullBounds({n:40,successes:0,unresolved:0,eligibilityCounts:counts}));
 });
 test('D2 registered printed-precision approximation across n<=100 at M_C=10^6',()=>{

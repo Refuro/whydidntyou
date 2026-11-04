@@ -13,7 +13,7 @@ for(const opts of specimens)test('B1 proof, certificates, identifiability and re
  for(const p of [...inst.trainingPairs,...inst.calibrationPairs]){assert.equal(inst.quantity(p.a)===inst.quantity(p.b),p.label);if(p.label)assert.ok(verifyPath(p.a,p.b,p.certificate.path,inst.rules));else {assert.deepEqual(p.certificate.values,[inst.quantity(p.a),inst.quantity(p.b)]);assert.notEqual(...p.certificate.values);}}
  assert.equal(inst.identifiabilityAudit.referenceConsistent,true);assert.equal(inst.identifiabilityAudit.recoverable,true);
  assert.equal(inst.worldDigest,make(1,opts).worldDigest);assert.notEqual(inst.instanceDigest,make(2,opts).instanceDigest);
- const r=await evaluate(referenceCode(inst),inst,{evaluationPairs:inst.calibrationPairs,purpose:'wall-selftest',outputCondition:'quantity-requested',timeoutMs:20000});assert.equal(r.ok,true,JSON.stringify(r));assert.equal(r.accuracy,1);assert.ok(isSuccess(r));assert.equal(r.quantity.conservation.proved,true);assert.equal(r.quantity.partitionsAgree,true);assert.equal(r.generalizationGap,0);
+ const r=await evaluate(referenceCode(inst),inst,{evaluationPairs:inst.calibrationPairs,purpose:'wall-selftest',outputCondition:'quantity-requested',timeoutMs:20000});assert.equal(r.ok,true,JSON.stringify(r));assert.equal(r.accuracy,1);assert.ok(isSuccess(r,inst));assert.equal(r.quantity.conservation.proved,true);assert.equal(r.quantity.partitionsAgree,true);assert.equal(r.generalizationGap,0);
 });
 test('B1 finite table laws reject invalid proofs',()=>{
  const spec=algebraFor('F-nonabelian',{algebra:'S3'});const bad=structuredClone(spec);bad.table[1][1]=999;assert.throws(()=>validateMonoid(bad),/closure/);

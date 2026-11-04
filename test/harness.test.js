@@ -88,5 +88,5 @@ test('A5 unknown paired outcomes yield per-world and sample identification bound
 test('A5 repeat strata never inflate the number of independent worlds',async()=>{
  const cfg=config();cfg.repeats=2;const f=await fixture({cfg});const a=analyzeAssignment(validateBatch(f.records));assert.equal(a.conditions.length,2);assert.ok(a.conditions.every(c=>c.n===1));
  const report=reportBatch(f.out),markdown=readFileSync(report.out,'utf8');assert.match(markdown,/a \/ 0 \| PRIMARY/);assert.match(markdown,/a \/ 1 \| EXPLORATORY/);assert.match(markdown,/estimated-M_C reference/);
- assert.ok(report.analysis.conditions.every(c=>c.eligiblePopulation.proposed===1&&c.eligiblePopulation.eligible===1));
+ assert.ok(report.analysis.conditions.every(c=>c.diagnostics.eligiblePopulation.proposed===1&&c.diagnostics.eligiblePopulation.eligible===1));
 });

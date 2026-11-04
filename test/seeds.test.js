@@ -17,7 +17,7 @@ test('A1: adjacent masters do not yield shifted windows', () => {
   }
 });
 test('master representation is exact, including beyond Number precision', () => {
-  for (const bad of [20261103, '', '01', '-1', '1.5', '1e2', ' 1', 'f', '9'.repeat(65)]) assert.throws(() => drawSeeds(bad, 1));
+  for (const bad of [20261103, '', '01', '-1', '1.5', '1e2', ' 1', 'f', '9'.repeat(79)]) assert.throws(() => drawSeeds(bad, 1));
   assert.notDeepEqual(drawSeeds('9007199254740992', 10), drawSeeds('9007199254740993', 10));
-  assert.equal(drawSeeds('9'.repeat(64), 1).length, 1);
+  assert.equal(drawSeeds('9'.repeat(78), 1).length, 1);
 });

@@ -57,7 +57,7 @@ export async function runAttempts({ domain, seed, attempts, hint=null, scaffold=
     writeFileSync(pendingPath,[meta,...archived].map(JSON.stringify).join('\n')+'\n');
     renameSync(pendingPath,logPath); history.push(rec);
     if (!quiet) console.log('#'+attempt+' '+describeResult(result));
-    if (isSuccess(result)) {success=attempt;break;}
+    if (isSuccess(result,inst)) {success=attempt;break;}
   }
   writeEnd('completed');
   return {runId,logPath,success,interrupted:false,history,archived,inst};

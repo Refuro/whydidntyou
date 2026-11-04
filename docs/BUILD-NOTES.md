@@ -58,3 +58,12 @@ Base: 08d6ca0. The author explicitly confirmed that the B2 review is still pendi
 - Baseline dependency install and full selftest passed. The updated npm test suite passed all 55 tests. Final full selftest results are recorded below. No real model requests, dependency additions, new adversarial sandbox probes, or B3/B4 implementation occurred.
 
 - Final follow-up selftest passed: both original compression walls and all 16 invariant wall worlds. Evidence is in SELFTEST-B2-decisions.json; the original SELFTEST-B2.json remains unchanged.
+
+## 2026-11-03 — B2 review repairs (v2 step 1)
+
+- R1: results cannot select the success contract. Readers regenerate the instance; the shared validator rejects foreign fields, incorrect variants, inconsistent arithmetic, and execution without parsed code. Compression's legacy untagged result stays a fixed compression variant.
+- R2: canonical decimal masters allow 78 digits; `--source-hex` records original hex, bytes and exact BigInt decimal in the draw manifest. Decimal strings are bounded by length (not restricted to a 256-bit numeric maximum).
+- R3: public identifiability no longer reads certificates. Private path coverage is separate and explicitly unavailable without certificates.
+- R4: only resolved zero-success evidence receives the registered stochastic inference bound. Positive/unresolved counts return unavailable and bound 1; hypergeometric, resolved-only and population plug-in values are explicitly non-inferential diagnostics. The midpoint counterexample reproduces noncoverage above 5%.
+- Plan edit inventory correction: the earlier §13 sampling-history terminology edit changed coincident worlds to “retained draws and reported”; it was omitted from the earlier inventory. No new PLAN edits in this repair commit.
+- Fixtures: `test/review-b2-repairs.test.js`, plus updated diagnostics and master-shape assertions in existing tests. Historical B2 evidence and reviewer-owned input files are unchanged.

@@ -100,7 +100,7 @@ export async function evaluate(code, inst, options = {}) {
     return await (inst.contract ?? compressionContract).score(code, inst, { ...options, runProgram });
   } catch (e) { return { ok: false, stage: 'verify', error: 'host boundary: ' + String(e?.message || e).slice(0,200) }; }
 }
-export function isSuccess(r) { return !!(r && r.ok && (r.contract === 'reachability' ? r.accuracy >= .95 : r.ratioToBaseline <= SUCCESS_RATIO)); }
+export { isSuccess } from './result-contract.js';
 
 // Generic contract call: fresh canonical state for EACH pair or quantity state.
 // Only the unlabelled arguments enter the sandbox. The caller owns the total budget.
