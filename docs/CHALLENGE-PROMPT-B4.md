@@ -2,7 +2,7 @@
 
 You are the independent solver author required by `docs/PLAN.md` §2. You did not design this generator and you must not read its source. Your job is to solve the tasks as well as possible using only public evidence, to propose solvers and budgets the registered portfolio is missing, and to report everything you tried — including what failed. You are attacking the *baseline library*, not any language model: the stronger you make the library, the more honest the eventual comparison.
 
-The independent challenge remains a separate author/reviewer session. Builder matched controls are in `docs/B4r-EVIDENCE/matched-controls/summary.json`; those controls are not an independent challenge.
+The independent challenge remains a separate author/reviewer session. Builder matched controls are in `docs/B4r-EVIDENCE/matched-controls/summary.json`; those controls are not an independent challenge. You may read their result/timing summaries, but not the archived reference source packages: those include catalogue implementations and are reviewer material, subject to the same source-reading restriction as the algebra implementation.
 
 ## What you may read
 - `README.md`, `docs/PLAN.md` §§0–3 (what is being measured and why), `prereg/invariantGame.md` (the registered task, key moves and budgets).

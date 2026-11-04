@@ -1,0 +1,174 @@
+{
+  "type": "external-score-meta",
+  "version": 2,
+  "exportVersion": "sealed-matched-padded-v2-public-v2",
+  "runId": "9d4df2a6c0f0799dfe0af5bf53b42885",
+  "solverName": "bfs-b2.solver.json",
+  "solverHash": "141a7d6c6f473ab562d6f34ac579b67ec650dd9d8371db03b4b291f487494862",
+  "sourceHash": "985bff1f1ed128cd16657fcee99c311e4965326c2d14ed480b7ecf466c5a409b",
+  "publicIndexHash": "a3733debe3cc0d1eff280e3304854b20f696a66977c35fa72adb6783c5c98a4a",
+  "worlds": 1,
+  "budget": {
+    "fitMs": 20000,
+    "inferenceMs": 20000,
+    "pairMs": 2000,
+    "maxInferenceCalls": 200
+  },
+  "contract": "fit-once-private-pair-v2",
+  "scope": "development challenge; descriptive scores only",
+  "workPolicy": "fit once; fresh runtime/context per row; no cross-set cache; equal independent public/challenge/natural inference budgets; wall-clock includes context, load, parse, execute and cleanup; module initialization reported separately; no external self-reported counters trusted",
+  "startedAt": "2026-11-04T07:21:07.422Z",
+  "status": "completed",
+  "completedAt": "2026-11-04T07:21:08.281Z",
+  "byFamily": {
+    "F-nonabelian": {
+      "worlds": 1,
+      "scoredWorlds": 1,
+      "failedWorlds": 0,
+      "successes": 0,
+      "sandboxCalls": 201,
+      "sandboxMs": 188.27349999999933,
+      "hostPreparationMs": 240.636599999998,
+      "chargedProgramBytes": 27968,
+      "meanAccuracyScoredWorlds": 0.68,
+      "accuracyBoundsAcrossAllWorlds": [
+        0.68,
+        0.68
+      ]
+    }
+  },
+  "byRequestedFamily": {
+    "F-nonabelian": {
+      "worlds": 1,
+      "scoredWorlds": 1,
+      "failedWorlds": 0,
+      "successes": 0,
+      "sandboxCalls": 201,
+      "sandboxMs": 188.27349999999933,
+      "hostPreparationMs": 240.636599999998,
+      "chargedProgramBytes": 27968,
+      "meanAccuracyScoredWorlds": 0.68,
+      "accuracyBoundsAcrossAllWorlds": [
+        0.68,
+        0.68
+      ]
+    }
+  },
+  "construction": [
+    {
+      "ledger": "C:\\Users\\Refur\\LLMBreakthroughs\\examples\\invariantGame-world-b4r-1.construction.jsonl",
+      "counts": {
+        "F-nonabelian": {
+          "proposed": 1,
+          "eligible": 1,
+          "constructionValid": 1,
+          "reasons": {},
+          "effectiveClassifications": {
+            "F-nonabelian": 1
+          },
+          "eligibilityRate": 1,
+          "acceptanceRate": 1
+        }
+      }
+    }
+  ],
+  "dependence": "rows within worlds are dependent; family audits reuse seeds; no pooled interval",
+  "worldResults": [
+    {
+      "type": "external-world-score",
+      "exportVersion": "sealed-matched-padded-v2-public-v2",
+      "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+      "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+      "family": "F-nonabelian",
+      "requestedFamily": "F-nonabelian",
+      "status": "scored",
+      "accuracy": 0.68,
+      "correct": 136,
+      "total": 200,
+      "success": false,
+      "failure": null,
+      "fit": {
+        "status": "fitted",
+        "reason": null,
+        "ms": 2.318599999998696,
+        "moduleInitializationMs": 0.003400000001420267,
+        "standalonePreparationMs": 9.602199999998732,
+        "standaloneIsColdStartEstimate": true,
+        "coldModuleInitializationEstimateMs": 7.283600000000035,
+        "amortizedPreparationMs": 2.318599999998696,
+        "stateBytes": 584,
+        "calls": 1,
+        "memberSpecificSearchCounters": null
+      },
+      "public": {
+        "status": "scored",
+        "accuracy": 0.51,
+        "correct": 102,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "smallAccuracy": 0.51,
+        "largeAccuracy": null,
+        "paddingRobustnessGap": null,
+        "resources": {
+          "ms": 197.80040000000008,
+          "calls": 200,
+          "completedCalls": 200,
+          "cacheHits": 0,
+          "memberSpecificSearchCounters": null
+        }
+      },
+      "sealed": {
+        "status": "scored",
+        "accuracy": 0.68,
+        "correct": 136,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "smallAccuracy": 0.84,
+        "largeAccuracy": 0.52,
+        "paddingRobustnessGap": 0.31999999999999995,
+        "resources": {
+          "ms": 185.95490000000063,
+          "calls": 200,
+          "completedCalls": 200,
+          "cacheHits": 0,
+          "memberSpecificSearchCounters": null
+        }
+      },
+      "natural": {
+        "status": "scored",
+        "accuracy": 0.5,
+        "correct": 100,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "smallAccuracy": 0.5,
+        "largeAccuracy": 0.5,
+        "paddingRobustnessGap": 0,
+        "resources": {
+          "ms": 195.18139999999767,
+          "calls": 200,
+          "completedCalls": 200,
+          "cacheHits": 0,
+          "memberSpecificSearchCounters": null
+        }
+      },
+      "hostPreparationMs": 240.636599999998,
+      "programBytes": 27968,
+      "support": {
+        "rows": 200,
+        "distinctPairs": 128,
+        "smallDistinctPairs": 64,
+        "largeDistinctPairs": 64,
+        "pairedDependence": {
+          "kind": "neutral-prefix copies of the same short cores",
+          "pairedRows": 100,
+          "independentRows": false
+        },
+        "sizeEstimand": "padding robustness"
+      }
+    }
+  ],
+  "liveModelCalls": 0
+}

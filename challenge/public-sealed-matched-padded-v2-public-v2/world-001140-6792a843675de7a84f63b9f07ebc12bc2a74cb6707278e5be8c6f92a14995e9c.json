@@ -1,0 +1,1058 @@
+{
+  "alphabet": [
+    "v",
+    "l",
+    "a"
+  ],
+  "rules": [
+    {
+      "u": "v",
+      "v": "val"
+    },
+    {
+      "u": "l",
+      "v": "lla"
+    },
+    {
+      "u": "la",
+      "v": ""
+    },
+    {
+      "u": "l",
+      "v": "vlv"
+    },
+    {
+      "u": "vlv",
+      "v": "lla"
+    },
+    {
+      "u": "l",
+      "v": "aaa"
+    },
+    {
+      "u": "aal",
+      "v": "vav"
+    },
+    {
+      "u": "la",
+      "v": "al"
+    },
+    {
+      "u": "aal",
+      "v": "lll"
+    },
+    {
+      "u": "al",
+      "v": ""
+    },
+    {
+      "u": "lll",
+      "v": "vav"
+    }
+  ],
+  "rulesText": "1. v ↔ val\n2. l ↔ lla\n3. la ↔ ε\n4. l ↔ vlv\n5. vlv ↔ lla\n6. l ↔ aaa\n7. aal ↔ vav\n8. la ↔ al\n9. aal ↔ lll\n10. al ↔ ε\n11. lll ↔ vav",
+  "trainingPairs": [
+    {
+      "a": "vvallvavvv",
+      "b": "vaal",
+      "label": false
+    },
+    {
+      "a": "lvvllav",
+      "b": "lvaallvlllaaalvlaal",
+      "label": true
+    },
+    {
+      "a": "vvla",
+      "b": "vvlaaaaalallaaaaaa",
+      "label": true
+    },
+    {
+      "a": "vlla",
+      "b": "vallaalaaa",
+      "label": true
+    },
+    {
+      "a": "vllalvavlv",
+      "b": "vllallaaaavlvaaaaaaalv",
+      "label": true
+    },
+    {
+      "a": "lavavlvvav",
+      "b": "laalvavlvvaaalaalaallaav",
+      "label": true
+    },
+    {
+      "a": "aaav",
+      "b": "aaalaallalav",
+      "label": true
+    },
+    {
+      "a": "avlv",
+      "b": "aalllaavalllvlvaalav",
+      "label": true
+    },
+    {
+      "a": "vavlalaa",
+      "b": "vavlalllavaalvallaaala",
+      "label": true
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "lvvlla",
+      "b": "vall",
+      "label": false
+    },
+    {
+      "a": "aallvl",
+      "b": "aaaavlalavlalv",
+      "label": true
+    },
+    {
+      "a": "vaaa",
+      "b": "alvaaalaaalaaala",
+      "label": true
+    },
+    {
+      "a": "lllaalvla",
+      "b": "lvalvlvvvlvaalaallvlala",
+      "label": true
+    },
+    {
+      "a": "llvvvl",
+      "b": "vaallvaa",
+      "label": false
+    },
+    {
+      "a": "alavvlaa",
+      "b": "allaavalvllalaavlvaa",
+      "label": true
+    },
+    {
+      "a": "allvl",
+      "b": "aaavlvllllavlal",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "lalvaa",
+      "b": "vlvaaaavallalalaaa",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "avllllavva",
+      "b": "avvalavvlvavvlavllavalaa",
+      "label": true
+    },
+    {
+      "a": "valllal",
+      "b": "vllllvlvallaall",
+      "label": true
+    },
+    {
+      "a": "alaaaaa",
+      "b": "alalaallaaalllllaaa",
+      "label": true
+    },
+    {
+      "a": "avaaav",
+      "b": "aavvl",
+      "label": false
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "lvalvl",
+      "b": "lvvavlvlvlvala",
+      "label": true
+    },
+    {
+      "a": "vaaalal",
+      "b": "vvavvvvvl",
+      "label": false
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "avalll",
+      "b": "alavvlvavlvvavaallllla",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "laalall",
+      "b": "llllllvlaa",
+      "label": false
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "lallvlva",
+      "b": "laaaallaalalvaaavlaa",
+      "label": true
+    },
+    {
+      "a": "vaala",
+      "b": "aalvaav",
+      "label": false
+    },
+    {
+      "a": "lllllva",
+      "b": "alalallllaaaavllavlalva",
+      "label": true
+    },
+    {
+      "a": "lavavlvv",
+      "b": "aaaavavlvlaalvla",
+      "label": true
+    },
+    {
+      "a": "laaaall",
+      "b": "laaaaalaalaaavlvlal",
+      "label": true
+    },
+    {
+      "a": "vlvvaaalla",
+      "b": "allvaavvav",
+      "label": false
+    },
+    {
+      "a": "llaaaa",
+      "b": "alvlvalaaaalallaaaalaa",
+      "label": true
+    },
+    {
+      "a": "vlaa",
+      "b": "lavlalvaaaallavaaaal",
+      "label": true
+    },
+    {
+      "a": "vlalvaa",
+      "b": "alvlalaalvaaavvaala",
+      "label": true
+    },
+    {
+      "a": "alva",
+      "b": "aaaaaa",
+      "label": false
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "vvvlvlvlva",
+      "b": "aallvaala",
+      "label": false
+    },
+    {
+      "a": "vaallaa",
+      "b": "lavaaalaaallaaa",
+      "label": true
+    },
+    {
+      "a": "laaa",
+      "b": "aala",
+      "label": true
+    },
+    {
+      "a": "lvvlvavvv",
+      "b": "vavvaa",
+      "label": false
+    },
+    {
+      "a": "lvvvlaava",
+      "b": "lalaaa",
+      "label": false
+    },
+    {
+      "a": "vllvvvaaav",
+      "b": "vllalvvalalvllaaaaaval",
+      "label": true
+    },
+    {
+      "a": "lavava",
+      "b": "vaalallavlaaal",
+      "label": true
+    },
+    {
+      "a": "laaav",
+      "b": "avlvaaaaalalaalav",
+      "label": true
+    },
+    {
+      "a": "vvvaaal",
+      "b": "lavvvalaalaalalla",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "laaal",
+      "b": "vlalalll",
+      "label": false
+    },
+    {
+      "a": "llvvlalaal",
+      "b": "llallavvaaaalalallll",
+      "label": true
+    },
+    {
+      "a": "avvaa",
+      "b": "avvla",
+      "label": false
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "vaalvv",
+      "b": "vavavla",
+      "label": false
+    },
+    {
+      "a": "lalaalv",
+      "b": "vlvalavlvalallavavv",
+      "label": true
+    },
+    {
+      "a": "alvlavva",
+      "b": "aaallaaalavaallalvva",
+      "label": true
+    },
+    {
+      "a": "lalaaaalv",
+      "b": "aaaaallaaaaaaaallav",
+      "label": true
+    },
+    {
+      "a": "vlvaal",
+      "b": "lavavlvlvaalal",
+      "label": true
+    },
+    {
+      "a": "vlval",
+      "b": "vllavalalavaaavalavlv",
+      "label": true
+    },
+    {
+      "a": "laallv",
+      "b": "llaaaaaaallaalllavla",
+      "label": true
+    },
+    {
+      "a": "vvalavaavl",
+      "b": "vvaaaaalavaavvlvallaalal",
+      "label": true
+    },
+    {
+      "a": "alllaav",
+      "b": "alallllaaavalla",
+      "label": true
+    },
+    {
+      "a": "avlv",
+      "b": "aaalaaavvallalalalvv",
+      "label": true
+    },
+    {
+      "a": "llvlaavlal",
+      "b": "vvvllva",
+      "label": false
+    },
+    {
+      "a": "aavlvllav",
+      "b": "aaavlvvlaaaavlalalvalla",
+      "label": true
+    },
+    {
+      "a": "vvllllaa",
+      "b": "vlaalaallvvalavlaa",
+      "label": true
+    },
+    {
+      "a": "lvallaal",
+      "b": "laallvallaalllaaal",
+      "label": true
+    },
+    {
+      "a": "avlvaava",
+      "b": "lavaaavaa",
+      "label": false
+    },
+    {
+      "a": "llvvlval",
+      "b": "vlllava",
+      "label": false
+    },
+    {
+      "a": "llllv",
+      "b": "lavl",
+      "label": false
+    },
+    {
+      "a": "lvvlvaaa",
+      "b": "lvvlvalaaaalaaaaaaaala",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "laavvaall",
+      "b": "llaaavvalalaallalaalaaa",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "lavvlvllav",
+      "b": "lvavalvl",
+      "label": false
+    },
+    {
+      "a": "avlavvaav",
+      "b": "avaaaavlavlalalalaaalav",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "alvava",
+      "b": "alaalvlvvavlaa",
+      "label": true
+    },
+    {
+      "a": "aaaavlvl",
+      "b": "aaaaalvaaaalaavavavaaa",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "llvaaaava",
+      "b": "vvlvvlaallalvalaaaava",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "avllvlval",
+      "b": "alavllaallallavlval",
+      "label": true
+    },
+    {
+      "a": "vvavlla",
+      "b": "vaalllalalala",
+      "label": true
+    },
+    {
+      "a": "allvlvla",
+      "b": "lllllalllllvlvla",
+      "label": true
+    },
+    {
+      "a": "lvvvl",
+      "b": "allvlavlalavavlvl",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "llala",
+      "b": "vlvalvlvalavallvala",
+      "label": true
+    },
+    {
+      "a": "vlvvvaaaav",
+      "b": "vallalvvalvaalalalaaavla",
+      "label": true
+    },
+    {
+      "a": "avlavv",
+      "b": "lalvl",
+      "label": false
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "lavla",
+      "b": "laalvaaalaaaall",
+      "label": true
+    },
+    {
+      "a": "alavllvv",
+      "b": "aaavlvaaaa",
+      "label": false
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "aalvalla",
+      "b": "lllallv",
+      "label": false
+    },
+    {
+      "a": "alll",
+      "b": "avvllvl",
+      "label": false
+    },
+    {
+      "a": "aavallalv",
+      "b": "alalaaalvllaalallavla",
+      "label": true
+    },
+    {
+      "a": "allvvla",
+      "b": "allaal",
+      "label": false
+    },
+    {
+      "a": "vaaavvvva",
+      "b": "vaaaalvvvvaavllavalvlva",
+      "label": true
+    },
+    {
+      "a": "valv",
+      "b": "vlvavllaaalv",
+      "label": true
+    },
+    {
+      "a": "vlvv",
+      "b": "vaaalll",
+      "label": false
+    },
+    {
+      "a": "lvvaaallv",
+      "b": "vlllaavala",
+      "label": false
+    },
+    {
+      "a": "aavaaaavlv",
+      "b": "lllavaallaaaavalaaalaalv",
+      "label": true
+    },
+    {
+      "a": "alaalaaav",
+      "b": "aaaaaaavlvaavla",
+      "label": true
+    },
+    {
+      "a": "vvall",
+      "b": "llava",
+      "label": false
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "aavl",
+      "b": "llalvavaa",
+      "label": false
+    },
+    {
+      "a": "valvl",
+      "b": "vaalllaalavavlvlvvlla",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "lalvlllv",
+      "b": "llalalalalalavlllv",
+      "label": true
+    },
+    {
+      "a": "alval",
+      "b": "aaavavaalallalv",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "lalaalvvvl",
+      "b": "valllavaaaalllvvvl",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "alvla",
+      "b": "alvlvavllaala",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "llaaalvv",
+      "b": "aalallllallaalavavvv",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "laavlv",
+      "b": "valavval",
+      "label": false
+    },
+    {
+      "a": "lavl",
+      "b": "lalv",
+      "label": false
+    },
+    {
+      "a": "aavalaalv",
+      "b": "aavllaaalaaaallllav",
+      "label": true
+    },
+    {
+      "a": "llallllvll",
+      "b": "aaallalllaallvlalall",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "avvvvvlav",
+      "b": "avvvvlalavlav",
+      "label": true
+    },
+    {
+      "a": "lvllaa",
+      "b": "alalvlvvllvlvaalaa",
+      "label": true
+    },
+    {
+      "a": "vvalala",
+      "b": "vvaalllalallaaa",
+      "label": true
+    },
+    {
+      "a": "alvavlalvl",
+      "b": "aalll",
+      "label": false
+    },
+    {
+      "a": "lvlva",
+      "b": "laaaaalalvlalvaal",
+      "label": true
+    },
+    {
+      "a": "lvvvvvvlv",
+      "b": "lalvvl",
+      "label": false
+    },
+    {
+      "a": "vvlavl",
+      "b": "alvvavlal",
+      "label": false
+    },
+    {
+      "a": "llvllvaav",
+      "b": "aaalllalllalvllvaav",
+      "label": true
+    },
+    {
+      "a": "avlvaa",
+      "b": "llvaa",
+      "label": false
+    },
+    {
+      "a": "lavl",
+      "b": "lalv",
+      "label": false
+    },
+    {
+      "a": "lvvlvl",
+      "b": "aaav",
+      "label": false
+    },
+    {
+      "a": "avlvav",
+      "b": "lalaaalvllvlvlla",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "vllvvvaal",
+      "b": "lavaavvv",
+      "label": false
+    },
+    {
+      "a": "aavlv",
+      "b": "llvlvlll",
+      "label": false
+    },
+    {
+      "a": "avaavala",
+      "b": "llll",
+      "label": false
+    },
+    {
+      "a": "aavllvvva",
+      "b": "lvlall",
+      "label": false
+    },
+    {
+      "a": "alalvll",
+      "b": "aallavlvaaaavlvavllla",
+      "label": true
+    },
+    {
+      "a": "lallvaa",
+      "b": "llaalalaaavalaala",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "lavl",
+      "b": "lalv",
+      "label": false
+    },
+    {
+      "a": "vllallvva",
+      "b": "alvaaa",
+      "label": false
+    },
+    {
+      "a": "alvllavav",
+      "b": "alaaaavlvavllalavalav",
+      "label": true
+    },
+    {
+      "a": "llalvll",
+      "b": "lalallallavaalalalaal",
+      "label": true
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "lvllalv",
+      "b": "vaalaa",
+      "label": false
+    },
+    {
+      "a": "lvallaalal",
+      "b": "lvallaaalvllavaaaaaalaaa",
+      "label": true
+    },
+    {
+      "a": "lllaaal",
+      "b": "llavllavaavlvavlval",
+      "label": true
+    },
+    {
+      "a": "llala",
+      "b": "aaaallaal",
+      "label": true
+    },
+    {
+      "a": "valvlv",
+      "b": "vallaalvalaalaaalv",
+      "label": true
+    },
+    {
+      "a": "lvvva",
+      "b": "lallavvalvala",
+      "label": true
+    },
+    {
+      "a": "alvvvvlava",
+      "b": "avlvlvavvalvvlavlalaalva",
+      "label": true
+    },
+    {
+      "a": "lvlvlalva",
+      "b": "llavlvlalalalaaalvlvlva",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "llvlaaa",
+      "b": "vlvlvllaalllalala",
+      "label": true
+    },
+    {
+      "a": "vlavaalaa",
+      "b": "lvvlavlvv",
+      "label": false
+    },
+    {
+      "a": "avalllaa",
+      "b": "laaaavvaal",
+      "label": false
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "lvavv",
+      "b": "laaaallaa",
+      "label": false
+    },
+    {
+      "a": "lvvvaaavl",
+      "b": "vlvallavvvaaavaaalaal",
+      "label": true
+    },
+    {
+      "a": "aavl",
+      "b": "alaavll",
+      "label": false
+    },
+    {
+      "a": "llalvav",
+      "b": "llalvalalalaalaaaav",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "vaaavvl",
+      "b": "alll",
+      "label": false
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "llalval",
+      "b": "lllaaaaalvavvlalaal",
+      "label": true
+    },
+    {
+      "a": "vvlllalvl",
+      "b": "vvalllalllavlvaalalvlla",
+      "label": true
+    },
+    {
+      "a": "lalv",
+      "b": "lallaalallalvavalv",
+      "label": true
+    },
+    {
+      "a": "lalalavl",
+      "b": "lalalalv",
+      "label": false
+    },
+    {
+      "a": "avala",
+      "b": "aaaalalaalalavalalaal",
+      "label": true
+    },
+    {
+      "a": "aaavvl",
+      "b": "vlavla",
+      "label": false
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    },
+    {
+      "a": "lvvll",
+      "b": "lvvavlvlllaaalallla",
+      "label": true
+    },
+    {
+      "a": "vavvallav",
+      "b": "alaavavvl",
+      "label": false
+    },
+    {
+      "a": "valla",
+      "b": "vlaaallavlvlalavllava",
+      "label": true
+    },
+    {
+      "a": "lavl",
+      "b": "lalv",
+      "label": false
+    },
+    {
+      "a": "vallll",
+      "b": "aaaa",
+      "label": false
+    },
+    {
+      "a": "alvaallal",
+      "b": "lvllal",
+      "label": false
+    },
+    {
+      "a": "avlla",
+      "b": "aallavaaaal",
+      "label": true
+    },
+    {
+      "a": "lalaaa",
+      "b": "lalalaalaaal",
+      "label": true
+    },
+    {
+      "a": "lalavl",
+      "b": "lalalv",
+      "label": false
+    },
+    {
+      "a": "alaala",
+      "b": "aallaalaalallallaa",
+      "label": true
+    },
+    {
+      "a": "lalalalavl",
+      "b": "lalalalalv",
+      "label": false
+    }
+  ],
+  "worldDigest": "6792a843675de7a84f63b9f07ebc12bc2a74cb6707278e5be8c6f92a14995e9c",
+  "exportVersion": "sealed-matched-padded-v2-public-v2"
+}

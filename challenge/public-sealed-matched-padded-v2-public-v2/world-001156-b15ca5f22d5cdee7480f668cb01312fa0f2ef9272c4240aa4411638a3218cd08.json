@@ -1,0 +1,1058 @@
+{
+  "alphabet": [
+    "u",
+    "x",
+    "g"
+  ],
+  "rules": [
+    {
+      "u": "u",
+      "v": "x"
+    },
+    {
+      "u": "ux",
+      "v": "xu"
+    },
+    {
+      "u": "uuu",
+      "v": "uxx"
+    },
+    {
+      "u": "uu",
+      "v": "gg"
+    },
+    {
+      "u": "ggg",
+      "v": "xxg"
+    },
+    {
+      "u": "uuu",
+      "v": "xuu"
+    },
+    {
+      "u": "uu",
+      "v": "ux"
+    },
+    {
+      "u": "uxx",
+      "v": "xuu"
+    },
+    {
+      "u": "gxu",
+      "v": "xxg"
+    },
+    {
+      "u": "gg",
+      "v": "ux"
+    },
+    {
+      "u": "gxu",
+      "v": "ggg"
+    }
+  ],
+  "rulesText": "1. u ↔ x\n2. ux ↔ xu\n3. uuu ↔ uxx\n4. uu ↔ gg\n5. ggg ↔ xxg\n6. uuu ↔ xuu\n7. uu ↔ ux\n8. uxx ↔ xuu\n9. gxu ↔ xxg\n10. gg ↔ ux\n11. gxu ↔ ggg",
+  "trainingPairs": [
+    {
+      "a": "gxuugu",
+      "b": "gxxxgu",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uuxggxxug",
+      "b": "xxuxuxuxg",
+      "label": true
+    },
+    {
+      "a": "gugxugxxxu",
+      "b": "gggxuuxxxu",
+      "label": true
+    },
+    {
+      "a": "xxgx",
+      "b": "gxux",
+      "label": true
+    },
+    {
+      "a": "ggxxxu",
+      "b": "xuxuxu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "gxxggu",
+      "b": "xugguxu",
+      "label": false
+    },
+    {
+      "a": "ggxuugugg",
+      "b": "xxuuugugg",
+      "label": true
+    },
+    {
+      "a": "ggux",
+      "b": "uuxx",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "ggugugg",
+      "b": "uuuguux",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "xuxxuxx",
+      "b": "uggxuuu",
+      "label": true
+    },
+    {
+      "a": "uuuggx",
+      "b": "uxxxxu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uuggxg",
+      "b": "uuuxug",
+      "label": true
+    },
+    {
+      "a": "xgxggugx",
+      "b": "xguuxxgx",
+      "label": true
+    },
+    {
+      "a": "gxuuxguux",
+      "b": "guuguuxgg",
+      "label": true
+    },
+    {
+      "a": "gugggx",
+      "b": "gxxugu",
+      "label": true
+    },
+    {
+      "a": "uuguuuxg",
+      "b": "gguuggx",
+      "label": false
+    },
+    {
+      "a": "uuguuxuxg",
+      "b": "gxuuuuugg",
+      "label": false
+    },
+    {
+      "a": "xxuxugug",
+      "b": "xugxg",
+      "label": false
+    },
+    {
+      "a": "xxguuu",
+      "b": "uxuxggg",
+      "label": false
+    },
+    {
+      "a": "gxuxg",
+      "b": "gggxg",
+      "label": true
+    },
+    {
+      "a": "uxgxxxxgx",
+      "b": "uxgxxgxuu",
+      "label": true
+    },
+    {
+      "a": "gxuugux",
+      "b": "gxxugxu",
+      "label": true
+    },
+    {
+      "a": "uguxx",
+      "b": "xuugu",
+      "label": true
+    },
+    {
+      "a": "uuxxgguxg",
+      "b": "uuxxgguxg",
+      "label": true
+    },
+    {
+      "a": "xugguguux",
+      "b": "uxuggguux",
+      "label": true
+    },
+    {
+      "a": "xuuxuxgx",
+      "b": "uuuxxugxuu",
+      "label": false
+    },
+    {
+      "a": "guuuggg",
+      "b": "uggxggggxg",
+      "label": false
+    },
+    {
+      "a": "gggxx",
+      "b": "uxgux",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "gxuu",
+      "b": "ggxugggxu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "xxxgxgx",
+      "b": "uxxgxgu",
+      "label": true
+    },
+    {
+      "a": "xuxuxg",
+      "b": "uuuuxg",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uguuxgguxg",
+      "b": "uguxxgguxg",
+      "label": true
+    },
+    {
+      "a": "gxuuxgxg",
+      "b": "guggxgxg",
+      "label": true
+    },
+    {
+      "a": "gxux",
+      "b": "uggxx",
+      "label": false
+    },
+    {
+      "a": "guggggxu",
+      "b": "gxgxg",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "gxguxxuxg",
+      "b": "uuuxuxguug",
+      "label": false
+    },
+    {
+      "a": "xuuux",
+      "b": "xxxux",
+      "label": true
+    },
+    {
+      "a": "gxgug",
+      "b": "gugxg",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "gxuxgxguu",
+      "b": "gxgugxuux",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uguxgxxxxu",
+      "b": "xggu",
+      "label": false
+    },
+    {
+      "a": "ggxux",
+      "b": "gggxuu",
+      "label": false
+    },
+    {
+      "a": "gxxuuxgxux",
+      "b": "gxuuxxgggu",
+      "label": true
+    },
+    {
+      "a": "uguugg",
+      "b": "xgxggu",
+      "label": true
+    },
+    {
+      "a": "uxuux",
+      "b": "gguggx",
+      "label": false
+    },
+    {
+      "a": "xuuuxuggg",
+      "b": "uguux",
+      "label": false
+    },
+    {
+      "a": "xxuggxxuux",
+      "b": "ggxguux",
+      "label": false
+    },
+    {
+      "a": "uxguxguggg",
+      "b": "uxgxuuxgxg",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "xuxgux",
+      "b": "gugxxguuuu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "guuxxuxggu",
+      "b": "guggxuuggu",
+      "label": true
+    },
+    {
+      "a": "xxug",
+      "b": "guguu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uggugxxxg",
+      "b": "xuuugxxxg",
+      "label": true
+    },
+    {
+      "a": "gxug",
+      "b": "guxg",
+      "label": true
+    },
+    {
+      "a": "ggxxxu",
+      "b": "uuuuux",
+      "label": true
+    },
+    {
+      "a": "guuxgux",
+      "b": "gxxugux",
+      "label": true
+    },
+    {
+      "a": "xxxggxgx",
+      "b": "uuuu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "guxg",
+      "b": "ggxu",
+      "label": true
+    },
+    {
+      "a": "uxxxgxxgg",
+      "b": "uuuxxxxx",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "ugxxxx",
+      "b": "xgxgxxxu",
+      "label": false
+    },
+    {
+      "a": "xggxgxxggg",
+      "b": "ugguggxxuu",
+      "label": true
+    },
+    {
+      "a": "uxxxgx",
+      "b": "uuguxx",
+      "label": true
+    },
+    {
+      "a": "gxggxguuxu",
+      "b": "ugxxxu",
+      "label": false
+    },
+    {
+      "a": "uuuguxxgxg",
+      "b": "uxugggugug",
+      "label": true
+    },
+    {
+      "a": "gxuuxgg",
+      "b": "gxxuugg",
+      "label": true
+    },
+    {
+      "a": "gxugg",
+      "b": "xxgxxx",
+      "label": false
+    },
+    {
+      "a": "xuxuuuuuu",
+      "b": "gxguxxux",
+      "label": false
+    },
+    {
+      "a": "uguuxgg",
+      "b": "xguxugg",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uuxgxgxu",
+      "b": "gxuxg",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uxux",
+      "b": "uuxxuug",
+      "label": false
+    },
+    {
+      "a": "guuugux",
+      "b": "guuuxuxugx",
+      "label": false
+    },
+    {
+      "a": "gxxugxuuxu",
+      "b": "guuuuxguuu",
+      "label": true
+    },
+    {
+      "a": "uxug",
+      "b": "xxug",
+      "label": true
+    },
+    {
+      "a": "xxgggugg",
+      "b": "guuguuxg",
+      "label": false
+    },
+    {
+      "a": "gxguxx",
+      "b": "gxguxu",
+      "label": true
+    },
+    {
+      "a": "uxgxuxug",
+      "b": "xxgxggug",
+      "label": true
+    },
+    {
+      "a": "uggux",
+      "b": "xggux",
+      "label": true
+    },
+    {
+      "a": "guuugxuux",
+      "b": "xxgxxugxx",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "xggxuxu",
+      "b": "xxugu",
+      "label": false
+    },
+    {
+      "a": "ugguuu",
+      "b": "uxggxu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "guugu",
+      "b": "xgguxuuggg",
+      "label": false
+    },
+    {
+      "a": "xgxgggxux",
+      "b": "xguxugxxu",
+      "label": true
+    },
+    {
+      "a": "gxxxuxxgx",
+      "b": "gxuxxgxux",
+      "label": true
+    },
+    {
+      "a": "gxuggu",
+      "b": "guuuxx",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "xuuuuuuxx",
+      "b": "xuxuxuuuu",
+      "label": true
+    },
+    {
+      "a": "uuuuxxgu",
+      "b": "uggugux",
+      "label": false
+    },
+    {
+      "a": "gxxxugxxux",
+      "b": "gxxgxuuxxu",
+      "label": true
+    },
+    {
+      "a": "gxuuggug",
+      "b": "ggguggug",
+      "label": true
+    },
+    {
+      "a": "xxxuu",
+      "b": "gggx",
+      "label": false
+    },
+    {
+      "a": "xxgug",
+      "b": "uxgxg",
+      "label": true
+    },
+    {
+      "a": "ugxuxuu",
+      "b": "ugxuuuu",
+      "label": true
+    },
+    {
+      "a": "xuxxuugxx",
+      "b": "uxuxguuxx",
+      "label": true
+    },
+    {
+      "a": "xuugugx",
+      "b": "ugxuugx",
+      "label": true
+    },
+    {
+      "a": "guxux",
+      "b": "gugxg",
+      "label": false
+    },
+    {
+      "a": "xxgu",
+      "b": "guxx",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uxxgxgxxgu",
+      "b": "uxxu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "guugxuuxg",
+      "b": "guxgxuuxg",
+      "label": true
+    },
+    {
+      "a": "uxxuxggug",
+      "b": "gxgxxxuuxx",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "xuguggu",
+      "b": "xxguuux",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "ugggugxgg",
+      "b": "uuugugxxx",
+      "label": true
+    },
+    {
+      "a": "gguugxuugx",
+      "b": "uxuugggugx",
+      "label": true
+    },
+    {
+      "a": "xxxuuxggx",
+      "b": "ggguxugg",
+      "label": false
+    },
+    {
+      "a": "guux",
+      "b": "guuu",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uugx",
+      "b": "xxgx",
+      "label": true
+    },
+    {
+      "a": "xxxgxg",
+      "b": "uguuxg",
+      "label": true
+    },
+    {
+      "a": "uguuuux",
+      "b": "xugx",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "xguxxugx",
+      "b": "xugxguxuu",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "ggggxg",
+      "b": "ugxuuux",
+      "label": false
+    },
+    {
+      "a": "ugxxux",
+      "b": "xxugxx",
+      "label": true
+    },
+    {
+      "a": "xgxxgxxg",
+      "b": "uguuguxg",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "xugxggxg",
+      "b": "gugxgu",
+      "label": false
+    },
+    {
+      "a": "ugxxuggxxg",
+      "b": "xgxuuxxgxu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "xuxgg",
+      "b": "xuxux",
+      "label": true
+    },
+    {
+      "a": "uguuxxg",
+      "b": "xgxuuxg",
+      "label": true
+    },
+    {
+      "a": "uugxugxxg",
+      "b": "uuguxgxxg",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "gxuuuu",
+      "b": "xxguuu",
+      "label": true
+    },
+    {
+      "a": "uxuxuxxx",
+      "b": "xgguuuxu",
+      "label": true
+    },
+    {
+      "a": "uxggug",
+      "b": "gguxxg",
+      "label": true
+    },
+    {
+      "a": "ugxugugu",
+      "b": "ugxxgxgx",
+      "label": true
+    },
+    {
+      "a": "xxxuux",
+      "b": "uggxxu",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "xxguxuggu",
+      "b": "uggu",
+      "label": false
+    },
+    {
+      "a": "xxugxuxxuu",
+      "b": "xggguugguu",
+      "label": true
+    },
+    {
+      "a": "gxxgxg",
+      "b": "uuxuxg",
+      "label": true
+    },
+    {
+      "a": "gxggxgg",
+      "b": "gugxxgx",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "gxugx",
+      "b": "ggguu",
+      "label": false
+    },
+    {
+      "a": "ggugxguug",
+      "b": "ggxgxuxux",
+      "label": true
+    },
+    {
+      "a": "guuugxxggx",
+      "b": "guggxgxxg",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uguuxugu",
+      "b": "xgxuxugu",
+      "label": true
+    },
+    {
+      "a": "uxuxgxuugu",
+      "b": "uggugxuxgu",
+      "label": true
+    },
+    {
+      "a": "ggggxug",
+      "b": "gxxgg",
+      "label": false
+    },
+    {
+      "a": "uggxgug",
+      "b": "gguugxg",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "xxggxxugug",
+      "b": "ggggxuxgxg",
+      "label": true
+    },
+    {
+      "a": "uuxxxgxxuu",
+      "b": "uxuxx",
+      "label": false
+    },
+    {
+      "a": "uuuxxxguuu",
+      "b": "xggxxxguuu",
+      "label": true
+    },
+    {
+      "a": "ugxggug",
+      "b": "uguugg",
+      "label": false
+    },
+    {
+      "a": "gugguuxugu",
+      "b": "gxgguggugx",
+      "label": true
+    },
+    {
+      "a": "ggxuuuxxu",
+      "b": "xxxxxxuxx",
+      "label": true
+    },
+    {
+      "a": "gggguggu",
+      "b": "guuguggx",
+      "label": true
+    },
+    {
+      "a": "xxxxgxu",
+      "b": "uxuuxu",
+      "label": false
+    },
+    {
+      "a": "gguxx",
+      "b": "uuxux",
+      "label": true
+    },
+    {
+      "a": "xguxxgggu",
+      "b": "xguuugxuu",
+      "label": true
+    },
+    {
+      "a": "xxxgg",
+      "b": "xxggu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuuug",
+      "b": "uuuuuuuugu",
+      "label": false
+    },
+    {
+      "a": "uxgugxxx",
+      "b": "xugxxu",
+      "label": false
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "guguuxxuxg",
+      "b": "gugxuuxxxg",
+      "label": true
+    },
+    {
+      "a": "gguxxxxugg",
+      "b": "ggxuuuxggu",
+      "label": true
+    },
+    {
+      "a": "uuxggxguu",
+      "b": "uuuxxxguu",
+      "label": true
+    },
+    {
+      "a": "uuxuu",
+      "b": "gguux",
+      "label": true
+    },
+    {
+      "a": "xuuxu",
+      "b": "xugguxxgx",
+      "label": false
+    },
+    {
+      "a": "gxxxgguuxu",
+      "b": "gxgguuuuxu",
+      "label": true
+    },
+    {
+      "a": "uuuuug",
+      "b": "uuuugu",
+      "label": false
+    },
+    {
+      "a": "uugux",
+      "b": "xuxxgxx",
+      "label": false
+    },
+    {
+      "a": "uuxguxx",
+      "b": "xxxgggx",
+      "label": true
+    },
+    {
+      "a": "xxgggguug",
+      "b": "gxugggggg",
+      "label": true
+    }
+  ],
+  "worldDigest": "b15ca5f22d5cdee7480f668cb01312fa0f2ef9272c4240aa4411638a3218cd08",
+  "exportVersion": "sealed-matched-padded-v2-public-v2"
+}

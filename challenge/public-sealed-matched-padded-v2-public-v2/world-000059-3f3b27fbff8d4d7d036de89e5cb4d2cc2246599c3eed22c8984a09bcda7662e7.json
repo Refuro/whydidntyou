@@ -1,0 +1,1054 @@
+{
+  "alphabet": [
+    "s",
+    "t",
+    "a"
+  ],
+  "rules": [
+    {
+      "u": "ttt",
+      "v": "tt"
+    },
+    {
+      "u": "tt",
+      "v": "aas"
+    },
+    {
+      "u": "",
+      "v": "tt"
+    },
+    {
+      "u": "",
+      "v": "s"
+    },
+    {
+      "u": "",
+      "v": "t"
+    },
+    {
+      "u": "ass",
+      "v": "sa"
+    },
+    {
+      "u": "",
+      "v": "ss"
+    },
+    {
+      "u": "ass",
+      "v": "aaa"
+    },
+    {
+      "u": "ttt",
+      "v": "aas"
+    },
+    {
+      "u": "aaa",
+      "v": "sa"
+    }
+  ],
+  "rulesText": "1. ttt ↔ tt\n2. tt ↔ aas\n3. ε ↔ tt\n4. ε ↔ s\n5. ε ↔ t\n6. ass ↔ sa\n7. ε ↔ ss\n8. ass ↔ aaa\n9. ttt ↔ aas\n10. aaa ↔ sa",
+  "trainingPairs": [
+    {
+      "a": "ssattatat",
+      "b": "ttasstttaat",
+      "label": true
+    },
+    {
+      "a": "aast",
+      "b": "tatattsaassssst",
+      "label": true
+    },
+    {
+      "a": "atas",
+      "b": "sttatttsstttastt",
+      "label": true
+    },
+    {
+      "a": "sststsatt",
+      "b": "asttsast",
+      "label": false
+    },
+    {
+      "a": "sasttatss",
+      "b": "ssssast",
+      "label": false
+    },
+    {
+      "a": "ttttstssss",
+      "b": "taaatata",
+      "label": false
+    },
+    {
+      "a": "aatst",
+      "b": "asassssstttsstttst",
+      "label": true
+    },
+    {
+      "a": "ataa",
+      "b": "tattstassataaaa",
+      "label": true
+    },
+    {
+      "a": "stasttttt",
+      "b": "saasaaaa",
+      "label": false
+    },
+    {
+      "a": "aata",
+      "b": "astsastaa",
+      "label": false
+    },
+    {
+      "a": "atsst",
+      "b": "satsttstts",
+      "label": true
+    },
+    {
+      "a": "tasstttstt",
+      "b": "ttst",
+      "label": false
+    },
+    {
+      "a": "tssst",
+      "b": "tasatsas",
+      "label": false
+    },
+    {
+      "a": "astsaas",
+      "b": "stttsassta",
+      "label": false
+    },
+    {
+      "a": "aats",
+      "b": "tssataataa",
+      "label": false
+    },
+    {
+      "a": "ttas",
+      "b": "tsssstsssttas",
+      "label": true
+    },
+    {
+      "a": "taasttt",
+      "b": "attaats",
+      "label": false
+    },
+    {
+      "a": "tsaaatta",
+      "b": "sasattastt",
+      "label": false
+    },
+    {
+      "a": "tasta",
+      "b": "atastatt",
+      "label": false
+    },
+    {
+      "a": "sast",
+      "b": "ssssstassst",
+      "label": true
+    },
+    {
+      "a": "sstataats",
+      "b": "satsssttaatsttt",
+      "label": true
+    },
+    {
+      "a": "tattsst",
+      "b": "tsstst",
+      "label": false
+    },
+    {
+      "a": "asaas",
+      "b": "attastas",
+      "label": true
+    },
+    {
+      "a": "sataa",
+      "b": "ttttsttataa",
+      "label": true
+    },
+    {
+      "a": "atttaast",
+      "b": "ataatstaasttstt",
+      "label": true
+    },
+    {
+      "a": "atasaa",
+      "b": "atssastttsaas",
+      "label": true
+    },
+    {
+      "a": "taass",
+      "b": "tats",
+      "label": false
+    },
+    {
+      "a": "ssttass",
+      "b": "tstst",
+      "label": false
+    },
+    {
+      "a": "saataattt",
+      "b": "sssaaasst",
+      "label": false
+    },
+    {
+      "a": "ssatatt",
+      "b": "asstaaasss",
+      "label": true
+    },
+    {
+      "a": "ssatsaatss",
+      "b": "aaasass",
+      "label": false
+    },
+    {
+      "a": "tasatsatt",
+      "b": "ttstttttt",
+      "label": false
+    },
+    {
+      "a": "sasstatsta",
+      "b": "ttsaaasstatttssa",
+      "label": true
+    },
+    {
+      "a": "aata",
+      "b": "ttasat",
+      "label": false
+    },
+    {
+      "a": "asta",
+      "b": "tsta",
+      "label": false
+    },
+    {
+      "a": "ssts",
+      "b": "ttttttttttttsts",
+      "label": true
+    },
+    {
+      "a": "tatstas",
+      "b": "tttttsstatsttaaa",
+      "label": true
+    },
+    {
+      "a": "astsssas",
+      "b": "aata",
+      "label": false
+    },
+    {
+      "a": "atastsaass",
+      "b": "astassttsssaasssss",
+      "label": true
+    },
+    {
+      "a": "aattst",
+      "b": "tatts",
+      "label": false
+    },
+    {
+      "a": "aaatsssa",
+      "b": "satattass",
+      "label": false
+    },
+    {
+      "a": "tattsttst",
+      "b": "tstt",
+      "label": false
+    },
+    {
+      "a": "aaaa",
+      "b": "sattsssttattt",
+      "label": true
+    },
+    {
+      "a": "ssstsa",
+      "b": "sssaasttssatt",
+      "label": true
+    },
+    {
+      "a": "ttstssast",
+      "b": "tasasstt",
+      "label": false
+    },
+    {
+      "a": "atstassas",
+      "b": "sstaaaa",
+      "label": false
+    },
+    {
+      "a": "ttttt",
+      "b": "sasasa",
+      "label": false
+    },
+    {
+      "a": "aaaatas",
+      "b": "aasststttsstssssast",
+      "label": true
+    },
+    {
+      "a": "tsttas",
+      "b": "aastastaaa",
+      "label": false
+    },
+    {
+      "a": "saaasa",
+      "b": "asstsstttasss",
+      "label": true
+    },
+    {
+      "a": "ttaa",
+      "b": "tsssastaa",
+      "label": false
+    },
+    {
+      "a": "taatts",
+      "b": "atassasts",
+      "label": false
+    },
+    {
+      "a": "aatta",
+      "b": "sssstattatat",
+      "label": true
+    },
+    {
+      "a": "ststtaat",
+      "b": "stssttasssatttt",
+      "label": true
+    },
+    {
+      "a": "stssts",
+      "b": "ttsssa",
+      "label": false
+    },
+    {
+      "a": "tttssst",
+      "b": "atsts",
+      "label": false
+    },
+    {
+      "a": "tttsatss",
+      "b": "stttssts",
+      "label": false
+    },
+    {
+      "a": "tsasaasaaa",
+      "b": "tsttsasasastsssaaatt",
+      "label": true
+    },
+    {
+      "a": "atstatasst",
+      "b": "aastss",
+      "label": false
+    },
+    {
+      "a": "ssatta",
+      "b": "ssstsssstsssaa",
+      "label": true
+    },
+    {
+      "a": "ttsss",
+      "b": "tsssststttt",
+      "label": true
+    },
+    {
+      "a": "tsasaasta",
+      "b": "tsttsaaaasastatst",
+      "label": true
+    },
+    {
+      "a": "staaassat",
+      "b": "tasts",
+      "label": false
+    },
+    {
+      "a": "tsssa",
+      "b": "taasassats",
+      "label": false
+    },
+    {
+      "a": "saaaasatas",
+      "b": "tsasstttaasstsasatast",
+      "label": true
+    },
+    {
+      "a": "tasaaaastt",
+      "b": "tatttasts",
+      "label": false
+    },
+    {
+      "a": "sststssas",
+      "b": "ttsaa",
+      "label": false
+    },
+    {
+      "a": "saatastt",
+      "b": "sttsasassssstast",
+      "label": true
+    },
+    {
+      "a": "tttssatst",
+      "b": "aataattsst",
+      "label": false
+    },
+    {
+      "a": "atatttsttt",
+      "b": "asst",
+      "label": false
+    },
+    {
+      "a": "tasaastaa",
+      "b": "stsststs",
+      "label": false
+    },
+    {
+      "a": "aaaaa",
+      "b": "aasssttttaatsa",
+      "label": true
+    },
+    {
+      "a": "sstttsaaaa",
+      "b": "saastassassattstsssa",
+      "label": true
+    },
+    {
+      "a": "saaatasaa",
+      "b": "sttsssastttasaat",
+      "label": true
+    },
+    {
+      "a": "atatt",
+      "b": "tsstsasstatsst",
+      "label": true
+    },
+    {
+      "a": "tststssas",
+      "b": "astttaata",
+      "label": false
+    },
+    {
+      "a": "asaas",
+      "b": "satsassasstt",
+      "label": true
+    },
+    {
+      "a": "tsattssass",
+      "b": "tatstasssss",
+      "label": true
+    },
+    {
+      "a": "tssasastas",
+      "b": "ttssttaaaastasssss",
+      "label": true
+    },
+    {
+      "a": "assaat",
+      "b": "tattsta",
+      "label": false
+    },
+    {
+      "a": "saat",
+      "b": "sattassa",
+      "label": false
+    },
+    {
+      "a": "aatt",
+      "b": "sstatstt",
+      "label": false
+    },
+    {
+      "a": "satttsssaa",
+      "b": "sstss",
+      "label": false
+    },
+    {
+      "a": "ssstata",
+      "b": "ssttssstatttsssta",
+      "label": true
+    },
+    {
+      "a": "aaasta",
+      "b": "aassta",
+      "label": false
+    },
+    {
+      "a": "assatsa",
+      "b": "attta",
+      "label": false
+    },
+    {
+      "a": "tssa",
+      "b": "taat",
+      "label": false
+    },
+    {
+      "a": "asas",
+      "b": "satsssassaastss",
+      "label": true
+    },
+    {
+      "a": "tstttstss",
+      "b": "tsssssttttsttssst",
+      "label": true
+    },
+    {
+      "a": "aassast",
+      "b": "ssss",
+      "label": false
+    },
+    {
+      "a": "attata",
+      "b": "stssaa",
+      "label": false
+    },
+    {
+      "a": "aatata",
+      "b": "tsttaaattsa",
+      "label": true
+    },
+    {
+      "a": "sssaaatst",
+      "b": "saatss",
+      "label": false
+    },
+    {
+      "a": "asaaatt",
+      "b": "ttaaa",
+      "label": false
+    },
+    {
+      "a": "atassstss",
+      "b": "aattssssttttsstt",
+      "label": true
+    },
+    {
+      "a": "ataaaaat",
+      "b": "statsaa",
+      "label": false
+    },
+    {
+      "a": "tsssstt",
+      "b": "tatasaaats",
+      "label": false
+    },
+    {
+      "a": "tasatsas",
+      "b": "tsstststasssatsas",
+      "label": true
+    },
+    {
+      "a": "saasass",
+      "b": "ssaassaassat",
+      "label": true
+    },
+    {
+      "a": "stssss",
+      "b": "sstta",
+      "label": false
+    },
+    {
+      "a": "ttss",
+      "b": "sttstast",
+      "label": false
+    },
+    {
+      "a": "astasasss",
+      "b": "astasttasssssttssss",
+      "label": true
+    },
+    {
+      "a": "asstatsas",
+      "b": "asssstsassttssttasss",
+      "label": true
+    },
+    {
+      "a": "tstaatsaaa",
+      "b": "ttstastttatsatt",
+      "label": true
+    },
+    {
+      "a": "stsstaasts",
+      "b": "stsststssttaasttts",
+      "label": true
+    },
+    {
+      "a": "tatt",
+      "b": "tasstsst",
+      "label": true
+    },
+    {
+      "a": "aasttsa",
+      "b": "aasstttsssats",
+      "label": true
+    },
+    {
+      "a": "tsaa",
+      "b": "astststt",
+      "label": false
+    },
+    {
+      "a": "aass",
+      "b": "taaaaaattt",
+      "label": true
+    },
+    {
+      "a": "asaaat",
+      "b": "ssttasttsatst",
+      "label": true
+    },
+    {
+      "a": "tasttta",
+      "b": "sstaaaststtta",
+      "label": true
+    },
+    {
+      "a": "satsttt",
+      "b": "taaattta",
+      "label": false
+    },
+    {
+      "a": "ttatt",
+      "b": "taastaaats",
+      "label": true
+    },
+    {
+      "a": "aasas",
+      "b": "atatasssstss",
+      "label": true
+    },
+    {
+      "a": "aaastaa",
+      "b": "atstsasstt",
+      "label": false
+    },
+    {
+      "a": "sstst",
+      "b": "satst",
+      "label": false
+    },
+    {
+      "a": "tats",
+      "b": "sssassa",
+      "label": false
+    },
+    {
+      "a": "assst",
+      "b": "tsttstt",
+      "label": false
+    },
+    {
+      "a": "aaat",
+      "b": "aaaatast",
+      "label": true
+    },
+    {
+      "a": "stts",
+      "b": "sttastt",
+      "label": false
+    },
+    {
+      "a": "assaasaata",
+      "b": "sassaasssssaasaaat",
+      "label": true
+    },
+    {
+      "a": "sststttsa",
+      "b": "sssststttttssas",
+      "label": true
+    },
+    {
+      "a": "atast",
+      "b": "asstastsssstt",
+      "label": true
+    },
+    {
+      "a": "sasattss",
+      "b": "assssatsa",
+      "label": false
+    },
+    {
+      "a": "satsa",
+      "b": "ssats",
+      "label": false
+    },
+    {
+      "a": "ttttass",
+      "b": "tattasttatss",
+      "label": true
+    },
+    {
+      "a": "tass",
+      "b": "tasasata",
+      "label": false
+    },
+    {
+      "a": "ttststtats",
+      "b": "tassatst",
+      "label": false
+    },
+    {
+      "a": "stsstss",
+      "b": "tasttaa",
+      "label": false
+    },
+    {
+      "a": "taaataaata",
+      "b": "tattstssssaatataastass",
+      "label": true
+    },
+    {
+      "a": "ssatt",
+      "b": "satasaast",
+      "label": false
+    },
+    {
+      "a": "tstat",
+      "b": "ttstastssstss",
+      "label": true
+    },
+    {
+      "a": "aatttss",
+      "b": "tttssat",
+      "label": false
+    },
+    {
+      "a": "sstt",
+      "b": "tssssssttt",
+      "label": true
+    },
+    {
+      "a": "asttstata",
+      "b": "asssssssststttsatat",
+      "label": true
+    },
+    {
+      "a": "tssasttat",
+      "b": "stassst",
+      "label": false
+    },
+    {
+      "a": "sasta",
+      "b": "tsattttstasst",
+      "label": true
+    },
+    {
+      "a": "tttastta",
+      "b": "ttassststtstttat",
+      "label": true
+    },
+    {
+      "a": "ttstt",
+      "b": "satastttts",
+      "label": true
+    },
+    {
+      "a": "tssatttta",
+      "b": "ssstasstts",
+      "label": false
+    },
+    {
+      "a": "aattttt",
+      "b": "atatattss",
+      "label": false
+    },
+    {
+      "a": "satasat",
+      "b": "sttss",
+      "label": false
+    },
+    {
+      "a": "asstss",
+      "b": "assssstssttsssstss",
+      "label": true
+    },
+    {
+      "a": "atat",
+      "b": "ttatsasststtss",
+      "label": true
+    },
+    {
+      "a": "tsatsasta",
+      "b": "sattatt",
+      "label": false
+    },
+    {
+      "a": "ttat",
+      "b": "ttttsaatatt",
+      "label": true
+    },
+    {
+      "a": "atsta",
+      "b": "attassss",
+      "label": true
+    },
+    {
+      "a": "asss",
+      "b": "aattta",
+      "label": true
+    },
+    {
+      "a": "tastaaaaa",
+      "b": "sstas",
+      "label": false
+    },
+    {
+      "a": "ttaaaas",
+      "b": "ttaaas",
+      "label": false
+    },
+    {
+      "a": "aatstttat",
+      "b": "atatstsssstaaaaat",
+      "label": true
+    },
+    {
+      "a": "saaaaatta",
+      "b": "tstssaaaaattat",
+      "label": true
+    },
+    {
+      "a": "asasas",
+      "b": "sttaaassatssass",
+      "label": true
+    },
+    {
+      "a": "asas",
+      "b": "tasaassssa",
+      "label": true
+    },
+    {
+      "a": "tttssastss",
+      "b": "asattt",
+      "label": false
+    },
+    {
+      "a": "ttsttataa",
+      "b": "ttaaasaatt",
+      "label": true
+    },
+    {
+      "a": "sastttstt",
+      "b": "sttastaaststttss",
+      "label": true
+    },
+    {
+      "a": "atastss",
+      "b": "stttssa",
+      "label": false
+    },
+    {
+      "a": "ttsstst",
+      "b": "tsstttttstaas",
+      "label": true
+    },
+    {
+      "a": "atas",
+      "b": "tsastttsat",
+      "label": true
+    },
+    {
+      "a": "aatssatt",
+      "b": "tsts",
+      "label": false
+    },
+    {
+      "a": "tsattataat",
+      "b": "ttststtattatttsstaa",
+      "label": true
+    },
+    {
+      "a": "asaasattat",
+      "b": "sastas",
+      "label": false
+    },
+    {
+      "a": "attaaasts",
+      "b": "atttsstattttttsssts",
+      "label": true
+    },
+    {
+      "a": "ttaa",
+      "b": "asata",
+      "label": false
+    },
+    {
+      "a": "tatsaaas",
+      "b": "ssaaatss",
+      "label": false
+    },
+    {
+      "a": "sstatsa",
+      "b": "tsstttsatstasss",
+      "label": true
+    },
+    {
+      "a": "tattttaa",
+      "b": "sststsssstattaastaa",
+      "label": true
+    },
+    {
+      "a": "tttstttsss",
+      "b": "aaaaat",
+      "label": false
+    },
+    {
+      "a": "tttas",
+      "b": "tttttatts",
+      "label": true
+    },
+    {
+      "a": "tsttsa",
+      "b": "tssstttassastsatt",
+      "label": true
+    },
+    {
+      "a": "aatststa",
+      "b": "aasaastaaststa",
+      "label": true
+    },
+    {
+      "a": "satas",
+      "b": "tsststtat",
+      "label": false
+    },
+    {
+      "a": "ssstsss",
+      "b": "tsast",
+      "label": false
+    },
+    {
+      "a": "sassatss",
+      "b": "sassatsstsss",
+      "label": true
+    },
+    {
+      "a": "sata",
+      "b": "tstsaasta",
+      "label": false
+    },
+    {
+      "a": "atasssts",
+      "b": "statsaa",
+      "label": false
+    },
+    {
+      "a": "aasattas",
+      "b": "satassa",
+      "label": false
+    },
+    {
+      "a": "ssaasssass",
+      "b": "ttatta",
+      "label": false
+    },
+    {
+      "a": "tass",
+      "b": "staa",
+      "label": false
+    },
+    {
+      "a": "tatsassaa",
+      "b": "aaatatatt",
+      "label": false
+    },
+    {
+      "a": "assstt",
+      "b": "assssaassssstttss",
+      "label": true
+    },
+    {
+      "a": "saaastts",
+      "b": "aats",
+      "label": false
+    },
+    {
+      "a": "statt",
+      "b": "tasttsstsa",
+      "label": false
+    },
+    {
+      "a": "ttsa",
+      "b": "tsatsssss",
+      "label": true
+    },
+    {
+      "a": "ttastsas",
+      "b": "asaasttt",
+      "label": false
+    },
+    {
+      "a": "asssas",
+      "b": "ssastssssassttss",
+      "label": true
+    },
+    {
+      "a": "ataassataa",
+      "b": "assassta",
+      "label": false
+    },
+    {
+      "a": "tsasstsst",
+      "b": "ttttssatsstttsssst",
+      "label": true
+    },
+    {
+      "a": "ssststatt",
+      "b": "ssstststsataass",
+      "label": true
+    },
+    {
+      "a": "taaaat",
+      "b": "aaastts",
+      "label": false
+    },
+    {
+      "a": "attatssss",
+      "b": "tastttsaa",
+      "label": false
+    },
+    {
+      "a": "tsss",
+      "b": "tssss",
+      "label": true
+    },
+    {
+      "a": "taattttas",
+      "b": "atsats",
+      "label": false
+    },
+    {
+      "a": "aaaa",
+      "b": "atassattttatttss",
+      "label": true
+    },
+    {
+      "a": "taast",
+      "b": "tssaattstt",
+      "label": true
+    },
+    {
+      "a": "stassattt",
+      "b": "stssasssstassttss",
+      "label": true
+    },
+    {
+      "a": "atssasts",
+      "b": "atsssssassststt",
+      "label": true
+    },
+    {
+      "a": "aaatsaaa",
+      "b": "asssaattttsaassa",
+      "label": true
+    },
+    {
+      "a": "tsstastat",
+      "b": "ststtasssats",
+      "label": true
+    }
+  ],
+  "worldDigest": "3f3b27fbff8d4d7d036de89e5cb4d2cc2246599c3eed22c8984a09bcda7662e7",
+  "exportVersion": "sealed-matched-padded-v2-public-v2"
+}

@@ -1,0 +1,133 @@
+{
+  "audit": {
+    "master": "2026110304",
+    "proposalsPerFamily": 512,
+    "families": [
+      "F-count",
+      "F-abelian",
+      "F-nonabelian",
+      "F-monoid"
+    ],
+    "nonabelianVariants": [
+      "S3",
+      "Q8",
+      "D4",
+      "A4"
+    ],
+    "monoidPoints": [
+      3,
+      4
+    ],
+    "scoringWorkers": 8,
+    "shardsPerFamily": 2,
+    "policy": "fixed 512 proposals per requested family; variants cycle by proposal index; no replacement; construction for every family finishes before the first portfolio fit",
+    "independentChallenger": "postponed until versioned export; B4r builder audit only, no freeze",
+    "samplerVersion": "sealed-matched-padded-v2",
+    "dependence": "four requested-family audits reuse the same 512 seed values; rows within a world are dependent; no pooled independent interval"
+  },
+  "portfolio": {
+    "version": "portfolio-b4r-v2",
+    "contract": "fit-once-private-pair-v2",
+    "fitOperations": 2000000,
+    "fitMs": 20000,
+    "inferenceMs": 20000,
+    "pairMs": 2000,
+    "maxInferenceCalls": 200,
+    "maxStateBytes": 2000000,
+    "finiteStateChoicesPerQ": 4096,
+    "grammarRounds": 16,
+    "selector": "highest public training accuracy; ties by registration order; chosen before sealed scoring",
+    "workAccounting": "Wall-clock per stage is comparable. Search counters are member-specific and not comparable across members. Fit includes catalogue, feature and model preparation. Runtime/context creation, source loading, state parsing and serialization are included in stage wall-clock. WASM module initialization is reported separately.",
+    "memoization": "none: each row gets a fresh runtime and context; public, challenge and natural each have a separate equal inference budget",
+    "preparation": "standalone estimate = measured cold module initialization + fit; actual module initialization is separately charged when incurred; amortized = fit per world with a reused interpreter module, never reused solver state"
+  },
+  "members": [
+    {
+      "id": "count-linear",
+      "language": "Gaussian elimination on rule count differences modulo 2 and 3"
+    },
+    {
+      "id": "group-full",
+      "language": "enumerate symbol homomorphisms into C2..C6, C2xC2, C3xC3, S3, Q8, D4, A4"
+    },
+    {
+      "id": "group-quotients",
+      "language": "same search into all proper quotients of the registered groups"
+    },
+    {
+      "id": "monoid-csp",
+      "language": "backtracking symbol-image CSP over registered finite tables; exhaustive laws, partial rules and examples"
+    },
+    {
+      "id": "joint-coarse",
+      "language": "fit a public finite-table CSP then majority-classify the joint proper-quotient and count tuple"
+    },
+    {
+      "id": "finite-state",
+      "language": "infer complete letter transformations on q=2,3,4 points; retain full product with <=q^q states"
+    },
+    {
+      "id": "rewrite-normal-form",
+      "language": "bounded shortlex-decreasing rewrite normalization"
+    },
+    {
+      "id": "grammar-cegis",
+      "language": "relation-constrained finite fold grammar with public counterexample refinement"
+    },
+    {
+      "id": "nuisance-stumps",
+      "language": "fitted threshold stumps on lengths, histogram L1, edit, LCS, positional agreement and bigram differences"
+    },
+    {
+      "id": "positional-template",
+      "language": "registered ambient templates with their historical generator images at public alphabet positions; free remaining images"
+    },
+    {
+      "id": "bfs-b2",
+      "language": "bounded single-rule FIFO string search",
+      "search": {
+        "name": "b2",
+        "maxNodes": 128,
+        "maxPositions": 4096,
+        "lengthSlack": 6
+      }
+    },
+    {
+      "id": "bfs-4x",
+      "language": "bounded single-rule FIFO string search",
+      "search": {
+        "name": "4x",
+        "maxNodes": 512,
+        "maxPositions": 16384,
+        "lengthSlack": 6
+      }
+    },
+    {
+      "id": "bfs-16x",
+      "language": "bounded single-rule FIFO string search",
+      "search": {
+        "name": "16x",
+        "maxNodes": 2048,
+        "maxPositions": 65536,
+        "lengthSlack": 6
+      }
+    },
+    {
+      "id": "bidirectional",
+      "language": "bounded two-frontier reversible rewrite search",
+      "search": {
+        "name": "b2",
+        "maxNodes": 128,
+        "maxPositions": 4096,
+        "lengthSlack": 6
+      }
+    }
+  ],
+  "sourceHash": "985bff1f1ed128cd16657fcee99c311e4965326c2d14ed480b7ecf466c5a409b",
+  "host": {
+    "platform": "win32",
+    "node": "v22.23.4",
+    "cpu": "13th Gen Intel(R) Core(TM) i5-13600K",
+    "logicalProcessors": 20
+  }
+}

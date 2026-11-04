@@ -1,0 +1,1054 @@
+{
+  "alphabet": [
+    "u",
+    "q",
+    "s"
+  ],
+  "rules": [
+    {
+      "u": "u",
+      "v": "s"
+    },
+    {
+      "u": "",
+      "v": "su"
+    },
+    {
+      "u": "qqs",
+      "v": "qq"
+    },
+    {
+      "u": "qqq",
+      "v": "ssq"
+    },
+    {
+      "u": "qqs",
+      "v": "suu"
+    },
+    {
+      "u": "",
+      "v": "s"
+    },
+    {
+      "u": "qus",
+      "v": "qqq"
+    },
+    {
+      "u": "suu",
+      "v": "qq"
+    },
+    {
+      "u": "qus",
+      "v": "ssq"
+    },
+    {
+      "u": "",
+      "v": "u"
+    }
+  ],
+  "rulesText": "1. u ↔ s\n2. ε ↔ su\n3. qqs ↔ qq\n4. qqq ↔ ssq\n5. qqs ↔ suu\n6. ε ↔ s\n7. qus ↔ qqq\n8. suu ↔ qq\n9. qus ↔ ssq\n10. ε ↔ u",
+  "trainingPairs": [
+    {
+      "a": "susssuu",
+      "b": "ususqsuu",
+      "label": false
+    },
+    {
+      "a": "qqsqsu",
+      "b": "quuqqusuuuu",
+      "label": true
+    },
+    {
+      "a": "qsqqququuq",
+      "b": "ususuqqusuqququuq",
+      "label": true
+    },
+    {
+      "a": "quqsq",
+      "b": "qqussqssuu",
+      "label": true
+    },
+    {
+      "a": "uquuqs",
+      "b": "suuqssusuq",
+      "label": true
+    },
+    {
+      "a": "usqqsuuq",
+      "b": "usssuusussuusuuq",
+      "label": true
+    },
+    {
+      "a": "uusqqsquq",
+      "b": "uquuusss",
+      "label": false
+    },
+    {
+      "a": "ussuquqqqu",
+      "b": "suusuuqsuqqqu",
+      "label": true
+    },
+    {
+      "a": "usussqq",
+      "b": "usuqsquus",
+      "label": true
+    },
+    {
+      "a": "ssuqsuqs",
+      "b": "qsuus",
+      "label": false
+    },
+    {
+      "a": "sqqqq",
+      "b": "sqquusqsq",
+      "label": true
+    },
+    {
+      "a": "sussqqsuu",
+      "b": "ssusuqqssssuuusus",
+      "label": true
+    },
+    {
+      "a": "squuq",
+      "b": "uqssqssq",
+      "label": false
+    },
+    {
+      "a": "qqqu",
+      "b": "uqsusuqs",
+      "label": false
+    },
+    {
+      "a": "qussuuqsu",
+      "b": "uuquqqu",
+      "label": false
+    },
+    {
+      "a": "qssqs",
+      "b": "qssusuususquusu",
+      "label": true
+    },
+    {
+      "a": "usuqu",
+      "b": "suususuqu",
+      "label": true
+    },
+    {
+      "a": "uuquu",
+      "b": "uusuuuqussuuuu",
+      "label": true
+    },
+    {
+      "a": "uqsqsqu",
+      "b": "ssussuu",
+      "label": false
+    },
+    {
+      "a": "sssssq",
+      "b": "uqqs",
+      "label": false
+    },
+    {
+      "a": "ususqqqssu",
+      "b": "ssqq",
+      "label": false
+    },
+    {
+      "a": "qssssq",
+      "b": "suusuqsss",
+      "label": false
+    },
+    {
+      "a": "squsquu",
+      "b": "squssusssuquus",
+      "label": true
+    },
+    {
+      "a": "sssuq",
+      "b": "ssuuuuqsusuu",
+      "label": true
+    },
+    {
+      "a": "qquuq",
+      "b": "ssuqsuuquq",
+      "label": true
+    },
+    {
+      "a": "uquuuqusqq",
+      "b": "uquuusqusussusqsssuq",
+      "label": true
+    },
+    {
+      "a": "sssqqssqqs",
+      "b": "uuquqqsu",
+      "label": false
+    },
+    {
+      "a": "uqsuqqq",
+      "b": "uusqsusuuqususu",
+      "label": true
+    },
+    {
+      "a": "squuquus",
+      "b": "uqsssu",
+      "label": false
+    },
+    {
+      "a": "qquqssus",
+      "b": "quusuquqsssu",
+      "label": true
+    },
+    {
+      "a": "usquqs",
+      "b": "uqqssssq",
+      "label": false
+    },
+    {
+      "a": "ssssuu",
+      "b": "sqqqsusqqs",
+      "label": false
+    },
+    {
+      "a": "uussssqsus",
+      "b": "ssss",
+      "label": false
+    },
+    {
+      "a": "squsq",
+      "b": "squqqqqu",
+      "label": false
+    },
+    {
+      "a": "sqss",
+      "b": "sqsqu",
+      "label": false
+    },
+    {
+      "a": "qsqsq",
+      "b": "suquussqus",
+      "label": false
+    },
+    {
+      "a": "suuu",
+      "b": "uussusuuu",
+      "label": true
+    },
+    {
+      "a": "uqssq",
+      "b": "usuqsusq",
+      "label": true
+    },
+    {
+      "a": "quqqs",
+      "b": "uusuuss",
+      "label": false
+    },
+    {
+      "a": "uqsqu",
+      "b": "usqsussusqs",
+      "label": true
+    },
+    {
+      "a": "uusuqusssq",
+      "b": "susuqssqqu",
+      "label": false
+    },
+    {
+      "a": "sqssqs",
+      "b": "suqqqsuuqs",
+      "label": true
+    },
+    {
+      "a": "uuqqqquu",
+      "b": "uqssusu",
+      "label": false
+    },
+    {
+      "a": "qqqsqus",
+      "b": "qqssqsssuqsu",
+      "label": true
+    },
+    {
+      "a": "suqqqq",
+      "b": "uusq",
+      "label": false
+    },
+    {
+      "a": "squqqququs",
+      "b": "qquqsqsss",
+      "label": false
+    },
+    {
+      "a": "qsusqu",
+      "b": "uquqssq",
+      "label": false
+    },
+    {
+      "a": "uusss",
+      "b": "uusuqsqqqq",
+      "label": false
+    },
+    {
+      "a": "quuuuss",
+      "b": "quusuuussssuss",
+      "label": true
+    },
+    {
+      "a": "qussusuqqu",
+      "b": "uuqqsssqqs",
+      "label": false
+    },
+    {
+      "a": "susuusu",
+      "b": "sssssuqss",
+      "label": false
+    },
+    {
+      "a": "quuqquqsss",
+      "b": "quussuqssqqss",
+      "label": true
+    },
+    {
+      "a": "uqsusuqu",
+      "b": "quqsuqsssuuqs",
+      "label": true
+    },
+    {
+      "a": "squs",
+      "b": "ssssquuqqsu",
+      "label": true
+    },
+    {
+      "a": "quuu",
+      "b": "usqqsuu",
+      "label": false
+    },
+    {
+      "a": "suqs",
+      "b": "uuqqus",
+      "label": false
+    },
+    {
+      "a": "uqsus",
+      "b": "uqqqqu",
+      "label": false
+    },
+    {
+      "a": "uuquusqqq",
+      "b": "suuuuquuusqqsuuqsu",
+      "label": true
+    },
+    {
+      "a": "qqqqssu",
+      "b": "usuqusuuu",
+      "label": false
+    },
+    {
+      "a": "qsuquqs",
+      "b": "ssuuqsuusuqsuqs",
+      "label": true
+    },
+    {
+      "a": "qsqq",
+      "b": "uqqsqs",
+      "label": true
+    },
+    {
+      "a": "ussqqqq",
+      "b": "usssqqquqqq",
+      "label": true
+    },
+    {
+      "a": "quuqu",
+      "b": "uquussuuquuu",
+      "label": true
+    },
+    {
+      "a": "suqus",
+      "b": "uussuuqusss",
+      "label": true
+    },
+    {
+      "a": "qsuuuqu",
+      "b": "qssqusquu",
+      "label": false
+    },
+    {
+      "a": "uquuusqs",
+      "b": "usquusssuqussssuus",
+      "label": true
+    },
+    {
+      "a": "squsssqu",
+      "b": "sqqsuuuq",
+      "label": false
+    },
+    {
+      "a": "uuussqusss",
+      "b": "ususssuss",
+      "label": false
+    },
+    {
+      "a": "ussuqu",
+      "b": "usssuquuu",
+      "label": true
+    },
+    {
+      "a": "ssqqsus",
+      "b": "sussusqss",
+      "label": false
+    },
+    {
+      "a": "qqsqus",
+      "b": "uusus",
+      "label": false
+    },
+    {
+      "a": "uqqqqsqu",
+      "b": "qsuqqsq",
+      "label": false
+    },
+    {
+      "a": "uuuss",
+      "b": "suussus",
+      "label": true
+    },
+    {
+      "a": "ssusq",
+      "b": "uqquu",
+      "label": false
+    },
+    {
+      "a": "qsqss",
+      "b": "usqs",
+      "label": false
+    },
+    {
+      "a": "usqquuqqs",
+      "b": "quuuuss",
+      "label": false
+    },
+    {
+      "a": "quus",
+      "b": "ussus",
+      "label": false
+    },
+    {
+      "a": "sssu",
+      "b": "suuususu",
+      "label": true
+    },
+    {
+      "a": "uuuqsuqusq",
+      "b": "uuusuuususqssquuq",
+      "label": true
+    },
+    {
+      "a": "suuusss",
+      "b": "usuusssuu",
+      "label": true
+    },
+    {
+      "a": "qssququuq",
+      "b": "sqsus",
+      "label": false
+    },
+    {
+      "a": "suqsqsq",
+      "b": "suqsssqu",
+      "label": false
+    },
+    {
+      "a": "ussu",
+      "b": "ususuuusussusu",
+      "label": true
+    },
+    {
+      "a": "usuqs",
+      "b": "usuuuuuqssuss",
+      "label": true
+    },
+    {
+      "a": "quqsuuqquq",
+      "b": "qsuqsuuqqs",
+      "label": false
+    },
+    {
+      "a": "uqqusssu",
+      "b": "usqsqsussu",
+      "label": true
+    },
+    {
+      "a": "suqu",
+      "b": "sqqqu",
+      "label": true
+    },
+    {
+      "a": "qquu",
+      "b": "quuu",
+      "label": false
+    },
+    {
+      "a": "quqsqquuq",
+      "b": "sqsq",
+      "label": false
+    },
+    {
+      "a": "uuuuuquss",
+      "b": "ssuuuuqqsqsssu",
+      "label": true
+    },
+    {
+      "a": "uquqs",
+      "b": "uuqsq",
+      "label": true
+    },
+    {
+      "a": "ssqsqquss",
+      "b": "squusq",
+      "label": false
+    },
+    {
+      "a": "sqqquqqqq",
+      "b": "suquqqsqssuq",
+      "label": true
+    },
+    {
+      "a": "uquqquuq",
+      "b": "uusssquuuqusu",
+      "label": true
+    },
+    {
+      "a": "qsssqqsqs",
+      "b": "squsqusqsqs",
+      "label": true
+    },
+    {
+      "a": "uqquusuuq",
+      "b": "quqs",
+      "label": false
+    },
+    {
+      "a": "sqsqqq",
+      "b": "uqsusq",
+      "label": true
+    },
+    {
+      "a": "quuqu",
+      "b": "suuqsussssqu",
+      "label": true
+    },
+    {
+      "a": "sqsqqsssu",
+      "b": "qsquu",
+      "label": false
+    },
+    {
+      "a": "ssqqqqqqq",
+      "b": "qssuqsu",
+      "label": false
+    },
+    {
+      "a": "uqusu",
+      "b": "sqsq",
+      "label": false
+    },
+    {
+      "a": "qqsuq",
+      "b": "squq",
+      "label": false
+    },
+    {
+      "a": "sqsuqs",
+      "b": "qusussqs",
+      "label": true
+    },
+    {
+      "a": "qqussuuu",
+      "b": "ssuusqqssuuuu",
+      "label": true
+    },
+    {
+      "a": "uquuqqqsq",
+      "b": "uqssqs",
+      "label": false
+    },
+    {
+      "a": "uquusuuu",
+      "b": "qsqss",
+      "label": false
+    },
+    {
+      "a": "qqqu",
+      "b": "suquususq",
+      "label": false
+    },
+    {
+      "a": "ussssuu",
+      "b": "ussssuussussu",
+      "label": true
+    },
+    {
+      "a": "uusqu",
+      "b": "sqqsuu",
+      "label": false
+    },
+    {
+      "a": "sqsququ",
+      "b": "usquqssqusu",
+      "label": true
+    },
+    {
+      "a": "qqssuqsqu",
+      "b": "qssuuu",
+      "label": false
+    },
+    {
+      "a": "ussu",
+      "b": "uqqsquqqs",
+      "label": false
+    },
+    {
+      "a": "uqqssqsqu",
+      "b": "sssuususssqssuq",
+      "label": true
+    },
+    {
+      "a": "usssuuus",
+      "b": "sqssss",
+      "label": false
+    },
+    {
+      "a": "ssququuqq",
+      "b": "suququuqsuuq",
+      "label": true
+    },
+    {
+      "a": "usuqsusq",
+      "b": "sqsu",
+      "label": false
+    },
+    {
+      "a": "suuq",
+      "b": "suusqsu",
+      "label": true
+    },
+    {
+      "a": "qqquqsqus",
+      "b": "sssu",
+      "label": false
+    },
+    {
+      "a": "susuuqussu",
+      "b": "usuuquusuu",
+      "label": true
+    },
+    {
+      "a": "ssssuuuss",
+      "b": "qqsssuuq",
+      "label": false
+    },
+    {
+      "a": "uqsqsqsssq",
+      "b": "uqqsqsuss",
+      "label": false
+    },
+    {
+      "a": "ssuqus",
+      "b": "qqusssu",
+      "label": false
+    },
+    {
+      "a": "uuqs",
+      "b": "uuusqusss",
+      "label": true
+    },
+    {
+      "a": "usqqqu",
+      "b": "uqqu",
+      "label": false
+    },
+    {
+      "a": "qqsq",
+      "b": "qssqsusususq",
+      "label": true
+    },
+    {
+      "a": "susssuquu",
+      "b": "suususuususuquu",
+      "label": true
+    },
+    {
+      "a": "qsqq",
+      "b": "qqqsq",
+      "label": false
+    },
+    {
+      "a": "uqus",
+      "b": "sssu",
+      "label": false
+    },
+    {
+      "a": "qqqquuusq",
+      "b": "qqss",
+      "label": false
+    },
+    {
+      "a": "qsusuuq",
+      "b": "ssuuqqqusuuuuuuq",
+      "label": true
+    },
+    {
+      "a": "uusqqqqsu",
+      "b": "uussqqssqqusussus",
+      "label": true
+    },
+    {
+      "a": "suqquq",
+      "b": "suqssussusuqsuq",
+      "label": true
+    },
+    {
+      "a": "qsusqu",
+      "b": "qqssqqqs",
+      "label": false
+    },
+    {
+      "a": "ussqu",
+      "b": "qsqqqussuu",
+      "label": false
+    },
+    {
+      "a": "usqsqsus",
+      "b": "qusqqssuu",
+      "label": false
+    },
+    {
+      "a": "ququu",
+      "b": "qsqq",
+      "label": false
+    },
+    {
+      "a": "susuq",
+      "b": "ssuqu",
+      "label": true
+    },
+    {
+      "a": "uusquuu",
+      "b": "sssqusssuus",
+      "label": true
+    },
+    {
+      "a": "qqsuus",
+      "b": "qqssuusuussussu",
+      "label": true
+    },
+    {
+      "a": "sususqssqq",
+      "b": "sssqqusuuu",
+      "label": false
+    },
+    {
+      "a": "usqusssqs",
+      "b": "qquuqu",
+      "label": false
+    },
+    {
+      "a": "qussqqqq",
+      "b": "uqusssqssuq",
+      "label": true
+    },
+    {
+      "a": "usuqqsqsq",
+      "b": "sssqqsuqqq",
+      "label": false
+    },
+    {
+      "a": "qsqq",
+      "b": "qssuqsqs",
+      "label": true
+    },
+    {
+      "a": "uqsuuuqss",
+      "b": "suquqqs",
+      "label": false
+    },
+    {
+      "a": "quussq",
+      "b": "sssq",
+      "label": false
+    },
+    {
+      "a": "uqqssqu",
+      "b": "ssuusuqusu",
+      "label": true
+    },
+    {
+      "a": "qssuusss",
+      "b": "qsuuq",
+      "label": false
+    },
+    {
+      "a": "qqss",
+      "b": "qqsuquu",
+      "label": false
+    },
+    {
+      "a": "ussqqqsss",
+      "b": "usqsuqqssususuu",
+      "label": true
+    },
+    {
+      "a": "qussssquu",
+      "b": "sqssuuqsq",
+      "label": false
+    },
+    {
+      "a": "ssqsqsquu",
+      "b": "ssuuuqsqusquu",
+      "label": true
+    },
+    {
+      "a": "uusuuqusq",
+      "b": "uqssssuusu",
+      "label": false
+    },
+    {
+      "a": "qsuuuusqqq",
+      "b": "qqqqsuuqqq",
+      "label": false
+    },
+    {
+      "a": "ususuuqqq",
+      "b": "uqqsssususuuqsuuu",
+      "label": true
+    },
+    {
+      "a": "sqss",
+      "b": "qsqsus",
+      "label": false
+    },
+    {
+      "a": "ssqu",
+      "b": "quussqu",
+      "label": false
+    },
+    {
+      "a": "sssusquq",
+      "b": "ssssusuqq",
+      "label": true
+    },
+    {
+      "a": "uuqsuqusus",
+      "b": "qsqqs",
+      "label": false
+    },
+    {
+      "a": "uuquqqqq",
+      "b": "uusuqqqsq",
+      "label": false
+    },
+    {
+      "a": "sqsssq",
+      "b": "ussuqssssssq",
+      "label": true
+    },
+    {
+      "a": "quqsss",
+      "b": "uqqsussu",
+      "label": true
+    },
+    {
+      "a": "uuuu",
+      "b": "ssssuussu",
+      "label": true
+    },
+    {
+      "a": "susssqusq",
+      "b": "uusqqqus",
+      "label": false
+    },
+    {
+      "a": "uuquuq",
+      "b": "suuusqqqsuqs",
+      "label": true
+    },
+    {
+      "a": "sussu",
+      "b": "quuusuuu",
+      "label": false
+    },
+    {
+      "a": "ququsqsqq",
+      "b": "susquqqqsq",
+      "label": true
+    },
+    {
+      "a": "sqsqqsuusu",
+      "b": "ussqqqsqs",
+      "label": false
+    },
+    {
+      "a": "uuqssqs",
+      "b": "usqssuuqqq",
+      "label": true
+    },
+    {
+      "a": "qquqqqsu",
+      "b": "qsqsuusssu",
+      "label": false
+    },
+    {
+      "a": "uqsssus",
+      "b": "uqssuuuussussss",
+      "label": true
+    },
+    {
+      "a": "qqss",
+      "b": "qqsuuusussuu",
+      "label": true
+    },
+    {
+      "a": "uuquussqqu",
+      "b": "ssqqsqqu",
+      "label": false
+    },
+    {
+      "a": "ssqqu",
+      "b": "ssssuusqq",
+      "label": true
+    },
+    {
+      "a": "ssqqsssq",
+      "b": "qqsuqq",
+      "label": false
+    },
+    {
+      "a": "sssquqssus",
+      "b": "ssssquu",
+      "label": false
+    },
+    {
+      "a": "squssqqss",
+      "b": "qssuqsuusu",
+      "label": false
+    },
+    {
+      "a": "ussu",
+      "b": "usuusuusu",
+      "label": true
+    },
+    {
+      "a": "usuuqqsusu",
+      "b": "uuuusuuqqsuuussss",
+      "label": true
+    },
+    {
+      "a": "uqsqq",
+      "b": "uqsuqsssuusqs",
+      "label": true
+    },
+    {
+      "a": "uqqussqus",
+      "b": "usssuuuuqussus",
+      "label": true
+    },
+    {
+      "a": "usss",
+      "b": "uussuu",
+      "label": true
+    },
+    {
+      "a": "usus",
+      "b": "uusussuu",
+      "label": true
+    },
+    {
+      "a": "usqquu",
+      "b": "usqqsssuuusuu",
+      "label": true
+    },
+    {
+      "a": "qqusq",
+      "b": "qqssuuuq",
+      "label": true
+    },
+    {
+      "a": "ssusu",
+      "b": "ssussquqs",
+      "label": true
+    },
+    {
+      "a": "sqsqsus",
+      "b": "uququuqqq",
+      "label": false
+    },
+    {
+      "a": "usqsu",
+      "b": "suqqssss",
+      "label": false
+    },
+    {
+      "a": "suuqq",
+      "b": "usqs",
+      "label": false
+    },
+    {
+      "a": "qqqu",
+      "b": "ssuqssssqu",
+      "label": false
+    },
+    {
+      "a": "uussuusqs",
+      "b": "ssssuususuqs",
+      "label": true
+    },
+    {
+      "a": "qqqssusquu",
+      "b": "qqqssssuusuquusus",
+      "label": true
+    },
+    {
+      "a": "qquuqq",
+      "b": "suussqqsss",
+      "label": true
+    },
+    {
+      "a": "qsus",
+      "b": "suqsussuus",
+      "label": true
+    },
+    {
+      "a": "qsuqsuqs",
+      "b": "qusususussqsuuqsus",
+      "label": true
+    },
+    {
+      "a": "uuuuuu",
+      "b": "uuuuuqqsuus",
+      "label": true
+    },
+    {
+      "a": "uqqsuqu",
+      "b": "quqsu",
+      "label": false
+    },
+    {
+      "a": "suquuuq",
+      "b": "suquuuuusuqsuusu",
+      "label": true
+    },
+    {
+      "a": "ssquuq",
+      "b": "ussuqs",
+      "label": false
+    },
+    {
+      "a": "quuussqu",
+      "b": "qssussussusqs",
+      "label": true
+    }
+  ],
+  "worldDigest": "7b5f31589bf299e011c80aec15f1fa98b17808b0ad802c7d3de8be11ef27c939",
+  "exportVersion": "sealed-matched-padded-v2-public-v2"
+}

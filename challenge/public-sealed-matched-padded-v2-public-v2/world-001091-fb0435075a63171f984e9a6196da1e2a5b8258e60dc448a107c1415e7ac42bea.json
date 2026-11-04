@@ -1,0 +1,1058 @@
+{
+  "alphabet": [
+    "u",
+    "d",
+    "h"
+  ],
+  "rules": [
+    {
+      "u": "huu",
+      "v": "hdd"
+    },
+    {
+      "u": "huu",
+      "v": "ddh"
+    },
+    {
+      "u": "ddh",
+      "v": "hdd"
+    },
+    {
+      "u": "hdu",
+      "v": "hud"
+    },
+    {
+      "u": "hd",
+      "v": "hud"
+    },
+    {
+      "u": "hd",
+      "v": "hdu"
+    },
+    {
+      "u": "udu",
+      "v": "uud"
+    },
+    {
+      "u": "uud",
+      "v": "d"
+    },
+    {
+      "u": "",
+      "v": "uu"
+    },
+    {
+      "u": "udu",
+      "v": "d"
+    },
+    {
+      "u": "",
+      "v": "u"
+    }
+  ],
+  "rulesText": "1. huu ↔ hdd\n2. huu ↔ ddh\n3. ddh ↔ hdd\n4. hdu ↔ hud\n5. hd ↔ hud\n6. hd ↔ hdu\n7. udu ↔ uud\n8. uud ↔ d\n9. ε ↔ uu\n10. udu ↔ d\n11. ε ↔ u",
+  "trainingPairs": [
+    {
+      "a": "dhduhddhd",
+      "b": "dddhduuuuhddhud",
+      "label": true
+    },
+    {
+      "a": "uhuuu",
+      "b": "hududu",
+      "label": true
+    },
+    {
+      "a": "duhd",
+      "b": "duddduhhu",
+      "label": false
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "huhuhudd",
+      "b": "uuuuhuuuuhuuhuuduud",
+      "label": true
+    },
+    {
+      "a": "ddduu",
+      "b": "uduuuuuuudduuu",
+      "label": true
+    },
+    {
+      "a": "dhhhhuu",
+      "b": "uhhd",
+      "label": false
+    },
+    {
+      "a": "ddhhhdh",
+      "b": "udduuhuuhhudh",
+      "label": true
+    },
+    {
+      "a": "uuuudh",
+      "b": "uuuuhd",
+      "label": false
+    },
+    {
+      "a": "udduhduuu",
+      "b": "uuuuududuuuuuuhduuu",
+      "label": true
+    },
+    {
+      "a": "dhdu",
+      "b": "uuuduhuuuuud",
+      "label": true
+    },
+    {
+      "a": "hhuhhhhdhu",
+      "b": "hhhhdudhh",
+      "label": false
+    },
+    {
+      "a": "huhuhu",
+      "b": "dduhu",
+      "label": false
+    },
+    {
+      "a": "hhhdudh",
+      "b": "hhhuduudhu",
+      "label": true
+    },
+    {
+      "a": "udhddud",
+      "b": "duuhuuudududu",
+      "label": true
+    },
+    {
+      "a": "uuuuudh",
+      "b": "uuuuuhd",
+      "label": false
+    },
+    {
+      "a": "huhdhdudh",
+      "b": "huhuuuuduuhuuduuuudh",
+      "label": true
+    },
+    {
+      "a": "uuhuh",
+      "b": "duhhuh",
+      "label": false
+    },
+    {
+      "a": "ddhdd",
+      "b": "uduuduhuduud",
+      "label": true
+    },
+    {
+      "a": "uudu",
+      "b": "uuuuuduuu",
+      "label": true
+    },
+    {
+      "a": "ddduuudud",
+      "b": "duuuduuuduuuddu",
+      "label": true
+    },
+    {
+      "a": "hduuuudh",
+      "b": "huhh",
+      "label": false
+    },
+    {
+      "a": "uudhdu",
+      "b": "hddhdhuud",
+      "label": false
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "udhddu",
+      "b": "uuudhduudddu",
+      "label": true
+    },
+    {
+      "a": "hhuudh",
+      "b": "dhhhuhdhdd",
+      "label": false
+    },
+    {
+      "a": "dhhdduuuu",
+      "b": "dduhu",
+      "label": false
+    },
+    {
+      "a": "ddduudud",
+      "b": "hhhhuuu",
+      "label": false
+    },
+    {
+      "a": "uduu",
+      "b": "uduuuuuuu",
+      "label": true
+    },
+    {
+      "a": "ddhhhuhhu",
+      "b": "uuuduudhuhhhh",
+      "label": true
+    },
+    {
+      "a": "dhhh",
+      "b": "dhhhdhu",
+      "label": false
+    },
+    {
+      "a": "uduhuuuhdd",
+      "b": "uuduuhuuuhdd",
+      "label": true
+    },
+    {
+      "a": "dudhuudd",
+      "b": "uuhuuh",
+      "label": false
+    },
+    {
+      "a": "hhhdhdud",
+      "b": "uhuhhudhuudd",
+      "label": true
+    },
+    {
+      "a": "ddduhdduhu",
+      "b": "dduuduhdduuuhu",
+      "label": true
+    },
+    {
+      "a": "hddduhu",
+      "b": "uuuuhuuuduududuhu",
+      "label": true
+    },
+    {
+      "a": "dhduuhdudh",
+      "b": "dhuuduuuuhduuudhuu",
+      "label": true
+    },
+    {
+      "a": "ddhdhhuud",
+      "b": "dddu",
+      "label": false
+    },
+    {
+      "a": "uduudh",
+      "b": "dduhhhudhd",
+      "label": false
+    },
+    {
+      "a": "duduhdd",
+      "b": "hhdudhd",
+      "label": false
+    },
+    {
+      "a": "uudh",
+      "b": "uuhd",
+      "label": false
+    },
+    {
+      "a": "duuhudd",
+      "b": "dhdu",
+      "label": false
+    },
+    {
+      "a": "dudddu",
+      "b": "uuduuuuuuuuddd",
+      "label": true
+    },
+    {
+      "a": "dhddud",
+      "b": "hduuuduh",
+      "label": false
+    },
+    {
+      "a": "uuududdddh",
+      "b": "hhuhdhudd",
+      "label": false
+    },
+    {
+      "a": "hdudu",
+      "b": "huuuddu",
+      "label": true
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "dudu",
+      "b": "duudu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "dddudd",
+      "b": "dduuuuuuuduuudd",
+      "label": true
+    },
+    {
+      "a": "duud",
+      "b": "duuuuduu",
+      "label": true
+    },
+    {
+      "a": "huddud",
+      "b": "huduuuudd",
+      "label": true
+    },
+    {
+      "a": "hhuhuduhd",
+      "b": "hhuuuuuhuuuuudhuuud",
+      "label": true
+    },
+    {
+      "a": "duud",
+      "b": "uduuudu",
+      "label": true
+    },
+    {
+      "a": "ddhuuudh",
+      "b": "duuuuduhdduduuh",
+      "label": true
+    },
+    {
+      "a": "uhhhhdu",
+      "b": "udduhuud",
+      "label": false
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "ddhduhuh",
+      "b": "uuduuuudhuduhuh",
+      "label": true
+    },
+    {
+      "a": "hhhh",
+      "b": "huuhhh",
+      "label": true
+    },
+    {
+      "a": "huudh",
+      "b": "hhhhuhhd",
+      "label": false
+    },
+    {
+      "a": "hudduuduu",
+      "b": "huuuuudduuduuuuu",
+      "label": true
+    },
+    {
+      "a": "hdhddhddhu",
+      "b": "huhhhdh",
+      "label": false
+    },
+    {
+      "a": "hduuddhu",
+      "b": "hduuuuduuuudddhu",
+      "label": true
+    },
+    {
+      "a": "uuuudh",
+      "b": "uuuuhd",
+      "label": false
+    },
+    {
+      "a": "hhduuuudhd",
+      "b": "uhhuuduuuuuuudhuud",
+      "label": true
+    },
+    {
+      "a": "dudhhd",
+      "b": "uuhududuuhuud",
+      "label": true
+    },
+    {
+      "a": "hdhhhuh",
+      "b": "hduhuuuuhuddhh",
+      "label": true
+    },
+    {
+      "a": "uuuhddhhh",
+      "b": "duhhuh",
+      "label": false
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "hudhdhd",
+      "b": "hdhduuuhuuuudu",
+      "label": true
+    },
+    {
+      "a": "uhdhudu",
+      "b": "uudhdd",
+      "label": false
+    },
+    {
+      "a": "uhuhhuhd",
+      "b": "ddhuuddhdh",
+      "label": false
+    },
+    {
+      "a": "hddhd",
+      "b": "uhududhuuuuudu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uhdhudhd",
+      "b": "uhdddhudhduuuuuu",
+      "label": true
+    },
+    {
+      "a": "uuhduhh",
+      "b": "dddduhdh",
+      "label": false
+    },
+    {
+      "a": "dhuhduhhdd",
+      "b": "dhdduuhhu",
+      "label": false
+    },
+    {
+      "a": "duhhuhhh",
+      "b": "uuduuuuhduuuudhhhh",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "hudduhdhu",
+      "b": "dhuu",
+      "label": false
+    },
+    {
+      "a": "dhhhhu",
+      "b": "udhhuhuuuddh",
+      "label": true
+    },
+    {
+      "a": "ddhhdudh",
+      "b": "uhuhdhdudd",
+      "label": false
+    },
+    {
+      "a": "hddhudduud",
+      "b": "huuuudhh",
+      "label": false
+    },
+    {
+      "a": "hhudud",
+      "b": "huududuhduudu",
+      "label": true
+    },
+    {
+      "a": "uuhduhhdd",
+      "b": "uuhduuuuuuuhhdudu",
+      "label": true
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "duhh",
+      "b": "uuuuuuuduuuuuhh",
+      "label": true
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uuuudh",
+      "b": "uuuuhd",
+      "label": false
+    },
+    {
+      "a": "uuudhudhu",
+      "b": "udhuduuuuuuuuuhuu",
+      "label": true
+    },
+    {
+      "a": "duhu",
+      "b": "uuuduuhu",
+      "label": true
+    },
+    {
+      "a": "uudhu",
+      "b": "uuudh",
+      "label": true
+    },
+    {
+      "a": "uuudh",
+      "b": "uuuhd",
+      "label": false
+    },
+    {
+      "a": "hhdhdddud",
+      "b": "hhudhudduuduuud",
+      "label": true
+    },
+    {
+      "a": "hhdh",
+      "b": "huddhduuuh",
+      "label": true
+    },
+    {
+      "a": "uuuuudh",
+      "b": "uuuuuhd",
+      "label": false
+    },
+    {
+      "a": "hdddhhuuu",
+      "b": "ddddd",
+      "label": false
+    },
+    {
+      "a": "ddud",
+      "b": "uuduuduudu",
+      "label": true
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "hhddh",
+      "b": "hhuuuduuudhuu",
+      "label": true
+    },
+    {
+      "a": "uuuuudh",
+      "b": "uuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uuuuuuudh",
+      "b": "uuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uuuuudh",
+      "b": "uuuuuhd",
+      "label": false
+    },
+    {
+      "a": "duuh",
+      "b": "hdhdduhuhh",
+      "label": false
+    },
+    {
+      "a": "uuuudh",
+      "b": "uuuuhd",
+      "label": false
+    },
+    {
+      "a": "uuuuudh",
+      "b": "uuuuuhd",
+      "label": false
+    },
+    {
+      "a": "dhhd",
+      "b": "uuuuduuuuhuuhud",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "hudu",
+      "b": "uhud",
+      "label": true
+    },
+    {
+      "a": "uuuuuuudh",
+      "b": "uuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "hhuuhudhh",
+      "b": "huuhuhuuuduhh",
+      "label": true
+    },
+    {
+      "a": "uuuuuuudh",
+      "b": "uuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "dhuuuuhh",
+      "b": "duuu",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uddhhhhudh",
+      "b": "uuuuddhuuuuhhhuudhu",
+      "label": true
+    },
+    {
+      "a": "hhuhhhd",
+      "b": "hdududdhu",
+      "label": false
+    },
+    {
+      "a": "uhhhu",
+      "b": "uuhhuhuuuuuuuuu",
+      "label": true
+    },
+    {
+      "a": "uhhuduhd",
+      "b": "uhdduuhudhdu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uudh",
+      "b": "uuhd",
+      "label": false
+    },
+    {
+      "a": "uudud",
+      "b": "uuduuuuuduu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uuuhudduu",
+      "b": "uuuuuhududu",
+      "label": true
+    },
+    {
+      "a": "uduuhdh",
+      "b": "uuduhdhuu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "dhdhhdhu",
+      "b": "duhduu",
+      "label": false
+    },
+    {
+      "a": "huhhhudu",
+      "b": "uhuuddhduu",
+      "label": false
+    },
+    {
+      "a": "uuudh",
+      "b": "uuuhd",
+      "label": false
+    },
+    {
+      "a": "hdudddduu",
+      "b": "duhdhdud",
+      "label": false
+    },
+    {
+      "a": "uuuuuuudh",
+      "b": "uuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "dudhd",
+      "b": "duduhuuud",
+      "label": true
+    },
+    {
+      "a": "uuuuuuudh",
+      "b": "uuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "dhuhuhu",
+      "b": "ududdhuhuuuuuh",
+      "label": true
+    },
+    {
+      "a": "huhhuhd",
+      "b": "huuuhhuuuhdu",
+      "label": true
+    },
+    {
+      "a": "hhhhudud",
+      "b": "uhhh",
+      "label": false
+    },
+    {
+      "a": "uhhuuhd",
+      "b": "hhhuu",
+      "label": false
+    },
+    {
+      "a": "uuuudh",
+      "b": "uuuuhd",
+      "label": false
+    },
+    {
+      "a": "uduhuuuhh",
+      "b": "uduududuuhuhh",
+      "label": true
+    },
+    {
+      "a": "uuudh",
+      "b": "uuuhd",
+      "label": false
+    },
+    {
+      "a": "uhhuh",
+      "b": "uhddhhuuuu",
+      "label": true
+    },
+    {
+      "a": "uuuuuuudh",
+      "b": "uuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "dhdu",
+      "b": "uuduuuuhuduuuuuu",
+      "label": true
+    },
+    {
+      "a": "huuduhhhu",
+      "b": "huduuhuuuuhuhu",
+      "label": true
+    },
+    {
+      "a": "duhhddu",
+      "b": "duhhddhddu",
+      "label": false
+    },
+    {
+      "a": "hhhuduh",
+      "b": "uuhhhuduuuuuuuh",
+      "label": true
+    },
+    {
+      "a": "huuudhuduh",
+      "b": "huduhuduhduuudu",
+      "label": true
+    },
+    {
+      "a": "uuuudh",
+      "b": "uuuuhd",
+      "label": false
+    },
+    {
+      "a": "huhddhduhd",
+      "b": "huhuduuuuuduuuhduuuuhud",
+      "label": true
+    },
+    {
+      "a": "uudh",
+      "b": "uuhd",
+      "label": false
+    },
+    {
+      "a": "hhuuhhud",
+      "b": "hhuuuuhhuuuuduu",
+      "label": true
+    },
+    {
+      "a": "uhuhud",
+      "b": "uhuuhuuuuduuu",
+      "label": true
+    },
+    {
+      "a": "dhuhduuuu",
+      "b": "dhuuuuhduuuu",
+      "label": true
+    },
+    {
+      "a": "uuudh",
+      "b": "uuuhd",
+      "label": false
+    },
+    {
+      "a": "hdud",
+      "b": "duduh",
+      "label": true
+    },
+    {
+      "a": "dhuududhh",
+      "b": "uuudhuduududdhh",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "dhddhdh",
+      "b": "dhuuuuuddhuuduh",
+      "label": true
+    },
+    {
+      "a": "dudhd",
+      "b": "duuudddhdudduuu",
+      "label": true
+    },
+    {
+      "a": "huuhdhud",
+      "b": "hdduhudhuuuudu",
+      "label": true
+    },
+    {
+      "a": "dhhddhhu",
+      "b": "uduhuhduudhhuudd",
+      "label": true
+    },
+    {
+      "a": "dhdddh",
+      "b": "uuuuduuuduuduuuhdh",
+      "label": true
+    },
+    {
+      "a": "hhduuuhuh",
+      "b": "uuhuhuuduuuhuh",
+      "label": true
+    },
+    {
+      "a": "dhhuh",
+      "b": "uuuuuduhhuhuu",
+      "label": true
+    },
+    {
+      "a": "dhuh",
+      "b": "hdduu",
+      "label": false
+    },
+    {
+      "a": "hhuuhu",
+      "b": "huuhuduhd",
+      "label": false
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uhdhdh",
+      "b": "uhdhuduuhu",
+      "label": true
+    },
+    {
+      "a": "hhhhu",
+      "b": "hhdhddhu",
+      "label": false
+    },
+    {
+      "a": "hhdhuhhud",
+      "b": "hhhhu",
+      "label": false
+    },
+    {
+      "a": "huhhudhuh",
+      "b": "huhhduhuuuuhuuu",
+      "label": true
+    },
+    {
+      "a": "uuhudu",
+      "b": "uuuuuuhuduu",
+      "label": true
+    },
+    {
+      "a": "huuudhud",
+      "b": "hdudhhhhh",
+      "label": false
+    },
+    {
+      "a": "dhhduud",
+      "b": "duuuhuuuhuuuduuuduuu",
+      "label": true
+    },
+    {
+      "a": "dddhuhhddu",
+      "b": "uuudduuduuhuuhhddu",
+      "label": true
+    },
+    {
+      "a": "udhdhudd",
+      "b": "uudhduhuuuudd",
+      "label": true
+    },
+    {
+      "a": "uddhuhhhuh",
+      "b": "uduuuuuduhhhuhuh",
+      "label": true
+    },
+    {
+      "a": "uuuuuuuudh",
+      "b": "uuuuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "hduhhhhu",
+      "b": "uuhuuuuduhhuuuuuuhh",
+      "label": true
+    },
+    {
+      "a": "dhdhhhuuh",
+      "b": "huhu",
+      "label": false
+    },
+    {
+      "a": "uuuudd",
+      "b": "uuuuuduuudu",
+      "label": true
+    },
+    {
+      "a": "huuhddhuh",
+      "b": "hhdhuduh",
+      "label": false
+    },
+    {
+      "a": "dhuuuuhhd",
+      "b": "uudhuuuuuuhuuhuudu",
+      "label": true
+    },
+    {
+      "a": "uhhhu",
+      "b": "hudhduhuh",
+      "label": false
+    },
+    {
+      "a": "uudhddhuu",
+      "b": "udhhuduuuuuuduu",
+      "label": true
+    },
+    {
+      "a": "uuuudh",
+      "b": "uuuuhd",
+      "label": false
+    },
+    {
+      "a": "uduhhu",
+      "b": "hhuuhd",
+      "label": false
+    },
+    {
+      "a": "ddhuuudhud",
+      "b": "uuuduuududdhuduhud",
+      "label": true
+    },
+    {
+      "a": "uuuuudh",
+      "b": "uuuuuhd",
+      "label": false
+    },
+    {
+      "a": "uuuudh",
+      "b": "uuuuhd",
+      "label": false
+    },
+    {
+      "a": "hdududh",
+      "b": "uuhuuduuuuuuduuuudh",
+      "label": true
+    },
+    {
+      "a": "uuuuuudh",
+      "b": "uuuuuuhd",
+      "label": false
+    },
+    {
+      "a": "hhuhuuuudh",
+      "b": "hhuhuuuuuudh",
+      "label": true
+    },
+    {
+      "a": "uuudh",
+      "b": "uuuhd",
+      "label": false
+    },
+    {
+      "a": "duuhuhhd",
+      "b": "dhdhuu",
+      "label": false
+    },
+    {
+      "a": "dhuduhhhud",
+      "b": "dhduuhhhuuduuu",
+      "label": true
+    },
+    {
+      "a": "uudhh",
+      "b": "uuddhh",
+      "label": false
+    },
+    {
+      "a": "uhhdududu",
+      "b": "uhhduuuuuuudud",
+      "label": true
+    },
+    {
+      "a": "uhdddhuu",
+      "b": "uhuuuudhuuuuuu",
+      "label": true
+    }
+  ],
+  "worldDigest": "fb0435075a63171f984e9a6196da1e2a5b8258e60dc448a107c1415e7ac42bea",
+  "exportVersion": "sealed-matched-padded-v2-public-v2"
+}

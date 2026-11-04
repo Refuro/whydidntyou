@@ -1,0 +1,2697 @@
+{
+  "sourceHash": "985bff1f1ed128cd16657fcee99c311e4965326c2d14ed480b7ecf466c5a409b",
+  "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+  "exportVersion": "sealed-matched-padded-v2-public-v2",
+  "scope": "builder reference programs through the external adapter; not an independent challenge",
+  "comparison": "identical source packages, public fit evidence, serialized-state contract, budgets and fresh contexts; timings are separate observations on the same host",
+  "members": 14,
+  "allMatched": true,
+  "controls": [
+    {
+      "member": "count-linear",
+      "matched": true,
+      "builder": {
+        "id": "count-linear",
+        "language": "Gaussian elimination on rule count differences modulo 2 and 3",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 1218,
+            "assignments": 0,
+            "ruleChecks": 0,
+            "exampleChecks": 0,
+            "transitions": 0,
+            "counterexamples": 0,
+            "ruleCountCharacterVisits": 624,
+            "linearAlgebraBound": 594
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 18.128300000000024,
+          "moduleInitializationMs": 7.283600000000035,
+          "standalonePreparationMs": 25.41190000000006,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 18.128300000000024,
+          "stateBytes": 352,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.67,
+          "correct": 134,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.67,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 169.9031,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 11706
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 153.09810000000016,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 61560
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.655,
+          "correct": 131,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.66,
+          "largeAccuracy": 0.65,
+          "paddingRobustnessGap": 0.010000000000000009,
+          "resources": {
+            "ms": 147.35510000000068,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 79428
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.5,
+        "correct": 100,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 2.608200000000579,
+          "moduleInitializationMs": 0.0031999999991967343,
+          "standalonePreparationMs": 9.891800000000615,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.608200000000579,
+          "stateBytes": 352,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.67,
+          "correct": 134,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.67,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 141.0655000000006,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 145.92169999999896,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.655,
+          "correct": 131,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.66,
+          "largeAccuracy": 0.65,
+          "paddingRobustnessGap": 0.010000000000000009,
+          "resources": {
+            "ms": 144.47049999999945,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 262.2492999999995,
+        "programBytes": 28801,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\19148ebd4baa6f11046a4bb540b0a077.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\19148ebd4baa6f11046a4bb540b0a077.solver.txt"
+    },
+    {
+      "member": "group-full",
+      "matched": true,
+      "builder": {
+        "id": "group-full",
+        "language": "enumerate symbol homomorphisms into C2..C6, C2xC2, C3xC3, S3, Q8, D4, A4",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 17193,
+            "assignments": 1286,
+            "ruleChecks": 1772,
+            "exampleChecks": 215,
+            "transitions": 10459,
+            "counterexamples": 0,
+            "catalogueTableCells": 495,
+            "lawTriples": 1449,
+            "imageChoices": 1517
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 10.232099999999946,
+          "moduleInitializationMs": 0.002200000000016189,
+          "standalonePreparationMs": 17.51569999999998,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 10.232099999999946,
+          "stateBytes": 468,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 93.69630000000006,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 3902
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 86.58289999999943,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 20520
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 89.72019999999975,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 26476
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 1,
+        "correct": 200,
+        "total": 200,
+        "success": true,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 10.681700000001001,
+          "moduleInitializationMs": 0.004000000000814907,
+          "standalonePreparationMs": 17.965300000001037,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 10.681700000001001,
+          "stateBytes": 468,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 86.10499999999956,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 85.6867000000002,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 87.76440000000002,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 257.3220000000001,
+        "programBytes": 25711,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\04c984f561ef36e7ba42e25bdd3c4b41.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\04c984f561ef36e7ba42e25bdd3c4b41.solver.txt"
+    },
+    {
+      "member": "group-quotients",
+      "matched": true,
+      "builder": {
+        "id": "group-quotients",
+        "language": "same search into all proper quotients of the registered groups",
+        "fit": {
+          "status": "unavailable",
+          "reason": "no consistent program within registered search",
+          "memberSpecificSearchCounters": {
+            "operations": 529789,
+            "assignments": 100,
+            "ruleChecks": 250,
+            "exampleChecks": 8,
+            "transitions": 1120,
+            "counterexamples": 0,
+            "catalogueTableCells": 495,
+            "congruenceClosures": 560,
+            "congruenceMergeTests": 527016,
+            "lawTriples": 100,
+            "imageChoices": 140
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 222.5621,
+          "moduleInitializationMs": 0.0018999999999778083,
+          "standalonePreparationMs": 229.84570000000002,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 222.5621,
+          "stateBytes": 427,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 90.33929999999998,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {}
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 82.82700000000023,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {}
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 81.3777,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {}
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.5,
+        "correct": 100,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 215.8184999999994,
+          "moduleInitializationMs": 0.003500000000713044,
+          "standalonePreparationMs": 223.10209999999944,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 215.8184999999994,
+          "stateBytes": 427,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 78.94020000000091,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 81.53329999999914,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 79.89000000000124,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 249.95739999999932,
+        "programBytes": 25706,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\0687e265123362f2487b3efe87597919.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\0687e265123362f2487b3efe87597919.solver.txt"
+    },
+    {
+      "member": "monoid-csp",
+      "matched": true,
+      "builder": {
+        "id": "monoid-csp",
+        "language": "backtracking symbol-image CSP over registered finite tables; exhaustive laws, partial rules and examples",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 13604,
+            "assignments": 1,
+            "ruleChecks": 544,
+            "exampleChecks": 435,
+            "transitions": 10133,
+            "counterexamples": 0,
+            "catalogueTableCells": 720,
+            "lawTriples": 1449,
+            "imageChoices": 322
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 27.586599999999862,
+          "moduleInitializationMs": 0.002100000000041291,
+          "standalonePreparationMs": 34.8701999999999,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 27.586599999999862,
+          "stateBytes": 463,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 91.84670000000006,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 3902
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 87.30249999999978,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 20520
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 87.80709999999999,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 26476
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 1,
+        "correct": 200,
+        "total": 200,
+        "success": true,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 26.725499999998647,
+          "moduleInitializationMs": 0.004399999999805004,
+          "standalonePreparationMs": 34.00909999999868,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 26.725499999998647,
+          "stateBytes": 463,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 84.79579999999987,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 86.02240000000165,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 86.69959999999992,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 253.18019999999888,
+        "programBytes": 25743,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\d3ef4e615a4c81fdd97cdf336d13ec30.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\d3ef4e615a4c81fdd97cdf336d13ec30.solver.txt"
+    },
+    {
+      "member": "joint-coarse",
+      "matched": true,
+      "builder": {
+        "id": "joint-coarse",
+        "language": "fit a public finite-table CSP then majority-classify the joint proper-quotient and count tuple",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 34450,
+            "assignments": 1,
+            "ruleChecks": 544,
+            "exampleChecks": 435,
+            "transitions": 10133,
+            "counterexamples": 0,
+            "catalogueTableCells": 720,
+            "lawTriples": 1449,
+            "imageChoices": 322,
+            "congruenceClosures": 24,
+            "congruenceMergeTests": 5214,
+            "featureCharacterVisits": 15608
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 33.2659000000001,
+          "moduleInitializationMs": 0.0025000000000545697,
+          "standalonePreparationMs": 40.54950000000014,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 33.2659000000001,
+          "stateBytes": 7133,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 192.4822999999999,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 15608
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 188.65189999999984,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 82080
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 193.6927999999998,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 105904
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.5,
+        "correct": 100,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 31.905500000000757,
+          "moduleInitializationMs": 0.0032000000010157237,
+          "standalonePreparationMs": 39.18910000000079,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 31.905500000000757,
+          "stateBytes": 7133,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 185.68099999999868,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 195.33550000000105,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 192.55439999999908,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 257.9493000000002,
+        "programBytes": 29059,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\821c2940834673c9c20828c51e079ef3.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\821c2940834673c9c20828c51e079ef3.solver.txt"
+    },
+    {
+      "member": "finite-state",
+      "matched": true,
+      "builder": {
+        "id": "finite-state",
+        "language": "infer complete letter transformations on q=2,3,4 points; retain full product with <=q^q states",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 13406,
+            "assignments": 1,
+            "ruleChecks": 137,
+            "exampleChecks": 202,
+            "transitions": 12977,
+            "counterexamples": 0,
+            "imageChoices": 89
+          },
+          "statesBound": 27,
+          "points": 3,
+          "ms": 11.492500000000064,
+          "moduleInitializationMs": 0.0009999999999763531,
+          "standalonePreparationMs": 18.7761000000001,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 11.492500000000064,
+          "stateBytes": 305,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 87.52239999999983,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 3902,
+              "pointTransitions": 11706
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 102.27009999999973,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 20520,
+              "pointTransitions": 61560
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 109.90200000000004,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 26476,
+              "pointTransitions": 79428
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 1,
+        "correct": 200,
+        "total": 200,
+        "success": true,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 11.24460000000181,
+          "moduleInitializationMs": 0.004000000000814907,
+          "standalonePreparationMs": 18.528200000001846,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 11.24460000000181,
+          "stateBytes": 305,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 86.79100000000108,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 102.82380000000194,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 111.25240000000122,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 255.09379999999874,
+        "programBytes": 25510,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\a56b10b3088d47d20c845a0cd9d97f32.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\a56b10b3088d47d20c845a0cd9d97f32.solver.txt"
+    },
+    {
+      "member": "rewrite-normal-form",
+      "matched": true,
+      "builder": {
+        "id": "rewrite-normal-form",
+        "language": "bounded shortlex-decreasing rewrite normalization",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 11,
+            "assignments": 0,
+            "ruleChecks": 0,
+            "exampleChecks": 0,
+            "transitions": 0,
+            "counterexamples": 0,
+            "rulePreparation": 11
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 2.4576999999999316,
+          "moduleInitializationMs": 0.0018999999999778083,
+          "standalonePreparationMs": 9.741299999999967,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.4576999999999316,
+          "stateBytes": 530,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.76,
+          "correct": 152,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.76,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 142.08899999999994,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "positionLimit": 6553600
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.645,
+          "correct": 129,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.77,
+          "largeAccuracy": 0.52,
+          "paddingRobustnessGap": 0.25,
+          "resources": {
+            "ms": 557.1925000000001,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "positionLimit": 6553600
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.645,
+          "correct": 129,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.79,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0.29000000000000004,
+          "resources": {
+            "ms": 553.8939999999993,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "positionLimit": 6553600
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.645,
+        "correct": 129,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 2.4536000000007334,
+          "moduleInitializationMs": 0.0996000000013737,
+          "standalonePreparationMs": 9.737200000000769,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.4536000000007334,
+          "stateBytes": 530,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.76,
+          "correct": 152,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.76,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 138.37260000000242,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.645,
+          "correct": 129,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.77,
+          "largeAccuracy": 0.52,
+          "paddingRobustnessGap": 0.25,
+          "resources": {
+            "ms": 561.3254000000015,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.645,
+          "correct": 129,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.79,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0.29000000000000004,
+          "resources": {
+            "ms": 564.5729000000028,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 251.65729999999894,
+        "programBytes": 27906,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\f9b11ce534f97925bd863f312f339e14.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\f9b11ce534f97925bd863f312f339e14.solver.txt"
+    },
+    {
+      "member": "grammar-cegis",
+      "matched": true,
+      "builder": {
+        "id": "grammar-cegis",
+        "language": "relation-constrained finite fold grammar with public counterexample refinement",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 9244,
+            "assignments": 1,
+            "ruleChecks": 544,
+            "exampleChecks": 221,
+            "transitions": 5987,
+            "counterexamples": 0,
+            "catalogueTableCells": 720,
+            "lawTriples": 1449,
+            "imageChoices": 322
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 9.570400000000063,
+          "moduleInitializationMs": 0.0017000000000280124,
+          "standalonePreparationMs": 16.8540000000001,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 9.570400000000063,
+          "stateBytes": 461,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 87.81730000000016,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 3902
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 86.15589999999975,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 20520
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 87.63510000000042,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "characterVisits": 26476
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 1,
+        "correct": 200,
+        "total": 200,
+        "success": true,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 9.449899999999616,
+          "moduleInitializationMs": 0.004499999999097781,
+          "standalonePreparationMs": 16.73349999999965,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 9.449899999999616,
+          "stateBytes": 461,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 84.33959999999934,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 89.38720000000103,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 1,
+          "correct": 200,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 89.73909999999887,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 246.12669999999707,
+        "programBytes": 25720,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\ddfed78a89b12dd28400c780502b89c7.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\ddfed78a89b12dd28400c780502b89c7.solver.txt"
+    },
+    {
+      "member": "nuisance-stumps",
+      "matched": true,
+      "builder": {
+        "id": "nuisance-stumps",
+        "language": "fitted threshold stumps on lengths, histogram L1, edit, LCS, positional agreement and bigram differences",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 144085,
+            "assignments": 0,
+            "ruleChecks": 0,
+            "exampleChecks": 0,
+            "transitions": 0,
+            "counterexamples": 0,
+            "featureDpCells": 18620,
+            "featureCharacterVisits": 13147,
+            "bigramPositions": 31518,
+            "featureCells": 3200,
+            "stumpComparisons": 77600
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 26.497900000000072,
+          "moduleInitializationMs": 0.0027000000000043656,
+          "standalonePreparationMs": 33.78150000000011,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 26.497900000000072,
+          "stateBytes": 453,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.97,
+          "correct": 194,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 0.97,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 178.01520000000005,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "dpCells": 18620,
+              "characterVisits": 13147,
+              "bigramPositions": 31518
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 484.6848,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "dpCells": 987088,
+              "characterVisits": 71856,
+              "bigramPositions": 181080
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.735,
+          "correct": 147,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.97,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0.47,
+          "resources": {
+            "ms": 671.9211000000005,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "dpCells": 1503722,
+              "characterVisits": 91527,
+              "bigramPositions": 234684
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.5,
+        "correct": 100,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 26.702499999999418,
+          "moduleInitializationMs": 0.004400000001623994,
+          "standalonePreparationMs": 33.98609999999945,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 26.702499999999418,
+          "stateBytes": 453,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.97,
+          "correct": 194,
+          "total": 200,
+          "success": true,
+          "failure": null,
+          "smallAccuracy": 0.97,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 172.20730000000185,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 492.86229999999705,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.735,
+          "correct": 147,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.97,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0.47,
+          "resources": {
+            "ms": 678.8962000000029,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 245.22139999999854,
+        "programBytes": 29365,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\3c068fd16a83a28427b325eba27e8e6d.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\3c068fd16a83a28427b325eba27e8e6d.solver.txt"
+    },
+    {
+      "member": "positional-template",
+      "matched": true,
+      "builder": {
+        "id": "positional-template",
+        "language": "registered ambient templates with their historical generator images at public alphabet positions; free remaining images",
+        "fit": {
+          "status": "unavailable",
+          "reason": "no consistent program within registered search",
+          "memberSpecificSearchCounters": {
+            "operations": 1826,
+            "assignments": 139,
+            "ruleChecks": 202,
+            "exampleChecks": 1,
+            "transitions": 764,
+            "counterexamples": 0,
+            "catalogueTableCells": 720
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 3.9483999999999924,
+          "moduleInitializationMs": 0.0019999999999527063,
+          "standalonePreparationMs": 11.232000000000028,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 3.9483999999999924,
+          "stateBytes": 333,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 84.78650000000016,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {}
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 79.2510999999995,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {}
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 79.18289999999979,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {}
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.5,
+        "correct": 100,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 3.880300000000716,
+          "moduleInitializationMs": 0.005399999998189742,
+          "standalonePreparationMs": 11.163900000000751,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 3.880300000000716,
+          "stateBytes": 333,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 79.86269999999786,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 82.88800000000265,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 81.52649999999994,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 252.94989999999962,
+        "programBytes": 25767,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\12b4ed0b857fde44ff62e3729cafff8b.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\12b4ed0b857fde44ff62e3729cafff8b.solver.txt"
+    },
+    {
+      "member": "bfs-b2",
+      "matched": true,
+      "builder": {
+        "id": "bfs-b2",
+        "language": "bounded single-rule FIFO string search",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 11,
+            "assignments": 0,
+            "ruleChecks": 0,
+            "exampleChecks": 0,
+            "transitions": 0,
+            "counterexamples": 0,
+            "rulePreparation": 11
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 2.274800000000141,
+          "moduleInitializationMs": 0.0022999999998774,
+          "standalonePreparationMs": 9.558400000000177,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.274800000000141,
+          "stateBytes": 584,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.51,
+          "correct": 102,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.51,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 196.76440000000025,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 25519,
+              "testedPositions": 186705,
+              "maxDepth": 2,
+              "budgetExhausted": 198
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.68,
+          "correct": 136,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.84,
+          "largeAccuracy": 0.52,
+          "paddingRobustnessGap": 0.31999999999999995,
+          "resources": {
+            "ms": 178.6144000000004,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 22129,
+              "testedPositions": 131497,
+              "maxDepth": 3,
+              "budgetExhausted": 164
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 189.54349999999977,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 25600,
+              "testedPositions": 192455,
+              "maxDepth": 2,
+              "budgetExhausted": 200
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.68,
+        "correct": 136,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 2.318599999998696,
+          "moduleInitializationMs": 0.003400000001420267,
+          "standalonePreparationMs": 9.602199999998732,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.318599999998696,
+          "stateBytes": 584,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.51,
+          "correct": 102,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.51,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 197.80040000000008,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.68,
+          "correct": 136,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.84,
+          "largeAccuracy": 0.52,
+          "paddingRobustnessGap": 0.31999999999999995,
+          "resources": {
+            "ms": 185.95490000000063,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 195.18139999999767,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 240.636599999998,
+        "programBytes": 27968,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\9d4df2a6c0f0799dfe0af5bf53b42885.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\9d4df2a6c0f0799dfe0af5bf53b42885.solver.txt"
+    },
+    {
+      "member": "bfs-4x",
+      "matched": true,
+      "builder": {
+        "id": "bfs-4x",
+        "language": "bounded single-rule FIFO string search",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 11,
+            "assignments": 0,
+            "ruleChecks": 0,
+            "exampleChecks": 0,
+            "transitions": 0,
+            "counterexamples": 0,
+            "rulePreparation": 11
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 2.4682999999999993,
+          "moduleInitializationMs": 0.0024000000003070454,
+          "standalonePreparationMs": 9.751900000000035,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.4682999999999993,
+          "stateBytes": 585,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.51,
+          "correct": 102,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.51,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 463.6599000000001,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 101551,
+              "testedPositions": 1081294,
+              "maxDepth": 3,
+              "budgetExhausted": 198
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.795,
+          "correct": 159,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.95,
+          "largeAccuracy": 0.64,
+          "paddingRobustnessGap": 0.30999999999999994,
+          "resources": {
+            "ms": 359.66129999999976,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 79498,
+              "testedPositions": 665978,
+              "maxDepth": 3,
+              "budgetExhausted": 141
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 415.01820000000043,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 102400,
+              "testedPositions": 896938,
+              "maxDepth": 2,
+              "budgetExhausted": 200
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.795,
+        "correct": 159,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 2.292199999999866,
+          "moduleInitializationMs": 0.0031000000017229468,
+          "standalonePreparationMs": 9.575799999999902,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.292199999999866,
+          "stateBytes": 585,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.51,
+          "correct": 102,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.51,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 464.6862000000001,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.795,
+          "correct": 159,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.95,
+          "largeAccuracy": 0.64,
+          "paddingRobustnessGap": 0.30999999999999994,
+          "resources": {
+            "ms": 356.54569999999876,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 418.93369999999777,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 251.28870000000097,
+        "programBytes": 27969,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\59adc69f2218519202ec89e201cd27e3.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\59adc69f2218519202ec89e201cd27e3.solver.txt"
+    },
+    {
+      "member": "bfs-16x",
+      "matched": true,
+      "builder": {
+        "id": "bfs-16x",
+        "language": "bounded single-rule FIFO string search",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 11,
+            "assignments": 0,
+            "ruleChecks": 0,
+            "exampleChecks": 0,
+            "transitions": 0,
+            "counterexamples": 0,
+            "rulePreparation": 11
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 2.355999999999767,
+          "moduleInitializationMs": 0.0018000000000029104,
+          "standalonePreparationMs": 9.639599999999803,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.355999999999767,
+          "stateBytes": 587,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.52,
+          "correct": 104,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.52,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 1695.4393999999998,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 403070,
+              "testedPositions": 5437253,
+              "maxDepth": 3,
+              "budgetExhausted": 196
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.82,
+          "correct": 164,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 0.64,
+          "paddingRobustnessGap": 0.36,
+          "resources": {
+            "ms": 1248.6949999999997,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 286459,
+              "testedPositions": 3746739,
+              "maxDepth": 4,
+              "budgetExhausted": 136
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 1408.504500000001,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 409600,
+              "testedPositions": 4190320,
+              "maxDepth": 3,
+              "budgetExhausted": 200
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.82,
+        "correct": 164,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 2.296700000002602,
+          "moduleInitializationMs": 0.003899999999703141,
+          "standalonePreparationMs": 9.580300000002637,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.296700000002602,
+          "stateBytes": 587,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.52,
+          "correct": 104,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.52,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 1710.5856999999996,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.82,
+          "correct": 164,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 0.64,
+          "paddingRobustnessGap": 0.36,
+          "resources": {
+            "ms": 1269.5257999999994,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 1424.4758999999976,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 250.62880000000223,
+        "programBytes": 27972,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\0700cbff1dfd22c7f47aabf3e166c947.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\0700cbff1dfd22c7f47aabf3e166c947.solver.txt"
+    },
+    {
+      "member": "bidirectional",
+      "matched": true,
+      "builder": {
+        "id": "bidirectional",
+        "language": "bounded two-frontier reversible rewrite search",
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "memberSpecificSearchCounters": {
+            "operations": 11,
+            "assignments": 0,
+            "ruleChecks": 0,
+            "exampleChecks": 0,
+            "transitions": 0,
+            "counterexamples": 0,
+            "rulePreparation": 11
+          },
+          "statesBound": null,
+          "points": null,
+          "ms": 2.2793000000001484,
+          "moduleInitializationMs": 0.0026000000007115887,
+          "standalonePreparationMs": 9.562900000000184,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.2793000000001484,
+          "stateBytes": 583,
+          "calls": 1
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.51,
+          "correct": 102,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.51,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 191.0001000000002,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 25403,
+              "testedPositions": 167040,
+              "maxDepth": 1,
+              "budgetExhausted": 198
+            }
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.76,
+          "correct": 152,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 0.52,
+          "paddingRobustnessGap": 0.48,
+          "resources": {
+            "ms": 169.10000000000036,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 20377,
+              "testedPositions": 99074,
+              "maxDepth": 2,
+              "budgetExhausted": 148
+            }
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 189.97040000000015,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": {
+              "visitedNodes": 25600,
+              "testedPositions": 183305,
+              "maxDepth": 1,
+              "budgetExhausted": 200
+            }
+          }
+        }
+      },
+      "external": {
+        "type": "external-world-score",
+        "exportVersion": "sealed-matched-padded-v2-public-v2",
+        "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+        "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+        "family": "F-nonabelian",
+        "requestedFamily": "F-nonabelian",
+        "status": "scored",
+        "accuracy": 0.76,
+        "correct": 152,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "fit": {
+          "status": "fitted",
+          "reason": null,
+          "ms": 2.2937999999994645,
+          "moduleInitializationMs": 0.004399999997986015,
+          "standalonePreparationMs": 9.5773999999995,
+          "standaloneIsColdStartEstimate": true,
+          "coldModuleInitializationEstimateMs": 7.283600000000035,
+          "amortizedPreparationMs": 2.2937999999994645,
+          "stateBytes": 583,
+          "calls": 1,
+          "memberSpecificSearchCounters": null
+        },
+        "public": {
+          "status": "scored",
+          "accuracy": 0.51,
+          "correct": 102,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.51,
+          "largeAccuracy": null,
+          "paddingRobustnessGap": null,
+          "resources": {
+            "ms": 189.94420000000173,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "sealed": {
+          "status": "scored",
+          "accuracy": 0.76,
+          "correct": 152,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 1,
+          "largeAccuracy": 0.52,
+          "paddingRobustnessGap": 0.48,
+          "resources": {
+            "ms": 176.02360000000044,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "natural": {
+          "status": "scored",
+          "accuracy": 0.5,
+          "correct": 100,
+          "total": 200,
+          "success": false,
+          "failure": null,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5,
+          "paddingRobustnessGap": 0,
+          "resources": {
+            "ms": 191.8709000000017,
+            "calls": 200,
+            "completedCalls": 200,
+            "cacheHits": 0,
+            "memberSpecificSearchCounters": null
+          }
+        },
+        "hostPreparationMs": 242.89870000000155,
+        "programBytes": 27983,
+        "support": {
+          "rows": 200,
+          "distinctPairs": 128,
+          "smallDistinctPairs": 64,
+          "largeDistinctPairs": 64,
+          "pairedDependence": {
+            "kind": "neutral-prefix copies of the same short cores",
+            "pairedRows": 100,
+            "independentRows": false
+          },
+          "sizeEstimand": "padding robustness"
+        }
+      },
+      "externalReport": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\1a2d257d520af4d1f0b87370604eb3fe.json",
+      "solverArchive": "C:\\Users\\Refur\\LLMBreakthroughs\\docs\\B4r-EVIDENCE\\matched-controls\\external\\1a2d257d520af4d1f0b87370604eb3fe.solver.txt"
+    }
+  ],
+  "liveModelCalls": 0
+}

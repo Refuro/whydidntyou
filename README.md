@@ -138,19 +138,19 @@ Reports regenerate requests and instances, validate the full chain, and sum name
 
 Adapted review 9: `node test/REVIEW-CHECKS-v9.mjs . docs/REVIEW-EVIDENCE-schema5.json`. The archived reviewer scripts remain unchanged.
 
-## Invariant game — B4 review checkpoint
+## Invariant game — B4r review checkpoint
 
 B2 review findings are repaired. The current generator (`invariantGame-v2-b3`) samples symbol images independently of the public alphabet listing. The B2 implementation and its 16 historical worlds remain available as `invariantGame-b2.js`.
 
-B3 adds the durable construction-defect ledger, a certified sealed sampler, the bounded LP and independent realized-ceiling checks, and validated batch resume. B4 implements the solver portfolio, public-only selector, separately labeled oracle portfolio, positional-template control and all registered BFS resource curves. See `docs/BUILD-REPORT-v2.md`, `docs/B4-EVIDENCE/coverage.md` and `docs/REVIEW-PROMPT-B4.md`.
+B3 adds the durable construction-defect ledger, a certified sealed sampler, the bounded LP and independent realized-ceiling checks, and validated batch resume. B4 implements the solver portfolio, public-only selector, separately labeled oracle portfolio, positional-template control and all registered BFS resource curves. The B4 evidence remains historical. B4r repairs final-list ordering and admission, gives builder and external solvers the same fit-once/private-pair contract, and reports wall-clock by stage. The sampler is `sealed-matched-padded-v2`; its large rows measure padding robustness, not long-core size generalization. See `docs/BUILD-REPORT-v3.md`, `docs/B4r-EVIDENCE/coverage.md` and `docs/REVIEW-PROMPT-B4r.md`. The versioned public export and submission format are documented in `src/portfolio/README.md`.
 
 ```powershell
 $env:LLM_MOCK='1'
 npm test
-node src/check-invariant-world.js examples/invariantGame-world-1.json
-node src/portfolio/run.js examples/invariantGame-world-1.json
+node src/check-invariant-world.js examples/invariantGame-world-b4r-1.json
+node src/portfolio/run.js examples/invariantGame-world-b4r-1.json
 # Regenerate the full fixed audit in a NEW directory; existing evidence is not overwritten.
-node src/portfolio/audit.js docs/B4-EVIDENCE-reproduction
+node src/portfolio/audit.js docs/B4r-EVIDENCE-reproduction
 # Resume a compatible incomplete batch. Completed batches are a no-op.
 node src/experiment.js --resume runs/experiment-name.jsonl
 ```
@@ -159,4 +159,4 @@ Responses are persisted as `received-unscored` before parsing/scoring. Resume bi
 
 Exact public-source seed conversion: `node src/draw-seeds.js --source-hex <1-to-32-bytes-as-hex> --n 40`. The output records original hex, bytes and canonical decimal. Direct decimal masters allow up to 78 digits and reject aliases, signs and whitespace.
 
-**B4 review stop:** the builder coverage audit is not an independent challenge or a freeze. The independent solver-author challenge remains required. B5 leakage audits, B6 model-loop integration, real-model pilots and Phase 4 remain gated. No real-model calls were made in this build.
+**B4r review stop:** the builder coverage audit is not an independent challenge or a freeze. The independent solver-author challenge remains required. B5 leakage audits, B6 model-loop integration, real-model pilots and Phase 4 remain gated. No real-model calls were made in this build.

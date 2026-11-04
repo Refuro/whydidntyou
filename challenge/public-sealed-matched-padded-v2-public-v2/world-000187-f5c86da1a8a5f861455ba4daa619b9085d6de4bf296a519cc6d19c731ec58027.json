@@ -1,0 +1,1058 @@
+{
+  "alphabet": [
+    "n",
+    "g",
+    "a"
+  ],
+  "rules": [
+    {
+      "u": "ngn",
+      "v": "nng"
+    },
+    {
+      "u": "nna",
+      "v": "agg"
+    },
+    {
+      "u": "aag",
+      "v": "nng"
+    },
+    {
+      "u": "naa",
+      "v": "gn"
+    },
+    {
+      "u": "aaa",
+      "v": "nna"
+    },
+    {
+      "u": "aag",
+      "v": "ngn"
+    },
+    {
+      "u": "aaa",
+      "v": "agg"
+    },
+    {
+      "u": "",
+      "v": "nn"
+    },
+    {
+      "u": "gn",
+      "v": "nnn"
+    },
+    {
+      "u": "",
+      "v": "g"
+    },
+    {
+      "u": "naa",
+      "v": "nnn"
+    }
+  ],
+  "rulesText": "1. ngn ↔ nng\n2. nna ↔ agg\n3. aag ↔ nng\n4. naa ↔ gn\n5. aaa ↔ nna\n6. aag ↔ ngn\n7. aaa ↔ agg\n8. ε ↔ nn\n9. gn ↔ nnn\n10. ε ↔ g\n11. naa ↔ nnn",
+  "trainingPairs": [
+    {
+      "a": "gngga",
+      "b": "nnnaagnngaaagnn",
+      "label": true
+    },
+    {
+      "a": "gnaag",
+      "b": "nnnngnaangng",
+      "label": true
+    },
+    {
+      "a": "ngnnggaann",
+      "b": "aganagaagn",
+      "label": false
+    },
+    {
+      "a": "naannggaga",
+      "b": "ngannnnga",
+      "label": true
+    },
+    {
+      "a": "nggnngngaa",
+      "b": "anaggaanga",
+      "label": false
+    },
+    {
+      "a": "aganann",
+      "b": "gaaa",
+      "label": false
+    },
+    {
+      "a": "gnanna",
+      "b": "gnnngagaaaaann",
+      "label": true
+    },
+    {
+      "a": "agaagaa",
+      "b": "ngga",
+      "label": false
+    },
+    {
+      "a": "nanagggnaa",
+      "b": "ganagn",
+      "label": false
+    },
+    {
+      "a": "ananag",
+      "b": "gagaang",
+      "label": false
+    },
+    {
+      "a": "nnnnnnagna",
+      "b": "aanaaaanagnaaa",
+      "label": true
+    },
+    {
+      "a": "agagaggng",
+      "b": "gnagnnn",
+      "label": false
+    },
+    {
+      "a": "anaagnnnna",
+      "b": "anannaagnnannnna",
+      "label": true
+    },
+    {
+      "a": "gnngagnaag",
+      "b": "nnnngagnnnnnnnaann",
+      "label": true
+    },
+    {
+      "a": "gaaaganann",
+      "b": "gannagaagnnngann",
+      "label": true
+    },
+    {
+      "a": "nagnaaaaa",
+      "b": "gnagagnnga",
+      "label": false
+    },
+    {
+      "a": "anaagg",
+      "b": "ganaanngnng",
+      "label": true
+    },
+    {
+      "a": "naan",
+      "b": "agnnnn",
+      "label": false
+    },
+    {
+      "a": "gnagn",
+      "b": "nnaagnagngaa",
+      "label": true
+    },
+    {
+      "a": "ngnag",
+      "b": "aggna",
+      "label": false
+    },
+    {
+      "a": "ggnn",
+      "b": "ggnnnnnngnn",
+      "label": true
+    },
+    {
+      "a": "ggnaaagagn",
+      "b": "nngggnaanngnnagagnggnn",
+      "label": true
+    },
+    {
+      "a": "nggnnannna",
+      "b": "nnnnngnnnngnnanaggnn",
+      "label": true
+    },
+    {
+      "a": "ganggnn",
+      "b": "ggangnnnnngnnng",
+      "label": true
+    },
+    {
+      "a": "ggaaa",
+      "b": "nnnaannaannnag",
+      "label": true
+    },
+    {
+      "a": "nnngaaggn",
+      "b": "ngnnnagg",
+      "label": false
+    },
+    {
+      "a": "nagana",
+      "b": "nana",
+      "label": false
+    },
+    {
+      "a": "gngngggaga",
+      "b": "gaagnnnga",
+      "label": false
+    },
+    {
+      "a": "naagnan",
+      "b": "aagnaannngnnan",
+      "label": true
+    },
+    {
+      "a": "nannnnan",
+      "b": "nanngnnnggnan",
+      "label": true
+    },
+    {
+      "a": "gngnnnggag",
+      "b": "gnnnnggnnaaag",
+      "label": true
+    },
+    {
+      "a": "gnnaangn",
+      "b": "aggnaa",
+      "label": false
+    },
+    {
+      "a": "naangggna",
+      "b": "gngaagna",
+      "label": false
+    },
+    {
+      "a": "agagangnnn",
+      "b": "aggaagnga",
+      "label": false
+    },
+    {
+      "a": "ggang",
+      "b": "ggggangngaan",
+      "label": true
+    },
+    {
+      "a": "ngangn",
+      "b": "gngagngga",
+      "label": false
+    },
+    {
+      "a": "gnnaan",
+      "b": "nnnnngnannan",
+      "label": true
+    },
+    {
+      "a": "nnagn",
+      "b": "nngnngangnnnnnn",
+      "label": true
+    },
+    {
+      "a": "gnaggna",
+      "b": "ngaaanaga",
+      "label": false
+    },
+    {
+      "a": "agnnangnaa",
+      "b": "agngnna",
+      "label": false
+    },
+    {
+      "a": "aggggn",
+      "b": "nanan",
+      "label": false
+    },
+    {
+      "a": "gngngagn",
+      "b": "nngnaannnngnan",
+      "label": true
+    },
+    {
+      "a": "ggnanngnan",
+      "b": "gnngnagnangg",
+      "label": true
+    },
+    {
+      "a": "agnanagggg",
+      "b": "gnaa",
+      "label": false
+    },
+    {
+      "a": "gaangn",
+      "b": "aggagnn",
+      "label": true
+    },
+    {
+      "a": "ngagggn",
+      "b": "gnnnnnagng",
+      "label": true
+    },
+    {
+      "a": "gnngganng",
+      "b": "naaann",
+      "label": false
+    },
+    {
+      "a": "agnag",
+      "b": "anaannnnnnag",
+      "label": true
+    },
+    {
+      "a": "ggnnaagg",
+      "b": "gaaa",
+      "label": false
+    },
+    {
+      "a": "ngna",
+      "b": "nnngngaaangn",
+      "label": true
+    },
+    {
+      "a": "ganaannggn",
+      "b": "gnngnnanannangngggng",
+      "label": true
+    },
+    {
+      "a": "ggnggga",
+      "b": "aaaan",
+      "label": false
+    },
+    {
+      "a": "ganang",
+      "b": "ngggnaggnn",
+      "label": false
+    },
+    {
+      "a": "nnagg",
+      "b": "nggn",
+      "label": false
+    },
+    {
+      "a": "anngangn",
+      "b": "nnaaanag",
+      "label": false
+    },
+    {
+      "a": "gnngnggg",
+      "b": "nangga",
+      "label": false
+    },
+    {
+      "a": "nnaannann",
+      "b": "nnnngnnangn",
+      "label": true
+    },
+    {
+      "a": "nagnaagg",
+      "b": "gnnnagnagga",
+      "label": true
+    },
+    {
+      "a": "nagngn",
+      "b": "nggnag",
+      "label": false
+    },
+    {
+      "a": "gngng",
+      "b": "ngngg",
+      "label": true
+    },
+    {
+      "a": "aaaggnaag",
+      "b": "aggaa",
+      "label": false
+    },
+    {
+      "a": "nanaa",
+      "b": "ganag",
+      "label": false
+    },
+    {
+      "a": "aaangggna",
+      "b": "gaaangggnga",
+      "label": true
+    },
+    {
+      "a": "gagan",
+      "b": "aggaan",
+      "label": false
+    },
+    {
+      "a": "nagnna",
+      "b": "ngaaagnna",
+      "label": true
+    },
+    {
+      "a": "nggag",
+      "b": "ganga",
+      "label": false
+    },
+    {
+      "a": "ggan",
+      "b": "nanga",
+      "label": false
+    },
+    {
+      "a": "aangnggan",
+      "b": "gggaggaag",
+      "label": false
+    },
+    {
+      "a": "ggnagggaa",
+      "b": "gangnag",
+      "label": false
+    },
+    {
+      "a": "gaggnanna",
+      "b": "anngagaagg",
+      "label": false
+    },
+    {
+      "a": "aannng",
+      "b": "agnnnnanggnnnnnnnng",
+      "label": true
+    },
+    {
+      "a": "ngnannan",
+      "b": "nnngaaaan",
+      "label": false
+    },
+    {
+      "a": "ggaagnanaa",
+      "b": "gnnaaggnnnanaa",
+      "label": true
+    },
+    {
+      "a": "nggagnnnga",
+      "b": "nggannnngnaangngggga",
+      "label": true
+    },
+    {
+      "a": "gnnagaanaa",
+      "b": "gnaaagnan",
+      "label": false
+    },
+    {
+      "a": "ggggnnag",
+      "b": "gaagg",
+      "label": false
+    },
+    {
+      "a": "nggn",
+      "b": "naagnngggn",
+      "label": true
+    },
+    {
+      "a": "aaaaaa",
+      "b": "ngna",
+      "label": false
+    },
+    {
+      "a": "angg",
+      "b": "annnnn",
+      "label": true
+    },
+    {
+      "a": "ggagnann",
+      "b": "angn",
+      "label": false
+    },
+    {
+      "a": "nanaaagggn",
+      "b": "nnnnnannnnnannnnng",
+      "label": true
+    },
+    {
+      "a": "gnagn",
+      "b": "ngnnnnganaa",
+      "label": true
+    },
+    {
+      "a": "nngg",
+      "b": "gggngaggn",
+      "label": false
+    },
+    {
+      "a": "nggaggaa",
+      "b": "ngnggnggn",
+      "label": false
+    },
+    {
+      "a": "gnaga",
+      "b": "gggg",
+      "label": false
+    },
+    {
+      "a": "aaagngnan",
+      "b": "agga",
+      "label": false
+    },
+    {
+      "a": "anaggng",
+      "b": "gngnnngga",
+      "label": false
+    },
+    {
+      "a": "ananganga",
+      "b": "agnnnangaaagnnnga",
+      "label": true
+    },
+    {
+      "a": "naggan",
+      "b": "gggnaganag",
+      "label": false
+    },
+    {
+      "a": "gaaagng",
+      "b": "ggaaannngg",
+      "label": true
+    },
+    {
+      "a": "anngnann",
+      "b": "ananan",
+      "label": false
+    },
+    {
+      "a": "gngnangn",
+      "b": "gagaangga",
+      "label": false
+    },
+    {
+      "a": "gnaaag",
+      "b": "nangnaangngaann",
+      "label": true
+    },
+    {
+      "a": "agngag",
+      "b": "nngg",
+      "label": false
+    },
+    {
+      "a": "gaganng",
+      "b": "aaanngnaag",
+      "label": false
+    },
+    {
+      "a": "aagn",
+      "b": "angaan",
+      "label": false
+    },
+    {
+      "a": "nnaagga",
+      "b": "naggangaga",
+      "label": false
+    },
+    {
+      "a": "nnanngaa",
+      "b": "nggnnnagnnggagga",
+      "label": true
+    },
+    {
+      "a": "gaagagnnng",
+      "b": "nnann",
+      "label": false
+    },
+    {
+      "a": "angggaanna",
+      "b": "anggggagannnnnngann",
+      "label": true
+    },
+    {
+      "a": "aaaggan",
+      "b": "agggnnggagngnnnng",
+      "label": true
+    },
+    {
+      "a": "nggaa",
+      "b": "nggnngn",
+      "label": false
+    },
+    {
+      "a": "ggggnn",
+      "b": "gnngggnnngng",
+      "label": true
+    },
+    {
+      "a": "gnanggg",
+      "b": "nagga",
+      "label": false
+    },
+    {
+      "a": "anngnag",
+      "b": "aannangnna",
+      "label": true
+    },
+    {
+      "a": "nnnnna",
+      "b": "aangna",
+      "label": false
+    },
+    {
+      "a": "ngnnaagaan",
+      "b": "gagana",
+      "label": false
+    },
+    {
+      "a": "gganngaaa",
+      "b": "naagnggng",
+      "label": false
+    },
+    {
+      "a": "angggggg",
+      "b": "nanaagg",
+      "label": false
+    },
+    {
+      "a": "gagnagaaa",
+      "b": "gnnggagg",
+      "label": false
+    },
+    {
+      "a": "gagng",
+      "b": "nnaaaagag",
+      "label": false
+    },
+    {
+      "a": "gaaaaggng",
+      "b": "ggaaaaggngaaggg",
+      "label": true
+    },
+    {
+      "a": "ggna",
+      "b": "ngaana",
+      "label": false
+    },
+    {
+      "a": "naaagnna",
+      "b": "ngaannnngagnnnnangnnn",
+      "label": true
+    },
+    {
+      "a": "gnnggnnagn",
+      "b": "gaanngnnggaggn",
+      "label": true
+    },
+    {
+      "a": "gnan",
+      "b": "naaannggnnn",
+      "label": true
+    },
+    {
+      "a": "nngann",
+      "b": "gngg",
+      "label": false
+    },
+    {
+      "a": "naganag",
+      "b": "naannnaggnnnnnngnn",
+      "label": true
+    },
+    {
+      "a": "ngnannag",
+      "b": "nngnaanannnna",
+      "label": true
+    },
+    {
+      "a": "gnggnn",
+      "b": "naagnga",
+      "label": false
+    },
+    {
+      "a": "agnag",
+      "b": "nnannnnnagnn",
+      "label": true
+    },
+    {
+      "a": "annnggannn",
+      "b": "agagannaan",
+      "label": false
+    },
+    {
+      "a": "gggngna",
+      "b": "nngnnnngnggna",
+      "label": true
+    },
+    {
+      "a": "gggan",
+      "b": "ggannaggan",
+      "label": true
+    },
+    {
+      "a": "gnnanaagga",
+      "b": "anannan",
+      "label": false
+    },
+    {
+      "a": "agagaaagaa",
+      "b": "nnnnanngaaaaggaann",
+      "label": true
+    },
+    {
+      "a": "gnnggag",
+      "b": "ngaag",
+      "label": false
+    },
+    {
+      "a": "gggagna",
+      "b": "gnaaagg",
+      "label": false
+    },
+    {
+      "a": "ngagng",
+      "b": "gnaggn",
+      "label": true
+    },
+    {
+      "a": "ngnagggngg",
+      "b": "aanngnaannnaggnggg",
+      "label": true
+    },
+    {
+      "a": "gnaangng",
+      "b": "ggngggngnngn",
+      "label": true
+    },
+    {
+      "a": "gngn",
+      "b": "agaag",
+      "label": false
+    },
+    {
+      "a": "nngnnan",
+      "b": "nggaanan",
+      "label": true
+    },
+    {
+      "a": "gangg",
+      "b": "naggnagaa",
+      "label": false
+    },
+    {
+      "a": "naannnnag",
+      "b": "gnngg",
+      "label": false
+    },
+    {
+      "a": "nnag",
+      "b": "gnnngnnngnnagnn",
+      "label": true
+    },
+    {
+      "a": "agnaaaa",
+      "b": "ggana",
+      "label": false
+    },
+    {
+      "a": "ngggggag",
+      "b": "nggnnnngggggag",
+      "label": true
+    },
+    {
+      "a": "anaag",
+      "b": "annnagg",
+      "label": false
+    },
+    {
+      "a": "naagana",
+      "b": "naannnnngngannnaaa",
+      "label": true
+    },
+    {
+      "a": "gaanagg",
+      "b": "ggaganannggg",
+      "label": true
+    },
+    {
+      "a": "nggnggn",
+      "b": "angn",
+      "label": false
+    },
+    {
+      "a": "nnnngaa",
+      "b": "nnnnnnngggnngngnnaa",
+      "label": true
+    },
+    {
+      "a": "gnannaa",
+      "b": "agggnngna",
+      "label": false
+    },
+    {
+      "a": "aggnnaanan",
+      "b": "aggggnnannnaananang",
+      "label": true
+    },
+    {
+      "a": "aaanangna",
+      "b": "gnagggnaa",
+      "label": false
+    },
+    {
+      "a": "nnngagnggg",
+      "b": "naaangnnggngn",
+      "label": true
+    },
+    {
+      "a": "aggag",
+      "b": "aangg",
+      "label": false
+    },
+    {
+      "a": "ganga",
+      "b": "nagnaag",
+      "label": false
+    },
+    {
+      "a": "aanng",
+      "b": "nngga",
+      "label": false
+    },
+    {
+      "a": "ngagana",
+      "b": "naganann",
+      "label": true
+    },
+    {
+      "a": "ngaaaangn",
+      "b": "ngaaaagnnnnaannngggn",
+      "label": true
+    },
+    {
+      "a": "gggnnnn",
+      "b": "ggaagggnnnnnnnn",
+      "label": true
+    },
+    {
+      "a": "ggnann",
+      "b": "gnananna",
+      "label": false
+    },
+    {
+      "a": "agnnan",
+      "b": "gnnanana",
+      "label": false
+    },
+    {
+      "a": "gnan",
+      "b": "annaagngg",
+      "label": false
+    },
+    {
+      "a": "nagagangn",
+      "b": "ngagaaaangnnn",
+      "label": true
+    },
+    {
+      "a": "angagnaa",
+      "b": "nagaaga",
+      "label": false
+    },
+    {
+      "a": "aganggggg",
+      "b": "annagan",
+      "label": false
+    },
+    {
+      "a": "annnaagan",
+      "b": "ngangganna",
+      "label": false
+    },
+    {
+      "a": "gaaana",
+      "b": "gganggngngnnann",
+      "label": true
+    },
+    {
+      "a": "nanaaaaggg",
+      "b": "ngangnnaaaanaaggng",
+      "label": true
+    },
+    {
+      "a": "ggaaaaa",
+      "b": "agagaaggn",
+      "label": false
+    },
+    {
+      "a": "aanaana",
+      "b": "nnggnnngnnaanannnn",
+      "label": true
+    },
+    {
+      "a": "gngnnggagn",
+      "b": "naaggnnngnagngngn",
+      "label": true
+    },
+    {
+      "a": "agna",
+      "b": "anannnnngnggg",
+      "label": true
+    },
+    {
+      "a": "aaaggngann",
+      "b": "annaagngganaan",
+      "label": true
+    },
+    {
+      "a": "nnganag",
+      "b": "gnnganganngnn",
+      "label": true
+    },
+    {
+      "a": "nanagn",
+      "b": "nnnananaangngnn",
+      "label": true
+    },
+    {
+      "a": "ngnn",
+      "b": "ggnga",
+      "label": false
+    },
+    {
+      "a": "ngagng",
+      "b": "nnnnngagngnnnngg",
+      "label": true
+    },
+    {
+      "a": "nngnng",
+      "b": "nnaanag",
+      "label": false
+    },
+    {
+      "a": "ganaaga",
+      "b": "gagna",
+      "label": true
+    },
+    {
+      "a": "nnggnanggn",
+      "b": "nnnaanggn",
+      "label": false
+    },
+    {
+      "a": "ngggagna",
+      "b": "ggga",
+      "label": false
+    },
+    {
+      "a": "gagnaaagaa",
+      "b": "gaagnn",
+      "label": false
+    },
+    {
+      "a": "ngagn",
+      "b": "nnnagnngng",
+      "label": true
+    },
+    {
+      "a": "agnngangg",
+      "b": "gnnagggagnnnnn",
+      "label": true
+    },
+    {
+      "a": "gnagann",
+      "b": "agaaga",
+      "label": false
+    },
+    {
+      "a": "gaangaan",
+      "b": "nnnngaangagnnanaa",
+      "label": true
+    },
+    {
+      "a": "gggnngaga",
+      "b": "ggnnggaggnna",
+      "label": true
+    },
+    {
+      "a": "naaaag",
+      "b": "ngnnagaaaaag",
+      "label": true
+    },
+    {
+      "a": "annnaa",
+      "b": "anaaaannna",
+      "label": false
+    },
+    {
+      "a": "aaaag",
+      "b": "gaagnngg",
+      "label": true
+    },
+    {
+      "a": "angg",
+      "b": "nnnnnnaggng",
+      "label": true
+    },
+    {
+      "a": "aagnnaa",
+      "b": "aggannnagannnnn",
+      "label": true
+    },
+    {
+      "a": "nngaaaaagn",
+      "b": "ngngaaannnnggnnnnn",
+      "label": true
+    },
+    {
+      "a": "aannagga",
+      "b": "nnannaaanngngnaggann",
+      "label": true
+    },
+    {
+      "a": "aaagngnaa",
+      "b": "gannnaaggn",
+      "label": true
+    },
+    {
+      "a": "aagnna",
+      "b": "nanaanna",
+      "label": false
+    },
+    {
+      "a": "aaaaa",
+      "b": "nngggaannannngn",
+      "label": true
+    },
+    {
+      "a": "aangnannng",
+      "b": "gaaa",
+      "label": false
+    },
+    {
+      "a": "gagag",
+      "b": "nagnna",
+      "label": false
+    },
+    {
+      "a": "aaagnggg",
+      "b": "nnagnnnggg",
+      "label": true
+    },
+    {
+      "a": "aggagagg",
+      "b": "ggnnagggggagagggnn",
+      "label": true
+    },
+    {
+      "a": "nnaa",
+      "b": "anna",
+      "label": true
+    },
+    {
+      "a": "naaaang",
+      "b": "ngan",
+      "label": false
+    },
+    {
+      "a": "gggg",
+      "b": "gngn",
+      "label": true
+    },
+    {
+      "a": "ganagan",
+      "b": "gaaaaang",
+      "label": false
+    },
+    {
+      "a": "aaaagnggg",
+      "b": "ngngggggngggg",
+      "label": true
+    }
+  ],
+  "worldDigest": "f5c86da1a8a5f861455ba4daa619b9085d6de4bf296a519cc6d19c731ec58027",
+  "exportVersion": "sealed-matched-padded-v2-public-v2"
+}

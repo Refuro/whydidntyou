@@ -1,0 +1,1058 @@
+{
+  "alphabet": [
+    "x",
+    "m",
+    "a"
+  ],
+  "rules": [
+    {
+      "u": "xm",
+      "v": "xx"
+    },
+    {
+      "u": "xa",
+      "v": "am"
+    },
+    {
+      "u": "ma",
+      "v": "am"
+    },
+    {
+      "u": "",
+      "v": "xm"
+    },
+    {
+      "u": "",
+      "v": "aa"
+    },
+    {
+      "u": "ma",
+      "v": "xa"
+    },
+    {
+      "u": "mxa",
+      "v": "mam"
+    },
+    {
+      "u": "xax",
+      "v": "mam"
+    },
+    {
+      "u": "mxa",
+      "v": "xax"
+    },
+    {
+      "u": "mm",
+      "v": "xx"
+    },
+    {
+      "u": "mm",
+      "v": "xm"
+    }
+  ],
+  "rulesText": "1. xm ↔ xx\n2. xa ↔ am\n3. ma ↔ am\n4. ε ↔ xm\n5. ε ↔ aa\n6. ma ↔ xa\n7. mxa ↔ mam\n8. xax ↔ mam\n9. mxa ↔ xax\n10. mm ↔ xx\n11. mm ↔ xm",
+  "trainingPairs": [
+    {
+      "a": "aaxxxx",
+      "b": "axmxmxmaaaxxxaam",
+      "label": true
+    },
+    {
+      "a": "xaaxmmmx",
+      "b": "amamx",
+      "label": false
+    },
+    {
+      "a": "amxmm",
+      "b": "axmaxmxaaaxmxmm",
+      "label": true
+    },
+    {
+      "a": "xxmmxaaxax",
+      "b": "xxaamxmamammxmxaaaaaaxax",
+      "label": true
+    },
+    {
+      "a": "aaxma",
+      "b": "amxaxmma",
+      "label": false
+    },
+    {
+      "a": "amam",
+      "b": "mammx",
+      "label": false
+    },
+    {
+      "a": "maammma",
+      "b": "xmxxaxxx",
+      "label": false
+    },
+    {
+      "a": "axxxm",
+      "b": "axmaaxmxamaxmaaxmaa",
+      "label": true
+    },
+    {
+      "a": "mmmx",
+      "b": "xaxaamx",
+      "label": false
+    },
+    {
+      "a": "axaxmmma",
+      "b": "aaamxmaxmaaxmaaa",
+      "label": true
+    },
+    {
+      "a": "xxxm",
+      "b": "xxmmama",
+      "label": false
+    },
+    {
+      "a": "mxamamxmmm",
+      "b": "xmaaxaaa",
+      "label": false
+    },
+    {
+      "a": "xxaxxmaamx",
+      "b": "amaaaam",
+      "label": false
+    },
+    {
+      "a": "mxmxxxm",
+      "b": "aaxxmx",
+      "label": false
+    },
+    {
+      "a": "maaxmxxmm",
+      "b": "aaaamaaaaxaamxxmmxx",
+      "label": true
+    },
+    {
+      "a": "mama",
+      "b": "mmmaxaaaaa",
+      "label": true
+    },
+    {
+      "a": "xmam",
+      "b": "xxaaaxmx",
+      "label": true
+    },
+    {
+      "a": "xaaaamaa",
+      "b": "xaaaaaxaaxaxmxxmxm",
+      "label": true
+    },
+    {
+      "a": "aaxmaxxaax",
+      "b": "mxaaxax",
+      "label": false
+    },
+    {
+      "a": "aammam",
+      "b": "mamaaxm",
+      "label": false
+    },
+    {
+      "a": "maxxaamaam",
+      "b": "aaxxa",
+      "label": false
+    },
+    {
+      "a": "xxamaxa",
+      "b": "aaxmaxmaamaaama",
+      "label": true
+    },
+    {
+      "a": "axama",
+      "b": "ammamx",
+      "label": false
+    },
+    {
+      "a": "axax",
+      "b": "ammam",
+      "label": false
+    },
+    {
+      "a": "xxxm",
+      "b": "aammmma",
+      "label": false
+    },
+    {
+      "a": "amxam",
+      "b": "xxaxx",
+      "label": false
+    },
+    {
+      "a": "xaxmx",
+      "b": "xaxmaaxmxxmmxmaaaaaax",
+      "label": true
+    },
+    {
+      "a": "maxamm",
+      "b": "mammxaaaaaxmmm",
+      "label": true
+    },
+    {
+      "a": "amxamxx",
+      "b": "aaammaxxmxmxmxx",
+      "label": true
+    },
+    {
+      "a": "mmxxmmaaax",
+      "b": "xxxaaxxmaxmaaxxmmx",
+      "label": true
+    },
+    {
+      "a": "xaaxxaxxmm",
+      "b": "xxaammxmxx",
+      "label": false
+    },
+    {
+      "a": "xmxmaama",
+      "b": "ammmx",
+      "label": false
+    },
+    {
+      "a": "axxa",
+      "b": "xaxamaxaxa",
+      "label": false
+    },
+    {
+      "a": "aaaxam",
+      "b": "aaaaaxxaaaxmaaxm",
+      "label": true
+    },
+    {
+      "a": "maaxxx",
+      "b": "mxmaaaaxaa",
+      "label": true
+    },
+    {
+      "a": "maxxammx",
+      "b": "xxam",
+      "label": false
+    },
+    {
+      "a": "aaaamxamxm",
+      "b": "xammax",
+      "label": false
+    },
+    {
+      "a": "xmaxxxmx",
+      "b": "aaxx",
+      "label": false
+    },
+    {
+      "a": "xmmxmmma",
+      "b": "xmmxmaamaama",
+      "label": true
+    },
+    {
+      "a": "mxxma",
+      "b": "axxam",
+      "label": false
+    },
+    {
+      "a": "mxxxaaxxm",
+      "b": "mxxxmxaa",
+      "label": false
+    },
+    {
+      "a": "mmxaama",
+      "b": "maxxxxmxa",
+      "label": false
+    },
+    {
+      "a": "ammmmmaax",
+      "b": "maxmxaaaaxmxaaxaaxm",
+      "label": true
+    },
+    {
+      "a": "xaam",
+      "b": "maaxxaaa",
+      "label": false
+    },
+    {
+      "a": "maxxxxm",
+      "b": "xaaaxmxmxxmxx",
+      "label": true
+    },
+    {
+      "a": "mmxamm",
+      "b": "aaaaxxaaxaaamm",
+      "label": true
+    },
+    {
+      "a": "xxaamxx",
+      "b": "xxaamaaaaxxmaaxaamx",
+      "label": true
+    },
+    {
+      "a": "xxmx",
+      "b": "xxax",
+      "label": false
+    },
+    {
+      "a": "mxaaxa",
+      "b": "xmmxaaxxm",
+      "label": false
+    },
+    {
+      "a": "xaxa",
+      "b": "xaxmxx",
+      "label": false
+    },
+    {
+      "a": "maaxaa",
+      "b": "maaaaxmaaaxmaxaaaa",
+      "label": true
+    },
+    {
+      "a": "mmmax",
+      "b": "mxxx",
+      "label": false
+    },
+    {
+      "a": "maaxmmxxxx",
+      "b": "mammmaxaa",
+      "label": false
+    },
+    {
+      "a": "aaxaaammm",
+      "b": "axamx",
+      "label": false
+    },
+    {
+      "a": "aammaaamm",
+      "b": "aamxmxxmmmxxaaaaamm",
+      "label": true
+    },
+    {
+      "a": "aaaxxmaa",
+      "b": "aaaxxaammxaaaxax",
+      "label": true
+    },
+    {
+      "a": "xmaamam",
+      "b": "amxxmmmmxm",
+      "label": false
+    },
+    {
+      "a": "xmxxmmmmaa",
+      "b": "ammammama",
+      "label": false
+    },
+    {
+      "a": "axxx",
+      "b": "xxmm",
+      "label": false
+    },
+    {
+      "a": "xxmxxxmm",
+      "b": "aaxxxxmxmxaaxxxm",
+      "label": true
+    },
+    {
+      "a": "amammmma",
+      "b": "mmaxxmaaammxxa",
+      "label": true
+    },
+    {
+      "a": "amamax",
+      "b": "aaaxmxmxmaax",
+      "label": true
+    },
+    {
+      "a": "xxaxmxma",
+      "b": "mmmmaam",
+      "label": false
+    },
+    {
+      "a": "amxaamaaaa",
+      "b": "xmammmaamaaaaxaaaa",
+      "label": true
+    },
+    {
+      "a": "mmmmx",
+      "b": "mxmxxxaammxaaaa",
+      "label": true
+    },
+    {
+      "a": "xaxmaamamx",
+      "b": "mmaamxamaxxm",
+      "label": true
+    },
+    {
+      "a": "mmamammx",
+      "b": "mmmaaxmxa",
+      "label": false
+    },
+    {
+      "a": "axmaxaxmxa",
+      "b": "mmaaammx",
+      "label": false
+    },
+    {
+      "a": "xxma",
+      "b": "xaaxmxamamaxmama",
+      "label": true
+    },
+    {
+      "a": "mmmmxmmaxm",
+      "b": "maaxaammmmxxaaxaxmmm",
+      "label": true
+    },
+    {
+      "a": "aamxaxx",
+      "b": "xaaaa",
+      "label": false
+    },
+    {
+      "a": "ammmxm",
+      "b": "xmaxmxmam",
+      "label": false
+    },
+    {
+      "a": "xxaxm",
+      "b": "amaa",
+      "label": false
+    },
+    {
+      "a": "amamaax",
+      "b": "maxxxxaxa",
+      "label": false
+    },
+    {
+      "a": "amaxaa",
+      "b": "xmammaxmammaaaxm",
+      "label": true
+    },
+    {
+      "a": "mmmxamaxmm",
+      "b": "mxaxmx",
+      "label": false
+    },
+    {
+      "a": "xaaxaxmxm",
+      "b": "xaaaxx",
+      "label": false
+    },
+    {
+      "a": "mmammaa",
+      "b": "xxxamaaaamaamxmaa",
+      "label": true
+    },
+    {
+      "a": "xmmaaamxmx",
+      "b": "mmmmmmmx",
+      "label": false
+    },
+    {
+      "a": "xxaaxa",
+      "b": "mxmxmmmmaama",
+      "label": true
+    },
+    {
+      "a": "xxxaam",
+      "b": "xmamxm",
+      "label": false
+    },
+    {
+      "a": "xaaammx",
+      "b": "mmmmax",
+      "label": false
+    },
+    {
+      "a": "xmxam",
+      "b": "xaaaamaaaaaaxmxxaxm",
+      "label": true
+    },
+    {
+      "a": "maaxax",
+      "b": "maxmmmma",
+      "label": false
+    },
+    {
+      "a": "mmxmamm",
+      "b": "mxmxaa",
+      "label": false
+    },
+    {
+      "a": "amxa",
+      "b": "aamaamamxxmmaaxmxa",
+      "label": true
+    },
+    {
+      "a": "mxaam",
+      "b": "axammaxama",
+      "label": false
+    },
+    {
+      "a": "aamaam",
+      "b": "aaaaammaxmxm",
+      "label": true
+    },
+    {
+      "a": "xamm",
+      "b": "aaammaaaaaaaaaam",
+      "label": true
+    },
+    {
+      "a": "amxxam",
+      "b": "xmmxa",
+      "label": false
+    },
+    {
+      "a": "xxam",
+      "b": "mmaxmmaaa",
+      "label": false
+    },
+    {
+      "a": "xxmm",
+      "b": "maamxmaaaxxa",
+      "label": true
+    },
+    {
+      "a": "xxam",
+      "b": "xaaxaaxxaaaxaaaa",
+      "label": true
+    },
+    {
+      "a": "maxaxaaxx",
+      "b": "aaaxaxxma",
+      "label": false
+    },
+    {
+      "a": "mxxam",
+      "b": "xmmxmxammaxam",
+      "label": true
+    },
+    {
+      "a": "axaxxmamx",
+      "b": "xxxaamm",
+      "label": false
+    },
+    {
+      "a": "xamaa",
+      "b": "xaamxxxamxxmmaa",
+      "label": true
+    },
+    {
+      "a": "axaxxaxxx",
+      "b": "axxmaaaxxmxmxax",
+      "label": true
+    },
+    {
+      "a": "xmaax",
+      "b": "xmxxmmxaaxaaxaa",
+      "label": true
+    },
+    {
+      "a": "ammm",
+      "b": "axam",
+      "label": false
+    },
+    {
+      "a": "maamaaax",
+      "b": "xaxaaaaaax",
+      "label": true
+    },
+    {
+      "a": "mamxmaaaam",
+      "b": "mamxxxxmmaaaaxmm",
+      "label": true
+    },
+    {
+      "a": "mxxmaxm",
+      "b": "aamxxxaaaxama",
+      "label": true
+    },
+    {
+      "a": "xxaama",
+      "b": "aaxxaaaaamaaxmaaaa",
+      "label": true
+    },
+    {
+      "a": "xmxaaa",
+      "b": "maaxaxxxx",
+      "label": false
+    },
+    {
+      "a": "maaxaxxxma",
+      "b": "aamxamamaxxmmxxxma",
+      "label": true
+    },
+    {
+      "a": "ammaxx",
+      "b": "xmamxxxx",
+      "label": false
+    },
+    {
+      "a": "amxm",
+      "b": "xxxxamxmxaamxm",
+      "label": true
+    },
+    {
+      "a": "aaaaxx",
+      "b": "axxmmxmaaaaxmamm",
+      "label": true
+    },
+    {
+      "a": "ammxmmaxm",
+      "b": "axmmmxmaaxmmaxmxm",
+      "label": true
+    },
+    {
+      "a": "xaxxmxaaa",
+      "b": "aaamxaaxaammaaaaa",
+      "label": true
+    },
+    {
+      "a": "xxmmxxxam",
+      "b": "xxmmxmxxmmxxmma",
+      "label": true
+    },
+    {
+      "a": "amaaaax",
+      "b": "ammmmmmaxm",
+      "label": false
+    },
+    {
+      "a": "xxaa",
+      "b": "xxxxmmaaaaaa",
+      "label": true
+    },
+    {
+      "a": "mmmaxxm",
+      "b": "xaxam",
+      "label": false
+    },
+    {
+      "a": "maaaxx",
+      "b": "amamxxamx",
+      "label": false
+    },
+    {
+      "a": "mxaamax",
+      "b": "xxxmaxa",
+      "label": false
+    },
+    {
+      "a": "xmmmxmaxa",
+      "b": "xaamma",
+      "label": false
+    },
+    {
+      "a": "aaxmxxx",
+      "b": "aammxxmmmmaaxmmaa",
+      "label": true
+    },
+    {
+      "a": "xmmax",
+      "b": "xamxmaxaamxax",
+      "label": true
+    },
+    {
+      "a": "mmxx",
+      "b": "xaaamxmx",
+      "label": false
+    },
+    {
+      "a": "xaxx",
+      "b": "xmmxmaxmmaaaaxxmxm",
+      "label": true
+    },
+    {
+      "a": "xxmmmaamm",
+      "b": "xxmxxmmmaammmaammaaxx",
+      "label": true
+    },
+    {
+      "a": "mmmxaaam",
+      "b": "aammxmxmmxaaxmam",
+      "label": true
+    },
+    {
+      "a": "aamxxxamax",
+      "b": "axaxaaxxmxmmmaax",
+      "label": true
+    },
+    {
+      "a": "aamaamam",
+      "b": "aaaaaaxaaaaxmmxa",
+      "label": true
+    },
+    {
+      "a": "mmxmxm",
+      "b": "xxxmmaamxmxmaxma",
+      "label": true
+    },
+    {
+      "a": "mmam",
+      "b": "xxxx",
+      "label": false
+    },
+    {
+      "a": "xmmaxmamma",
+      "b": "aammxxaa",
+      "label": false
+    },
+    {
+      "a": "mxxxaxa",
+      "b": "xmxaxamma",
+      "label": false
+    },
+    {
+      "a": "mxaa",
+      "b": "xmmaaamaxm",
+      "label": true
+    },
+    {
+      "a": "axmxaxmxaa",
+      "b": "axmxaaamaaxaxa",
+      "label": true
+    },
+    {
+      "a": "axxxxmx",
+      "b": "xmamaaxmxaa",
+      "label": true
+    },
+    {
+      "a": "aaama",
+      "b": "xaama",
+      "label": false
+    },
+    {
+      "a": "mmaaaaamm",
+      "b": "mmamaxx",
+      "label": false
+    },
+    {
+      "a": "mmmmxxamam",
+      "b": "xxxaxaxxmxamaaxxma",
+      "label": true
+    },
+    {
+      "a": "aaxmxx",
+      "b": "aaaaaaaaxmxmaaaaxaaaax",
+      "label": true
+    },
+    {
+      "a": "amxxmxm",
+      "b": "aaxaaa",
+      "label": false
+    },
+    {
+      "a": "xaxa",
+      "b": "xxaama",
+      "label": false
+    },
+    {
+      "a": "mmaaxaxmam",
+      "b": "mxmmxamxx",
+      "label": false
+    },
+    {
+      "a": "maxaxmxa",
+      "b": "maamaamaamxmaaxa",
+      "label": true
+    },
+    {
+      "a": "axxxm",
+      "b": "aaxxaaaxaammm",
+      "label": true
+    },
+    {
+      "a": "xmamxxmaax",
+      "b": "mmxmxaxaaaxmax",
+      "label": true
+    },
+    {
+      "a": "aaxaxaaxma",
+      "b": "aaaaxxxaxaammaaaaaaaaa",
+      "label": true
+    },
+    {
+      "a": "xxaaxaaxax",
+      "b": "aaxaxxm",
+      "label": false
+    },
+    {
+      "a": "mamxmmmxmm",
+      "b": "xmmxammmxx",
+      "label": true
+    },
+    {
+      "a": "amxmmaxma",
+      "b": "mxmm",
+      "label": false
+    },
+    {
+      "a": "xaaax",
+      "b": "xamaax",
+      "label": false
+    },
+    {
+      "a": "xmaaamx",
+      "b": "aaaaaaaxaammxxm",
+      "label": true
+    },
+    {
+      "a": "maxammaamm",
+      "b": "maxaxmaaaaxxmmmxmaaama",
+      "label": true
+    },
+    {
+      "a": "xaxxxmxx",
+      "b": "xmxaxmxmxxxmmaaxaa",
+      "label": true
+    },
+    {
+      "a": "axmxax",
+      "b": "xaxamaxma",
+      "label": false
+    },
+    {
+      "a": "aaxax",
+      "b": "xxmxaxxaxm",
+      "label": false
+    },
+    {
+      "a": "mmxxxamm",
+      "b": "aaxxxxmmxxmxmaaammaa",
+      "label": true
+    },
+    {
+      "a": "axxxx",
+      "b": "xaammamxxmaamaa",
+      "label": true
+    },
+    {
+      "a": "mmxaxxama",
+      "b": "mmxmxaaxxaaaxxmaxxa",
+      "label": true
+    },
+    {
+      "a": "mamxmaaxx",
+      "b": "aamamxxxaxxmaxxxxaa",
+      "label": true
+    },
+    {
+      "a": "xxxm",
+      "b": "mxaaxmama",
+      "label": false
+    },
+    {
+      "a": "xammaxa",
+      "b": "amaaxmxmmxmmaxa",
+      "label": true
+    },
+    {
+      "a": "xxmaxmmma",
+      "b": "xaaxmaaaxmxxmma",
+      "label": true
+    },
+    {
+      "a": "maxmmmxaa",
+      "b": "mmmxaxxaxa",
+      "label": false
+    },
+    {
+      "a": "maxaamxmma",
+      "b": "xxamaaaa",
+      "label": false
+    },
+    {
+      "a": "xaaaa",
+      "b": "xxxmmax",
+      "label": false
+    },
+    {
+      "a": "xmxxxxxm",
+      "b": "xmaaamaaaxxxxm",
+      "label": true
+    },
+    {
+      "a": "mxmx",
+      "b": "aamxxxaaxxaaxm",
+      "label": true
+    },
+    {
+      "a": "xaxx",
+      "b": "mxmmxx",
+      "label": false
+    },
+    {
+      "a": "aaxmxm",
+      "b": "xxxmmxaxx",
+      "label": false
+    },
+    {
+      "a": "aaxx",
+      "b": "mxamx",
+      "label": false
+    },
+    {
+      "a": "mmmaxxmam",
+      "b": "mxmmmaaaxmaaaaaaaamma",
+      "label": true
+    },
+    {
+      "a": "aammmamxm",
+      "b": "xaxax",
+      "label": false
+    },
+    {
+      "a": "xxxxam",
+      "b": "xmxmam",
+      "label": true
+    },
+    {
+      "a": "mmamax",
+      "b": "xaaaxaaaxaaaaxxm",
+      "label": true
+    },
+    {
+      "a": "xmax",
+      "b": "xaaax",
+      "label": false
+    },
+    {
+      "a": "mxxmx",
+      "b": "mxmxaaxmxaamxxx",
+      "label": true
+    },
+    {
+      "a": "mmaxaxxamm",
+      "b": "aamx",
+      "label": false
+    },
+    {
+      "a": "ammmamxmm",
+      "b": "aaam",
+      "label": false
+    },
+    {
+      "a": "xaxxmmmamm",
+      "b": "axaamm",
+      "label": false
+    },
+    {
+      "a": "aaxmmax",
+      "b": "xmaaxmmmmmamx",
+      "label": true
+    },
+    {
+      "a": "mmmamxm",
+      "b": "maaaaa",
+      "label": false
+    },
+    {
+      "a": "mmaamaxxam",
+      "b": "xamaa",
+      "label": false
+    },
+    {
+      "a": "xmaaxmama",
+      "b": "mammm",
+      "label": false
+    },
+    {
+      "a": "mamxaxm",
+      "b": "axxaa",
+      "label": false
+    },
+    {
+      "a": "axxxxxxa",
+      "b": "axamaxmxamaaxm",
+      "label": true
+    },
+    {
+      "a": "amamxxa",
+      "b": "amxa",
+      "label": false
+    },
+    {
+      "a": "xxmaaaax",
+      "b": "xxxmmxamxmaaax",
+      "label": true
+    },
+    {
+      "a": "mmmxmxxa",
+      "b": "xmxxmxxmmmxmmaxmxmaa",
+      "label": true
+    },
+    {
+      "a": "ammxaaaxm",
+      "b": "ammaaxaaamaxa",
+      "label": true
+    },
+    {
+      "a": "xmxxxxx",
+      "b": "xmxmxmaaxxmmxxaaxxmmxxx",
+      "label": true
+    },
+    {
+      "a": "mmxxaa",
+      "b": "aaxaaaammmxaaxaa",
+      "label": true
+    },
+    {
+      "a": "xxaammaam",
+      "b": "mama",
+      "label": false
+    },
+    {
+      "a": "maax",
+      "b": "xamamaaaaaaxamax",
+      "label": true
+    },
+    {
+      "a": "mamamamam",
+      "b": "maam",
+      "label": false
+    },
+    {
+      "a": "xmmaamxxx",
+      "b": "xaamxx",
+      "label": false
+    },
+    {
+      "a": "xmmxm",
+      "b": "xxmxxaaxxxmaaxm",
+      "label": true
+    },
+    {
+      "a": "xaxxxmmxxa",
+      "b": "aaxmmxaxaaxxmxxxam",
+      "label": true
+    },
+    {
+      "a": "xmaaaxxxxm",
+      "b": "aammmxaxxa",
+      "label": false
+    },
+    {
+      "a": "ammx",
+      "b": "ammmxm",
+      "label": true
+    },
+    {
+      "a": "mxxmm",
+      "b": "xmmaxmxmx",
+      "label": false
+    },
+    {
+      "a": "mmaaa",
+      "b": "xmaaxmm",
+      "label": false
+    },
+    {
+      "a": "xaamaaa",
+      "b": "amxma",
+      "label": false
+    }
+  ],
+  "worldDigest": "530cfc9e59f43ab7feb2ff0c912cbe4c771011c57a47bb5b0331fae2367ddfb0",
+  "exportVersion": "sealed-matched-padded-v2-public-v2"
+}

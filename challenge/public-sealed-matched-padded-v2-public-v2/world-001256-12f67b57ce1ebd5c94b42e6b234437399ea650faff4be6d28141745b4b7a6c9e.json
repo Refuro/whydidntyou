@@ -1,0 +1,1058 @@
+{
+  "alphabet": [
+    "u",
+    "f",
+    "n"
+  ],
+  "rules": [
+    {
+      "u": "",
+      "v": "un"
+    },
+    {
+      "u": "",
+      "v": "ff"
+    },
+    {
+      "u": "nff",
+      "v": "nun"
+    },
+    {
+      "u": "",
+      "v": "fun"
+    },
+    {
+      "u": "ffu",
+      "v": "nnn"
+    },
+    {
+      "u": "unn",
+      "v": "nun"
+    },
+    {
+      "u": "nnn",
+      "v": "fu"
+    },
+    {
+      "u": "nff",
+      "v": "unn"
+    },
+    {
+      "u": "ffu",
+      "v": "fu"
+    },
+    {
+      "u": "",
+      "v": "f"
+    },
+    {
+      "u": "fun",
+      "v": "ff"
+    }
+  ],
+  "rulesText": "1. ε ↔ un\n2. ε ↔ ff\n3. nff ↔ nun\n4. ε ↔ fun\n5. ffu ↔ nnn\n6. unn ↔ nun\n7. nnn ↔ fu\n8. nff ↔ unn\n9. ffu ↔ fu\n10. ε ↔ f\n11. fun ↔ ff",
+  "trainingPairs": [
+    {
+      "a": "nunuuff",
+      "b": "nunuufufnffffuunnununf",
+      "label": true
+    },
+    {
+      "a": "uufu",
+      "b": "uffunufufunnnufufun",
+      "label": true
+    },
+    {
+      "a": "ffuunfn",
+      "b": "fnnnnunuuffffnfnff",
+      "label": true
+    },
+    {
+      "a": "unfnff",
+      "b": "unuffnfunnffunffunf",
+      "label": true
+    },
+    {
+      "a": "funnnf",
+      "b": "ffununfffnnfunfuunn",
+      "label": true
+    },
+    {
+      "a": "nnfnfffffn",
+      "b": "ufnnunnffnfffufunnfffn",
+      "label": true
+    },
+    {
+      "a": "fnfuun",
+      "b": "fuffnuu",
+      "label": false
+    },
+    {
+      "a": "nnnnfuff",
+      "b": "fufunnffufunf",
+      "label": true
+    },
+    {
+      "a": "fnunu",
+      "b": "ufunuuuu",
+      "label": false
+    },
+    {
+      "a": "nfnnf",
+      "b": "unnunfuffnnnfunfufuffnnf",
+      "label": true
+    },
+    {
+      "a": "nuuuunfnn",
+      "b": "uffnnffnnu",
+      "label": false
+    },
+    {
+      "a": "uufu",
+      "b": "uffnuu",
+      "label": false
+    },
+    {
+      "a": "nunn",
+      "b": "nfununfuun",
+      "label": false
+    },
+    {
+      "a": "unfnu",
+      "b": "unfffnfuffununnuun",
+      "label": true
+    },
+    {
+      "a": "nufnnf",
+      "b": "fnnffuuuuu",
+      "label": false
+    },
+    {
+      "a": "ufuuuf",
+      "b": "funfunuunfunfffuuunuf",
+      "label": true
+    },
+    {
+      "a": "uuufff",
+      "b": "uunfnuufunuffffun",
+      "label": true
+    },
+    {
+      "a": "fuffnfnunu",
+      "b": "nunnffnffffnfnunu",
+      "label": true
+    },
+    {
+      "a": "uuuuufuu",
+      "b": "nuunnffuuf",
+      "label": false
+    },
+    {
+      "a": "nnnnnu",
+      "b": "nnfnffun",
+      "label": false
+    },
+    {
+      "a": "uununnnnnn",
+      "b": "ufnu",
+      "label": false
+    },
+    {
+      "a": "fffnnuuff",
+      "b": "unffufnnnfffuunufffun",
+      "label": true
+    },
+    {
+      "a": "ufnnunf",
+      "b": "nufffffnnf",
+      "label": false
+    },
+    {
+      "a": "fnfu",
+      "b": "fnnnffffffufnnunff",
+      "label": true
+    },
+    {
+      "a": "nnuf",
+      "b": "funuunf",
+      "label": false
+    },
+    {
+      "a": "funfu",
+      "b": "ffnn",
+      "label": false
+    },
+    {
+      "a": "unfn",
+      "b": "unffnnnnunffn",
+      "label": true
+    },
+    {
+      "a": "fnnufff",
+      "b": "nuuu",
+      "label": false
+    },
+    {
+      "a": "ffufnnf",
+      "b": "ffunffunfufnnffffunf",
+      "label": true
+    },
+    {
+      "a": "nfuunfff",
+      "b": "nuuf",
+      "label": false
+    },
+    {
+      "a": "nnffu",
+      "b": "uffnnn",
+      "label": false
+    },
+    {
+      "a": "nfun",
+      "b": "ffffnunuunnun",
+      "label": true
+    },
+    {
+      "a": "uffunnnfn",
+      "b": "fnuffunu",
+      "label": false
+    },
+    {
+      "a": "nffunffn",
+      "b": "ufunnnffunfunfffn",
+      "label": true
+    },
+    {
+      "a": "uunu",
+      "b": "nffffuff",
+      "label": false
+    },
+    {
+      "a": "nnnnnfufu",
+      "b": "fnfuuuf",
+      "label": false
+    },
+    {
+      "a": "ufufnnfu",
+      "b": "uffufffffunfnnfuunfunfun",
+      "label": true
+    },
+    {
+      "a": "nnfnuuf",
+      "b": "nnufunnffunnuuunfff",
+      "label": true
+    },
+    {
+      "a": "fffnfun",
+      "b": "nnnnnnnnunffuffnnun",
+      "label": true
+    },
+    {
+      "a": "nufnuf",
+      "b": "unufuunf",
+      "label": false
+    },
+    {
+      "a": "fnnunffu",
+      "b": "ffffnunnfffunffuun",
+      "label": true
+    },
+    {
+      "a": "fnnfnfnu",
+      "b": "fnfffffffnfffunfnfffnu",
+      "label": true
+    },
+    {
+      "a": "uuufnfnnuu",
+      "b": "fnfffu",
+      "label": false
+    },
+    {
+      "a": "nufnuuu",
+      "b": "unfnufnuffuunfufunun",
+      "label": true
+    },
+    {
+      "a": "nfnuu",
+      "b": "nfffun",
+      "label": false
+    },
+    {
+      "a": "ffnn",
+      "b": "ffnuf",
+      "label": false
+    },
+    {
+      "a": "fuuuunfffn",
+      "b": "nfufn",
+      "label": false
+    },
+    {
+      "a": "uuuf",
+      "b": "ufuffffnufffununfunfuf",
+      "label": true
+    },
+    {
+      "a": "ffuf",
+      "b": "fffufff",
+      "label": true
+    },
+    {
+      "a": "fuffufnn",
+      "b": "fnnuuuf",
+      "label": false
+    },
+    {
+      "a": "nnufnu",
+      "b": "ffuunfunfunfnnnfffufnu",
+      "label": true
+    },
+    {
+      "a": "fffnuufufu",
+      "b": "ufnffuun",
+      "label": false
+    },
+    {
+      "a": "fnnnnfnuu",
+      "b": "fnun",
+      "label": false
+    },
+    {
+      "a": "fuuuuf",
+      "b": "nuuff",
+      "label": false
+    },
+    {
+      "a": "fnnfnu",
+      "b": "unfffffnnffffnu",
+      "label": true
+    },
+    {
+      "a": "nnufffuf",
+      "b": "nfffffnffufufunf",
+      "label": true
+    },
+    {
+      "a": "fnuufnff",
+      "b": "ffffunfunnufufnufn",
+      "label": true
+    },
+    {
+      "a": "ffunffff",
+      "b": "nunffnf",
+      "label": false
+    },
+    {
+      "a": "nfuufunf",
+      "b": "fuffu",
+      "label": false
+    },
+    {
+      "a": "nnuuuffuf",
+      "b": "nnuuun",
+      "label": false
+    },
+    {
+      "a": "uufufufuf",
+      "b": "uffffuufffuu",
+      "label": true
+    },
+    {
+      "a": "nunfn",
+      "b": "ffunufnf",
+      "label": false
+    },
+    {
+      "a": "ufunfu",
+      "b": "ufunfunfunffunu",
+      "label": true
+    },
+    {
+      "a": "fnnuufunnf",
+      "b": "fuunfn",
+      "label": false
+    },
+    {
+      "a": "fnfuffuufn",
+      "b": "fnfuuuu",
+      "label": false
+    },
+    {
+      "a": "nnfuffffnu",
+      "b": "unnnfufunfunffunnu",
+      "label": true
+    },
+    {
+      "a": "ffffu",
+      "b": "unffuunnuununnfu",
+      "label": true
+    },
+    {
+      "a": "nunnnffn",
+      "b": "ufufuunufn",
+      "label": false
+    },
+    {
+      "a": "nuuuufu",
+      "b": "nuufununufuuunnunfu",
+      "label": true
+    },
+    {
+      "a": "nnnffuu",
+      "b": "fnfnf",
+      "label": false
+    },
+    {
+      "a": "nnnufnfnnn",
+      "b": "funffunnfnnufnufunfnfnnn",
+      "label": true
+    },
+    {
+      "a": "uuufnfnf",
+      "b": "funufunuunfunnunfun",
+      "label": true
+    },
+    {
+      "a": "ffnuu",
+      "b": "fffununfunnunufuunnu",
+      "label": true
+    },
+    {
+      "a": "nufnunnfu",
+      "b": "uffffunf",
+      "label": false
+    },
+    {
+      "a": "nfunfffu",
+      "b": "unnfunnfnnfun",
+      "label": true
+    },
+    {
+      "a": "fnff",
+      "b": "ffnfunununf",
+      "label": true
+    },
+    {
+      "a": "uunnnn",
+      "b": "fnunfu",
+      "label": false
+    },
+    {
+      "a": "ufun",
+      "b": "nnnfn",
+      "label": false
+    },
+    {
+      "a": "ufnffu",
+      "b": "ufnfffffffffunffnnn",
+      "label": true
+    },
+    {
+      "a": "ufuunnfu",
+      "b": "ufunf",
+      "label": false
+    },
+    {
+      "a": "ffnufnf",
+      "b": "ffnfffunufnf",
+      "label": true
+    },
+    {
+      "a": "uunfufnn",
+      "b": "uunfnnnnuffffununfnunn",
+      "label": true
+    },
+    {
+      "a": "fnnnnnfuf",
+      "b": "ufuf",
+      "label": false
+    },
+    {
+      "a": "fuunfff",
+      "b": "fffunfffffuunffunfff",
+      "label": true
+    },
+    {
+      "a": "ffnffuuuf",
+      "b": "fffununffununfunnuuunuf",
+      "label": true
+    },
+    {
+      "a": "nnnun",
+      "b": "fuuuunnuf",
+      "label": false
+    },
+    {
+      "a": "uffufffun",
+      "b": "nfnfunuff",
+      "label": false
+    },
+    {
+      "a": "ufun",
+      "b": "ufffufnfffuunn",
+      "label": true
+    },
+    {
+      "a": "unfuf",
+      "b": "nnnnfunfunfffunfuf",
+      "label": true
+    },
+    {
+      "a": "uufn",
+      "b": "nnunfnffn",
+      "label": false
+    },
+    {
+      "a": "nufnfff",
+      "b": "ufffff",
+      "label": false
+    },
+    {
+      "a": "fuuuuunf",
+      "b": "uunfu",
+      "label": false
+    },
+    {
+      "a": "unfnf",
+      "b": "funfufn",
+      "label": false
+    },
+    {
+      "a": "fuuufnffff",
+      "b": "funfunuuufnunfunff",
+      "label": true
+    },
+    {
+      "a": "nuufuf",
+      "b": "funnuuffffufffun",
+      "label": true
+    },
+    {
+      "a": "fnffufffun",
+      "b": "ffufuunun",
+      "label": false
+    },
+    {
+      "a": "fufn",
+      "b": "uuffnff",
+      "label": false
+    },
+    {
+      "a": "nnfn",
+      "b": "fnnffunffffuunnn",
+      "label": true
+    },
+    {
+      "a": "nunfuunnuu",
+      "b": "ffuu",
+      "label": false
+    },
+    {
+      "a": "unnf",
+      "b": "unnfuunffn",
+      "label": true
+    },
+    {
+      "a": "nnuf",
+      "b": "nnfunffu",
+      "label": true
+    },
+    {
+      "a": "ufufuuuuf",
+      "b": "ufuunfuufffuunnuuffunun",
+      "label": true
+    },
+    {
+      "a": "uufu",
+      "b": "nnffff",
+      "label": false
+    },
+    {
+      "a": "nnuunuf",
+      "b": "nufunfuuf",
+      "label": false
+    },
+    {
+      "a": "ffffu",
+      "b": "ufuufufnu",
+      "label": false
+    },
+    {
+      "a": "fnnnffu",
+      "b": "uufuf",
+      "label": false
+    },
+    {
+      "a": "nnnfnfufu",
+      "b": "nnuufnnnn",
+      "label": false
+    },
+    {
+      "a": "unnnnnfufu",
+      "b": "uununnnuun",
+      "label": false
+    },
+    {
+      "a": "fnffnuuufu",
+      "b": "unfu",
+      "label": false
+    },
+    {
+      "a": "nnfnffn",
+      "b": "fffnnfunnfn",
+      "label": true
+    },
+    {
+      "a": "nfnn",
+      "b": "nfnffunfunffunffunn",
+      "label": true
+    },
+    {
+      "a": "nnfuuuuuf",
+      "b": "nfunnfununuuuunuufff",
+      "label": true
+    },
+    {
+      "a": "nufu",
+      "b": "funfnunufu",
+      "label": true
+    },
+    {
+      "a": "nunu",
+      "b": "funfnunfuunnfu",
+      "label": true
+    },
+    {
+      "a": "ffun",
+      "b": "nfufuun",
+      "label": false
+    },
+    {
+      "a": "funnunnn",
+      "b": "fffnffunfuuffffnnunfnn",
+      "label": true
+    },
+    {
+      "a": "ufnfnfn",
+      "b": "fnuufnfn",
+      "label": false
+    },
+    {
+      "a": "ffuunfufun",
+      "b": "nuffufn",
+      "label": false
+    },
+    {
+      "a": "funnn",
+      "b": "fuffunfunnfufffunuf",
+      "label": true
+    },
+    {
+      "a": "unfn",
+      "b": "unffffufffunnfn",
+      "label": true
+    },
+    {
+      "a": "uunuffnnu",
+      "b": "fufunnnnu",
+      "label": false
+    },
+    {
+      "a": "ffuuffnnnf",
+      "b": "fnfnffnun",
+      "label": false
+    },
+    {
+      "a": "uunfnuunff",
+      "b": "uunfnuffuunnunff",
+      "label": true
+    },
+    {
+      "a": "nfuun",
+      "b": "nnfuufu",
+      "label": false
+    },
+    {
+      "a": "funuffunn",
+      "b": "fnffnn",
+      "label": false
+    },
+    {
+      "a": "ufnnf",
+      "b": "unufnun",
+      "label": false
+    },
+    {
+      "a": "ufffuufuf",
+      "b": "funnnnnfnn",
+      "label": false
+    },
+    {
+      "a": "uunnnfuf",
+      "b": "fuunnfffnffufunffunfunf",
+      "label": true
+    },
+    {
+      "a": "fnfnufn",
+      "b": "nfuff",
+      "label": false
+    },
+    {
+      "a": "ufffn",
+      "b": "uffunffn",
+      "label": true
+    },
+    {
+      "a": "fuffnn",
+      "b": "nnfunnffffufnfffnn",
+      "label": true
+    },
+    {
+      "a": "nffnn",
+      "b": "funnfffnfu",
+      "label": false
+    },
+    {
+      "a": "ffufnn",
+      "b": "fnunnffnnf",
+      "label": false
+    },
+    {
+      "a": "ufunnnfnf",
+      "b": "ufffufnnnffffffn",
+      "label": true
+    },
+    {
+      "a": "fuunnn",
+      "b": "uuufunnnnfn",
+      "label": true
+    },
+    {
+      "a": "unnnfnffu",
+      "b": "uunuffunnfunffufun",
+      "label": true
+    },
+    {
+      "a": "uuuuuuunfu",
+      "b": "ffuuuuufuunfunfffufun",
+      "label": true
+    },
+    {
+      "a": "uffuunfun",
+      "b": "nuuf",
+      "label": false
+    },
+    {
+      "a": "nnuufun",
+      "b": "ffnffnuufuffn",
+      "label": true
+    },
+    {
+      "a": "uufnfunffn",
+      "b": "fufunufnffnnnnffunffn",
+      "label": true
+    },
+    {
+      "a": "unnuuffn",
+      "b": "unnuufffunufunnffffunfn",
+      "label": true
+    },
+    {
+      "a": "uufufunfnf",
+      "b": "nnfuuffu",
+      "label": false
+    },
+    {
+      "a": "nfunfuff",
+      "b": "ffuuu",
+      "label": false
+    },
+    {
+      "a": "uuunf",
+      "b": "nfunuunnf",
+      "label": false
+    },
+    {
+      "a": "fnufnunf",
+      "b": "fnufnffunfunffunff",
+      "label": true
+    },
+    {
+      "a": "fnuuufu",
+      "b": "ffunnuff",
+      "label": false
+    },
+    {
+      "a": "uffuffnn",
+      "b": "fuffufnufffffufunffnnn",
+      "label": true
+    },
+    {
+      "a": "fnufuunfu",
+      "b": "fnuffunuffuununnu",
+      "label": true
+    },
+    {
+      "a": "nnnufunuu",
+      "b": "uunufn",
+      "label": false
+    },
+    {
+      "a": "ffnufu",
+      "b": "fffffffffffffnfufu",
+      "label": true
+    },
+    {
+      "a": "nnffu",
+      "b": "nfnnuf",
+      "label": false
+    },
+    {
+      "a": "uunuu",
+      "b": "nunuuunff",
+      "label": false
+    },
+    {
+      "a": "fufnu",
+      "b": "fufnffufunffnuf",
+      "label": true
+    },
+    {
+      "a": "fffu",
+      "b": "nnfufnnfnf",
+      "label": false
+    },
+    {
+      "a": "ufufuf",
+      "b": "uffffuffu",
+      "label": true
+    },
+    {
+      "a": "uffnunff",
+      "b": "fuuun",
+      "label": false
+    },
+    {
+      "a": "ununnnunnf",
+      "b": "uunfnuu",
+      "label": false
+    },
+    {
+      "a": "ffnuuuuu",
+      "b": "ffunnufffunfunuunuuuff",
+      "label": true
+    },
+    {
+      "a": "fffnunuu",
+      "b": "nfnnunfnuu",
+      "label": false
+    },
+    {
+      "a": "nnnfffnf",
+      "b": "funfnnunff",
+      "label": false
+    },
+    {
+      "a": "uuun",
+      "b": "funuffffunuff",
+      "label": true
+    },
+    {
+      "a": "fnuufnfnf",
+      "b": "fffnn",
+      "label": false
+    },
+    {
+      "a": "nufu",
+      "b": "fnuuunnnun",
+      "label": false
+    },
+    {
+      "a": "nffufnf",
+      "b": "nfffuf",
+      "label": false
+    },
+    {
+      "a": "unffufu",
+      "b": "unffununuunfunu",
+      "label": true
+    },
+    {
+      "a": "ufffu",
+      "b": "funnnnffffunfu",
+      "label": true
+    },
+    {
+      "a": "nunnnf",
+      "b": "ufnn",
+      "label": false
+    },
+    {
+      "a": "funfuffnf",
+      "b": "nfuu",
+      "label": false
+    },
+    {
+      "a": "unnnff",
+      "b": "ufufuufn",
+      "label": false
+    },
+    {
+      "a": "nffuunuu",
+      "b": "nfunuuunnufuunuunfunn",
+      "label": true
+    },
+    {
+      "a": "ufnufu",
+      "b": "funfufffnunffuu",
+      "label": true
+    },
+    {
+      "a": "nunufff",
+      "b": "funu",
+      "label": false
+    },
+    {
+      "a": "fnnnnuu",
+      "b": "fffnffuufunuffun",
+      "label": true
+    },
+    {
+      "a": "uunnnfnfnu",
+      "b": "fuuuufu",
+      "label": false
+    },
+    {
+      "a": "ffnnun",
+      "b": "fffunufununnnnfff",
+      "label": true
+    },
+    {
+      "a": "nuffnnuu",
+      "b": "funffunununfnuffnnuunu",
+      "label": true
+    },
+    {
+      "a": "unnfn",
+      "b": "nffffunfnff",
+      "label": true
+    },
+    {
+      "a": "nnfffufn",
+      "b": "uffnn",
+      "label": false
+    },
+    {
+      "a": "nfnnn",
+      "b": "fuffnfunnfnfunnnfunff",
+      "label": true
+    },
+    {
+      "a": "fnnnunuf",
+      "b": "uunffnfuuf",
+      "label": true
+    },
+    {
+      "a": "unnfufff",
+      "b": "ffunffunnfffufffunfff",
+      "label": true
+    },
+    {
+      "a": "funnufunf",
+      "b": "ffununnuunfufununnff",
+      "label": true
+    },
+    {
+      "a": "unnffnunf",
+      "b": "funnnuu",
+      "label": false
+    },
+    {
+      "a": "nfnnun",
+      "b": "nuunffnuf",
+      "label": false
+    },
+    {
+      "a": "nnuuuunnf",
+      "b": "unfuufff",
+      "label": false
+    },
+    {
+      "a": "nnnnfnfnu",
+      "b": "fnnffnnnffnfuun",
+      "label": true
+    },
+    {
+      "a": "unnu",
+      "b": "ununffnnnnffnuf",
+      "label": true
+    },
+    {
+      "a": "funfun",
+      "b": "fuunnffunnnfunnnf",
+      "label": true
+    },
+    {
+      "a": "ufnu",
+      "b": "uffnffunfununu",
+      "label": true
+    },
+    {
+      "a": "nunnnfu",
+      "b": "unnuffffuffu",
+      "label": true
+    },
+    {
+      "a": "nnnfufu",
+      "b": "unufnfunu",
+      "label": false
+    },
+    {
+      "a": "ufuuffuf",
+      "b": "uffunufufunfuffunf",
+      "label": true
+    },
+    {
+      "a": "ffffnuuffu",
+      "b": "uffnfffnuufununffu",
+      "label": true
+    },
+    {
+      "a": "unuuuu",
+      "b": "funuff",
+      "label": false
+    },
+    {
+      "a": "nnff",
+      "b": "ufnnfnnun",
+      "label": false
+    },
+    {
+      "a": "nnunffn",
+      "b": "nnffunfffufunnffn",
+      "label": true
+    },
+    {
+      "a": "fnfnnn",
+      "b": "fnunfn",
+      "label": false
+    },
+    {
+      "a": "fufnff",
+      "b": "nnufffnunn",
+      "label": false
+    },
+    {
+      "a": "nfuff",
+      "b": "fuufffff",
+      "label": false
+    },
+    {
+      "a": "fnuunnunf",
+      "b": "unnnnun",
+      "label": false
+    }
+  ],
+  "worldDigest": "12f67b57ce1ebd5c94b42e6b234437399ea650faff4be6d28141745b4b7a6c9e",
+  "exportVersion": "sealed-matched-padded-v2-public-v2"
+}

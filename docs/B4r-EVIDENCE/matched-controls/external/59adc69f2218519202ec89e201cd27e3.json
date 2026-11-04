@@ -1,0 +1,174 @@
+{
+  "type": "external-score-meta",
+  "version": 2,
+  "exportVersion": "sealed-matched-padded-v2-public-v2",
+  "runId": "59adc69f2218519202ec89e201cd27e3",
+  "solverName": "bfs-4x.solver.json",
+  "solverHash": "b3951dbaf934f13856ac71cf82ad989c962d36787817cd8f86d649fd680d6075",
+  "sourceHash": "985bff1f1ed128cd16657fcee99c311e4965326c2d14ed480b7ecf466c5a409b",
+  "publicIndexHash": "a3733debe3cc0d1eff280e3304854b20f696a66977c35fa72adb6783c5c98a4a",
+  "worlds": 1,
+  "budget": {
+    "fitMs": 20000,
+    "inferenceMs": 20000,
+    "pairMs": 2000,
+    "maxInferenceCalls": 200
+  },
+  "contract": "fit-once-private-pair-v2",
+  "scope": "development challenge; descriptive scores only",
+  "workPolicy": "fit once; fresh runtime/context per row; no cross-set cache; equal independent public/challenge/natural inference budgets; wall-clock includes context, load, parse, execute and cleanup; module initialization reported separately; no external self-reported counters trusted",
+  "startedAt": "2026-11-04T07:21:08.317Z",
+  "status": "completed",
+  "completedAt": "2026-11-04T07:21:09.847Z",
+  "byFamily": {
+    "F-nonabelian": {
+      "worlds": 1,
+      "scoredWorlds": 1,
+      "failedWorlds": 0,
+      "successes": 0,
+      "sandboxCalls": 201,
+      "sandboxMs": 358.8378999999986,
+      "hostPreparationMs": 251.28870000000097,
+      "chargedProgramBytes": 27969,
+      "meanAccuracyScoredWorlds": 0.795,
+      "accuracyBoundsAcrossAllWorlds": [
+        0.795,
+        0.795
+      ]
+    }
+  },
+  "byRequestedFamily": {
+    "F-nonabelian": {
+      "worlds": 1,
+      "scoredWorlds": 1,
+      "failedWorlds": 0,
+      "successes": 0,
+      "sandboxCalls": 201,
+      "sandboxMs": 358.8378999999986,
+      "hostPreparationMs": 251.28870000000097,
+      "chargedProgramBytes": 27969,
+      "meanAccuracyScoredWorlds": 0.795,
+      "accuracyBoundsAcrossAllWorlds": [
+        0.795,
+        0.795
+      ]
+    }
+  },
+  "construction": [
+    {
+      "ledger": "C:\\Users\\Refur\\LLMBreakthroughs\\examples\\invariantGame-world-b4r-1.construction.jsonl",
+      "counts": {
+        "F-nonabelian": {
+          "proposed": 1,
+          "eligible": 1,
+          "constructionValid": 1,
+          "reasons": {},
+          "effectiveClassifications": {
+            "F-nonabelian": 1
+          },
+          "eligibilityRate": 1,
+          "acceptanceRate": 1
+        }
+      }
+    }
+  ],
+  "dependence": "rows within worlds are dependent; family audits reuse seeds; no pooled interval",
+  "worldResults": [
+    {
+      "type": "external-world-score",
+      "exportVersion": "sealed-matched-padded-v2-public-v2",
+      "worldDigest": "49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a",
+      "publicFile": "world-000001-49f9b357cbbb6dfe4a4304123f1172aafeb328d27a77e0f5a7c9eaf32d64346a.json",
+      "family": "F-nonabelian",
+      "requestedFamily": "F-nonabelian",
+      "status": "scored",
+      "accuracy": 0.795,
+      "correct": 159,
+      "total": 200,
+      "success": false,
+      "failure": null,
+      "fit": {
+        "status": "fitted",
+        "reason": null,
+        "ms": 2.292199999999866,
+        "moduleInitializationMs": 0.0031000000017229468,
+        "standalonePreparationMs": 9.575799999999902,
+        "standaloneIsColdStartEstimate": true,
+        "coldModuleInitializationEstimateMs": 7.283600000000035,
+        "amortizedPreparationMs": 2.292199999999866,
+        "stateBytes": 585,
+        "calls": 1,
+        "memberSpecificSearchCounters": null
+      },
+      "public": {
+        "status": "scored",
+        "accuracy": 0.51,
+        "correct": 102,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "smallAccuracy": 0.51,
+        "largeAccuracy": null,
+        "paddingRobustnessGap": null,
+        "resources": {
+          "ms": 464.6862000000001,
+          "calls": 200,
+          "completedCalls": 200,
+          "cacheHits": 0,
+          "memberSpecificSearchCounters": null
+        }
+      },
+      "sealed": {
+        "status": "scored",
+        "accuracy": 0.795,
+        "correct": 159,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "smallAccuracy": 0.95,
+        "largeAccuracy": 0.64,
+        "paddingRobustnessGap": 0.30999999999999994,
+        "resources": {
+          "ms": 356.54569999999876,
+          "calls": 200,
+          "completedCalls": 200,
+          "cacheHits": 0,
+          "memberSpecificSearchCounters": null
+        }
+      },
+      "natural": {
+        "status": "scored",
+        "accuracy": 0.5,
+        "correct": 100,
+        "total": 200,
+        "success": false,
+        "failure": null,
+        "smallAccuracy": 0.5,
+        "largeAccuracy": 0.5,
+        "paddingRobustnessGap": 0,
+        "resources": {
+          "ms": 418.93369999999777,
+          "calls": 200,
+          "completedCalls": 200,
+          "cacheHits": 0,
+          "memberSpecificSearchCounters": null
+        }
+      },
+      "hostPreparationMs": 251.28870000000097,
+      "programBytes": 27969,
+      "support": {
+        "rows": 200,
+        "distinctPairs": 128,
+        "smallDistinctPairs": 64,
+        "largeDistinctPairs": 64,
+        "pairedDependence": {
+          "kind": "neutral-prefix copies of the same short cores",
+          "pairedRows": 100,
+          "independentRows": false
+        },
+        "sizeEstimand": "padding robustness"
+      }
+    }
+  ],
+  "liveModelCalls": 0
+}
