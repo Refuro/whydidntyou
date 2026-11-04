@@ -4,6 +4,7 @@
 // command line (normalizeRunInput) and stored fields are asserted as stored.
 import { isSuccess } from './sandbox.js';
 import { createHash } from 'node:crypto';
+import { resourceValue, validateUsage, validateResources } from './resources.js';
 
 export const SEED_MIN = 0, SEED_MAX = 4294967295; // generators normalize seeds to 32 bits; larger values alias smaller ones
 export const MEMORY_MODES = ['full', 'last-code', 'summary'];
@@ -119,8 +120,11 @@ export function validateMessages(msgs, where) {
 }
 export function validateMeta(meta) {
   if (!isPlainObj(meta) || meta.type !== 'meta') fail('meta record missing');
-  if (meta.schema !== 4) fail(`schema ${meta.schema}; schema 4 required`);
+  if (meta.schema !== 5) fail(`schema ${meta.schema}; schema 5 required`);
   for (const f of ['runId', 'domain', 'generatorVersion', 'model', 'system']) if (!isStr(meta[f])) fail(`meta.${f} missing or not a string`);
+  if (!/^[0-9a-f]{32}$/.test(meta.runId)) fail('meta.runId must be 16 random bytes as hex');
+  if (!isHex64(meta.promptBuilderHash)) fail('meta.promptBuilderHash invalid');
+  if (meta.scaffoldText !== null && typeof meta.scaffoldText !== 'string') fail('meta.scaffoldText must be null or text');
   if (typeof meta.seed !== 'number') fail('meta.seed must be a number'); assertSeed(meta.seed);
   if (!MEMORY_MODES.includes(meta.memory)) fail('meta.memory invalid');
   if (!isInt(meta.maxAttempts) || meta.maxAttempts < 1 || meta.maxAttempts > ATTEMPTS_MAX || meta.attempts !== meta.maxAttempts) fail('meta.maxAttempts/attempts invalid');
@@ -130,11 +134,17 @@ export function validateMeta(meta) {
   if (meta.hint !== null && !isStr(meta.hint)) fail('meta.hint must be null or a string');
   if (meta.scaffold !== null && !isStr(meta.scaffold)) fail('meta.scaffold must be null or a path');
   if (meta.scaffold !== null && !isHex64(meta.scaffoldHash)) fail('meta.scaffoldHash missing for a scaffold run');
-  if (meta.slot !== null) { if (!isPlainObj(meta.slot) || !isStr(meta.slot.batchId) || !isStr(meta.slot.condition) || typeof meta.slot.seed !== 'number' || !isInt(meta.slot.repeat)) fail('meta.slot invalid'); }
+  if (meta.slot !== null) { const s = meta.slot; if (!isPlainObj(s) || !isStr(s.batchId) || !isStr(s.condition) || s.seed !== meta.seed || !isInt(s.repeat) || s.repeat < 0 || !isInt(s.executionIndex) || s.executionIndex < 0 || s.executionIndex > 2 || s.runId !== meta.runId) fail('meta.slot invalid'); }
 }
 export function validateAttempt(x, i, meta, where = `attempt ${i + 1}`) {
   if (!isPlainObj(x) || x.type !== 'attempt') fail(`${where}: not an attempt record`);
   if (x.attempt !== i + 1) fail(`${where}: attempt number ${x.attempt} is not ${i + 1}`);
+  validateMessages(x.messagesSent, where); validateUsage(x.usage);
+  if (x.status === 'dispatched') {
+    for (const f of ['raw','result','feedbackText','idea','code','assumption','newObject','usage']) if (x[f] !== null) fail(`${where}: dispatched ${f} must be null`);
+    return;
+  }
+  if (x.status !== 'received') fail(`${where}: status must be dispatched|received`);
   if (typeof x.raw !== 'string') fail(`${where}: raw missing`); if (typeof x.feedbackText !== 'string' || !x.feedbackText) fail(`${where}: feedbackText missing`);
   if (typeof x.idea !== 'string') fail(`${where}: idea missing`); if (!(x.code === null || typeof x.code === 'string')) fail(`${where}: code must be null or string`);
   validateMessages(x.messagesSent, where); validateResult(x.result, where, meta ? { n: meta.n, baseline: meta.baseline, oracle: meta.oracle } : null);
@@ -143,7 +153,11 @@ export function validateEnd(end, meta, attempts) {
   if (!isPlainObj(end) || end.type !== 'end') fail('end record missing');
   if (!RUN_STATUS.includes(end.status)) fail(`end.status must be ${RUN_STATUS.join('|')}`);
   if (!('success' in end)) fail('end.success missing (must be null or an integer)');
-  if (!isInt(end.attemptsUsed) || end.attemptsUsed !== attempts.length) fail(`end.attemptsUsed ${end.attemptsUsed} != ${attempts.length} attempt records`);
+  const received = attempts.filter(a => a.status === 'received');
+  const pending = attempts.filter(a => a.status === 'dispatched');
+  if (pending.length > 1 || (pending.length && attempts.at(-1).status !== 'dispatched')) fail('only the last attempt may remain dispatched');
+  if (!isInt(end.attemptsUsed) || end.attemptsUsed !== received.length) fail('end.attemptsUsed differs from received responses');
+  if (end.requestsDispatched !== attempts.length) fail('end.requestsDispatched differs from archived requests');
   if (attempts.length > meta.maxAttempts) fail(`${attempts.length} attempts exceed the budget ${meta.maxAttempts}`);
   if (end.maxAttempts !== meta.maxAttempts) fail(`end.maxAttempts ${end.maxAttempts} != meta.maxAttempts ${meta.maxAttempts}`);
   if (typeof end.budgetExhausted !== 'boolean') fail('end.budgetExhausted must be a strict boolean');
@@ -152,6 +166,7 @@ export function validateEnd(end, meta, attempts) {
   if (end.success !== derivedSuccess) fail(`end.success ${JSON.stringify(end.success)} contradicts attempt results (derived ${derivedSuccess})`);
   if (derivedSuccess !== null && attempts.length !== derivedSuccess) fail('attempts continue after the first success (early stopping violated)');
   if (end.status === 'completed') {
+    if (pending.length) fail('completed run has an unreceived response');
     const derivedExhausted = derivedSuccess === null && attempts.length === meta.maxAttempts;
     if (end.budgetExhausted !== derivedExhausted) fail(`end.budgetExhausted contradicts derived ${derivedExhausted}`);
     if (derivedSuccess === null && !derivedExhausted) fail('completed failed run did not exhaust its budget');
@@ -159,49 +174,47 @@ export function validateEnd(end, meta, attempts) {
     if (end.budgetExhausted !== false) fail('interrupted run cannot be budgetExhausted'); if (!isStr(end.reason)) fail('interrupted run needs a reason');
     // an interruption can only happen while another attempt was still due: before any success and before exhaustion
     if (derivedSuccess !== null) fail('interrupted after a success is not a reachable state');
-    if (attempts.length >= meta.maxAttempts) fail('interrupted after the budget was exhausted is not a reachable state');
+    if (received.length >= meta.maxAttempts) fail('interrupted after the budget was exhausted is not a reachable state');
   }
 }
 // Validates a parsed run log. Returns {meta, attempts, end} or throws.
 export function validateRunLog(lines) {
   if (!Array.isArray(lines) || lines.length < 2) fail('log has fewer than two records');
-  const meta = lines[0], end = lines[lines.length - 1], attempts = lines.slice(1, -1);
+  const meta = lines[0];
+  const hasEnd = lines.at(-1).type === 'end';
+  const attempts = lines.slice(1, hasEnd ? -1 : undefined);
+  if (!hasEnd && attempts.at(-1)?.status !== 'dispatched') fail('unterminated log must end in a dispatched request');
+  const end = hasEnd ? lines.at(-1) : { type: 'end', status: 'interrupted', success: null, attemptsUsed: attempts.length - 1, requestsDispatched: attempts.length, maxAttempts: meta.maxAttempts, budgetExhausted: false, reason: 'process ended with an unreceived dispatched request', inferred: true };
   validateMeta(meta); attempts.forEach((x, i) => validateAttempt(x, i, meta)); validateEnd(end, meta, attempts);
   return { meta, attempts, end };
 }
 
-// A failed-trial record: a slot that produced no completed run (interrupted request, setup failure).
-export function validateTrialFailed(t, cfg, header, condById) {
-  if (!isPlainObj(t) || t.type !== 'trial-failed') fail('not a trial-failed record');
-  if (!isStr(t.batchId) || t.batchId !== header.batchId) fail(`trial-failed batch ${t.batchId} != file batch ${header.batchId}`);
-  if (!condById[t.condition]) fail(`trial-failed condition "${t.condition}" not in config`);
-  if (typeof t.seed !== 'number' || !cfg.seeds.includes(t.seed)) fail('trial-failed seed not in config');
-  if (!(isInt(t.repeat) && t.repeat >= 0 && t.repeat < cfg.repeats)) fail('trial-failed repeat out of range');
-  if (!isStr(t.reason)) fail('trial-failed lacks a reason');
-  if (!['setup', 'interrupted'].includes(t.stage)) fail('trial-failed stage must be setup|interrupted');
-  if (t.stage === 'setup') { if (t.runId != null || t.log != null) fail('setup failure cannot carry a run'); }
-  else { if (!isStr(t.runId) || !isStr(t.log)) fail('interrupted trial-failed must link its run log'); }
+// Slot and execution records use the same assignment contract on write and read.
+export function validateSlot(t, cfg, header, condById) {
+  if (!isPlainObj(t) || t.batchId !== header.batchId || !condById[t.condition] || !cfg.seeds.includes(t.seed) || !isInt(t.repeat) || t.repeat < 0 || t.repeat >= cfg.repeats) fail('slot does not match the batch assignment');
 }
-// Builds and validates a trial row (writer side) / validates one (reader side).
+export function validateExecution(t, cfg, header, condById) {
+  validateSlot(t,cfg,header,condById);
+  if (t.type !== 'slot-execution' || !isInt(t.executionIndex) || t.executionIndex < 0 || t.executionIndex > 2) fail('invalid slot execution index/type');
+  if (!['completed','interrupted','setup-failed'].includes(t.status)) fail('invalid execution status');
+  if (!/^[0-9a-f]{32}$/.test(t.runId)) fail('execution runId must be 16 random bytes hex');
+  if (t.status === 'setup-failed') { if (t.log !== null) fail('setup failure cannot link a run log'); }
+  else if (!isStr(t.log)) fail('execution must link its log');
+  if (t.status === 'completed' ? t.reason !== null : !isStr(t.reason)) fail('execution reason contradicts status');
+  validateResources(t.resources);
+}
 export function validateTrial(t, cfg, header, condById) {
-  const c = condById[t.condition]; if (!c) fail(`trial condition "${t.condition}" not in config`);
-  const k = `${t.condition}/${t.seed}/${t.repeat}`;
-  for (const f of ['batchId', 'model', 'generatorVersion', 'runId']) if (!isStr(t[f])) fail(`trial ${k}: ${f} missing or not a string`);
-  if (!isHex64(t.instanceDigest) || !isHex64(t.worldDigest)) fail(`trial ${k}: digests invalid`);
-  if (!isStr(header.batchId) || !isStr(header.model)) fail('batch header lacks batchId/model');
-  if (t.batchId !== header.batchId) fail(`trial batch ${t.batchId} != file batch ${header.batchId}`);
-  if (t.model !== header.model) fail(`trial model ${t.model} != batch model ${header.model}`);
-  if (typeof t.seed !== 'number') fail(`trial ${k}: seed must be a number`); assertSeed(t.seed);
-  if (!cfg.seeds.includes(t.seed)) fail(`trial seed ${t.seed} not in config seeds`);
-  if (!(isInt(t.repeat) && t.repeat >= 0 && t.repeat < cfg.repeats)) fail(`trial repeat ${t.repeat} outside [0,${cfg.repeats})`);
-  if (t.domain !== c.domain) fail(`trial ${k}: domain ${t.domain} contradicts config ${c.domain}`);
-  if (!isPlainObj(t.opts) || JSON.stringify(t.opts) !== JSON.stringify(c.opts || {})) fail(`trial ${k}: options contradict config`);
-  if (t.memory !== (c.memory || cfg.memory || 'full')) fail(`trial ${k}: memory contradicts config`);
-  if (t.maxAttempts !== cfg.attempts) fail(`trial ${k}: maxAttempts != config`);
-  if (!(t.success === null || (isInt(t.success) && t.success >= 1 && t.success <= cfg.attempts))) fail(`trial ${k}: success must be null or an integer in [1,${cfg.attempts}]`);
-  if (!isInt(t.attemptsUsed) || t.attemptsUsed < 1 || t.attemptsUsed > cfg.attempts) fail(`trial ${k}: attemptsUsed invalid`);
-  if (t.success !== null && t.attemptsUsed !== t.success) fail(`trial ${k}: success at ${t.success} but attemptsUsed ${t.attemptsUsed}`);
-  if (t.success === null && t.attemptsUsed !== cfg.attempts) fail(`trial ${k}: failed trial did not exhaust its budget`);
-  if (typeof t.budgetExhausted !== 'boolean' || t.budgetExhausted !== (t.success === null && t.attemptsUsed === cfg.attempts)) fail(`trial ${k}: budgetExhausted invalid or contradicts outcome`);
-  if (!isInt(t.distinctIdeas) || !isInt(t.tokens) || typeof t.seconds !== 'number') fail(`trial ${k}: metrics missing`);
+  validateSlot(t,cfg,header,condById);
+  if (t.type !== 'slot-terminal' || !['success','failure','unresolved'].includes(t.outcome)) fail('invalid slot terminal outcome/type');
+  const c=condById[t.condition];
+  if (t.model !== header.model || t.domain !== c.domain || JSON.stringify(t.opts) !== JSON.stringify(c.opts || {}) || t.memory !== (c.memory || cfg.memory || 'full') || t.maxAttempts !== cfg.attempts) fail('terminal treatment/budget/model contradicts config');
+  if (!isHex64(t.instanceDigest) || !isHex64(t.worldDigest) || !isStr(t.generatorVersion) || !isPlainObj(t.secret)) fail('terminal instance identity missing');
+  if (!(t.success === null || (isInt(t.success) && t.success >= 1 && t.success <= cfg.attempts)) || (t.outcome === 'success') !== (t.success !== null)) fail('terminal success contradicts outcome');
+  if (!Array.isArray(t.chain) || t.chain.length < 1 || t.chain.length > 3) fail('terminal must reference one to three executions');
+  if (!isInt(t.attemptsUsed) || t.attemptsUsed < 0 || t.attemptsUsed > cfg.attempts || !isInt(t.distinctIdeas) || t.distinctIdeas < 0) fail('terminal attempts/ideas invalid');
+  if (t.outcome === 'failure' && t.attemptsUsed !== cfg.attempts) fail('failed completed slot did not exhaust its budget');
+  if (t.outcome === 'success' && t.attemptsUsed !== t.success) fail('successful slot continued after success');
+  if (t.budgetExhausted !== (t.outcome === 'failure')) fail('terminal budgetExhausted contradicts outcome');
+  for (const f of ['tokens','seconds']) if (!resourceValue(t[f])) fail('terminal resources must be nonnegative finite or unknown');
+  validateResources(t.resources);
 }

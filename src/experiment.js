@@ -1,53 +1,61 @@
-// Experiment runner: a grid of conditions x seeds x repeats, so every number in the
-// report is a rate over many trials, not a single anecdote.
-//   node src/experiment.js experiments/pilot.json
-// Config:
-// { "name": "pilot", "attempts": 15, "seeds": [1,2,3,4,5], "repeats": 2,
-//   "conditions": [ {"id":"baseline","domain":"laggedRule"},
-//                   {"id":"scaffold","domain":"laggedRule","scaffold":"scaffolds/reframe.md"},
-//                   {"id":"heldout-baseline","domain":"hiddenPeriod"},
-//                   {"id":"heldout-scaffold","domain":"hiddenPeriod","scaffold":"scaffolds/reframe.md"} ] }
-import { readFileSync, appendFileSync, mkdirSync, existsSync } from 'node:fs';
+// Fixed assignment; each slot owns up to three fresh executions and exactly one terminal.
+import { readFileSync, appendFileSync, mkdirSync, existsSync, writeFileSync } from 'node:fs';
+import { randomBytes } from 'node:crypto';
+import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { MODEL, MOCK } from './llm.js';
-import { validateTrial, validateTrialFailed, validateConfig } from './validate.js';
+import { validateTrial, validateExecution, validateConfig } from './validate.js';
 import { domains } from './domains/index.js';
 import { runAttempts } from './run.js';
-import { clusterIdeas } from './ideas.js';
+import { sha256, promptBuilderHash } from './provenance.js';
+import { PROTOCOL, readLog, setupResources, terminalFromChain, validateBatch } from './ledger.js';
+import { resourcesFromAttempts } from './resources.js';
 
-const cfgPath = process.argv[2];
-if (!cfgPath) { console.error('usage: node src/experiment.js experiments/<config>.json'); process.exit(1); }
-const cfg = JSON.parse(readFileSync(cfgPath, 'utf8'));
-const DOMAIN_VERSIONS = Object.fromEntries(Object.entries(domains).map(([k, d]) => [k, d.VERSION]));
-try { validateConfig(cfg, DOMAIN_VERSIONS); } catch (e) { console.error('config invalid (no requests made): ' + e.message); process.exit(1); }
-// FULL preflight before the batch header and first request: every condition's generator on every seed, every scaffold file read and hashed.
-import { createHash } from 'node:crypto';
-const scaffoldHashes = {};
-for (const cond of cfg.conditions) {
-  for (const seed of cfg.seeds) { try { domains[cond.domain].make(seed, cond.opts || {}); } catch (e) { console.error(`condition ${cond.id} seed ${seed}: generator refused (no requests made): ${e.message}`); process.exit(1); } }
-  if (cond.scaffold) { if (!existsSync(cond.scaffold)) { console.error(`condition ${cond.id}: scaffold file ${cond.scaffold} not found (no requests made)`); process.exit(1); } scaffoldHashes[cond.id] = createHash('sha256').update(readFileSync(cond.scaffold, 'utf8')).digest('hex'); }
+export async function runExperiment(cfg,{outputDir='runs',transport=null,runner=runAttempts,quiet=false}={}) {
+  validateConfig(cfg,Object.fromEntries(Object.entries(domains).map(([k,d])=>[k,d.VERSION])));
+  const scaffoldHashes={};
+  // All setup/configuration checks precede any request or batch file.
+  for(const c of cfg.conditions) {
+    for(const seed of cfg.seeds)domains[c.domain].make(seed,c.opts||{});
+    if(c.scaffold)scaffoldHashes[c.id]=sha256(readFileSync(c.scaffold,'utf8'));
+  }
+  outputDir=resolve(outputDir);mkdirSync(outputDir,{recursive:true});
+  const out=join(outputDir,'experiment-'+cfg.name+'.jsonl');
+  if(existsSync(out))throw new Error('batch file already exists: '+out);
+  const header={type:'experiment-meta',schema:5,batchId:randomBytes(16).toString('hex'),config:cfg,scaffoldHashes,promptBuilderHash:promptBuilderHash(),protocol:PROTOCOL,model:MOCK?'mock':MODEL,startedAt:new Date().toISOString()};
+  const records=[header], conds=Object.fromEntries(cfg.conditions.map(c=>[c.id,c]));
+  writeFileSync(out,JSON.stringify(header)+'\n',{flag:'wx'});
+  const append=r=>{appendFileSync(out,JSON.stringify(r)+'\n');records.push(r);};
+  for(const c of cfg.conditions)for(const seed of cfg.seeds)for(let repeat=0;repeat<cfg.repeats;repeat++) {
+    const chain=[],logs=[],inst=domains[c.domain].make(seed,c.opts||{});
+    for(let executionIndex=0;executionIndex<=2;executionIndex++) {
+      const runId=randomBytes(16).toString('hex'),logPath=join(outputDir,runId+'.jsonl');
+      const slot={batchId:header.batchId,condition:c.id,seed,repeat,executionIndex,runId};
+      let log=null,status,reason,logFile=null;
+      try {
+        await runner({domain:c.domain,seed,attempts:cfg.attempts,hint:c.hint??null,scaffold:c.scaffold??null,memory:c.memory||cfg.memory||'full',opts:c.opts||{},slot,runId,outputDir,transport,quiet:true});
+        log=readLog(logPath);status=log.end.status;reason=log.end.reason??null;logFile=logPath;
+      } catch(e) {
+        if(existsSync(logPath)) {
+          // A process-level interruption with a durable dispatch is recoverable evidence.
+          // Malformed or already completed logs never become a fabricated setup failure.
+          log=readLog(logPath); if(log.end.status!=='interrupted')throw e;
+          status='interrupted';reason=log.end.reason;logFile=logPath;
+        } else {status='setup-failed';reason='run setup: '+String(e?.message||e).slice(0,300);}
+      }
+      const execution={type:'slot-execution',...slot,status,reason,log:logFile,resources:log?resourcesFromAttempts(log.attempts):setupResources()};
+      validateExecution(execution,cfg,header,conds);append(execution);chain.push(execution);logs.push(log);
+      if(status!=='interrupted')break;
+    }
+    const terminal=terminalFromChain(header,c,seed,repeat,chain,logs,inst);
+    validateTrial(terminal,cfg,header,conds);append(terminal);
+    if(!quiet)console.log(c.id+' seed='+seed+' repeat='+repeat+': '+terminal.outcome+' ('+chain.length+' execution(s))');
+  }
+  validateBatch(records);
+  return {out,records};
 }
-mkdirSync('runs', { recursive: true });
-const out = `runs/experiment-${cfg.name}.jsonl`;
-if (existsSync(out)) { console.error(`refusing: ${out} already exists. Each batch gets its own file; rename the old one or change "name".`); process.exit(2); }
-const batchId = `${cfg.name}-${Date.now()}`;
-const condById = Object.fromEntries(cfg.conditions.map(c => [c.id, c]));
-appendFileSync(out, JSON.stringify({ type: 'experiment-meta', schema: 4, batchId, config: cfg, scaffoldHashes, model: MOCK ? 'mock' : MODEL, startedAt: new Date().toISOString() }) + '\n');
-
-let done = 0; const total = cfg.conditions.length * cfg.seeds.length * cfg.repeats;
-for (const cond of cfg.conditions) for (const seed of cfg.seeds) for (let rep = 0; rep < cfg.repeats; rep++) {
-  const t0 = Date.now();
-  const writeFailed = (extra) => { const rec = { type: 'trial-failed', batchId, condition: cond.id, seed, repeat: rep, ...extra, ts: new Date().toISOString() }; validateTrialFailed(rec, cfg, { batchId }, condById); appendFileSync(out, JSON.stringify(rec) + '\n'); };
-  let r;
-  try { r = await runAttempts({ domain: cond.domain, seed, attempts: cfg.attempts, hint: cond.hint || null, scaffold: cond.scaffold || null, memory: cond.memory || cfg.memory || 'full', opts: cond.opts || {}, slot: { batchId, condition: cond.id, seed, repeat: rep }, tag: `${cfg.name}-${cond.id}-r${rep}`, quiet: true }); }
-  catch (e) { writeFailed({ stage: 'setup', reason: 'run setup: ' + String(e && e.message || e).slice(0, 300) }); done++; console.log(`[${done}/${total}] ${cond.id} seed=${seed} rep=${rep}: SETUP FAILED ${e.message}`); continue; }
-  if (r.interrupted) { writeFailed({ stage: 'interrupted', runId: r.runId, log: r.logPath, reason: r.reason }); done++; console.log(`[${done}/${total}] ${cond.id} seed=${seed} rep=${rep}: INTERRUPTED ${r.reason}`); continue; }
-  const tokens = r.history.reduce((s, h) => s + ((h.usage?.input_tokens || 0) + (h.usage?.output_tokens || 0)), 0);
-  const distinct = countDistinct(r.history.map(h => h.idea));
-  const trial = { type: 'trial', experiment: cfg.name, batchId, condition: cond.id, domain: cond.domain, generatorVersion: r.inst.generatorVersion, seed, repeat: rep, secret: r.inst.secret, opts: cond.opts || {}, memory: cond.memory || cfg.memory || 'full', model: MOCK ? 'mock' : MODEL, runId: r.runId, instanceDigest: r.inst.instanceDigest, worldDigest: r.inst.worldDigest, log: r.logPath, success: r.success, attemptsUsed: r.history.length, maxAttempts: cfg.attempts, budgetExhausted: !r.success && r.history.length === cfg.attempts, distinctIdeas: distinct, bestBps: Math.min(...r.history.filter(h => h.result.ok).map(h => h.result.bitsPerSym), Infinity), tokens, seconds: (Date.now() - t0) / 1000 };
-  try { validateTrial(trial, cfg, { batchId, model: MOCK ? 'mock' : MODEL }, condById); } catch (e) { console.error('internal: trial row failed its own contract: ' + e.message); process.exit(3); }
-  appendFileSync(out, JSON.stringify(trial) + '\n');
-  done++; console.log(`[${done}/${total}] ${cond.id} seed=${seed} rep=${rep}: ${r.success ? 'SUCCESS@' + r.success : 'fail'} distinct=${distinct}/${r.history.length} tokens=${tokens}`);
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {
+  const path=process.argv[2];
+  if(!path){console.error('usage: node src/experiment.js experiments/<config>.json');process.exitCode=1;}
+  else runExperiment(JSON.parse(readFileSync(path,'utf8'))).then(r=>console.log('batch -> '+r.out)).catch(e=>{console.error(e.message);process.exitCode=2;});
 }
-console.log(`\nall trials -> ${out}\nnext: node src/report.js ${out}`);
-
-function countDistinct(ideas) { return clusterIdeas(ideas).length; }

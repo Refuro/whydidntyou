@@ -1,5 +1,5 @@
 // Reveal + self-report + judged assessment. DESCRIPTIVE ONLY.
-// The retrospective record is built from ARCHIVED pieces only (schema 4): the exact initial request,
+// The retrospective record is built from ARCHIVED pieces only (schema 5): the exact initial request,
 // every raw response, and the exact verifier feedback text sent after each attempt, plus the exact
 // system prompt. Under summary/last-code memory the solver saw less than this; the record is labeled
 // retrospective and that difference is recorded.
@@ -10,6 +10,8 @@ import { complete, MODEL, MOCK, getLastModel } from './llm.js';
 import { parseArgs } from './run.js';
 import { validateRunLog, validateAttempt } from './validate.js';
 import { isSuccess } from './sandbox.js';
+import { validateRequestArchive } from './provenance.js';
+import { validatePostmortemBatch } from './postmortem-binding.js';
 
 const a = parseArgs(process.argv.slice(2));
 if (!a.log) { console.error('usage: node src/postmortem.js --log runs/<run>.jsonl [--judge-model id]'); process.exit(1); }
@@ -26,6 +28,8 @@ if (inst.instanceDigest !== meta.instanceDigest || inst.worldDigest !== meta.wor
 if (meta.n !== inst.n || meta.baseline !== inst.baselineBitsPerSym || Math.abs(meta.oracle - inst.oracleBitsPerSym) > 1e-9) refuse('log reference values differ from the regenerated instance');
 try { attempts.forEach((x, i) => validateAttempt(x, i, { n: inst.n, baseline: inst.baselineBitsPerSym, oracle: inst.oracleBitsPerSym })); } catch (e) { refuse('attempt arithmetic against regenerated references: ' + e.message); }
 if (JSON.stringify(inst.secret) !== JSON.stringify(meta.secret)) refuse('regenerated secret does not match the logged secret');
+try { validateRequestArchive({ meta, attempts, end }, inst); } catch (e) { refuse(e.message); }
+try { validatePostmortemBatch(a.log, { meta, attempts, end }, a.batch); } catch (e) { refuse(e.message); }
 
 // Complete retrospective record from archived pieces.
 const first = attempts[0].messagesSent[0]; const initialText = typeof first.content === 'string' ? first.content : first.content.map(b => b.text || '').join('\n');
@@ -67,7 +71,7 @@ try {
 } catch { problems.push('unparseable judge output'); }
 const assessment = problems.length ? 'unresolved' : judged.assessment; // PROVISIONAL: provenance-validated only; entailment and scope compliance are settled by the registered human review
 
-const rec = { type: 'postmortem', schema: 4, log: a.log, runId: meta.runId, domain: meta.domain, generatorVersion: meta.generatorVersion, seed: meta.seed, opts: meta.opts || {}, solverMemory: meta.memory, solverView, solverModel: meta.model, respondingModel, judgeModel: judgeResolved, why, judged, claimOffset, evidenceOffset, provisionalAssessment: assessment, humanReview: 'pending', validationProblems: problems, judgeRaw, ts: new Date().toISOString() };
+const rec = { type: 'postmortem', schema: 5, log: a.log, runId: meta.runId, domain: meta.domain, generatorVersion: meta.generatorVersion, seed: meta.seed, opts: meta.opts || {}, solverMemory: meta.memory, solverView, solverModel: meta.model, respondingModel, judgeModel: judgeResolved, why, judged, claimOffset, evidenceOffset, provisionalAssessment: assessment, humanReview: 'pending', validationProblems: problems, judgeRaw, ts: new Date().toISOString() };
 appendFileSync('runs/postmortems.jsonl', JSON.stringify(rec) + '\n');
 console.log('--- self-report ---\n' + why + '\n\n--- judged assessment (provisional, human review pending): ' + assessment + ' ---\n' + (judged ? JSON.stringify(judged, null, 2) : judgeRaw) + (problems.length ? '\nVALIDATION PROBLEMS: ' + problems.join('; ') : ''));
 if (rec.solverModel !== 'mock' && rec.solverModel !== respondingModel) console.log(`\nNOTE: solver ${rec.solverModel} != responder ${respondingModel}; not a self-report.`);

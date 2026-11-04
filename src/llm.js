@@ -20,10 +20,12 @@ export function getLastUsage() { return lastUsage; }
 export const MAX_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS || 16000);
 export async function complete({ system, messages, maxTokens = MAX_TOKENS, temperature = 1, model = MODEL }) {
   lastModel = model;
+  lastUsage = null;
   if (MOCK) return mockComplete({ system, messages });
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) throw new Error('ANTHROPIC_API_KEY not set (put it in .env or the environment), or set LLM_MOCK=1');
   const res = await fetch('https://api.anthropic.com/v1/messages', {
+    signal: AbortSignal.timeout(120000), // slot restarts own retries; one dispatch per call
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
     body: JSON.stringify({ model, max_tokens: maxTokens, temperature, system, messages }),

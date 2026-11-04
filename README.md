@@ -103,7 +103,7 @@ Scaffolds (`scaffolds/*.md`) are appended to the system prompt via `--scaffold` 
 ```
 src/
   domains/        laggedRule.js, hiddenPeriod.js  (make(seed) -> instance; referenceCode(inst))
-  sandbox.js      verifier: runs model JS in node:vm, round-trip check, bits/symbol
+  sandbox.js      verifier: runs model JS in isolated QuickJS/WASM, round-trip check, bits/symbol
   llm.js          fetch-based Anthropic client + LLM_MOCK
   prompt.js       the one prompt template, parsing of <idea>/<code> blocks
   run.js          attempt loop -> runs/<run>.jsonl
@@ -112,7 +112,7 @@ src/
   analyze.js      per-run analysis; --judge scores key moves
   experiment.js   grid runner -> runs/experiment-<name>.jsonl
   report.js       validates every record against the config and its run log; world-level report -> runs/report-<name>.md
-  validate.js     the one typed contract (schema 4) used by writers and readers
+  validate.js     the one typed contract (schema 5) used by writers and readers
   draw-seeds.js   registered seed draw for confirmatory batches
   bounds.js       registered null-bound calculations (completeness gate + conservative bound)
   ideas.js        lexical distinct-idea proxy
@@ -127,3 +127,13 @@ runs/             logs (gitignored)
 ## License
 
 Code: MIT (see `LICENSE`). Run logs, pre-registration documents and write-ups: CC BY 4.0.
+
+## Schema 5 evidence and offline checks
+
+`npm test` runs the retry-chain, request-reconstruction, resource-binding, sampling and exact coverage fixtures. `npm run selftest` retains the compression wall and historical sandbox regressions.
+
+Each assigned slot owns at most three fresh executions (indices 0–2). Only interruption permits a retry; a completed success or budget-exhausted failure terminates immediately. Setup failure terminates unresolved. One `slot-terminal` links every `slot-execution`. Requests are written before transport, and an unreceived response remains a dispatched record. Run IDs use 16 random bytes.
+
+Reports regenerate requests and instances, validate the full chain, and sum named usage fields across retries. Missing usage is `unknown`. The report and adjacent `.analysis.json` emit completeness gates, hypergeometric upper bounds (binomial approximations shown separately), and sample identification bounds for contrasts with unknown outcomes. Repeats are separate binary endpoint strata, not extra independent worlds. Historical schemas are not silently upgraded.
+
+Adapted review 9: `node test/REVIEW-CHECKS-v9.mjs . docs/REVIEW-EVIDENCE-schema5.json`. The archived reviewer scripts remain unchanged.
