@@ -1,5 +1,5 @@
 import {pathToFileURL} from 'node:url';
-import {make,referenceCode,publicEvidence} from './domains/invariantGame.js';
+import {make,referenceCode,publicEvidence} from './domains/invariantGame-b2.js';
 import {evaluate,isSuccess} from './sandbox.js';
 import {bfsCode,countNullspaceCode,WALL_BUDGETS} from './baselines/invariant-wall.js';
 

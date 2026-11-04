@@ -1,10 +1,11 @@
+import {samplingStream,permute} from '../sampling-stream.js';
 import {createHash} from 'node:crypto';
 import {assertSeed} from '../validate.js';
 import {mulberry32,randInt,shuffle} from '../rng.js';
 import {algebraFor,validateMonoid,fold,generatedSubmonoid,words,representationSignature} from '../algebra.js';
 import {reachabilityContract} from '../verifiers/reachability.js';
 
-export const VERSION='invariantGame-v1-b2.1';
+export const VERSION='invariantGame-v2-b3';
 export const name='invariantGame';
 export const REGISTRATION=Object.freeze({alphabetMin:2,alphabetMax:4,maxRuleLength:3,trainingPairs:200,calibrationPairs:80,representationClass:'all symbol images into the same ambient monoid; kernels equivalent up to rooted transition-graph isomorphism',maxAssignments:1_000_000,calibration:'40 small (length 4–10), 40 large (length 96–128); balanced labels; half the noncommutative negatives are order witnesses',sealed:'not built until B3'});
 const hash=x=>createHash('sha256').update(JSON.stringify(x)).digest('hex');
@@ -48,7 +49,7 @@ export function proveConservation(spec,rules){
   return {...laws,ruleEquations:rules.length,allContexts:true,argument:'I(xuy)=I(x) I(u) I(y)=I(x) I(v) I(y)=I(xvy) by associativity'};
 }
 function orderWitness(spec,alphabet){for(const a of alphabet)for(const b of alphabet)if(fold(a+b,spec)!==fold(b+a,spec))return [a+b,b+a];return null;}
-function pairs(spec,alphabet,rules,rng,count,large,witness,seed){
+export function naturalPairs(spec,alphabet,rules,rng,count,large,witness,seed){
   const out=[],idWord=witness?identityWordBounded(spec,alphabet):null;
   const state=length=>Array.from({length},()=>alphabet[randInt(rng,alphabet.length)]).join('');
   for(let i=0;i<count;i++){
@@ -67,6 +68,7 @@ function identityWordBounded(spec,alphabet){
   return null;
 }
 export function identifiabilityAudit(spec,alphabet,rules,trainingPairs){
+  alphabet=alphabet.toSorted();
   const size=spec.table.length,total=size**alphabet.length;
   if(total>REGISTRATION.maxAssignments)throw new Error('representation audit exceeds registered enumeration budget');
   const representations=new Set(),reference=representationSignature(spec,alphabet);let consistentAssignments=0;
@@ -84,26 +86,32 @@ export function privateRuleCoverage(rules,pairs){
   if(pairs.some(p=>!p.certificate||p.label&&!Array.isArray(p.certificate.path)))return {status:'unavailable',reason:'private path certificates missing'};
   return {status:'available',counts:Object.fromEntries(rules.map(r=>[r.id,pairs.reduce((sum,p)=>sum+(p.certificate.path||[]).filter(s=>s.rule===r.id).length,0)]))};
 }
-export function make(seed,opts={}){
+function construct(seed,opts={},context={}){
   assertSeed(seed);for(const k of Object.keys(opts))if(!['family','A','algebra','points','modulus','images'].includes(k))throw new Error('unregistered invariant option '+k);
   const family=opts.family??'F-nonabelian',A=opts.A??3;if(!Number.isInteger(A)||A<2||A>4)throw new Error('registered alphabet size is 2..4');
   const rng=mulberry32(seed),ambient=algebraFor(family,opts);validateMonoid(ambient);
-  const alphabet=shuffle(rng,[...'abcdefghijklmnopqrstuvwxyz']).slice(0,A);
-  const generators=family==='F-monoid'&&A===2?[ambient.generators[0],ambient.generators[2]]:ambient.generators;
-  const values=opts.images??Array.from({length:A},(_,i)=>generators[i]??randInt(rng,ambient.table.length));
+  const symbols=permute([...'abcdefghijklmnopqrstuvwxyz'],samplingStream(seed,'symbols')).slice(0,A).sort();
+  const draw=samplingStream(seed,'images|'+ambient.name+'|'+A);
+  const values=opts.images??symbols.map(()=>draw(ambient.table.length));
+  const alphabet=permute(symbols,samplingStream(seed,'public-alphabet'));
   if(!Array.isArray(values)||values.length!==A||values.some(v=>!Number.isInteger(v)||v<0||v>=ambient.table.length))throw new Error('invalid symbol images');
-  const images=Object.fromEntries(alphabet.map((s,i)=>[s,values[i]])),secret={table:ambient.table,identity:ambient.identity,images,algebra:ambient.name,elements:ambient.elements,points:ambient.points??null};
+  const images=Object.fromEntries(symbols.map((s,i)=>[s,values[i]])),secret={table:ambient.table,identity:ambient.identity,images,algebra:ambient.name,elements:ambient.elements,points:ambient.points??null};
   const submonoid=generatedSubmonoid(secret,images),classifiedFamily=submonoid.commutative&&['F-nonabelian','F-monoid'].includes(family)?'F-abelian':family;
+  context.effectiveClassification=classifiedFamily;context.assignmentSpace=ambient.table.length**A;
   if(submonoid.elements.length<2)throw new ConstructionDefect(seed,'constant invariant cannot supply negative labels');
   const rules=buildRules(secret,alphabet,rng,seed),conservationProof=proveConservation(secret,rules),witness=orderWitness(secret,alphabet);
   for(const r of rules.filter(r=>r.decoyProof))if(!verifyPath(r.u,r.v,r.decoyProof,rules.filter(r=>!r.decoyProof)))throw new ConstructionDefect(seed,'decoy consequence certificate failed');
-  const trainingPairs=pairs(secret,alphabet,rules,mulberry32(seed^0x517cc1b7),200,false,witness,seed);
-  const calibrationPairs=[...pairs(secret,alphabet,rules,mulberry32(seed^0x137a92ef),40,false,witness,seed),...pairs(secret,alphabet,rules,mulberry32(seed^0xa124b679),40,true,witness,seed)];
+  const trainingPairs=naturalPairs(secret,alphabet,rules,mulberry32(seed^0x517cc1b7),200,false,witness,seed);
+  const calibrationPairs=[...naturalPairs(secret,alphabet,rules,mulberry32(seed^0x137a92ef),40,false,witness,seed),...naturalPairs(secret,alphabet,rules,mulberry32(seed^0xa124b679),40,true,witness,seed)];
   const audit=identifiabilityAudit(secret,alphabet,rules,trainingPairs);
-  assertIdentifiable(seed,audit);
+  context.audit=audit;assertIdentifiable(seed,audit);
   const rulesText=rules.map((r,i)=>`${i+1}. ${r.u||'ε'} ↔ ${r.v||'ε'}`).join('\n');
-  const content={family:classifiedFamily,requestedFamily:family,generatorVersion:VERSION,A,alphabet,rules,trainingPairs,calibrationPairs,secret};
+  const content={family:classifiedFamily,requestedFamily:family,generatorVersion:VERSION,A,alphabet,rules,trainingPairs,calibrationPairs,secret,sampling:{version:'sha256-uniform-images-v1',override:opts.images!==undefined,ambient:ambient.name}};
   return {...content,seed,contract:reachabilityContract,rulesText,sealedPairs:null,sealedStatus:'pending B3',quantity:state=>fold(state,secret),conservationProof,submonoid,identifiabilityAudit:audit,noncommutativityWitness:witness,worldDigest:hash(content),instanceDigest:hash({seed,content}),description:'Decide whether a and b are connected by the exposed reversible rewrites, on the stated promise distribution.'};
+}
+export function make(seed,opts={}){
+  const context={effectiveClassification:null,assignmentSpace:null,audit:null};
+  try{return construct(seed,opts,context);}catch(error){if(error instanceof ConstructionDefect){Object.assign(error,context);if(context.audit)error.audit=context.audit;}throw error;}
 }
 export function referenceCode(inst,{functionalQuantity=false,includeQuantity=true}={}){
   const spec=JSON.stringify({table:inst.secret.table,identity:inst.secret.identity,images:inst.secret.images});

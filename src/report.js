@@ -2,6 +2,8 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { validateBatch } from './ledger.js';
+import {constructionSummary} from './construction-ledger.js';
+import {readRecords} from './durable.js';
 import { analyzeAssignment } from './analysis.js';
 
 export function reportBatch(file) {
@@ -54,4 +56,11 @@ export function reportBatch(file) {
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   try{if(!process.argv[2])throw new Error('usage: node src/report.js runs/experiment-<name>.jsonl');console.log('report -> '+reportBatch(process.argv[2]).out);}
   catch(e){console.error('refusing: '+e.message);process.exitCode=2;}
+}
+
+export function reportConstructionLedger(file){
+  const summary=constructionSummary(readRecords(file));
+  const rows=['# Construction acceptance','','All fixed proposed seeds are counted from the durable ledger. No replacements.','','| requested family | proposed | eligible | construction valid | acceptance |','|---|---:|---:|---:|---:|'];
+  for(const [family,c] of Object.entries(summary.counts))rows.push(`| ${family} | ${c.proposed} | ${c.eligible} | ${c.constructionValid} | ${(100*c.acceptanceRate).toFixed(2)}% |`);
+  const out=file.replace(/\.jsonl$/,'')+'.md';writeFileSync(out,rows.join('\n')+'\n');return {out,summary};
 }

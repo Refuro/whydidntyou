@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {make,proveConservation,verifyPath,identifiabilityAudit,referenceCode,ConstructionDefect,publicEvidence,assertIdentifiable} from '../src/domains/invariantGame.js';
+import {make,proveConservation,verifyPath,identifiabilityAudit,referenceCode,ConstructionDefect,publicEvidence,assertIdentifiable} from '../src/domains/invariantGame-b2.js';
 import {validateMonoid,algebraFor,generatedSubmonoid,representationSignature} from '../src/algebra.js';
 import {evaluate,isSuccess} from '../src/sandbox.js';
 export const specimens=[{family:'F-count'},{family:'F-abelian'},...['S3','Q8','D4','A4'].map(algebra=>({family:'F-nonabelian',algebra})),...[3,4].map(points=>({family:'F-monoid',points}))];

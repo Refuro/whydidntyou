@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {getDomain} from '../src/domains/index.js';
 import {validateResult,validateAttempt,drawSeeds} from '../src/validate.js';
 import {isSuccess,evaluate} from '../src/sandbox.js';
-import {make,publicEvidence,identifiabilityAudit,privateRuleCoverage} from '../src/domains/invariantGame.js';
+import {make,publicEvidence,identifiabilityAudit,privateRuleCoverage} from '../src/domains/invariantGame-b2.js';
 import {seedManifest,sourceHexToMaster,validateSeedSource} from '../src/seed-manifest.js';
 import {nullBounds,upperBound} from '../src/bounds.js';
 

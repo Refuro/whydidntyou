@@ -16,14 +16,14 @@ import { resourcesFromAttempts } from './resources.js';
 
 export async function runExperiment(cfg,{outputDir='runs',transport=null,runner=runAttempts,quiet=false,onBoundary=null}={}) {
   validateConfig(cfg,Object.fromEntries(Object.entries(domains).map(([k,d])=>[k,d.VERSION])));
-  const scaffoldHashes={};
-  for(const c of cfg.conditions){for(const seed of cfg.seeds)domains[c.domain].make(seed,c.opts||{});if(c.scaffold)scaffoldHashes[c.id]=sha256(readFileSync(c.scaffold,'utf8'));}
+  const scaffoldHashes={},constructionLedger=[];
+  for(const c of cfg.conditions){for(const seed of cfg.seeds){const inst=domains[c.domain].make(seed,c.opts||{});constructionLedger.push({condition:c.id,seed,requestedFamily:c.domain,effectiveClassification:c.domain,assignmentSpace:null,consistentAssignments:null,kernelClasses:null,eligible:true,constructionValid:true,reason:null,instanceDigest:inst.instanceDigest});}if(c.scaffold)scaffoldHashes[c.id]=sha256(readFileSync(c.scaffold,'utf8'));}
   outputDir=resolve(outputDir);mkdirSync(outputDir,{recursive:true});
   const out=join(outputDir,'experiment-'+cfg.name+'.jsonl');
   if(existsSync(out))throw new Error('batch file already exists: '+out);
   const executionPlans={};
   for(const c of cfg.conditions)for(const seed of cfg.seeds)for(let repeat=0;repeat<cfg.repeats;repeat++)executionPlans[slotKey({condition:c.id,seed,repeat})]=Array.from({length:3},()=>randomBytes(16).toString('hex'));
-  const header={type:'experiment-meta',schema:5,batchId:randomBytes(16).toString('hex'),config:cfg,scaffoldHashes,promptBuilderHash:promptBuilderHash(),protocol:PROTOCOL,model:MOCK?'mock':MODEL,startedAt:new Date().toISOString(),resumeVersion:1,sourceHash:sourceIdentity(),configHash:digest(JSON.stringify(cfg)),executionPlans};
+  const header={type:'experiment-meta',schema:5,batchId:randomBytes(16).toString('hex'),config:cfg,scaffoldHashes,promptBuilderHash:promptBuilderHash(),protocol:PROTOCOL,model:MOCK?'mock':MODEL,startedAt:new Date().toISOString(),resumeVersion:1,sourceHash:sourceIdentity(),configHash:digest(JSON.stringify(cfg)),executionPlans,constructionLedger};
   durableAppend(out,header,{exclusive:true});
   return continueBatch(out,[header],{transport,runner,quiet,onBoundary});
 }

@@ -75,3 +75,11 @@ Base: 08d6ca0. The author explicitly confirmed that the B2 review is still pendi
 - Usage seconds now mean archived transport latency; unknown usage remains unknown. Scoring runtime is not included in provider usage seconds.
 - PLAN edit: §8 replaces the blanket resumed-batch refusal with the validated resume path and explicit abandonment rule.
 - Offline suite: 68/68 pass, including receipt-before-score, orphan log, terminal-boundary interruption, repeated resume, partial batch/run records, and changed source/config. No model calls or new sandbox probes.
+
+## 2026-11-03 — B3 generator, sealed construction and evidence
+
+- Historical B2 implementation is retained as `invariantGame-b2.js`; its tests and wall runner explicitly use that version. Existing evidence files and archive contents remain unchanged. The current generator uses a uniform image draw and separate public-order stream, with a version bump and dated preregistration addendum.
+- Bounded string-support feasibility, a dependency-free two-phase simplex, exact joint nuisance matching, integer rounding, independent realized ceilings, and certificate checking are implemented. The support restriction and all numeric limits are registered in the addendum and `SAMPLER`; infeasibility concerns this support, not arbitrary strings. A minimum-weight objective retains support diversity instead of collapsing the feasibility solution to four repeated pairs.
+- Construction ledgers retain every fixed proposal, counts/classification/audit/reason, and exclude defects without replacement. Compression batch counts now come from their durable header construction entries; invariant corpus acceptance reports derive from their proposal/disposition ledger. Model-loop integration remains B6 and gated.
+- The export checker independently verifies the alphabet/image streams, finite laws, paths/inequalities, rounded ceilings and nuisance balance. It refuses the historical positional convention; chance agreement with a positional pattern is not excluded because that would bias the registered assignment distribution.
+- No additional PLAN edits here. Fixtures cover LP feasible/infeasible/unbounded cases, public permutation invariance, congruence closure, defect retention, rounded checks and tampered exports.

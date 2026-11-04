@@ -81,9 +81,15 @@ export function validateBatch(records, {loadLog=readLog}={}) {
   const coincident=[],byDigest=new Map();
   for(const c of cfg.conditions)for(const seed of cfg.seeds){const inst=instance(c,seed),k=c.id+'|'+inst.worldDigest;if(byDigest.has(k))coincident.push({condition:c.id,seeds:[byDigest.get(k),seed],worldDigest:inst.worldDigest});else byDigest.set(k,seed);}
   for(const ct of cfg.contrasts||[]){const [a,b]=Array.isArray(ct)?ct:[ct.a,ct.b];if(conds[a].domain===conds[b].domain&&JSON.stringify(conds[a].opts||{})===JSON.stringify(conds[b].opts||{}))for(const seed of cfg.seeds)equal(instance(conds[a],seed).worldDigest,instance(conds[b],seed).worldDigest,'paired world mismatch');}
-  // Current schema-5 construction preflights every proposed seed and assigns all of
-  // them, or refuses the batch. B3 exclusions must derive these counts from its
-  // validated proposal/defect ledger instead of copying summary fields.
-  const constructionCounts=Object.fromEntries(cfg.conditions.map(c=>[c.id,{proposed:cfg.seeds.length,eligible:cfg.seeds.length}]));
+  const constructionCounts={};
+  if(header.resumeVersion===1){
+    if(!Array.isArray(header.constructionLedger)||header.constructionLedger.length!==cfg.conditions.length*cfg.seeds.length)throw new Error('durable construction ledger missing');
+    const seen=new Set();
+    for(const e of header.constructionLedger){
+      const c=conds[e.condition],key=e.condition+'|'+e.seed;
+      if(!c||!cfg.seeds.includes(e.seed)||seen.has(key)||e.eligible!==true||e.constructionValid!==true||e.reason!==null||e.instanceDigest!==instance(c,e.seed).instanceDigest||e.requestedFamily!==c.domain||e.effectiveClassification!==c.domain)throw new Error('construction ledger contradicts compression assignment');
+      seen.add(key);const n=constructionCounts[e.condition]??={proposed:0,eligible:0,constructionValid:0};n.proposed++;n.eligible++;n.constructionValid++;
+    }
+  }else for(const c of cfg.conditions)constructionCounts[c.id]={proposed:cfg.seeds.length,eligible:cfg.seeds.length,constructionValid:cfg.seeds.length,source:'historical schema-5 all-or-refuse preflight'};
   return {header,cfg,slots,terminals,expected,missing,coincident,constructionCounts};
 }
