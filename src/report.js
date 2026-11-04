@@ -70,8 +70,7 @@ for (const t of trials) {
   if (inst.worldDigest !== t.worldDigest) refuse(`trial ${k}: worldDigest does not match the regenerated instance`);
   if (JSON.stringify(inst.secret) !== JSON.stringify(t.secret)) refuse(`trial ${k}: recorded secret differs from the regenerated instance`);
   t.secret = inst.secret; // strata use the regenerated secret, never the copied field
-  // Sampling policy (PLAN §8): seeds are independent draws WITH replacement; two seeds that generate the same world are
-  // coincident independent draws, retained as separate trials and REPORTED, so the independent-draw null bound stays valid.
+  // Sampling policy (PLAN §8): distinct seeds from the registered expansion; coincident worlds are retained draws and reported.
   const dk = `${t.condition}|${t.worldDigest}`; if (digests[dk] != null && digests[dk] !== t.seed) coincident.push({ condition: t.condition, seeds: [digests[dk], t.seed], worldDigest: t.worldDigest }); else digests[dk] = t.seed;
   const sk = `${t.condition}|${t.seed}`; if (seedWorld[sk] != null && seedWorld[sk] !== t.worldDigest) refuse(`condition ${t.condition} seed ${t.seed}: repeats carry different worldDigests`); seedWorld[sk] = t.worldDigest;
 }
@@ -98,7 +97,7 @@ const esc = (s) => String(s).replace(/\|/g, '\\|');
 const pct = (x) => (100 * x).toFixed(0) + '%';
 const md = [`# Report: ${cfg.name}`, '', `File: ${file}. Batch: ${meta.batchId}. Model: ${meta.model}. Generator versions: ${Object.entries(genVersions).map(([d, v]) => d + '=' + [...v][0]).join(', ')}.`, `Configured: ${cfg.conditions.length} conditions × ${cfg.seeds.length} worlds × ${cfg.repeats} repeats × ${cfg.attempts} attempts = ${expected.length} trials. Present: ${trials.length}. Missing: ${missing.length}${missing.length ? ' — ' + missing.slice(0, 20).map(m => `${m.condition}/s${m.seed}/r${m.repeat}`).join(', ') + (missing.length > 20 ? ', …' : '') : ''}.`, missing.length ? `missingPolicy=exploratory: this read-out is DEVELOPMENT ONLY; the complete missing list is in the .missing.json beside this file.` : ''];
 if (MISSING === 'exploratory') md.push('', '**EXPLORATORY BATCH (missingPolicy=exploratory). Not a confirmatory result.**');
-if (coincident.length) md.push('', `**Coincident worlds:** ${coincident.length} pair(s) of seeds generated identical worlds and are retained as independent draws: ${coincident.map(c => `${c.condition}: seeds ${c.seeds.join(' & ')}`).join('; ')}.`);
+if (coincident.length) md.push('', `**Coincident worlds:** ${coincident.length} pair(s) of seeds generated identical worlds and are retained draws: ${coincident.map(c => `${c.condition}: seeds ${c.seeds.join(' & ')}`).join('; ')}.`);
 
 // ---- world-level helpers
 const byCond = {}; for (const t of trials) (byCond[t.condition] ||= []).push(t);

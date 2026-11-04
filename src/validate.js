@@ -3,6 +3,7 @@
 // Presence and type first, then consistency. No coercion anywhere: inputs are normalized once at the
 // command line (normalizeRunInput) and stored fields are asserted as stored.
 import { isSuccess } from './sandbox.js';
+import { createHash } from 'node:crypto';
 
 export const SEED_MIN = 0, SEED_MAX = 4294967295; // generators normalize seeds to 32 bits; larger values alias smaller ones
 export const MEMORY_MODES = ['full', 'last-code', 'summary'];
@@ -47,11 +48,15 @@ export function validateOpts(o) {
   if (o.L != null && o.L > eff.n) fail(`opts.L=${o.L} must be at most n (effective n=${eff.n})`);
 }
 
-// Registered seed draw: n distinct seeds, uniform without replacement from [0, 2^32-1], from a master seed (splitmix-style hash).
+// PRF-style expansion: computational approximation to sampling distinct 32-bit seeds.
 export function drawSeeds(master, n) {
-  if (!isInt(master) || master < 0 || !isInt(n) || n < 1 || n > 100000) fail('drawSeeds: bad arguments');
-  const out = []; const seen = new Set(); let x = BigInt(master) * 0x9E3779B97F4A7C15n;
-  while (out.length < n) { x = (x + 0x9E3779B97F4A7C15n) & 0xFFFFFFFFFFFFFFFFn; let z = x; z = ((z ^ (z >> 30n)) * 0xBF58476D1CE4E5B9n) & 0xFFFFFFFFFFFFFFFFn; z = ((z ^ (z >> 27n)) * 0x94D049BB133111EBn) & 0xFFFFFFFFFFFFFFFFn; z ^= z >> 31n; const v = Number(z & 0xFFFFFFFFn); if (!seen.has(v)) { seen.add(v); out.push(v); } }
+  if (typeof master !== 'string' || !/^(0|[1-9][0-9]{0,63})$/.test(master) || !isInt(n) || n < 1 || n > 100000) fail('drawSeeds: master must be canonical decimal text (1–64 digits), n an integer in [1,100000]');
+  const out = [], seen = new Set();
+  for (let counter = 0; out.length < n; counter++) {
+    const digest = createHash('sha256').update(`whydidntyou-seed-draw-v2|${master}|${counter}`).digest();
+    const v = digest.readUInt32BE(28); // low 32 bits of the big-endian SHA-256 integer
+    if (!seen.has(v)) { seen.add(v); out.push(v); }
+  }
   return out;
 }
 
@@ -67,8 +72,8 @@ export function validateConfig(cfg, domainVersions /* {domain: currentVersion} o
   if (!isInt(cfg.repeats) || cfg.repeats < 1 || cfg.repeats > 100) fail('config repeats must be an integer in [1,100]');
   const mp = cfg.missingPolicy ?? 'refuse'; if (!MISSING_POLICIES.includes(mp)) fail(`config missingPolicy must be ${MISSING_POLICIES.join('|')} (got ${JSON.stringify(cfg.missingPolicy)})`);
   // Seed draw: confirmatory batches (missingPolicy refuse) must have their seed list produced by the registered draw
-  // procedure (distinct seeds, uniform without replacement from [0, 2^32-1], from a published master seed).
-  if (cfg.seedDraw != null) { if (!isPlainObj(cfg.seedDraw) || !isInt(cfg.seedDraw.master) || cfg.seedDraw.master < 0 || !isInt(cfg.seedDraw.n) || cfg.seedDraw.n !== cfg.seeds.length) fail('config seedDraw must be {master, n} with n equal to the seed count'); const drawn = drawSeeds(cfg.seedDraw.master, cfg.seedDraw.n); if (JSON.stringify(drawn) !== JSON.stringify(cfg.seeds)) fail('config seeds do not equal the registered draw from seedDraw.master'); }
+  // procedure (SHA-256 expansion of a string master; computational sampling assumption).
+  if (cfg.seedDraw != null) { if (!isPlainObj(cfg.seedDraw) || typeof cfg.seedDraw.master !== 'string' || !isInt(cfg.seedDraw.n) || cfg.seedDraw.n !== cfg.seeds.length) fail('config seedDraw must be {master: string, n} with n equal to the seed count'); const drawn = drawSeeds(cfg.seedDraw.master, cfg.seedDraw.n); if (JSON.stringify(drawn) !== JSON.stringify(cfg.seeds)) fail('config seeds do not equal the registered draw from seedDraw.master'); }
   else if (mp === 'refuse') fail('confirmatory config (missingPolicy refuse) must declare seedDraw {master, n}; hand-picked seeds are exploratory only');
   if (cfg.memory != null && !MEMORY_MODES.includes(cfg.memory)) fail('config memory invalid');
   if (cfg.generatorVersions != null && !isPlainObj(cfg.generatorVersions)) fail('config generatorVersions must be an object');
