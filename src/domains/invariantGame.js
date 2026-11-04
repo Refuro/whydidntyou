@@ -102,3 +102,8 @@ export function referenceCode(inst,{functionalQuantity=false}={}){
   const spec=JSON.stringify({table:inst.secret.table,identity:inst.secret.identity,images:inst.secret.images});
   return `const spec=${spec}; function product(s){let v=spec.identity;for(const a of s)v=spec.table[v][spec.images[a]];return v;} function reachable(a,b){return product(a)===product(b);}`+(functionalQuantity?'function quantity(s){return product(s);}':'const quantityFold=spec;');
 }
+// The only view intended for solver prompts/constructors. Proof certificates, secret
+// invariant values, decoy annotations, calibration data and administrative IDs stay out.
+export function publicEvidence(inst){
+  return {alphabet:inst.alphabet.slice(),rules:inst.rules.map(({u,v})=>({u,v})),rulesText:inst.rulesText,trainingPairs:inst.trainingPairs.map(({a,b,label})=>({a,b,label}))};
+}

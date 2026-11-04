@@ -22,7 +22,7 @@ One dependency (`quickjs-emscripten`, the WASM-hosted interpreter that runs subm
 
 Removing a real breakthrough (calculus, Huffman coding) from a model's training data is not possible without also removing the capability that would let it derive the breakthrough. So instead of erasing a known answer, we mint an unknown one: a generative process with a hidden rule, built so that compressing well requires modeling the structure that rule creates (checked against a registered set of known compressors in `selftest`, not asserted). The specific answer is new by construction; the *kind* of structure may be familiar, which is why every result is reported against a frozen baseline library rather than as discovery. The oracle (the true process) gives an expected bits-per-symbol floor to measure against.
 
-Two domain families ship:
+Two compression families are wired into the model loop:
 
 | family | hidden structure | the "key move" | role |
 |---|---|---|---|
@@ -137,3 +137,9 @@ Each assigned slot owns at most three fresh executions (indices 0–2). Only int
 Reports regenerate requests and instances, validate the full chain, and sum named usage fields across retries. Missing usage is `unknown`. The report and adjacent `.analysis.json` emit completeness gates, hypergeometric upper bounds (binomial approximations shown separately), and sample identification bounds for contrasts with unknown outcomes. Repeats are separate binary endpoint strata, not extra independent worlds. Historical schemas are not silently upgraded.
 
 Adapted review 9: `node test/REVIEW-CHECKS-v9.mjs . docs/REVIEW-EVIDENCE-schema5.json`. The archived reviewer scripts remain unchanged.
+
+## Invariant game — B2 review checkpoint
+
+`src/domains/invariantGame.js` generates finite-invariant rewrite worlds for count, abelian, S3/Q8/D4/A4 and small transformation-monoid families. It includes exact conservation proofs, 200 training pairs, calibration pairs and an exhaustive bounded identifiability audit. `publicEvidence(inst)` supplies the solver view without secret certificates or decoy annotations.
+
+`npm run selftest` also runs the invariant calibration wall: the reference passes every tested family, the count-nullspace solver passes the abelian controls and fails the noncommutative cases, and bounded BFS fails large pairs. These are development checks under explicit budgets. Sealed construction and model-loop integration remain pending the required B2 review; production invariant scoring refuses absent sealed data. See `docs/BUILD-REPORT-v1.md` and `docs/REVIEW-PROMPT-B2.md`.

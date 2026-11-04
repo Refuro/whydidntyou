@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {make,proveConservation,verifyPath,identifiabilityAudit,referenceCode,ConstructionDefect} from '../src/domains/invariantGame.js';
+import {make,proveConservation,verifyPath,identifiabilityAudit,referenceCode,ConstructionDefect,publicEvidence} from '../src/domains/invariantGame.js';
 import {validateMonoid,algebraFor,generatedSubmonoid,representationSignature} from '../src/algebra.js';
 import {evaluate,isSuccess} from '../src/sandbox.js';
 export const specimens=[{family:'F-count'},{family:'F-abelian'},...['S3','Q8','D4','A4'].map(algebra=>({family:'F-nonabelian',algebra})),...[3,4].map(points=>({family:'F-monoid',points}))];
@@ -10,7 +10,7 @@ for(const opts of specimens)test('B1 proof, certificates, identifiability and re
  assert.ok(inst.rules.length>=6&&inst.rules.length<=14);assert.ok(inst.rules.every(r=>r.u.length<=3&&r.v.length<=3&&r.u!==r.v));
  assert.ok(inst.rules.filter(r=>r.decoyProof).length>=2);assert.equal(inst.conservationProof.allContexts,true);assert.equal(inst.conservationProof.triplesChecked,inst.secret.table.length**3);
  for(const r of inst.rules.filter(r=>r.decoyProof))assert.ok(verifyPath(r.u,r.v,r.decoyProof,inst.rules.filter(r=>!r.decoyProof)));
- for(const p of [...inst.trainingPairs,...inst.calibrationPairs]){assert.equal(inst.quantity(p.a)===inst.quantity(p.b),p.label);if(p.label)assert.ok(verifyPath(p.a,p.b,p.certificate.path,inst.rules));else assert.notEqual(...p.certificate.values);}
+ for(const p of [...inst.trainingPairs,...inst.calibrationPairs]){assert.equal(inst.quantity(p.a)===inst.quantity(p.b),p.label);if(p.label)assert.ok(verifyPath(p.a,p.b,p.certificate.path,inst.rules));else {assert.deepEqual(p.certificate.values,[inst.quantity(p.a),inst.quantity(p.b)]);assert.notEqual(...p.certificate.values);}}
  assert.equal(inst.identifiabilityAudit.referenceConsistent,true);assert.equal(inst.identifiabilityAudit.recoverable,true);
  assert.equal(inst.worldDigest,make(1,opts).worldDigest);assert.notEqual(inst.instanceDigest,make(2,opts).instanceDigest);
  const r=await evaluate(referenceCode(inst),inst,{evaluationPairs:inst.calibrationPairs,purpose:'wall-selftest',timeoutMs:20000});assert.equal(r.ok,true,JSON.stringify(r));assert.equal(r.accuracy,1);assert.ok(isSuccess(r));assert.equal(r.quantity.conservation.proved,true);assert.equal(r.quantity.partitionsAgree,true);assert.equal(r.generalizationGap,0);
@@ -34,6 +34,10 @@ test('B1 ambiguity is counted and flagged without filtering the world',()=>{
 test('B1 verifier fails closed without B3 sealed data',async()=>{
  const i=make(1);assert.equal((await evaluate(referenceCode(i),i)).ok,false);
  assert.equal((await evaluate(referenceCode(i),i,{evaluationPairs:i.calibrationPairs})).ok,false);
+});
+test('B1 public evidence excludes oracle certificates and decoy annotations',()=>{
+ const view=publicEvidence(make(1));assert.deepEqual(Object.keys(view),['alphabet','rules','rulesText','trainingPairs']);
+ assert.ok(view.rules.every(r=>Object.keys(r).join(',')==='u,v'));assert.ok(view.trainingPairs.every(p=>Object.keys(p).join(',')==='a,b,label'));
 });
 test('B1 functional quantity compares partitions, not oracle labels; bounded evidence is not proof',async()=>{
  const i=make(1,{family:'F-count'}),code=referenceCode(i,{functionalQuantity:true}).replace('return product(s);',"return 'renamed-'+product(s);");
