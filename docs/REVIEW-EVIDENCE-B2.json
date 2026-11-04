@@ -1,0 +1,798 @@
+{
+  "commit": "953c16e6c0edd859f1edfdac79120a181590175c",
+  "node": "v22.23.4",
+  "root": "C:\\Users\\Refur\\SonyTv\\whydidntyou-review\\B2-HEAD-953c16e",
+  "scratch": "C:\\Users\\Refur\\SonyTv\\whydidntyou-review\\B2-checks-w8hxkl",
+  "sourceHashes": {
+    "src/algebra.js": "97a9e5035ff24e9c62435b5167ee836de0f4e3e1e4210b0232294809ee23d170",
+    "src/analysis.js": "2f3de99b9a0e7cd7d9decefd4490295fda93c3a6fd881ba1c19495de35b7c86e",
+    "src/analyze.js": "cea62c0810d323a81b77910bdb1aacf45e1942b7c09a087071089915f73a183c",
+    "src/bounds.js": "df4622d1f2fce9af98e3a5e7159731e6a985dea72d0ac379e0de251b684d3081",
+    "src/draw-seeds.js": "17189100582993394ab1f7e93e623523dd807b71e3214c6b2eb9d47cef7fcd2e",
+    "src/experiment.js": "6b83257e79d22036a07478b73ee3b496899d3a7634509dcb829a127c4c1b6e62",
+    "src/hints.js": "623d094d8bdc6d6e232969d4d8793675a2b5648cdba76b022f637144c1c84024",
+    "src/ideas.js": "3ad0dc15d5f019c512228bb5567a102d9a3ca1be778840e95bc7f3f32f8bd358",
+    "src/invariant-selftest.js": "2cd21950f9d0bf1e7d0dcaef236db6920f51df99c0ec9fcac1668632bdbf3115",
+    "src/ledger.js": "6e0b19901487b8cfd907e00f53a79f262e96b0795cef344fc385bb836f6f6a3c",
+    "src/llm.js": "72e7a18715d86ad785f8e39db19ff65d438828b533b29dc56b7bfbeeb9759f52",
+    "src/postmortem-binding.js": "200a724f8f02c89d331e0a3ba072224e2573c1a62938ea251cb61ceb9dd383a7",
+    "src/postmortem.js": "37cb5efc5408975a5f813edbb4985ce9bf7a4691d132120013f6935c3114df78",
+    "src/prompt.js": "c85337275c72a8fd6b763d2aa45951501b667b0ee8f93d3d35e56b2bbe69e070",
+    "src/provenance.js": "1d4e2c9a2e19f2db63a6c72c49625b21bd5c8dde0ff9ca47e9b476fdc901d3e3",
+    "src/report.js": "be7c298b24217073c42466247a1abd8e3aa7eafe81104600a69e79334ba83934",
+    "src/resources.js": "7d30998f0f92eb1d56c4a9df23e360dfb6f806b4b79a4729ab1e4608ed92fb9a",
+    "src/rng.js": "5b722e903533c1fa621f6163816c596d5c9e64d0330782a66a43f527af0165fe",
+    "src/run.js": "8b5f2ad72dd1b520037844c4b15f092d5b1f0a3c3953416de9604ce1dce94eca",
+    "src/sandbox.js": "d1e81df25999caee53cc71ea89dcd75cffa87db46667e6f538d6fd5c6d89c06e",
+    "src/selftest.js": "7f4e115d0692f138a2e4db854e70eeb4f14ab7565c6caa0d19d7f236f8e68b91",
+    "src/validate.js": "f1068081dd50075c3208d5f5795087036b9e6b6bc77c2f3eb65ac6bb572fee51",
+    "src/baselines/invariant-wall.js": "38a1a8e0f5e97565e19ac510728a111dfbf91642fb76aaa95de7178c244ff6eb",
+    "src/domains/hiddenPeriod.js": "d7e2ef01e84f5b584c0f3110cec7ce6f4e8c17488135dd41c0a3d42d5194b70b",
+    "src/domains/index.js": "66ac507758c21c8714f478ccb92e74ba61f989ed9324d444ff02342bcff2a0c4",
+    "src/domains/invariantGame.js": "95fecb82cdb980a5eb4ea32a36247bace147fe2be6b27832b67e582120cad4ee",
+    "src/domains/laggedRule.js": "725ace36e8278abb278a6421a4e2842fdc96ce857820fe063ef6cfe616d344b4",
+    "src/verifiers/reachability.js": "f68a84d89f4dcbad430a8901b8947cf3f9e4f506a37a7461d6e1a78c6c4db569",
+    "test/bounds.test.js": "78e607df996b7a96c2c0468d104262426e3a9f96289b297d9fac32882fe4dec7",
+    "test/decisions-b2.test.js": "9c01c56dd79870d9838358d9b429e004f7f79ff46da969278c0fb8bd712cb632",
+    "test/harness.test.js": "cacf85f66889605dd9c683b72d1e0250d8746a7db73f8ab4916dd73edf837464",
+    "test/invariant-generator.test.js": "3626fc7004ae69ac98323f462f77c9720e3698997e56ca562ae63e177c07d855",
+    "test/invariant-wall.test.js": "5ea1bac03607e4b547862f68b36c4a905407a1d52e8a32ec2124da3c9f528743",
+    "test/REVIEW-CHECKS-v9.mjs": "1a375a1e9f649f55153f5f05acd7f584e1762c69e45376ccf1388905447b8f5a",
+    "test/review-v9.test.js": "ab4af7c5435ee9bdc633a10feeb02675c126d9c4f1185b500f9c5ecb619309dc",
+    "test/seeds.test.js": "2c07c2a12b6a6bee8365c8489807ee499961191ab5f016a4235fd2baf3ca5a42",
+    "docs/PLAN.md": "90169f79a65729ebb684d0661510785f994e4616d137f4e5756e88e84013ecb1",
+    "docs/REVIEW-PROMPT-B2.md": "94a9fd305ebe53fe85fb747d5d9bb569d860aace5b5f768270d9a9cb38bd1cf8",
+    "docs/DECISIONS-B2.md": "bcea48ce563d1f2b644e95c118750ccb270ff750f8a211bb7bec56e15fe380ef",
+    "docs/BUILD-PROMPT-v1.md": "6e8e88900056a37d803a30ae6ba13d4a50e66b7fcc460840d3b8e4cb4b2e02c2",
+    "docs/BUILD-REPORT-v1.md": "5fa8fa3fc1fb5c0c22539fe9ccb2d51a475a7202b99f342c5277d05006cc4ddf",
+    "docs/BUILD-NOTES.md": "0d204b55deefb01da79148cf6c37ea45e737b234c3964fff180b4a3d8a4883de",
+    "prereg/invariantGame.md": "211b7aab60f7af4673a53935cf118d191219fd8afe8c266e0ecb4d5171d0f71c",
+    "package-lock.json": "971dc6ff0dbc617e2d01e2dfff465ec8a614624b31f8ac9af06ce65e98571ac8"
+  },
+  "checks": [
+    {
+      "id": "source/author-evidence-hashes",
+      "passed": true
+    },
+    {
+      "id": "seeds/kcurve",
+      "passed": true,
+      "master": "20261103",
+      "first": 471087916
+    },
+    {
+      "id": "seeds/pilot",
+      "passed": true,
+      "master": "20261104",
+      "first": 1284684434
+    },
+    {
+      "id": "seeds/adjacent-overlap",
+      "passed": true,
+      "overlap": 0
+    },
+    {
+      "id": "seeds/duplicate-suppression",
+      "passed": true,
+      "master": "0",
+      "duplicates": 1,
+      "counters": 100001,
+      "returned": 100000
+    },
+    {
+      "id": "decisions/hex-master-conversion",
+      "passed": false,
+      "originalHex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "decimalDigits": 78,
+      "error": "drawSeeds: master must be canonical decimal text (1–64 digits), n an integer in [1,100000]"
+    },
+    {
+      "id": "statistics/stochastic-coverage-M4294967296",
+      "passed": null,
+      "M": 4294967296,
+      "n": 100,
+      "hypergeometricUpper": 0.029513049172237515,
+      "binomialUpper": 0.029513049607039935,
+      "truePerSeedProbability": 0.029513049389638724,
+      "noncoverage": 0.050000001120062525,
+      "exceedsAlpha": true
+    },
+    {
+      "id": "statistics/stochastic-coverage-M1000000",
+      "passed": null,
+      "M": 1000000,
+      "n": 100,
+      "hypergeometricUpper": 0.029511,
+      "binomialUpper": 0.029513049607039935,
+      "truePerSeedProbability": 0.029512024803519967,
+      "noncoverage": 0.05000528011782278,
+      "exceedsAlpha": true
+    },
+    {
+      "id": "statistics/eligible-population-endpoint-sensitivity",
+      "passed": null,
+      "maximum": {
+        "n": 100,
+        "count": 39,
+        "large": 0.4769060774706304,
+        "small": 0.476901,
+        "difference": 0.000005077470630387992
+      },
+      "roundedDifferences": 147,
+      "scope": "M=10^6 versus 2^32, alpha=.05, every n=1..100 and count=0..n; not a proof over all M"
+    },
+    {
+      "id": "records/positive-control",
+      "passed": true
+    },
+    {
+      "id": "records/compression-result-contract-confusion",
+      "passed": false,
+      "ordinaryCompressionSuccess": false,
+      "taggedSuccess": true,
+      "ratioToBaseline": 1,
+      "accepted": true,
+      "terminal": "success",
+      "error": null,
+      "scope": "Synthetic result record only; no executable submission or actual verifier success claimed"
+    },
+    {
+      "id": "decisions/primary-repeat-zero",
+      "passed": true,
+      "repeatZeroDifference": 1,
+      "repeatOneDifference": -1,
+      "currentPrimaryContrast": [
+        1,
+        1
+      ],
+      "primaryFlag": true
+    },
+    {
+      "id": "algebra/Q8-Hamilton-products",
+      "passed": true,
+      "products": 64
+    },
+    {
+      "id": "algebra/laws-F-count-",
+      "passed": true,
+      "size": 4,
+      "associativityTriples": 64
+    },
+    {
+      "id": "generator/world-1-{\"family\":\"F-count\"}",
+      "passed": true,
+      "assignments": 6,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 1,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "generator/world-2-{\"family\":\"F-count\"}",
+      "passed": true,
+      "assignments": 6,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 1,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "algebra/laws-F-abelian-",
+      "passed": true,
+      "size": 9,
+      "associativityTriples": 729
+    },
+    {
+      "id": "generator/world-1-{\"family\":\"F-abelian\"}",
+      "passed": true,
+      "assignments": 48,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 1,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "generator/world-2-{\"family\":\"F-abelian\"}",
+      "passed": true,
+      "assignments": 48,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 1,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "algebra/laws-S3",
+      "passed": true,
+      "size": 6,
+      "associativityTriples": 216
+    },
+    {
+      "id": "generator/world-1-{\"family\":\"F-nonabelian\",\"algebra\":\"S3\"}",
+      "passed": true,
+      "assignments": 6,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.65,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "generator/world-2-{\"family\":\"F-nonabelian\",\"algebra\":\"S3\"}",
+      "passed": true,
+      "assignments": 6,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.625,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "algebra/laws-Q8",
+      "passed": true,
+      "size": 8,
+      "associativityTriples": 512
+    },
+    {
+      "id": "generator/world-1-{\"family\":\"F-nonabelian\",\"algebra\":\"Q8\"}",
+      "passed": true,
+      "assignments": 24,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.75,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "generator/world-2-{\"family\":\"F-nonabelian\",\"algebra\":\"Q8\"}",
+      "passed": true,
+      "assignments": 24,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.7375,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "algebra/laws-D4",
+      "passed": true,
+      "size": 8,
+      "associativityTriples": 512
+    },
+    {
+      "id": "generator/world-1-{\"family\":\"F-nonabelian\",\"algebra\":\"D4\"}",
+      "passed": true,
+      "assignments": 8,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.7125,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "generator/world-2-{\"family\":\"F-nonabelian\",\"algebra\":\"D4\"}",
+      "passed": true,
+      "assignments": 8,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.675,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "algebra/laws-A4",
+      "passed": true,
+      "size": 12,
+      "associativityTriples": 1728
+    },
+    {
+      "id": "generator/world-1-{\"family\":\"F-nonabelian\",\"algebra\":\"A4\"}",
+      "passed": true,
+      "assignments": 24,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.6875,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "generator/world-2-{\"family\":\"F-nonabelian\",\"algebra\":\"A4\"}",
+      "passed": true,
+      "assignments": 24,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.7375,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "algebra/laws-F-monoid-3",
+      "passed": true,
+      "size": 9,
+      "associativityTriples": 729
+    },
+    {
+      "id": "generator/world-1-{\"family\":\"F-monoid\",\"points\":3}",
+      "passed": true,
+      "assignments": 6,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.5,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "generator/world-2-{\"family\":\"F-monoid\",\"points\":3}",
+      "passed": true,
+      "assignments": 6,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.5,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "algebra/laws-F-monoid-4",
+      "passed": true,
+      "size": 12,
+      "associativityTriples": 1728
+    },
+    {
+      "id": "generator/world-1-{\"family\":\"F-monoid\",\"points\":4}",
+      "passed": true,
+      "assignments": 8,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.6875,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "generator/world-2-{\"family\":\"F-monoid\",\"points\":4}",
+      "passed": true,
+      "assignments": 8,
+      "kernelClasses": 1,
+      "certifiedPairs": 280,
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.5,
+        "bfs": 0.5
+      },
+      "scoreMatch": true
+    },
+    {
+      "id": "generator/audit-public-only-input",
+      "passed": false,
+      "error": "Cannot read properties of undefined (reading 'path')",
+      "meaning": "Count constraints use labels, but rule-coverage code also requires private certificates"
+    },
+    {
+      "id": "generator/alphabet-position-image-templates",
+      "passed": null,
+      "samples": [
+        {
+          "opts": {
+            "family": "F-count"
+          },
+          "states": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "opts": {
+            "family": "F-abelian"
+          },
+          "states": [
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              1,
+              3
+            ]
+          ]
+        },
+        {
+          "opts": {
+            "family": "F-nonabelian",
+            "algebra": "S3"
+          },
+          "states": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "opts": {
+            "family": "F-nonabelian",
+            "algebra": "Q8"
+          },
+          "states": [
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            [
+              2,
+              4
+            ],
+            {
+              "defect": "insufficient short consequence rules"
+            }
+          ]
+        },
+        {
+          "opts": {
+            "family": "F-nonabelian",
+            "algebra": "D4"
+          },
+          "states": [
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            [
+              1,
+              2
+            ],
+            {
+              "defect": "insufficient short consequence rules"
+            }
+          ]
+        },
+        {
+          "opts": {
+            "family": "F-nonabelian",
+            "algebra": "A4"
+          },
+          "states": [
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            [
+              1,
+              2
+            ],
+            {
+              "defect": "insufficient short consequence rules"
+            }
+          ]
+        },
+        {
+          "opts": {
+            "family": "F-monoid",
+            "points": 3
+          },
+          "states": [
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            [
+              1,
+              3
+            ],
+            {
+              "defect": "insufficient short consequence rules"
+            }
+          ]
+        },
+        {
+          "opts": {
+            "family": "F-monoid",
+            "points": 4
+          },
+          "states": [
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            {
+              "defect": "insufficient short consequence rules"
+            },
+            [
+              1,
+              3
+            ],
+            {
+              "defect": "insufficient short consequence rules"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "verifier/no-sealed-data",
+      "passed": true,
+      "result": {
+        "ok": false,
+        "stage": "verify",
+        "error": "sealed pairs are unavailable until B3 construction"
+      },
+      "calls": 0
+    },
+    {
+      "id": "scope/no-live-network-or-wasm",
+      "passed": true,
+      "networkCalls": 0,
+      "wasmCalls": 0,
+      "sourceUnchanged": true
+    }
+  ],
+  "shippedTests": {
+    "artifact": "REVIEW-TESTS-B2.txt",
+    "sha256": "c183e24588711f91114b4d2e7a5efa9bed859b5fca893aca936105290ec86b91",
+    "tests": 55,
+    "passed": 55,
+    "failed": 0,
+    "scope": "Ordinary committed test suite; excludes src/selftest.js historical adversarial regressions"
+  },
+  "wallRows": [
+    {
+      "seed": 1,
+      "family": "F-count",
+      "worldDigest": "419bacf36c823c614aacc2bffcc17742775e3c51b73dd0d3f044032cedc81099",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 1,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-count",
+      "worldDigest": "806fd219ab50cbd7ae19d65f4cbb506da4c8f2684c05e1d455615535ad1f9c80",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 1,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-abelian",
+      "worldDigest": "e6848c33d05772f91c0f9bb71c50bb4b4879ff5387507bf7dba3db88f8ee986f",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 1,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-abelian",
+      "worldDigest": "af0830066f69a280e1ebdb36ae64aee93a6795640b5828ac0bca910bcd43abdc",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 1,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-nonabelian",
+      "algebra": "S3",
+      "worldDigest": "7ddf55cc84dd88ca5b723677d93d75580a5c2bccc60bc7b6035b3a54c5e18d7b",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.65,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-nonabelian",
+      "algebra": "S3",
+      "worldDigest": "075e55083a1d67919460fa4b251de00a8ecb70ab198b19da1d96293ec6ecef1e",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.625,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-nonabelian",
+      "algebra": "Q8",
+      "worldDigest": "09c6e66c0089d237b5e29a19ffc85c7d997afd617130ccedca51067e757ee2db",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.75,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-nonabelian",
+      "algebra": "Q8",
+      "worldDigest": "1d7626e919a5aa22ea10e1d3c8c53f6f132d1c5247db852bd1a6633fde076578",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.7375,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-nonabelian",
+      "algebra": "D4",
+      "worldDigest": "19ab11ecb994550c343d582cf8c296decdeb5fb90cc09298eff7442b4b8f8cfe",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.7125,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-nonabelian",
+      "algebra": "D4",
+      "worldDigest": "4e4037e7078b402e44d96070c5b977087c243f827b97699ea61e8b659fd69221",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.675,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-nonabelian",
+      "algebra": "A4",
+      "worldDigest": "50b7bf0dbacf407a037f33f5fe6cc7543deb9fe028351e0602bebc8b81bc0217",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.6875,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-nonabelian",
+      "algebra": "A4",
+      "worldDigest": "2db7bc7a250e2b1f5fde4141d3708e9610d5955312e964ac36ff22f7d164eb93",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.7375,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-monoid",
+      "points": 3,
+      "worldDigest": "95bc6cf9d57d044e5d3a7d8ec2aa3e6ddb7a6fc62fb36ce7b2fe8a026aa16989",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.5,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-monoid",
+      "points": 3,
+      "worldDigest": "e18786d06290db0ce57a9b535b77656ffc8962728106a1b0c52396dcad89d4bf",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.5,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-monoid",
+      "points": 4,
+      "worldDigest": "80aa879823ab97fb9d949cfda69b880edf214fc311d2c30aabd3d8b0d6eca830",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.6875,
+        "bfs": 0.5
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-monoid",
+      "points": 4,
+      "worldDigest": "194f7e47507fb459c8ce77399721f9cec81da1dcff5fcb392b94ce6f7b5fbe5c",
+      "scores": {
+        "reference": 1,
+        "countNullspace": 0.5,
+        "bfs": 0.5
+      }
+    }
+  ]
+}

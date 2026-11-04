@@ -1,0 +1,340 @@
+TAP version 13
+# Subtest: A5: invalid counts and significance refuse; endpoints and no evidence are explicit
+ok 1 - A5: invalid counts and significance refuse; endpoints and no evidence are explicit
+  ---
+  duration_ms: 2.338
+  type: 'test'
+  ...
+# Subtest: A5: exact exhaustive >=95% coverage for all M<=40,n<=10,K (including n=0)
+ok 2 - A5: exact exhaustive >=95% coverage for all M<=40,n<=10,K (including n=0)
+  ---
+  duration_ms: 18.5696
+  type: 'test'
+  ...
+# Subtest: A5: reviewer M=79,K=77,n=2 and exact large-population boundary checks
+ok 3 - A5: reviewer M=79,K=77,n=2 and exact large-population boundary checks
+  ---
+  duration_ms: 2.896
+  type: 'test'
+  ...
+# Subtest: D1 primary contrast uses only repeat 0 even when later repeats reverse the effect
+ok 4 - D1 primary contrast uses only repeat 0 even when later repeats reverse the effect
+  ---
+  duration_ms: 2.4036
+  type: 'test'
+  ...
+# Subtest: D2 both population references are reported from explicit proposal/eligible counts
+ok 5 - D2 both population references are reported from explicit proposal/eligible counts
+  ---
+  duration_ms: 2.1009
+  type: 'test'
+  ...
+# Subtest: D2 registered printed-precision approximation across n<=100 at M_C=10^6
+ok 6 - D2 registered printed-precision approximation across n<=100 at M_C=10^6
+  ---
+  duration_ms: 540.0736
+  type: 'test'
+  ...
+# Subtest: D2 mean-of-products zero-success bound is available only for resolved zero outcomes
+ok 7 - D2 mean-of-products zero-success bound is available only for resolved zero outcomes
+  ---
+  duration_ms: 1.1165
+  type: 'test'
+  ...
+# Subtest: A2 interrupt-then-complete
+ok 8 - A2 interrupt-then-complete
+  ---
+  duration_ms: 33.8039
+  type: 'test'
+  ...
+# Subtest: A2 interrupt-twice-then-complete
+ok 9 - A2 interrupt-twice-then-complete
+  ---
+  duration_ms: 27.4854
+  type: 'test'
+  ...
+# Subtest: A2 interrupt-three-times-unresolved
+ok 10 - A2 interrupt-three-times-unresolved
+  ---
+  duration_ms: 23.8706
+  type: 'test'
+  ...
+# Subtest: A2 complete-failed-no-retry
+ok 11 - A2 complete-failed-no-retry
+  ---
+  duration_ms: 15.1857
+  type: 'test'
+  ...
+# Subtest: A2 setup failure terminates without a retry
+ok 12 - A2 setup failure terminates without a retry
+  ---
+  duration_ms: 3.7233
+  type: 'test'
+  ...
+# Subtest: A2 interrupted execution then reference success ends the slot at attempt one
+ok 13 - A2 interrupted execution then reference success ends the slot at attempt one
+  ---
+  duration_ms: 82.648
+  type: 'test'
+  ...
+# Subtest: A2 discarded completed attempts and requests count across the restart chain
+ok 14 - A2 discarded completed attempts and requests count across the restart chain
+  ---
+  duration_ms: 23.0995
+  type: 'test'
+  ...
+# Subtest: A2 dispatched-with-no-response and no end record is interrupted evidence
+ok 15 - A2 dispatched-with-no-response and no end record is interrupted evidence
+  ---
+  duration_ms: 21.1302
+  type: 'test'
+  ...
+# Subtest: A2 refuses terminal-with-missing-execution
+ok 16 - A2 refuses terminal-with-missing-execution
+  ---
+  duration_ms: 22.8898
+  type: 'test'
+  ...
+# Subtest: A2 refuses execution-after-terminal
+ok 17 - A2 refuses execution-after-terminal
+  ---
+  duration_ms: 23.7657
+  type: 'test'
+  ...
+# Subtest: A2 refuses execution-after-completion
+ok 18 - A2 refuses execution-after-completion
+  ---
+  duration_ms: 22.6916
+  type: 'test'
+  ...
+# Subtest: A2 refuses missing-index
+ok 19 - A2 refuses missing-index
+  ---
+  duration_ms: 22.7245
+  type: 'test'
+  ...
+# Subtest: A2 refuses four-executions
+ok 20 - A2 refuses four-executions
+  ---
+  duration_ms: 22.3851
+  type: 'test'
+  ...
+# Subtest: A2 refuses duplicate-terminal
+ok 21 - A2 refuses duplicate-terminal
+  ---
+  duration_ms: 20.4337
+  type: 'test'
+  ...
+# Subtest: A3 treatment control hint
+ok 22 - A3 treatment control hint
+  ---
+  duration_ms: 14.0972
+  type: 'test'
+  ...
+# Subtest: A3 treatment control scaffold
+ok 23 - A3 treatment control scaffold
+  ---
+  duration_ms: 16.8122
+  type: 'test'
+  ...
+# Subtest: A3 treatment control summary
+ok 24 - A3 treatment control summary
+  ---
+  duration_ms: 13.0709
+  type: 'test'
+  ...
+# Subtest: A3 treatment control last-code
+ok 25 - A3 treatment control last-code
+  ---
+  duration_ms: 13.4135
+  type: 'test'
+  ...
+# Subtest: A3 refuses payload-hint-absent
+ok 26 - A3 refuses payload-hint-absent
+  ---
+  duration_ms: 14.7117
+  type: 'test'
+  ...
+# Subtest: A3 refuses payload-scaffold-absent
+ok 27 - A3 refuses payload-scaffold-absent
+  ---
+  duration_ms: 15.5164
+  type: 'test'
+  ...
+# Subtest: A3 refuses payload-memory-wrong
+ok 28 - A3 refuses payload-memory-wrong
+  ---
+  duration_ms: 16.5035
+  type: 'test'
+  ...
+# Subtest: A3 refuses payload-feedback-wrong
+ok 29 - A3 refuses payload-feedback-wrong
+  ---
+  duration_ms: 13.4359
+  type: 'test'
+  ...
+# Subtest: A3 prompt source is frozen at batch and run level
+ok 30 - A3 prompt source is frozen at batch and run level
+  ---
+  duration_ms: 14.1614
+  type: 'test'
+  ...
+# Subtest: A4 refuses row-tokens-unbound
+ok 31 - A4 refuses row-tokens-unbound
+  ---
+  duration_ms: 15.4405
+  type: 'test'
+  ...
+# Subtest: A4 refuses row-seconds-unbound
+ok 32 - A4 refuses row-seconds-unbound
+  ---
+  duration_ms: 17.322
+  type: 'test'
+  ...
+# Subtest: A4 absence of usage remains unknown; all named cache fields count
+ok 33 - A4 absence of usage remains unknown; all named cache fields count
+  ---
+  duration_ms: 0.1428
+  type: 'test'
+  ...
+# Subtest: A5 unknown paired outcomes yield per-world and sample identification bounds
+ok 34 - A5 unknown paired outcomes yield per-world and sample identification bounds
+  ---
+  duration_ms: 32.4394
+  type: 'test'
+  ...
+# Subtest: A5 repeat strata never inflate the number of independent worlds
+ok 35 - A5 repeat strata never inflate the number of independent worlds
+  ---
+  duration_ms: 29.2716
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-count"}
+ok 36 - B1 proof, certificates, identifiability and reference: {"family":"F-count"}
+  ---
+  duration_ms: 616.485
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-abelian"}
+ok 37 - B1 proof, certificates, identifiability and reference: {"family":"F-abelian"}
+  ---
+  duration_ms: 450.4912
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"S3"}
+ok 38 - B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"S3"}
+  ---
+  duration_ms: 480.4358
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"Q8"}
+ok 39 - B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"Q8"}
+  ---
+  duration_ms: 482.9651
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"D4"}
+ok 40 - B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"D4"}
+  ---
+  duration_ms: 573.6684
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"A4"}
+ok 41 - B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"A4"}
+  ---
+  duration_ms: 434.3289
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-monoid","points":3}
+ok 42 - B1 proof, certificates, identifiability and reference: {"family":"F-monoid","points":3}
+  ---
+  duration_ms: 466.6978
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-monoid","points":4}
+ok 43 - B1 proof, certificates, identifiability and reference: {"family":"F-monoid","points":4}
+  ---
+  duration_ms: 371.1236
+  type: 'test'
+  ...
+# Subtest: B1 finite table laws reject invalid proofs
+ok 44 - B1 finite table laws reject invalid proofs
+  ---
+  duration_ms: 35.4037
+  type: 'test'
+  ...
+# Subtest: B1 generated commuting images are classified as abelian
+ok 45 - B1 generated commuting images are classified as abelian
+  ---
+  duration_ms: 35.622
+  type: 'test'
+  ...
+# Subtest: D7 ambiguous evidence is audited, then refused as a non-identifiable construction defect
+ok 46 - D7 ambiguous evidence is audited, then refused as a non-identifiable construction defect
+  ---
+  duration_ms: 40.9547
+  type: 'test'
+  ...
+# Subtest: B1 verifier fails closed without B3 sealed data
+ok 47 - B1 verifier fails closed without B3 sealed data
+  ---
+  duration_ms: 33.3531
+  type: 'test'
+  ...
+# Subtest: B1 public evidence excludes oracle certificates and decoy annotations
+ok 48 - B1 public evidence excludes oracle certificates and decoy annotations
+  ---
+  duration_ms: 31.9901
+  type: 'test'
+  ...
+# Subtest: B1 functional quantity compares partitions, not oracle labels; bounded evidence is not proof
+ok 49 - B1 functional quantity compares partitions, not oracle labels; bounded evidence is not proof
+  ---
+  duration_ms: 3876.7631
+  type: 'test'
+  ...
+# Subtest: B1 a constant conserved fold does not identify the oracle partition
+ok 50 - B1 a constant conserved fold does not identify the oracle partition
+  ---
+  duration_ms: 329.0453
+  type: 'test'
+  ...
+# Subtest: D5 output conditions require a quantity only in quantity-requested and refuse ambiguous forms
+ok 51 - D5 output conditions require a quantity only in quantity-requested and refuse ambiguous forms
+  ---
+  duration_ms: 939.7937
+  type: 'test'
+  ...
+# Subtest: B2 registered BFS/count/reference walls across eight algebra variants and two seeds
+ok 52 - B2 registered BFS/count/reference walls across eight algebra variants and two seeds
+  ---
+  duration_ms: 13853.5007
+  type: 'test'
+  ...
+# Subtest: schema-5 adaptation: every v9 absent protection is now present
+ok 53 - schema-5 adaptation: every v9 absent protection is now present
+  ---
+  duration_ms: 314.8927
+  type: 'test'
+  ...
+# Subtest: A1: adjacent masters do not yield shifted windows
+ok 54 - A1: adjacent masters do not yield shifted windows
+  ---
+  duration_ms: 3.3984
+  type: 'test'
+  ...
+# Subtest: master representation is exact, including beyond Number precision
+ok 55 - master representation is exact, including beyond Number precision
+  ---
+  duration_ms: 0.7842
+  type: 'test'
+  ...
+1..55
+# tests 55
+# suites 0
+# pass 55
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13987.1587
