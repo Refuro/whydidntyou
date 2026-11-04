@@ -1,49 +1,30 @@
-# B4 independent challenge interface
+# B4r private-pair challenge interface
 
-The current family is **within library**. The finite-monoid CSP solved 1,720/1,720 accepted audit worlds and the public selector solved 1,719. Those are performance/resource comparisons, not evidence that the class resists the library. The B4 review and independent challenge are pending; these tools do not freeze the portfolio or start B5/B6.
+Use export `sealed-matched-padded-v2-public-v2`. The historical B4 ordered export and 201-refit adapter are retired; their scores cannot enter a freeze. This build stops for B4r review and the separately authorized independent challenge.
 
-## Export public worlds
+The full repaired development export is `challenge/public-sealed-matched-padded-v2-public-v2/`; the single control example is `challenge/example-sealed-matched-padded-v2-public-v2/`. Each JSON contains alphabet, rules (`u`, `v`), rulesText, exactly 200 labeled trainingPairs, worldDigest and exportVersion. There are no sealed pairs in the export. A private host index binds each file to its construction ledger. Do not inspect that index or the generator, algebra or construction files as a challenger.
 
-```powershell
-node src/portfolio/export-public.js docs/B4-EVIDENCE/F-nonabelian.construction.jsonl --out challenge/public/
-```
-
-Pass construction-ledger paths to the tool without opening them. Multiple ledger paths can precede `--out` to export a combined corpus. Every accepted world is regenerated and checked against its recorded digest; defects are not replaced. An identical verified export is a no-op. A different assignment needs a new output directory.
-
-Every public JSON file has exactly these fields:
-
-- `alphabet`, `rules` (`u`, `v`) and the redundant `rulesText`;
-- `trainingPairs`: exactly 200 `{a, b, label}` examples;
-- `sealedPairs`: exactly 200 `{a, b}` examples, without labels or certificates;
-- `worldDigest`.
-
-There are no seed, family, secret, calibration, certificate, scale or defect fields in these files. File numbers enumerate accepted exports, not gaps in proposal indices. A host-only index outside the public directory binds the files to their construction ledgers. The scorer refuses missing, modified or additional public files and changed host evidence. Do not copy or inspect the host index or construction ledgers; the documented commands resolve them for you.
-
-## Submit and score a solver
-
-Write a self-contained JavaScript file defining `reachable(a, b) -> boolean`. The sandbox adds a lexical binding named **`publicWorld`**, with exactly the public JSON object above. It is available to your top-level fitting code and to `reachable`. No imports or host APIs are supplied. Do not declare another `publicWorld` variable.
+Define `fit(publicEvidence) -> string` and `predict(serializedState, a, b) -> boolean`:
 
 ```javascript
-// Interface example only: this is not a proposed challenge method.
-const symbols = publicWorld.alphabet;
-function reachable(a, b) {
-  return a === b;
+function fit(publicEvidence) {
+  return JSON.stringify({alphabet: publicEvidence.alphabet});
+}
+function predict(serializedState, a, b) {
+  const model = JSON.parse(serializedState);
+  return a === b; // Interface example, not a proposed method.
 }
 ```
 
+Fit receives only alphabet, rules, rulesText and trainingPairs; the version/digest envelope is withheld. Fit runs once. Each prediction starts in a fresh runtime/context with exactly state,a,b. There is no persistent fitting variable, sealed batch, row number or cross-pair history. Source runs only in QuickJS. Alternatively submit JSON `{ "format": "fit-predict-source-v2", "fitSource": "...", "inferenceSource": "..." }`, with each source defining its entry function. Both sides can omit unused fit code from inference this way. No imports or host APIs are supplied. The state limit is 2,000,000 bytes. The private-pair challenge scores classification only; quantity verification belongs to the separate legacy contract.
+
 ```powershell
-node src/portfolio/score-external.js challenge/solvers/my-solver.js challenge/public/
-node src/portfolio/score-external.js challenge/solvers/my-solver.js challenge/public/ --timeout-ms 40000 --max-calls 201
+node src/portfolio/score-external.js challenge/solvers/my-solver.js challenge/public-sealed-matched-padded-v2-public-v2/
+node src/portfolio/score-external.js challenge/solvers/my-solver.json challenge/public-sealed-matched-padded-v2-public-v2/ --fit-ms 40000 --inference-ms 40000
 ```
 
-The outside file is never imported or evaluated in the host JavaScript environment. It runs through the existing QuickJS reachability contract: one fresh context for inspection and another for every pair. Consequently, top-level fitting repeats in each context and is charged every time; there is no unreported persistent fitting cache. Only public evidence and unlabeled call arguments enter those contexts. Sealed-label comparison happens in the host. An optional single `quantity` or `quantityFold` declaration is recognized by the existing interface but is not certified or scored by this classifier-only challenge adapter.
+Defaults: fit 20,000 ms; independent public, challenge and natural inference budgets of 20,000 ms each; 2,000 ms per pair; 200 inference calls per set. `--fit-ms`, `--inference-ms`, `--pair-ms` and `--max-calls` retain every changed setting in a new report. All accept integers 1..120,000. The cooperative interpreter deadline is not a hard external supervisor. Prediction caches are disabled, so neither set inherits work from another. The interpreter module alone is reused. Fit and inference timing includes context creation, source loading, state handling and cleanup. Actual one-time module startup is separate; standalone preparation adds an explicitly labeled cold-start estimate. Host world regeneration is reported separately. Reference search counters are member-specific; external self-reported counters are not trusted or compared.
 
-Defaults are **20,000 ms total per world** and **201 sandbox calls per world** (inspection plus 200 predictions). `--timeout-ms` accepts 1..120,000; `--max-calls` accepts 1..100,000. These are adapter defaults to make budget proposals measurable, not frozen portfolio budgets. The existing cooperative sandbox time limit is retained. Measured time includes repeated preparation, VM initialization and contract execution; host regeneration time is reported separately. Charges include actual sandbox calls, completed calls, program/input bytes and elapsed time. The existing contract has no instruction counter, so primitive-operation counts are explicitly unavailable and are not equated with the builder portfolio's work units.
+Each invocation archives its exact source, append-only rows and final JSON under `challenge/results/` (override with `--out`). Reports retain failed evaluations with unavailable accuracy and family accuracy bounds. Every result includes construction acceptance/defects, requested and effective family denominators, and within-world dependence. No sealed labels or row predictions are emitted. `--host-root` may select an isolated host index; neither host data nor results may be inside the public export.
 
-Each invocation writes a unique solver-source archive, an append-only per-world log, and a JSON report under `challenge/results/`. `--out <directory>` changes that results directory. Failures and every changed budget setting are retained. Reports contain accuracy per world and by both effective/requested family, charged work, and failure counts. Failed evaluations have unavailable accuracy; family summaries show bounds retaining all failed worlds rather than silently dropping them. No per-pair predictions or sealed labels are published. These are descriptive development results, not inferential population bounds.
-
-The default host index is resolved automatically. `--host-root <directory>` on both commands is available for isolated test/install environments; it must stay outside the public directory. Results must also stay outside the public directory.
-
-## Registered portfolio languages
-
-The fourteen scored entries are count linear algebra; full and proper-quotient group homomorphism search; finite-monoid image CSP; joint coarse features; full-product finite-state inference; rewrite normal forms; counterexample-guided finite-fold grammar; nuisance stumps; positional templates; BFS at 128/512/2048 nodes with 4096/16384/65536 tested positions; and bounded bidirectional search. Historical templates scored 16/16; their amended success rates are retained per effective family in `docs/B4-EVIDENCE/coverage.md`. The 4x/16x BFS settings remain builder resource curves. All challenger methods and budget proposals, including successful wall crossings and failures, belong in the challenge report before any freeze.
+The fourteen entries are count linear algebra; full/quotient group homomorphism search; finite-monoid image CSP; joint coarse features; full-product finite-state inference; rewrite normal forms; counterexample-guided finite-fold grammar; nuisance stumps; positional templates; BFS at 128/512/2048 nodes and 4096/16384/65536 candidate positions; and bidirectional search. Exact languages and budgets are in `members.js` and `registration.js`. The new evidence is `docs/B4r-EVIDENCE/`; `docs/B4-EVIDENCE/` is historical. Small/large gaps on noncommutative matched supports measure padding robustness. Distinct support and dependent neutral-prefix copies are reported per world.
