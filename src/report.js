@@ -4,7 +4,9 @@
 // Contrasts in the config: ["a","b"] (requires identical generator options) or
 // {"a":"...","b":"...","sharedWorld":true} to declare that differing options share the world's other draws.
 import { readFileSync, writeFileSync } from 'node:fs';
-import { validateTrial, assertSeed } from './validate.js';
+import { validateTrial, validateTrialFailed, validateConfig, validateRunLog } from './validate.js';
+import { getDomain, domains } from './domains/index.js';
+import { existsSync } from 'node:fs';
 
 const file = process.argv[2];
 if (!file) { console.error('usage: node src/report.js runs/experiment-<name>.jsonl'); process.exit(1); }
@@ -12,32 +14,45 @@ const refuse = (m) => { console.error('refusing: ' + m); process.exit(2); };
 const lines = readFileSync(file, 'utf8').trim().split('\n').map(l => JSON.parse(l));
 const metas = lines.filter(l => l.type === 'experiment-meta');
 if (metas.length !== 1) refuse(`expected exactly one experiment-meta record, found ${metas.length}`);
-const meta = metas[0], cfg = meta.config; if (meta.schema !== 3) refuse(`file schema ${meta.schema}; the reporter requires schema 3`);
-const trials = lines.filter(l => l.type === 'trial');
-if (lines.length !== trials.length + 1) refuse('file contains records that are neither experiment-meta nor trial');
+const meta = metas[0], cfg = meta.config; if (meta.schema !== 4) refuse(`file schema ${meta.schema}; the reporter requires schema 4`);
+const trials = lines.filter(l => l.type === 'trial'); const failedTrials = lines.filter(l => l.type === 'trial-failed');
+if (lines.length !== trials.length + failedTrials.length + 1) refuse('file contains records of unknown type');
 const J = (o) => JSON.stringify(o || {});
 
-// ---- configuration validation (the config is part of the manifest)
-if (!Array.isArray(cfg.conditions) || !cfg.conditions.length) refuse('config has no conditions');
-if (!Array.isArray(cfg.seeds) || !cfg.seeds.length || !cfg.seeds.every(Number.isInteger)) refuse('config seeds must be a non-empty integer array');
-if (new Set(cfg.seeds).size !== cfg.seeds.length) refuse('config seeds contain duplicates (the same world would count twice)');
-try { cfg.seeds.forEach(assertSeed); } catch (e) { refuse(e.message); }
+// ---- configuration validation: the SAME validator the writer ran before its first request
+const DOMAIN_VERSIONS = Object.fromEntries(Object.entries(domains).map(([k, d]) => [k, d.VERSION]));
+let MISSING; try { ({ missingPolicy: MISSING } = validateConfig(cfg, DOMAIN_VERSIONS)); } catch (e) { refuse('config: ' + e.message); }
 if (typeof meta.batchId !== 'string' || !meta.batchId || typeof meta.model !== 'string' || !meta.model) refuse('batch header lacks batchId/model');
-if (new Set(cfg.conditions.map(c => c.id)).size !== cfg.conditions.length) refuse('config condition ids are not unique');
-if (!(Number.isInteger(cfg.attempts) && cfg.attempts >= 1 && Number.isInteger(cfg.repeats) && cfg.repeats >= 1)) refuse('config attempts/repeats must be positive integers');
-const MISSING = cfg.missingPolicy ?? 'refuse'; if (!['refuse', 'exploratory'].includes(MISSING)) refuse(`config missingPolicy must be "refuse" or "exploratory" (got ${JSON.stringify(MISSING)})`);
-if (cfg.generatorVersions != null && (typeof cfg.generatorVersions !== 'object' || Array.isArray(cfg.generatorVersions))) refuse('config generatorVersions must be an object {domain: version}');
 const condById = Object.fromEntries(cfg.conditions.map(c => [c.id, c]));
-for (const ct of cfg.contrasts || []) { if (!Array.isArray(ct) && ct.sharedWorld !== undefined && typeof ct.sharedWorld !== 'boolean') refuse(`contrast ${ct.a}/${ct.b}: sharedWorld must be a strict boolean`); }
 
-// ---- manifest validation: every trial must match the config exactly (shared contract in validate.js)
-const seen = new Set(); const genVersions = {}; const digests = {};
+
+// ---- manifest validation: every record must match the config exactly (shared contract in validate.js); one terminal outcome per slot
+const seen = new Set(); const genVersions = {}; const digests = {}; const seedWorld = {}; const coincident = [];
+for (const f of failedTrials) { try { validateTrialFailed(f, cfg, meta, condById); } catch (e) { refuse(e.message); } const k = `${f.condition}|${f.seed}|${f.repeat}`; if (seen.has(k)) refuse(`slot ${k} has more than one terminal record`); seen.add(k); }
 for (const t of trials) {
   try { validateTrial(t, cfg, meta, condById); } catch (e) { refuse(e.message); }
-  const k = `${t.condition}|${t.seed}|${t.repeat}`; if (seen.has(k)) refuse(`duplicate trial ${k}`); seen.add(k);
+  const k = `${t.condition}|${t.seed}|${t.repeat}`; if (seen.has(k)) refuse(`slot ${k} has more than one terminal record (trial and/or trial-failed)`); seen.add(k);
+  // bind the summary row to its run log: the log is the evidence, the row is a cache of it
+  if (!existsSync(t.log)) refuse(`trial ${k}: linked log ${t.log} not found`);
+  let log; try { log = validateRunLog(readFileSync(t.log, 'utf8').trim().split('\n').map(l => JSON.parse(l))); } catch (e) { refuse(`trial ${k}: linked log invalid: ${e.message}`); }
+  if (log.meta.runId !== t.runId || log.end.status !== 'completed' || log.end.success !== t.success || log.end.attemptsUsed !== t.attemptsUsed || log.meta.worldDigest !== t.worldDigest || log.meta.instanceDigest !== t.instanceDigest || log.meta.seed !== t.seed || log.meta.domain !== t.domain || log.meta.model !== t.model || log.meta.memory !== t.memory || JSON.stringify(log.meta.opts) !== JSON.stringify(t.opts)) refuse(`trial ${k}: summary row contradicts its linked log`);
   (genVersions[t.domain] ||= new Set()).add(t.generatorVersion);
-  // distinct seeds must generate distinct instances within a condition (seed aliasing / generator collisions)
-  const dk = `${t.condition}|${t.instanceDigest}`; if (digests[dk] != null && digests[dk] !== t.seed) refuse(`condition ${t.condition}: seeds ${digests[dk]} and ${t.seed} generated the identical instance (${t.instanceDigest.slice(0, 12)}…); they are one world, not two`); digests[dk] = t.seed;
+  // Recompute both digests from the generator: the row's digests must be what the generator produces for (seed, options).
+  const inst = getDomain(t.domain).make(t.seed, t.opts);
+  if (inst.generatorVersion !== t.generatorVersion) refuse(`trial ${k}: generator version ${t.generatorVersion} is not the current ${inst.generatorVersion}`);
+  if (inst.instanceDigest !== t.instanceDigest) refuse(`trial ${k}: instanceDigest does not match the regenerated instance`);
+  if (inst.worldDigest !== t.worldDigest) refuse(`trial ${k}: worldDigest does not match the regenerated instance`);
+  if (JSON.stringify(inst.secret) !== JSON.stringify(t.secret) || JSON.stringify(log.meta.secret) !== JSON.stringify(inst.secret)) refuse(`trial ${k}: recorded secret differs from the regenerated instance`);
+  t.secret = inst.secret; // strata use the regenerated secret, never the copied field
+  // Sampling policy (PLAN §8): seeds are independent draws WITH replacement; two seeds that generate the same world are
+  // coincident independent draws, retained as separate trials and REPORTED, so the independent-draw null bound stays valid.
+  const dk = `${t.condition}|${t.worldDigest}`; if (digests[dk] != null && digests[dk] !== t.seed) coincident.push({ condition: t.condition, seeds: [digests[dk], t.seed], worldDigest: t.worldDigest }); else digests[dk] = t.seed;
+  const sk = `${t.condition}|${t.seed}`; if (seedWorld[sk] != null && seedWorld[sk] !== t.worldDigest) refuse(`condition ${t.condition} seed ${t.seed}: repeats carry different worldDigests`); seedWorld[sk] = t.worldDigest;
+}
+// paired conditions with identical generator options must have the same world per seed
+for (const ct of (cfg.contrasts || []).map(x => Array.isArray(x) ? { a: x[0], b: x[1] } : x)) {
+  const cA = condById[ct.a], cB = condById[ct.b]; if (!cA || !cB || JSON.stringify(cA.opts || {}) !== JSON.stringify(cB.opts || {})) continue;
+  for (const s of cfg.seeds) { const wa = seedWorld[`${ct.a}|${s}`], wb = seedWorld[`${ct.b}|${s}`]; if (wa && wb && wa !== wb) refuse(`contrast ${ct.a}/${ct.b} seed ${s}: identical options but different worlds`); }
 }
 for (const [d, v] of Object.entries(genVersions)) {
   if (v.size !== 1) refuse(`domain ${d} has mixed generator versions ${[...v].join(',')}`);
@@ -49,13 +64,15 @@ for (const [d, v] of Object.entries(genVersions)) {
 // ---- expected grid and missingness
 const expected = []; for (const c of cfg.conditions) for (const s of cfg.seeds) for (let r = 0; r < cfg.repeats; r++) expected.push({ condition: c.id, seed: s, repeat: r });
 const present = new Set(trials.map(t => `${t.condition}|${t.seed}|${t.repeat}`));
-const missing = expected.filter(e => !present.has(`${e.condition}|${e.seed}|${e.repeat}`));
-if (missing.length && MISSING === 'refuse') refuse(`${missing.length} of ${expected.length} expected trials are missing and missingPolicy is "refuse" (set "exploratory" for a development read-out)`);
-writeFileSync(file.replace(/\.jsonl$/, '') + '.missing.json', JSON.stringify({ batchId: meta.batchId, expected: expected.length, present: trials.length, missing }, null, 2));
+const missing = expected.filter(e => !present.has(`${e.condition}|${e.seed}|${e.repeat}`)).map(e => ({ ...e, reason: (failedTrials.find(f => f.condition === e.condition && f.seed === e.seed && f.repeat === e.repeat) || {}).reason || 'not started' }));
+// the diagnostic ledger is written BEFORE any inferential refusal, so the reasons are always available
+writeFileSync(file.replace(/\.jsonl$/, '') + '.missing.json', JSON.stringify({ batchId: meta.batchId, expected: expected.length, present: trials.length, missing, coincidentWorlds: coincident }, null, 2));
+if (missing.length && MISSING === 'refuse') refuse(`${missing.length} of ${expected.length} expected trials are missing and missingPolicy is "refuse"; reasons are in ${file.replace(/\.jsonl$/, '')}.missing.json`);
 const esc = (s) => String(s).replace(/\|/g, '\\|');
 const pct = (x) => (100 * x).toFixed(0) + '%';
 const md = [`# Report: ${cfg.name}`, '', `File: ${file}. Batch: ${meta.batchId}. Model: ${meta.model}. Generator versions: ${Object.entries(genVersions).map(([d, v]) => d + '=' + [...v][0]).join(', ')}.`, `Configured: ${cfg.conditions.length} conditions × ${cfg.seeds.length} worlds × ${cfg.repeats} repeats × ${cfg.attempts} attempts = ${expected.length} trials. Present: ${trials.length}. Missing: ${missing.length}${missing.length ? ' — ' + missing.slice(0, 20).map(m => `${m.condition}/s${m.seed}/r${m.repeat}`).join(', ') + (missing.length > 20 ? ', …' : '') : ''}.`, missing.length ? `missingPolicy=exploratory: this read-out is DEVELOPMENT ONLY; the complete missing list is in the .missing.json beside this file.` : ''];
 if (MISSING === 'exploratory') md.push('', '**EXPLORATORY BATCH (missingPolicy=exploratory). Not a confirmatory result.**');
+if (coincident.length) md.push('', `**Coincident worlds:** ${coincident.length} pair(s) of seeds generated identical worlds and are retained as independent draws: ${coincident.map(c => `${c.condition}: seeds ${c.seeds.join(' & ')}`).join('; ')}.`);
 
 // ---- world-level helpers
 const byCond = {}; for (const t of trials) (byCond[t.condition] ||= []).push(t);

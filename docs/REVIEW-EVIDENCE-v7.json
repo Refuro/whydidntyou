@@ -1,0 +1,704 @@
+{
+  "node": "v22.23.4",
+  "root": "C:\\Users\\Refur\\LLMBreakthroughs",
+  "work": "C:\\Users\\Refur\\SonyTv\\whydidntyou-review\\v7-records-HcrCfM",
+  "scope": "Source inspection and ordinary offline record fixtures; no sandbox execution.",
+  "sourceHashes": {
+    "docs/PLAN.md": "808e45f2e2d7f38210e27bb688c76a33a25f93800b11c413113cce9173674a4c",
+    "docs/REVIEW-PROMPT-v7.md": "9809062214c479cf2ecf7068db37a779ac5293fee33b4d549b878bbc0763c7f5",
+    "package.json": "7d247455ae619875a830f2136fcc01a2ec216a3572ddd95edb9f8df61321d66b",
+    "package-lock.json": "971dc6ff0dbc617e2d01e2dfff465ec8a614624b31f8ac9af06ce65e98571ac8",
+    "src/analyze.js": "cea62c0810d323a81b77910bdb1aacf45e1942b7c09a087071089915f73a183c",
+    "src/experiment.js": "494f811a64afba5f4ef8a43093175a01c066c8dae43f6f779c9068e0d3dee931",
+    "src/hints.js": "d9c4b7d203f53549b9317a777f06edb163916de5726860fa43f52f2e726a3c8a",
+    "src/ideas.js": "3ad0dc15d5f019c512228bb5567a102d9a3ca1be778840e95bc7f3f32f8bd358",
+    "src/llm.js": "5a6fab7b76b27ea38dec0e8d256ba60762c066ccf7e7055aeca5f78b25a86f01",
+    "src/postmortem.js": "50e5d43fcf329d5cc5c944ededee273d97888dff63fb467d98681e3abb35128b",
+    "src/prompt.js": "c85337275c72a8fd6b763d2aa45951501b667b0ee8f93d3d35e56b2bbe69e070",
+    "src/report.js": "5c0288aefb7d95275ae6fe68f7df5fbf3660cf85962df3915ef3ad4c06d95c23",
+    "src/rng.js": "5b722e903533c1fa621f6163816c596d5c9e64d0330782a66a43f527af0165fe",
+    "src/run.js": "8b755105944846c63695f49cfa8219b9b596fe26a3cd993b78173d697bd4c377",
+    "src/sandbox.js": "5bf4e23face50d1a167311fe6b3b3a66e3abb5e71820664b4c83276f226c321a",
+    "src/selftest.js": "28cce4f0aef4bd4ed09f609aa21c4a013df284be6f6dc350d965907355c9e76f",
+    "src/validate.js": "ed4d065c963f8787004baf0f019a46eb789fd280e7e488d3fecf753fc7641ae4",
+    "src/domains/hiddenPeriod.js": "740edf883591e4c9ae4a50b36c85c48b2408e88824791ec691494e603748ade9",
+    "src/domains/index.js": "66ac507758c21c8714f478ccb92e74ba61f989ed9324d444ff02342bcff2a0c4",
+    "src/domains/laggedRule.js": "9f0f022b9fc6486ed56e0264641938da91ed39c6b14507ff90b9c4e8d9d655a7"
+  },
+  "cases": [
+    {
+      "id": "writer/budget-zero",
+      "pass": true,
+      "exit": 0,
+      "requests": 0,
+      "wasmCalls": 0,
+      "error": "attempts must be an integer in [1,1000] (got 0)"
+    },
+    {
+      "id": "writer/budget-fraction",
+      "pass": true,
+      "exit": 0,
+      "requests": 0,
+      "wasmCalls": 0,
+      "error": "attempts must be an integer in [1,1000] (got 1.5)"
+    },
+    {
+      "id": "writer/budget-text",
+      "pass": true,
+      "exit": 0,
+      "requests": 0,
+      "wasmCalls": 0,
+      "error": "attempts must be an integer in [1,1000] (got \"bad\")"
+    },
+    {
+      "id": "writer/budget-over-max",
+      "pass": true,
+      "exit": 0,
+      "requests": 0,
+      "wasmCalls": 0,
+      "error": "attempts must be an integer in [1,1000] (got 1001)"
+    },
+    {
+      "id": "writer/seed-null",
+      "pass": true,
+      "exit": 0,
+      "requests": 0,
+      "wasmCalls": 0,
+      "error": "seed must be an integer in [0, 4294967295] (got null); larger values alias smaller ones"
+    },
+    {
+      "id": "writer/seed-bool",
+      "pass": true,
+      "exit": 0,
+      "requests": 0,
+      "wasmCalls": 0,
+      "error": "seed must be an integer in [0, 4294967295] (got true); larger values alias smaller ones"
+    },
+    {
+      "id": "writer/seed-over-domain",
+      "pass": true,
+      "exit": 0,
+      "requests": 0,
+      "wasmCalls": 0,
+      "error": "seed must be an integer in [0, 4294967295] (got 4294967297); larger values alias smaller ones"
+    },
+    {
+      "id": "writer/memory-invalid",
+      "pass": true,
+      "exit": 0,
+      "requests": 0,
+      "wasmCalls": 0,
+      "error": "memory must be one of full|last-code|summary (got \"invalid\")"
+    },
+    {
+      "id": "writer/numeric-cli-input",
+      "pass": true,
+      "exit": 0,
+      "requests": 2,
+      "wasmCalls": 0,
+      "recordTypes": [
+        "meta",
+        "attempt",
+        "attempt",
+        "end"
+      ],
+      "metaSeed": 1,
+      "end": {
+        "type": "end",
+        "status": "completed",
+        "success": null,
+        "attemptsUsed": 2,
+        "maxAttempts": 2,
+        "budgetExhausted": true,
+        "reason": null,
+        "endedAt": "2026-11-03T23:49:57.185Z"
+      }
+    },
+    {
+      "id": "writer/interrupted-before-first",
+      "pass": true,
+      "exit": 0,
+      "requests": 1,
+      "wasmCalls": 0,
+      "recordTypes": [
+        "meta",
+        "end"
+      ],
+      "metaSeed": 1,
+      "end": {
+        "type": "end",
+        "status": "interrupted",
+        "success": null,
+        "attemptsUsed": 0,
+        "maxAttempts": 2,
+        "budgetExhausted": false,
+        "reason": "api: offline fixture request failure",
+        "endedAt": "2026-11-03T23:49:57.259Z"
+      }
+    },
+    {
+      "id": "writer/interrupted-after-first",
+      "pass": true,
+      "exit": 0,
+      "requests": 2,
+      "wasmCalls": 0,
+      "recordTypes": [
+        "meta",
+        "attempt",
+        "end"
+      ],
+      "metaSeed": 1,
+      "end": {
+        "type": "end",
+        "status": "interrupted",
+        "success": null,
+        "attemptsUsed": 1,
+        "maxAttempts": 2,
+        "budgetExhausted": false,
+        "reason": "api: offline fixture request failure",
+        "endedAt": "2026-11-03T23:49:57.335Z"
+      }
+    },
+    {
+      "id": "schema/stored-seed-1",
+      "pass": true,
+      "accepted": false,
+      "error": "meta.seed must be a number"
+    },
+    {
+      "id": "schema/stored-seed-true",
+      "pass": true,
+      "accepted": false,
+      "error": "meta.seed must be a number"
+    },
+    {
+      "id": "schema/stored-seed-null",
+      "pass": true,
+      "accepted": false,
+      "error": "meta.seed must be a number"
+    },
+    {
+      "id": "schema/result-missing-scores",
+      "pass": true,
+      "accepted": false,
+      "error": "fixture: successful result lacks finite bits"
+    },
+    {
+      "id": "schema/message-missing-content",
+      "pass": true,
+      "accepted": false,
+      "error": "fixture: message 0 content invalid"
+    },
+    {
+      "id": "schema/message-wrong-first-role",
+      "pass": true,
+      "accepted": false,
+      "error": "fixture: first message must be the user task"
+    },
+    {
+      "id": "schema/inconsistent-score-ratio",
+      "pass": false,
+      "accepted": true,
+      "error": null
+    },
+    {
+      "id": "schema/success-beyond-budget",
+      "pass": false,
+      "accepted": true,
+      "error": null
+    },
+    {
+      "id": "schema/interrupted-after-success",
+      "pass": false,
+      "accepted": true,
+      "error": null
+    },
+    {
+      "id": "schema/interrupted-after-budget",
+      "pass": false,
+      "accepted": true,
+      "error": null
+    },
+    {
+      "id": "schema/reader-budget-over-writer-max",
+      "pass": false,
+      "accepted": true,
+      "error": null
+    },
+    {
+      "id": "options/invalid-domain-values",
+      "pass": false,
+      "accepted": true,
+      "error": null
+    },
+    {
+      "id": "options/unknown-key",
+      "pass": true,
+      "accepted": false,
+      "error": "opts.unknown is not a registered numeric generator option"
+    },
+    {
+      "id": "report/valid",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 13 | 1 | 0% / 0% |",
+        "| a | 16 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/arbitrary-instanceDigest",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial a|1|0: instanceDigest does not match the regenerated instance\n",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/arbitrary-worldDigest",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial a|1|0: worldDigest does not match the regenerated instance\n",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/inconsistent-repeat-digest",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial a|1|1: worldDigest does not match the regenerated instance\n",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/paired-different-digest",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b|1|0: worldDigest does not match the regenerated instance\n",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "identity/default-canonicalization",
+      "pass": true,
+      "sameSemantic": true,
+      "sameProvenance": false
+    },
+    {
+      "id": "identity/same-content-distinct-seeds",
+      "pass": true,
+      "seeds": [
+        1,
+        3
+      ],
+      "opts": {
+        "A": 2,
+        "p": 1,
+        "L": 1,
+        "n": 1
+      },
+      "secret": {
+        "L": 1,
+        "K": [
+          1
+        ],
+        "p": 1
+      },
+      "sample": [
+        1
+      ],
+      "test": [
+        1
+      ],
+      "worldDigest": "423793b5ebeec6235a1cc209f6c74ab8ebf54c8dad9ccf0041b128ddda6a7665"
+    },
+    {
+      "id": "report/actual-toy-world-collision",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: condition a: seeds 1 and 3 generated the identical world (423793b5ebee…); they are one world, not two\n",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/summary-contradicts-linked-run",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 50% / 50% | 40 |",
+        "- PRIMARY: b − a (laggedRule): -50 pp, 95% CI [-100, 0]; n=2 paired worlds",
+        "| a | 13 | 1 | 100% / 100% |",
+        "| a | 16 | 1 | 0% / 0% |"
+      ],
+      "linkedRun": {
+        "runId": "laggedRule-s1-review-offline-numeric-cli-input-1793749797182",
+        "seed": 1,
+        "attemptsUsed": 2,
+        "success": null,
+        "status": "completed"
+      }
+    },
+    {
+      "id": "report/secret-contradicts-regenerated-world",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 16 | 1 | 0% / 0% |",
+        "| a | 999 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/valid-interruption-exploratory",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 3,
+        "missing": [
+          {
+            "condition": "a",
+            "seed": 1,
+            "repeat": 0,
+            "reason": "offline fixture request failure"
+          }
+        ]
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 3. Missing: 1 — a/s1/r0.",
+        "| a | laggedRule | 1 / 2 | 1 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a: only 1 paired world(s); no interval computed",
+        "| a | 16 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/valid-interruption-default-ledger",
+      "pass": false,
+      "exit": 2,
+      "stderr": "refusing: 1 of 4 expected trials are missing and missingPolicy is \"refuse\" (set \"exploratory\" for a development read-out)\n",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/foreign-batch-failure",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 3,
+        "missing": [
+          {
+            "condition": "a",
+            "seed": 1,
+            "repeat": 0,
+            "reason": "offline fixture request failure"
+          }
+        ]
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 3. Missing: 1 — a/s1/r0.",
+        "| a | laggedRule | 1 / 2 | 1 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a: only 1 paired world(s); no interval computed",
+        "| a | 16 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/completed-plus-failed-same-slot",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 13 | 1 | 0% / 0% |",
+        "| a | 16 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/duplicate-failed-slot",
+      "pass": false,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 3,
+        "missing": [
+          {
+            "condition": "a",
+            "seed": 1,
+            "repeat": 0,
+            "reason": "offline fixture request failure"
+          }
+        ]
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 3. Missing: 1 — a/s1/r0.",
+        "| a | laggedRule | 1 / 2 | 1 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a: only 1 paired world(s); no interval computed",
+        "| a | 16 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "experiment/unpinned-version",
+      "pass": false,
+      "writerExit": 0,
+      "requests": 2,
+      "records": [
+        "experiment-meta",
+        "trial"
+      ],
+      "reader": {
+        "exit": 2,
+        "stderr": "refusing: config does not pin generatorVersions.laggedRule; required unless missingPolicy is \"exploratory\"\n"
+      }
+    },
+    {
+      "id": "experiment/wrong-version",
+      "pass": false,
+      "writerExit": 0,
+      "requests": 2,
+      "records": [
+        "experiment-meta",
+        "trial"
+      ],
+      "reader": {
+        "exit": 2,
+        "stderr": "refusing: domain laggedRule: trial generator version laggedRule-v2 != pinned wrong\n"
+      }
+    },
+    {
+      "id": "experiment/invalid-missing-policy",
+      "pass": false,
+      "writerExit": 0,
+      "requests": 2,
+      "records": [
+        "experiment-meta",
+        "trial"
+      ],
+      "reader": {
+        "exit": 2,
+        "stderr": "refusing: config missingPolicy must be \"refuse\" or \"exploratory\" (got \"typo\")\n"
+      }
+    },
+    {
+      "id": "experiment/invalid-coupling",
+      "pass": false,
+      "writerExit": 0,
+      "requests": 2,
+      "records": [
+        "experiment-meta",
+        "trial"
+      ],
+      "reader": {
+        "exit": 2,
+        "stderr": "refusing: contrast a/a: sharedWorld must be a strict boolean\n"
+      }
+    },
+    {
+      "id": "experiment/preflight-all-conditions",
+      "pass": false,
+      "requests": 2,
+      "records": [
+        {
+          "type": "experiment-meta"
+        },
+        {
+          "type": "trial",
+          "condition": "a"
+        },
+        {
+          "type": "trial-failed",
+          "condition": "b",
+          "reason": "run setup: memory must be one of full|last-code|summary (got \"invalid\")"
+        }
+      ],
+      "reader": {
+        "exit": 2,
+        "stderr": "refusing: 1 of 2 expected trials are missing and missingPolicy is \"refuse\" (set \"exploratory\" for a development read-out)\n"
+      }
+    },
+    {
+      "id": "experiment/request-interruption",
+      "pass": true,
+      "requests": 1,
+      "records": [
+        {
+          "type": "experiment-meta",
+          "schema": 4,
+          "batchId": "request-interruption-1793749799191",
+          "config": {
+            "name": "request-interruption",
+            "seeds": [
+              1
+            ],
+            "repeats": 1,
+            "attempts": 2,
+            "conditions": [
+              {
+                "id": "a",
+                "domain": "laggedRule"
+              }
+            ],
+            "generatorVersions": {
+              "laggedRule": "laggedRule-v2"
+            },
+            "missingPolicy": "exploratory",
+            "contrasts": []
+          },
+          "model": "review-offline",
+          "startedAt": "2026-11-03T23:49:59.191Z"
+        },
+        {
+          "type": "trial-failed",
+          "batchId": "request-interruption-1793749799191",
+          "condition": "a",
+          "seed": 1,
+          "repeat": 0,
+          "runId": "laggedRule-s1-review-offline-request-interruption-a-r0-1793749799195",
+          "log": "runs/laggedRule-s1-review-offline-request-interruption-a-r0-1793749799195.jsonl",
+          "reason": "api: offline fixture request failure",
+          "ts": "2026-11-03T23:49:59.197Z"
+        }
+      ],
+      "reader": {
+        "exit": 0,
+        "stderr": ""
+      },
+      "missing": {
+        "batchId": "request-interruption-1793749799191",
+        "expected": 1,
+        "present": 0,
+        "missing": [
+          {
+            "condition": "a",
+            "seed": 1,
+            "repeat": 0,
+            "reason": "api: offline fixture request failure"
+          }
+        ]
+      }
+    },
+    {
+      "id": "postmortem/refuse-interrupted",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: run status interrupted; post-mortems are for completed runs\n"
+    },
+    {
+      "id": "postmortem/scope-unverifiable",
+      "pass": true,
+      "exit": 0,
+      "scopeInstructionReceived": true,
+      "assessment": "unverifiable",
+      "validationProblems": [],
+      "kind": "instruction-delivery"
+    },
+    {
+      "id": "postmortem/scope-supported",
+      "pass": null,
+      "exit": 0,
+      "scopeInstructionReceived": true,
+      "assessment": "supported",
+      "validationProblems": [],
+      "kind": "semantic-enforcement-boundary"
+    },
+    {
+      "id": "hints/interrupted-not-completed",
+      "pass": false,
+      "exit": 0,
+      "requests": 3,
+      "summary": [
+        {
+          "id": "control-nohint",
+          "category": "control",
+          "hint": null,
+          "assigned": 1,
+          "completed": 1,
+          "failed": 0,
+          "wins": 0,
+          "n": 1
+        },
+        {
+          "id": "control-neutral",
+          "category": "control",
+          "hint": "Take your time and think carefully before each attempt.",
+          "assigned": 1,
+          "completed": 1,
+          "failed": 0,
+          "wins": 0,
+          "n": 1
+        },
+        {
+          "id": "rung1",
+          "category": "content-free",
+          "hint": "Think carefully.",
+          "assigned": 1,
+          "completed": 1,
+          "failed": 0,
+          "wins": 0,
+          "n": 1
+        }
+      ],
+      "results": [
+        {
+          "arm": "control-neutral",
+          "repeat": 0,
+          "success": null,
+          "runId": "laggedRule-s1-review-offline-control-neutral-r0-1793749799608"
+        },
+        {
+          "arm": "control-nohint",
+          "repeat": 0,
+          "success": null,
+          "runId": "laggedRule-s1-review-offline-control-nohint-r0-1793749799612"
+        },
+        {
+          "arm": "rung1",
+          "repeat": 0,
+          "success": null,
+          "runId": "laggedRule-s1-review-offline-rung1-r0-1793749799613"
+        }
+      ]
+    }
+  ]
+}

@@ -38,15 +38,16 @@ appendFileSync('runs/hint-effects.partial.jsonl', JSON.stringify({ ...header, he
 for (const [i, { arm, r }] of jobs.entries()) {
   try {
     const res = await runAttempts({ domain: a.domain, seed: a.seed ?? 1, attempts, hint: arm.hint, memory, opts, tag: `${arm.id}-r${r}`, quiet: true });
-    out.results.push({ arm: arm.id, repeat: r, success: res.success, runId: res.runId });
-    console.log(`[${i + 1}/${jobs.length}] ${arm.id.padEnd(16)} rep ${r}: ${res.success ? 'SUCCESS@' + res.success : 'fail'}`);
-  } catch (e) { out.results.push({ arm: arm.id, repeat: r, error: String(e.message || e) }); console.log(`[${i + 1}/${jobs.length}] ${arm.id} rep ${r}: ERROR ${e.message}`); }
+    if (res.interrupted) { out.results.push({ arm: arm.id, repeat: r, status: 'interrupted', runId: res.runId, error: res.reason }); console.log(`[${i + 1}/${jobs.length}] ${arm.id.padEnd(16)} rep ${r}: INTERRUPTED ${res.reason}`); }
+    else { out.results.push({ arm: arm.id, repeat: r, status: 'completed', success: res.success, runId: res.runId }); console.log(`[${i + 1}/${jobs.length}] ${arm.id.padEnd(16)} rep ${r}: ${res.success ? 'SUCCESS@' + res.success : 'fail'}`); }
+  } catch (e) { out.results.push({ arm: arm.id, repeat: r, status: 'setup-failed', error: String(e.message || e) }); console.log(`[${i + 1}/${jobs.length}] ${arm.id} rep ${r}: ERROR ${e.message}`); }
   appendFileSync('runs/hint-effects.partial.jsonl', JSON.stringify({ type: 'hint-job', batchId, headerDigest, jobIndex: i, arm: arm.id, category: arm.category, repeat: r, result: out.results[out.results.length - 1], ts: new Date().toISOString() }) + '\n');
 }
-const summary = arms.map(arm => { const all = out.results.filter(x => x.arm === arm.id); const rs = all.filter(x => !x.error); return { id: arm.id, category: arm.category, hint: arm.hint, assigned: repeats, completed: rs.length, failed: all.length - rs.length, wins: rs.filter(x => x.success).length, n: rs.length }; });
+// Only COMPLETED solver runs enter the denominator. Interrupted and setup-failed jobs are counted and reported, never scored.
+const summary = arms.map(arm => { const all = out.results.filter(x => x.arm === arm.id); const rs = all.filter(x => x.status === 'completed'); return { id: arm.id, category: arm.category, hint: arm.hint, assigned: repeats, completed: rs.length, interrupted: all.filter(x => x.status === 'interrupted').length, setupFailed: all.filter(x => x.status === 'setup-failed').length, wins: rs.filter(x => x.success).length, n: rs.length }; });
 const ctrl = summary[0];
-console.log('\narm              cat        wins/completed (assigned, API-failed)   diff vs no-hint (pp)   (one world; development data; failed jobs excluded from the denominator — register a retry/exclusion rule before confirmatory use)');
-for (const s of summary) console.log(`${s.id.padEnd(16)} ${s.category.padEnd(10)} ${s.wins}/${s.completed} (${s.assigned}, ${s.failed})      ${s.n && ctrl.n ? ((s.wins / s.n - ctrl.wins / ctrl.n) * 100).toFixed(0).padStart(5) : '   —'}   ${s.hint ? JSON.stringify(s.hint).slice(0, 60) : '(no hint)'}`);
+console.log('\narm              cat        wins/completed (assigned, interrupted, setup-failed)   diff vs no-hint (pp)   (one world; development data; only completed solver runs are scored — register a retry/exclusion rule before confirmatory use)');
+for (const s of summary) console.log(`${s.id.padEnd(16)} ${s.category.padEnd(10)} ${s.wins}/${s.completed} (${s.assigned}, ${s.interrupted}, ${s.setupFailed})      ${s.n && ctrl.n ? ((s.wins / s.n - ctrl.wins / ctrl.n) * 100).toFixed(0).padStart(5) : '   —'}   ${s.hint ? JSON.stringify(s.hint).slice(0, 60) : '(no hint)'}`);
 out.summary = summary;
 appendFileSync('runs/hint-effects.jsonl', JSON.stringify({ ...out, ts: new Date().toISOString() }) + '\n');
 console.log('\n-> runs/hint-effects.jsonl');

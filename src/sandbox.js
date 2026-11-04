@@ -12,7 +12,22 @@
 //   decode(bits: string, n: number) -> number[]
 import { newQuickJSWASMModule, shouldInterruptAfterDeadline, DefaultIntrinsics } from 'quickjs-emscripten';
 
-const MEMORY_LIMIT = 256 * 1024 * 1024, STACK_LIMIT = 64 * 1024; // 64 KB: below the WASM stack, so native recursion (JSON, parse) overflows INSIDE the sandbox; allows ~300 JS frames
+const MEMORY_LIMIT = 256 * 1024 * 1024, STACK_LIMIT = 64 * 1024;
+// Randomness policy: QuickJS seeds Math.random from host time at runtime creation (verified on the
+// pinned build: two instances created 1.2 s apart give different sequences; upstream QuickJS seeds from
+// gettimeofday, which we treat as the likely cause without having verified the WASM build's source), which is ambient
+// information. Before any submitted code runs, Math.random is replaced by a fixed-seed xorshift128
+// generator (32-bit lanes) and locked (non-writable, non-configurable). Submitted programs may still use
+// Math.random; every instance sees the identical sequence.
+const PRELUDE = `
+(function(){
+  let s0 = 0x9E3779B9 | 0, s1 = 0x7F4A7C15 | 0, s2 = 0xF39CC060 | 0, s3 = 0x5CEDC834 | 0;
+  function next(){ // xorshift128 (32-bit lanes), fixed seed
+    let t = s3; t ^= t << 11; t ^= t >>> 8; s3 = s2; s2 = s1; s1 = s0; t ^= s0; t ^= s0 >>> 19; s0 = t;
+    return (t >>> 0) / 4294967296;
+  }
+  Object.defineProperty(Math, 'random', { value: next, writable: false, configurable: false, enumerable: false });
+})();`; // 64 KB: below the WASM stack, so native recursion (JSON, parse) overflows INSIDE the sandbox; allows ~300 JS frames
 const INTRINSICS = { ...DefaultIntrinsics, Date: false };
 
 const WRAP = (mode) => `
@@ -37,7 +52,9 @@ export async function runSide(code, mode, { A, dataJson, bits, n }, timeoutMs) {
     const setNum = (k, x) => { const h = vm.newNumber(x); vm.setProp(vm.global, k, h); h.dispose(); };
     const dumpStr = (handle) => { try { const v = vm.dump(handle); return v; } finally { handle.dispose(); } };
     setNum('A', A);
-    let r = vm.evalCode(code, 'submission.js');
+    let r = vm.evalCode(PRELUDE, 'prelude.js');
+    if (r.error) { r.error.dispose(); return { ok: false, stage: 'load', error: 'prelude failed' }; } r.value.dispose();
+    r = vm.evalCode(code, 'submission.js');
     if (r.error) { rt.setInterruptHandler(shouldInterruptAfterDeadline(Date.now() + 200)); return { ok: false, stage: 'load', error: errText(dumpStr(r.error)) }; }
     r.value.dispose();
     if (mode === 'encode') setStr('__dataJson', dataJson); else { setStr('__bits', bits); setNum('__n', n); }

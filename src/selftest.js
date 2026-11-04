@@ -135,6 +135,27 @@ function decode(){ return []; }`;
   else if (probe.bits !== expected) { console.error(`FAIL: capability probe reports ${probe.bits}, expected ${expected} (process,require,console,fetch,escape->process,Date.now moves,getBuiltinModule,Date exists,__OrigDate exists,Date via escape)`); failed++; }
   else console.log(`capability probe: ${probe.bits} (all ten capabilities absent; positive control ran)`);
 }
+// Randomness (review 7): the sandbox's Math.random must equal an INDEPENDENT host implementation of the
+// registered generator (full 32-bit precision, 16 values), be identical across instances created at
+// different times, and be locked (descriptor non-writable, non-configurable; assignment ineffective).
+{
+  const prog = `function encode(s){ let out = ''; for (let i = 0; i < 16; i++) { const v = Math.floor(Math.random() * 4294967296); out += v.toString(2).padStart(32, '0'); }
+    const d = Object.getOwnPropertyDescriptor(Math, 'random'); out += d.writable ? '1' : '0'; out += d.configurable ? '1' : '0';
+    try { Math.random = () => 0; } catch (e) {} out += Math.random() === 0 ? '1' : '0';
+    let threw = 0; try { Object.defineProperty(Math, 'random', { value: () => 0 }); } catch (e) { threw = 1; } out += threw ? '0' : '1'; return out; } function decode(){ return []; }`;
+  const r1 = await runSide(prog, 'encode', { A: 8, dataJson: '[1]' }, 5000);
+  await new Promise(res => setTimeout(res, 1200));
+  const r2 = await runSide(prog, 'encode', { A: 8, dataJson: '[1]' }, 5000);
+  // independent host implementation of the registered generator
+  let s0 = 0x9E3779B9 | 0, s1 = 0x7F4A7C15 | 0, s2 = 0xF39CC060 | 0, s3 = 0x5CEDC834 | 0;
+  const next = () => { let t = s3; t ^= t << 11; t ^= t >>> 8; s3 = s2; s2 = s1; s1 = s0; t ^= s0; t ^= s0 >>> 19; s0 = t; return t >>> 0; };
+  let expected = ''; for (let i = 0; i < 16; i++) expected += next().toString(2).padStart(32, '0');
+  if (!r1.ok || !r2.ok) { console.error('FAIL: randomness probe did not run'); failed++; }
+  else if (r1.bits !== r2.bits) { console.error('FAIL: Math.random differs across instances created at different times'); failed++; }
+  else if (r1.bits.slice(0, 512) !== expected) { console.error('FAIL: Math.random sequence does not match the registered generator'); failed++; }
+  else if (r1.bits.slice(512) !== '0000') { console.error(`FAIL: Math.random lock flags ${r1.bits.slice(512)} (writable, configurable, assignment-worked, defineProperty-worked) expected 0000`); failed++; }
+  else console.log('randomness: 512-bit sequence matches the registered generator, identical across instances, locked');
+}
 for (const [label, code] of [['zero-bit stash', sideChannel], ['shared host object', sharedHostObject], ['throwing proxy', hostileProxy], ['looping proxy', hostileWhile], ['console.log.constructor escape', consoleEscape], ['globalThis.constructor escape', ctorEscape], ['looping error getter', loopingErrorGetter], ['JSON.stringify trap', jsonTrap], ['promise loop', promiseLoop], ['file channel via require', fileChannel], ['network globals absent', netGlobals], ['sqlite channel (review 4)', sqliteChannel], ['kill parent (review 4)', killParent], ['env/process read', envRead], ['memory bomb', memoryBomb], ['clock absent', clockProbe], ['timing channel (review 5)', timingChannel], ['recursion (review 5)', recursion], ['deep nesting (review 5)', deepNesting]]) {
   let r; try { r = await evaluate(code, domains.laggedRule.make(1), { timeoutMs: 1500 }); } catch (e) { console.error(`FAIL: ${label}: evaluate() threw on the host: ${e.message}`); failed++; continue; }
   if (r.ok) { console.error(`FAIL: ${label} passed the verifier`); failed++; continue; }

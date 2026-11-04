@@ -1,0 +1,1166 @@
+{
+  "node": "v22.23.4",
+  "work": "C:\\Users\\Refur\\SonyTv\\whydidntyou-review\\v6-probes-BHtnF6",
+  "root": "C:\\Users\\Refur\\LLMBreakthroughs",
+  "sourceHashes": {
+    "docs/PLAN.md": "a7e560cb843cc8448483e6f9b81336eddf128760c3efe473caf709185820d5b1",
+    "docs/REVIEW-PROMPT-v6.md": "7edd3e39e8e487df360807c63664e8740e970ee275ce84086b5bdf2cb071bbb9",
+    "package.json": "7d247455ae619875a830f2136fcc01a2ec216a3572ddd95edb9f8df61321d66b",
+    "package-lock.json": "971dc6ff0dbc617e2d01e2dfff465ec8a614624b31f8ac9af06ce65e98571ac8",
+    "src/analyze.js": "cea62c0810d323a81b77910bdb1aacf45e1942b7c09a087071089915f73a183c",
+    "src/experiment.js": "28bf0b18e617dd08a5a897b105219bc65a69ef8ddae0de053aaedae4024b8ae8",
+    "src/hints.js": "d9c4b7d203f53549b9317a777f06edb163916de5726860fa43f52f2e726a3c8a",
+    "src/ideas.js": "3ad0dc15d5f019c512228bb5567a102d9a3ca1be778840e95bc7f3f32f8bd358",
+    "src/llm.js": "5a6fab7b76b27ea38dec0e8d256ba60762c066ccf7e7055aeca5f78b25a86f01",
+    "src/postmortem.js": "8610c310f4f095a5e56fc630cb505a6704c814bdeed6c7b8ba65371a08a5469f",
+    "src/prompt.js": "c85337275c72a8fd6b763d2aa45951501b667b0ee8f93d3d35e56b2bbe69e070",
+    "src/report.js": "0e63fab16a57afbfde2daf15d5660352b443deba3281196eb30495337a54a4fe",
+    "src/rng.js": "5b722e903533c1fa621f6163816c596d5c9e64d0330782a66a43f527af0165fe",
+    "src/run.js": "7440df191eb9f098a6c0d58e4f7191885e84df176bc3a90974a580d2ae259299",
+    "src/sandbox.js": "9ea8015456a6de45a6c76a67c66af998f082ed181a7943ce62f5a998088082ac",
+    "src/selftest.js": "bb525bb28848d031d1652b4f696ceaf02d893ada8ffc06baadedb6f26bb6bcde",
+    "src/validate.js": "ced02a175de11ac794d16f7f36b9ea692734b4973dc77053d0ace81e31ccfa47",
+    "src/domains/hiddenPeriod.js": "29471c51595cc7105a3fbe292b4ed876adc6a4d9df9831e3ace795d02658fcca",
+    "src/domains/index.js": "66ac507758c21c8714f478ccb92e74ba61f989ed9324d444ff02342bcff2a0c4",
+    "src/domains/laggedRule.js": "5c9e42669c7204e80b309e7b6c176fcefd26ecbb12a5a010c711fc3271c8cd03"
+  },
+  "cases": [
+    {
+      "id": "prior/original-stash",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "verify",
+          "error": "decode returned 0 items, expected 4000"
+        },
+        "success": false,
+        "elapsed": 35
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/shared-Math",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "decode returned a non-array"
+        },
+        "success": false,
+        "elapsed": 34
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/throwing-decoder-proxy",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "probe"
+        },
+        "success": false,
+        "elapsed": 36
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/looping-decoder-proxy",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "InternalError: interrupted"
+        },
+        "success": false,
+        "elapsed": 234
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/console-host-channel",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "ReferenceError: 'console' is not defined"
+        },
+        "success": false,
+        "elapsed": 17
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/context-constructor-channel",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "decode",
+          "error": "decode returned a non-array"
+        },
+        "success": false,
+        "elapsed": 34
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/thrown-message-getter",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "[object Object]"
+        },
+        "success": false,
+        "elapsed": 20
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/replaced-JSON-serializer",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "sandbox produced a non-string result"
+        },
+        "success": false,
+        "elapsed": 22
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/promise-timeout",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "verify",
+          "error": "decode returned 0 items, expected 4000"
+        },
+        "success": false,
+        "elapsed": 35
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/thrown-tostringtag-getter",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "InternalError: interrupted"
+        },
+        "success": false,
+        "elapsed": 213
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/error-descriptor-proxy",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "InternalError: interrupted"
+        },
+        "success": false,
+        "elapsed": 215
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/terminate-evaluator-parent",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "ReferenceError: 'console' is not defined"
+        },
+        "success": false,
+        "elapsed": 20
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/inherited-environment",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "ReferenceError: 'console' is not defined"
+        },
+        "success": false,
+        "elapsed": 17
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/permission-fs-write",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "ReferenceError: 'console' is not defined"
+        },
+        "success": false,
+        "elapsed": 17
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/sqlite-file-channel",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "ReferenceError: 'console' is not defined"
+        },
+        "success": false,
+        "elapsed": 19
+      },
+      "stderr": ""
+    },
+    {
+      "id": "prior/network-getBuiltinModule",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "cannot read property 'getBuiltinModule' of undefined"
+        },
+        "success": false,
+        "elapsed": 21
+      },
+      "stderr": ""
+    },
+    {
+      "id": "capability-original",
+      "pass": true,
+      "observed": {
+        "result": {
+          "ok": true,
+          "bits": "0000000"
+        },
+        "success": null,
+        "elapsed": 17
+      },
+      "expected": "0000000",
+      "stderr": ""
+    },
+    {
+      "id": "capability-clock-aliases",
+      "pass": true,
+      "observed": {
+        "result": {
+          "ok": true,
+          "bits": "000"
+        },
+        "success": null,
+        "elapsed": 17
+      },
+      "expected": "000",
+      "stderr": ""
+    },
+    {
+      "id": "timing-channel/trial-0-input-0",
+      "pass": true,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "ReferenceError: 'Date' is not defined"
+        },
+        "success": false,
+        "elapsed": 16
+      },
+      "exit": 0,
+      "timeout": false
+    },
+    {
+      "id": "timing-channel/trial-1-input-1",
+      "pass": true,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "ReferenceError: 'Date' is not defined"
+        },
+        "success": false,
+        "elapsed": 16
+      },
+      "exit": 0,
+      "timeout": false
+    },
+    {
+      "id": "timing-channel/trial-2-input-1",
+      "pass": true,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "ReferenceError: 'Date' is not defined"
+        },
+        "success": false,
+        "elapsed": 16
+      },
+      "exit": 0,
+      "timeout": false
+    },
+    {
+      "id": "timing-channel/trial-3-input-0",
+      "pass": true,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "ReferenceError: 'Date' is not defined"
+        },
+        "success": false,
+        "elapsed": 15
+      },
+      "exit": 0,
+      "timeout": false
+    },
+    {
+      "id": "new/regex-backtracking",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "InternalError: interrupted"
+        },
+        "success": false,
+        "elapsed": 213
+      },
+      "stderr": ""
+    },
+    {
+      "id": "new/load-error-toJSON-loop",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "[object Object]"
+        },
+        "success": false,
+        "elapsed": 219
+      },
+      "stderr": ""
+    },
+    {
+      "id": "new/load-error-message-loop",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": "Error: "
+        },
+        "success": false,
+        "elapsed": 218
+      },
+      "stderr": ""
+    },
+    {
+      "id": "new/load-error-proxy",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "load",
+          "error": ""
+        },
+        "success": false,
+        "elapsed": 217
+      },
+      "stderr": ""
+    },
+    {
+      "id": "new/wrapper-json-object",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "sandbox produced a non-string result"
+        },
+        "success": false,
+        "elapsed": 21
+      },
+      "stderr": ""
+    },
+    {
+      "id": "new/data-global-setter",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "unexpected token: 'undefined'"
+        },
+        "success": false,
+        "elapsed": 214
+      },
+      "stderr": ""
+    },
+    {
+      "id": "new/deep-nested-array",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "stack overflow"
+        },
+        "success": false,
+        "elapsed": 77
+      },
+      "stderr": ""
+    },
+    {
+      "id": "new/stack-recursion",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "stack overflow"
+        },
+        "success": false,
+        "elapsed": 22
+      },
+      "stderr": ""
+    },
+    {
+      "id": "new/bounded-memory",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "observed": {
+        "result": {
+          "ok": false,
+          "stage": "encode",
+          "error": "out of memory"
+        },
+        "success": false,
+        "elapsed": 1637
+      },
+      "stderr": ""
+    },
+    {
+      "id": "selftest/shipped",
+      "pass": true,
+      "exit": 0,
+      "timeout": false,
+      "stdout": "capability probe: 0000000000 (all ten capabilities absent; positive control ran)\nregression [zero-bit stash]: blocked (verify: decode returned 0 items, expected 4000)\nregression [shared host object]: blocked (decode: decode returned a non-array)\nregression [throwing proxy]: blocked (decode: boom)\nregression [looping proxy]: blocked (decode: InternalError: interrupted)\nregression [console.log.constructor escape]: blocked (load: ReferenceError: 'console' is not defined)\nregression [globalThis.constructor escape]: blocked (decode: decode returned a non-array)\nregression [looping error getter]: blocked (encode: [object Object])\nregression [JSON.stringify trap]: blocked (encode: sandbox produced a non-string result)\nregression [promise loop]: blocked (encode: x)\nregression [file channel via require]: blocked (verify: decode returned 0 items, expected 4000)\nregression [network globals absent]: blocked (verify: decode returned 0 items, expected 4000)\nregression [sqlite channel (review 4)]: blocked (load: ReferenceError: 'console' is not defined)\nregression [kill parent (review 4)]: blocked (load: ReferenceError: 'console' is not defined)\nregression [env/process read]: blocked (verify: decode returned 0 items, expected 4000)\nregression [memory bomb]: blocked (encode: out of memory)\nregression [clock absent]: blocked (verify: decode returned 0 items, expected 4000)\nregression [timing channel (review 5)]: blocked (load: ReferenceError: 'Date' is not defined)\nregression [recursion (review 5)]: blocked (encode: stack overflow)\nregression [deep nesting (review 5)]: blocked (encode: stack overflow)\nbaseline sonnet55-lagbank sha256=79d3ac622fc5bdab…\n\n[laggedRule] seed=1 secret={\"k\":13,\"g\":[1,4,3,0,7,2,5,6],\"p\":0.85} baseline=3 oracle=0.945\n┌─────────┬────────────────────────────┬─────────┬─────────┬─────────┐\n│ (index) │ label                      │ bps     │ ratio   │ success │\n├─────────┼────────────────────────────┼─────────┼─────────┼─────────┤\n│ 0       │ 'naive'                    │ '3.000' │ '1.000' │ false   │\n│ 1       │ 'order1'                   │ '3.660' │ '1.220' │ false   │\n│ 2       │ 'ppm-order6'               │ '3.611' │ '1.204' │ false   │\n│ 3       │ 'sonnet-lagbank(real win)' │ '0.995' │ '0.332' │ true    │\n│ 4       │ 'reference'                │ '1.404' │ '0.468' │ true    │\n└─────────┴────────────────────────────┴─────────┴─────────┴─────────┘\n\n[hiddenPeriod] seed=1 secret={\"L\":391,\"K\":[6,2,2,1,0,4,2,7,7,6,2,4,4,4,2,0,5,2,0,6,5,7,4,3,5,6,7,6,6,7,6,2,3,0,1,0,6,5,0,4,3,6,0,3,4,4,2,5,4,2,3,4,2,2,4,5,5,5,3,5,4,7,2,0,4,7,6,1,7,3,1,2,6,7,4,1,6,7,5,2,4,3,7,4,6,6,7,1,5,1,3,4,3,3,4,4,4,6,0,7,1,6,3,3,0,2,3,2,4,4,1,1,5,1,7,3,1,7,4,4,3,6,6,0,3,3,3,1,1,6,4,4,7,0,3,2,2,2,6,1,3,6,3,3,5,2,0,0,0,7,0,6,2,0,1,0,7,4,1,0,3,1,0,7,2,3,4,2,4,3,6,2,2,5,7,2,6,1,5,5,5,2,4,5,0,0,7,0,1,0,3,3,0,3,4,3,4,3,4,1,1,5,2,5,3,0,2,6,6,5,5,7,7,1,4,0,5,3,1,1,7,1,4,2,6,1,0,4,1,3,5,1,3,1,3,2,0,5,0,7,4,0,3,4,1,1,4,1,2,7,7,7,2,1,0,1,2,0,1,0,1,2,0,5,3,0,1,3,0,5,4,6,2,6,7,7,4,0,1,0,0,5,0,4,5,2,2,3,4,5,6,6,3,6,5,7,0,5,0,1,0,4,6,6,3,2,6,1,3,7,3,1,4,5,3,1,1,7,7,2,5,6,3,5,0,5,5,7,7,6,3,7,1,7,0,2,7,6,7,2,1,4,0,0,1,2,5,0,3,6,4,7,5,3,0,7,0,6,5,3,4,1,5,7,7,2,1,7,5,0,5,1,7,0,6,2,2,7,4,7,4,7,1,4,7,3,6,7,4,6,7],\"p\":0.8} baseline=3 oracle=1.449\n┌─────────┬────────────────────────────┬─────────┬─────────┬─────────┐\n│ (index) │ label                      │ bps     │ ratio   │ success │\n├─────────┼────────────────────────────┼─────────┼─────────┼─────────┤\n│ 0       │ 'naive'                    │ '3.000' │ '1.000' │ false   │\n│ 1       │ 'order1'                   │ '3.551' │ '1.184' │ false   │\n│ 2       │ 'ppm-order6'               │ '2.880' │ '0.960' │ false   │\n│ 3       │ 'sonnet-lagbank(real win)' │ '2.558' │ '0.853' │ false   │\n│ 4       │ 'reference'                │ '1.522' │ '0.507' │ true    │\n└─────────┴────────────────────────────┴─────────┴─────────┴─────────┘\n\nselftest OK\n",
+      "stderr": ""
+    },
+    {
+      "id": "report/paired-known",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": []
+      },
+      "lines": [
+        "File: runs/experiment-paired-known.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/forged-domain-hiddenPeriod",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: domain hiddenPeriod contradicts config laggedRule",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-opts-[object Object]",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: options contradict config",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-memory-summary",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: memory contradicts config",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-model-wrong",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial model wrong != batch model mock",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-batchId-wrong",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial batch wrong != file batch batch",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-repeat-10",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial repeat 10 outside [0,1)",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-seed-999",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial seed 999 not in config seeds",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-condition-wrong",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial condition \"wrong\" not in config",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-success--1",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: success must be null or an integer in [1,3]",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-success-99",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: success must be null or an integer in [1,3]",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-success-yes",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: success must be null or an integer in [1,3]",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-maxAttempts-99",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: maxAttempts != config",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-attemptsUsed-2",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial b/1/0: success at 1 but attemptsUsed 2",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/forged-generatorVersion-forged",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: domain laggedRule has mixed generator versions laggedRule-v2,forged",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/missing-versions",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial a/1/0: generatorVersion missing or not a string",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/uniform-wrong-version",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: domain laggedRule: trial generator version forged != pinned laggedRule-v2",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/unpinned-version",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: config does not pin generatorVersions.laggedRule; required unless missingPolicy is \"exploratory\"",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/duplicate-seeds",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: config seeds contain duplicates (the same world would count twice)",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/duplicate-conditions",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: config condition ids are not unique",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/duplicate-trial",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: duplicate trial a|1|0",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/mixed-meta",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: expected exactly one experiment-meta record, found 2",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/missing-refuse",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: 2 of 4 expected trials are missing and missingPolicy is \"refuse\" (set \"exploratory\" for a development read-out)",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/missing-exploratory",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 2,
+        "missing": [
+          {
+            "condition": "a",
+            "seed": 2,
+            "repeat": 0
+          },
+          {
+            "condition": "b",
+            "seed": 2,
+            "repeat": 0
+          }
+        ]
+      },
+      "lines": [
+        "File: runs/experiment-missing-exploratory.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 2. Missing: 2 — a/s2/r0, b/s2/r0.",
+        "**EXPLORATORY BATCH (missingPolicy=exploratory). Not a confirmatory result.**",
+        "| a | laggedRule | 1 / 2 | 1 | 0% / 0% | 1 |",
+        "- PRIMARY: b − a: only 1 paired world(s); no interval computed",
+        "| a | 13 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/unequal-repeats",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 8,
+        "present": 6,
+        "missing": [
+          {
+            "condition": "a",
+            "seed": 2,
+            "repeat": 1
+          },
+          {
+            "condition": "b",
+            "seed": 2,
+            "repeat": 1
+          }
+        ]
+      },
+      "lines": [
+        "File: runs/experiment-unequal-repeats.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 2 repeats × 3 attempts = 8 trials. Present: 6. Missing: 2 — a/s2/r1, b/s2/r1.",
+        "**EXPLORATORY BATCH (missingPolicy=exploratory). Not a confirmatory result.**",
+        "| a | laggedRule | 2 / 2 | 1 | 50% / 50% | 1 |",
+        "- PRIMARY: b − a (laggedRule): -50 pp, 95% CI [-100, 0]; n=2 paired worlds; worlds with incomplete repeats: 2",
+        "| a | 13 | 2 | 50% / 50% |"
+      ]
+    },
+    {
+      "id": "report/degenerate-zero",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": []
+      },
+      "lines": [
+        "File: runs/experiment-degenerate-zero.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/degenerate-constant-one",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": []
+      },
+      "lines": [
+        "File: runs/experiment-degenerate-constant-one.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 100 pp, bootstrap interval withheld (uninformative: every world difference is identical, 1, n=2). All 2 worlds differ in the same direction by 1. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/options-undeclared",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": []
+      },
+      "lines": [
+        "File: runs/experiment-options-undeclared.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "- PRIMARY: b − a: REFUSED — generator options differ ({} vs {\"k\":40}) and the config does not declare {\"sharedWorld\": true}",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/options-declared",
+      "pass": true,
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": []
+      },
+      "lines": [
+        "File: runs/experiment-options-declared.jsonl. Batch: batch. Model: mock. Generator versions: laggedRule=laggedRule-v2.",
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 3 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1 |",
+        "- PRIMARY: b − a (laggedRule): 50 pp, 95% CI [0, 100]; n=2 paired worlds; pairing relies on the declared shared-world coupling across options",
+        "| a | 13 | 2 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/options-string-false",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: contrast a/b: sharedWorld must be a strict boolean",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/missing-batch-and-model",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: batch header lacks batchId/model",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "generator/seed-alias",
+      "pass": true
+    },
+    {
+      "id": "report/seed-alias",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: seed must be an integer in [0, 4294967295] (got 4294967297); larger values alias smaller ones",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/contradictory-budget-flag",
+      "pass": true,
+      "exit": 2,
+      "stderr": "refusing: trial a/1/0: budgetExhausted invalid or contradicts outcome",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "postmortem/archive-full",
+      "pass": true,
+      "exit": 0,
+      "responderHasFinalFeedback": true,
+      "judgeHasFinalFeedback": true,
+      "models": [
+        "review-solver",
+        "review-judge"
+      ],
+      "savedModels": {
+        "responder": "review-solver",
+        "judge": "review-judge"
+      },
+      "assessment": "supported",
+      "offsets": [
+        0,
+        19
+      ]
+    },
+    {
+      "id": "postmortem/archive-summary",
+      "pass": true,
+      "exit": 0,
+      "responderHasFinalFeedback": true,
+      "judgeHasFinalFeedback": true,
+      "models": [
+        "review-solver",
+        "review-judge"
+      ],
+      "savedModels": {
+        "responder": "review-solver",
+        "judge": "review-judge"
+      },
+      "assessment": "supported",
+      "offsets": [
+        0,
+        19
+      ]
+    },
+    {
+      "id": "postmortem/final-feedback",
+      "pass": true,
+      "judgeHasFinalFeedback": true,
+      "responderHasFinalFeedback": true
+    },
+    {
+      "id": "postmortem/archive-last-code",
+      "pass": true,
+      "exit": 0,
+      "responderHasFinalFeedback": true,
+      "judgeHasFinalFeedback": true,
+      "models": [
+        "review-solver",
+        "review-judge"
+      ],
+      "savedModels": {
+        "responder": "review-solver",
+        "judge": "review-judge"
+      },
+      "assessment": "supported",
+      "offsets": [
+        0,
+        19
+      ]
+    },
+    {
+      "id": "postmortem/fabricated-claim",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "claim is not an exact substring of the self-report"
+      ]
+    },
+    {
+      "id": "postmortem/fabricated-evidence",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "evidence is not an exact substring of attempt 1"
+      ]
+    },
+    {
+      "id": "postmortem/wrong-attempt",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "evidenceAttempt 999 does not exist"
+      ]
+    },
+    {
+      "id": "postmortem/invalid-category",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "categories invalid"
+      ]
+    },
+    {
+      "id": "postmortem/invalid-assessment",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "assessment not in enum"
+      ]
+    },
+    {
+      "id": "postmortem/newline-quote",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "evidence is not an exact substring of attempt 1"
+      ]
+    },
+    {
+      "id": "postmortem/unverifiable-evidence",
+      "pass": true,
+      "assessment": "unresolved",
+      "problems": [
+        "unverifiable assessment must carry no evidence"
+      ]
+    },
+    {
+      "id": "postmortem/valid-unverifiable",
+      "pass": true,
+      "assessment": "unverifiable"
+    },
+    {
+      "id": "postmortem/incomplete",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: last record is not end\n"
+    },
+    {
+      "id": "postmortem/successful-end",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: end.budgetExhausted true contradicts derived false\n"
+    },
+    {
+      "id": "postmortem/successful-attempt",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: attempt 2 meets the success criterion but the end record says failure\n"
+    },
+    {
+      "id": "postmortem/wrong-secret",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: regenerated secret does not match the logged secret\n"
+    },
+    {
+      "id": "postmortem/wrong-version",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: generator version changed (old -> laggedRule-v2)\n"
+    },
+    {
+      "id": "postmortem/missing-attempt",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: attempt records not consecutive at index 0\n"
+    },
+    {
+      "id": "postmortem/duplicate-meta",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: records between meta and end are not all attempts\n"
+    },
+    {
+      "id": "postmortem/nonconsecutive",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: attempt records not consecutive at index 0\n"
+    },
+    {
+      "id": "postmortem/end-before-attempts",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: last record is not end\n"
+    },
+    {
+      "id": "postmortem/incomplete-budget",
+      "pass": true,
+      "exit": 2,
+      "requests": 0,
+      "stderr": "refusing: meta.maxAttempts/attempts invalid\n"
+    },
+    {
+      "id": "postmortem/wrong-end-budget",
+      "pass": true,
+      "exit": 2,
+      "requests": 0
+    },
+    {
+      "id": "postmortem/string-budget-exhausted",
+      "pass": true,
+      "exit": 2,
+      "requests": 0
+    },
+    {
+      "id": "postmortem/missing-system",
+      "pass": true,
+      "exit": 2,
+      "requests": 0
+    },
+    {
+      "id": "postmortem/missing-end-success",
+      "pass": true,
+      "exit": 2,
+      "requests": 0
+    },
+    {
+      "id": "run/recursive-submission",
+      "pass": true,
+      "observed": {
+        "caught": null,
+        "recordTypes": [
+          "meta",
+          "attempt",
+          "end"
+        ]
+      },
+      "stderr": ""
+    },
+    {
+      "id": "hints/fresh-directory",
+      "pass": true,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "id": "hints/header-digest",
+      "pass": true,
+      "exit": 0,
+      "headerFirst": true,
+      "digestMatches": true,
+      "jobs": 3,
+      "headerKeys": [
+        "type",
+        "batchId",
+        "estimand",
+        "domain",
+        "seed",
+        "opts",
+        "memory",
+        "model",
+        "ladder",
+        "ladderContent",
+        "arms",
+        "attempts",
+        "repeats",
+        "orderSeed",
+        "schedule",
+        "ts",
+        "headerDigest"
+      ]
+    }
+  ],
+  "dependencies": {
+    "quickjs": "0.32.0",
+    "core": "0.32.0",
+    "wasmSha256": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232"
+  }
+}
