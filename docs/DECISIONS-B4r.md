@@ -1,0 +1,21 @@
+# Decisions after the B4 review (REVIEW-RESPONSE-B4.md)
+
+Author, 2026-11-03. Supersedes DECISIONS-B4.md where they conflict. Binding for BUILD-PROMPT-v3.
+
+1. **The challenge is postponed** until the order leak is repaired and a versioned public export exists. No external solver is scored on the current export; any score already obtained from it is labeled with the leaking sampler version and discarded from the freeze input.
+
+2. **Inference interface (review P1, "transductive or per-pair?"): per-pair, private.** Both builder members and external solvers get the same contract: a budgeted **fit-once stage** receiving public evidence only (alphabet, rules, 200 labeled pairs) that returns a serialized model state (a string); then **per-pair inference** in a fresh sandbox context receiving only that state and the current pair. The sealed set is never supplied as a batch to anyone. The task is not transductive. `score-external.js` and `portfolio/run.js` implement this one contract; the old 201-fresh-context refit policy is retired.
+
+3. **Sealed list order.** The fully realized sealed list is permuted by a registered PRF stream (domain-separated from image/alphabet streams) after construction, preserving label/certificate association; new sampler identity; old evidence retained as historical. The reviewer's order-decoder becomes a permanent regression together with reversal and permutation controls and a test that the per-pair interface cannot observe export order.
+
+4. **Checker scope.** `check-invariant-world.js` becomes an **admission verifier**: it recomputes effective classification from the generated submonoid, recomputes public identifiability (kernel classes) from public evidence, verifies stratum counts and registered padding, reconstructs the core digest from artifact content, and binds the image-stream ambient name to the validated algebra. The reviewer's three semantic fixtures must be refused. A deliberately small, independent reference implementation of counts/edit-distance/LCS/congruence checks is kept beside it and used on the exported example.
+
+5. **Resources.** The shared "primitive work" ceiling is withdrawn as a cross-member comparable. Decision: the cross-side comparable resource is **wall-clock per stage (fit, inference) under the matched contract of decision 2**, reported separately for standalone and amortized preparation; the counters are renamed member-specific search counters and remain in the evidence. Feature and catalogue preparation are charged explicitly where metered. The implementable selector's total work across all fitted members is emitted. The 12/4 and 16/4 undercharges are regression fixtures. Challenge and natural sets are evaluated from the same post-fit state with separate, equal budgets (no shared cache or budget across the two).
+
+6. **Support and size estimands.** The challenge construction is named the **matched/padded challenge**: first-representative selection, ≤32 matched classes, analytic uniform-weight balancing (added as a sampler oracle), neutral-prefix duplication; the small/large gap is reported as **padding robustness**, not size generalization. Distinct support size and paired dependence are reported per world. A long-core distribution for size generalization is a separate future registration; none is made now. PLAN §3.4 text is updated to say exactly this.
+
+7. **Challenger constraints (for the eventual challenge).** The sampler critique must hold the registered nuisance constraints fixed; a ceiling change obtained by dropping them is noted but not counted. Reference members are run through the external adapter as matched controls so interpreter startup and fitting are visible.
+
+8. **Denominators and reporting.** Requested→effective flow, defect reasons and acceptance rates (monoid 57.6%) are part of the benchmark definition and are reported with every result. No interval is attached to 1,720/1,720; rows within a world are not trials; the four family audits reuse the same 512 seed values and are not pooled.
+
+9. **Sequence.** Builder: BUILD-PROMPT-v3 (repairs 1–6 with fixtures) → versioned public export → stop. Then: challenge (third session) and B4-r review in parallel → decisions → builder registers accepted methods, freezes portfolio → B5 → B6 → first exploratory pilot.

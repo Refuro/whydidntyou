@@ -1,0 +1,532 @@
+TAP version 13
+# Subtest: A5: invalid counts and significance refuse; endpoints and no evidence are explicit
+ok 1 - A5: invalid counts and significance refuse; endpoints and no evidence are explicit
+  ---
+  duration_ms: 3.089
+  type: 'test'
+  ...
+# Subtest: A5: exact exhaustive >=95% coverage for all M<=40,n<=10,K (including n=0)
+ok 2 - A5: exact exhaustive >=95% coverage for all M<=40,n<=10,K (including n=0)
+  ---
+  duration_ms: 26.2885
+  type: 'test'
+  ...
+# Subtest: A5: reviewer M=79,K=77,n=2 and exact large-population boundary checks
+ok 3 - A5: reviewer M=79,K=77,n=2 and exact large-population boundary checks
+  ---
+  duration_ms: 4.8202
+  type: 'test'
+  ...
+# Subtest: B4 exporter emits exactly the accepted public projections, never private fields or sealed labels
+ok 4 - B4 exporter emits exactly the accepted public projections, never private fields or sealed labels
+  ---
+  duration_ms: 715.3641
+  type: 'test'
+  ...
+# Subtest: B4 export writer refuses injected private fields before creating a file
+ok 5 - B4 export writer refuses injected private fields before creating a file
+  ---
+  duration_ms: 10.0008
+  type: 'test'
+  ...
+# Subtest: B4 export binds regenerated worlds to historical digests despite new adapter source files
+ok 6 - B4 export binds regenerated worlds to historical digests despite new adapter source files
+  ---
+  duration_ms: 285.4149
+  type: 'test'
+  ...
+# Subtest: B4 external public-only solver uses the existing contract and reports world/family accuracy and charged work
+ok 7 - B4 external public-only solver uses the existing contract and reports world/family accuracy and charged work
+  ---
+  duration_ms: 5174.3855
+  type: 'test'
+  ...
+# Subtest: B4 every budget setting is retained; exhausted calls produce failed worlds with unavailable accuracy
+ok 8 - B4 every budget setting is retained; exhausted calls produce failed worlds with unavailable accuracy
+  ---
+  duration_ms: 4522.8157
+  type: 'test'
+  ...
+# Subtest: B4 invalid outside contract output is scored as failure, not a fabricated zero or omitted world
+ok 9 - B4 invalid outside contract output is scored as failure, not a fabricated zero or omitted world
+  ---
+  duration_ms: 1136.5479
+  type: 'test'
+  ...
+# Subtest: B4 public tampering, missing/extra files and changed host ledgers refuse before outside code runs
+ok 10 - B4 public tampering, missing/extra files and changed host ledgers refuse before outside code runs
+  ---
+  duration_ms: 2602.1081
+  type: 'test'
+  ...
+# Subtest: B4 documented exporter/scorer CLI pair works without exposing a host index in the public directory
+ok 11 - B4 documented exporter/scorer CLI pair works without exposing a host index in the public directory
+  ---
+  duration_ms: 1368.7493
+  type: 'test'
+  ...
+# Subtest: D1 primary contrast uses only repeat 0 even when later repeats reverse the effect
+ok 12 - D1 primary contrast uses only repeat 0 even when later repeats reverse the effect
+  ---
+  duration_ms: 3.6643
+  type: 'test'
+  ...
+# Subtest: D2 both population references are reported from explicit proposal/eligible counts
+ok 13 - D2 both population references are reported from explicit proposal/eligible counts
+  ---
+  duration_ms: 2.9086
+  type: 'test'
+  ...
+# Subtest: D2 registered printed-precision approximation across n<=100 at M_C=10^6
+ok 14 - D2 registered printed-precision approximation across n<=100 at M_C=10^6
+  ---
+  duration_ms: 711.4549
+  type: 'test'
+  ...
+# Subtest: D2 mean-of-products zero-success bound is available only for resolved zero outcomes
+ok 15 - D2 mean-of-products zero-success bound is available only for resolved zero outcomes
+  ---
+  duration_ms: 1.0849
+  type: 'test'
+  ...
+# Subtest: A2 interrupt-then-complete
+ok 16 - A2 interrupt-then-complete
+  ---
+  duration_ms: 187.6748
+  type: 'test'
+  ...
+# Subtest: A2 interrupt-twice-then-complete
+ok 17 - A2 interrupt-twice-then-complete
+  ---
+  duration_ms: 176.5794
+  type: 'test'
+  ...
+# Subtest: A2 interrupt-three-times-unresolved
+ok 18 - A2 interrupt-three-times-unresolved
+  ---
+  duration_ms: 167.6638
+  type: 'test'
+  ...
+# Subtest: A2 complete-failed-no-retry
+ok 19 - A2 complete-failed-no-retry
+  ---
+  duration_ms: 120.1419
+  type: 'test'
+  ...
+# Subtest: A2 setup failure terminates without a retry
+ok 20 - A2 setup failure terminates without a retry
+  ---
+  duration_ms: 81.4724
+  type: 'test'
+  ...
+# Subtest: A2 interrupted execution then reference success ends the slot at attempt one
+ok 21 - A2 interrupted execution then reference success ends the slot at attempt one
+  ---
+  duration_ms: 200.7526
+  type: 'test'
+  ...
+# Subtest: A2 discarded completed attempts and requests count across the restart chain
+ok 22 - A2 discarded completed attempts and requests count across the restart chain
+  ---
+  duration_ms: 136.5582
+  type: 'test'
+  ...
+# Subtest: A2 dispatched-with-no-response and no end record is interrupted evidence
+ok 23 - A2 dispatched-with-no-response and no end record is interrupted evidence
+  ---
+  duration_ms: 172.0435
+  type: 'test'
+  ...
+# Subtest: A2 refuses terminal-with-missing-execution
+ok 24 - A2 refuses terminal-with-missing-execution
+  ---
+  duration_ms: 150.8903
+  type: 'test'
+  ...
+# Subtest: A2 refuses execution-after-terminal
+ok 25 - A2 refuses execution-after-terminal
+  ---
+  duration_ms: 142.4164
+  type: 'test'
+  ...
+# Subtest: A2 refuses execution-after-completion
+ok 26 - A2 refuses execution-after-completion
+  ---
+  duration_ms: 122.4506
+  type: 'test'
+  ...
+# Subtest: A2 refuses missing-index
+ok 27 - A2 refuses missing-index
+  ---
+  duration_ms: 112.2888
+  type: 'test'
+  ...
+# Subtest: A2 refuses four-executions
+ok 28 - A2 refuses four-executions
+  ---
+  duration_ms: 111.3247
+  type: 'test'
+  ...
+# Subtest: A2 refuses duplicate-terminal
+ok 29 - A2 refuses duplicate-terminal
+  ---
+  duration_ms: 110.4248
+  type: 'test'
+  ...
+# Subtest: A3 treatment control hint
+ok 30 - A3 treatment control hint
+  ---
+  duration_ms: 79.0177
+  type: 'test'
+  ...
+# Subtest: A3 treatment control scaffold
+ok 31 - A3 treatment control scaffold
+  ---
+  duration_ms: 86.2376
+  type: 'test'
+  ...
+# Subtest: A3 treatment control summary
+ok 32 - A3 treatment control summary
+  ---
+  duration_ms: 91.7666
+  type: 'test'
+  ...
+# Subtest: A3 treatment control last-code
+ok 33 - A3 treatment control last-code
+  ---
+  duration_ms: 80.5626
+  type: 'test'
+  ...
+# Subtest: A3 refuses payload-hint-absent
+ok 34 - A3 refuses payload-hint-absent
+  ---
+  duration_ms: 76.4542
+  type: 'test'
+  ...
+# Subtest: A3 refuses payload-scaffold-absent
+ok 35 - A3 refuses payload-scaffold-absent
+  ---
+  duration_ms: 104.887
+  type: 'test'
+  ...
+# Subtest: A3 refuses payload-memory-wrong
+ok 36 - A3 refuses payload-memory-wrong
+  ---
+  duration_ms: 69.7018
+  type: 'test'
+  ...
+# Subtest: A3 refuses payload-feedback-wrong
+ok 37 - A3 refuses payload-feedback-wrong
+  ---
+  duration_ms: 68.1918
+  type: 'test'
+  ...
+# Subtest: A3 prompt source is frozen at batch and run level
+ok 38 - A3 prompt source is frozen at batch and run level
+  ---
+  duration_ms: 69.9431
+  type: 'test'
+  ...
+# Subtest: A4 refuses row-tokens-unbound
+ok 39 - A4 refuses row-tokens-unbound
+  ---
+  duration_ms: 100.2906
+  type: 'test'
+  ...
+# Subtest: A4 refuses row-seconds-unbound
+ok 40 - A4 refuses row-seconds-unbound
+  ---
+  duration_ms: 94.914
+  type: 'test'
+  ...
+# Subtest: A4 absence of usage remains unknown; all named cache fields count
+ok 41 - A4 absence of usage remains unknown; all named cache fields count
+  ---
+  duration_ms: 0.1453
+  type: 'test'
+  ...
+# Subtest: A5 unknown paired outcomes yield per-world and sample identification bounds
+ok 42 - A5 unknown paired outcomes yield per-world and sample identification bounds
+  ---
+  duration_ms: 115.0191
+  type: 'test'
+  ...
+# Subtest: A5 repeat strata never inflate the number of independent worlds
+ok 43 - A5 repeat strata never inflate the number of independent worlds
+  ---
+  duration_ms: 121.549
+  type: 'test'
+  ...
+# Subtest: R1 reviewer compression-result-contract-confusion refuses at batch, report and postmortem boundaries
+ok 44 - R1 reviewer compression-result-contract-confusion refuses at batch, report and postmortem boundaries
+  ---
+  duration_ms: 72.3744
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-count"}
+ok 45 - B1 proof, certificates, identifiability and reference: {"family":"F-count"}
+  ---
+  duration_ms: 863.4796
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-abelian"}
+ok 46 - B1 proof, certificates, identifiability and reference: {"family":"F-abelian"}
+  ---
+  duration_ms: 508.6318
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"S3"}
+ok 47 - B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"S3"}
+  ---
+  duration_ms: 495.0918
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"Q8"}
+ok 48 - B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"Q8"}
+  ---
+  duration_ms: 493.0386
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"D4"}
+ok 49 - B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"D4"}
+  ---
+  duration_ms: 630.182
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"A4"}
+ok 50 - B1 proof, certificates, identifiability and reference: {"family":"F-nonabelian","algebra":"A4"}
+  ---
+  duration_ms: 426.0297
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-monoid","points":3}
+ok 51 - B1 proof, certificates, identifiability and reference: {"family":"F-monoid","points":3}
+  ---
+  duration_ms: 520.6502
+  type: 'test'
+  ...
+# Subtest: B1 proof, certificates, identifiability and reference: {"family":"F-monoid","points":4}
+ok 52 - B1 proof, certificates, identifiability and reference: {"family":"F-monoid","points":4}
+  ---
+  duration_ms: 536.9255
+  type: 'test'
+  ...
+# Subtest: B1 finite table laws reject invalid proofs
+ok 53 - B1 finite table laws reject invalid proofs
+  ---
+  duration_ms: 63.7272
+  type: 'test'
+  ...
+# Subtest: B1 generated commuting images are classified as abelian
+ok 54 - B1 generated commuting images are classified as abelian
+  ---
+  duration_ms: 29.811
+  type: 'test'
+  ...
+# Subtest: D7 ambiguous evidence is audited, then refused as a non-identifiable construction defect
+ok 55 - D7 ambiguous evidence is audited, then refused as a non-identifiable construction defect
+  ---
+  duration_ms: 35.1633
+  type: 'test'
+  ...
+# Subtest: B1 verifier fails closed without B3 sealed data
+ok 56 - B1 verifier fails closed without B3 sealed data
+  ---
+  duration_ms: 32.4168
+  type: 'test'
+  ...
+# Subtest: B1 public evidence excludes oracle certificates and decoy annotations
+ok 57 - B1 public evidence excludes oracle certificates and decoy annotations
+  ---
+  duration_ms: 33.5783
+  type: 'test'
+  ...
+# Subtest: B1 functional quantity compares partitions, not oracle labels; bounded evidence is not proof
+ok 58 - B1 functional quantity compares partitions, not oracle labels; bounded evidence is not proof
+  ---
+  duration_ms: 4480.5506
+  type: 'test'
+  ...
+# Subtest: B1 a constant conserved fold does not identify the oracle partition
+ok 59 - B1 a constant conserved fold does not identify the oracle partition
+  ---
+  duration_ms: 427.1813
+  type: 'test'
+  ...
+# Subtest: D5 output conditions require a quantity only in quantity-requested and refuse ambiguous forms
+ok 60 - D5 output conditions require a quantity only in quantity-requested and refuse ambiguous forms
+  ---
+  duration_ms: 1254.4056
+  type: 'test'
+  ...
+# Subtest: B2 registered BFS/count/reference walls across eight algebra variants and two seeds
+ok 61 - B2 registered BFS/count/reference walls across eight algebra variants and two seeds
+  ---
+  duration_ms: 16215.6871
+  type: 'test'
+  ...
+# Subtest: B4 positional-template control solves the 16 historical worlds using only public evidence
+ok 62 - B4 positional-template control solves the 16 historical worlds using only public evidence
+  ---
+  duration_ms: 756.6691
+  type: 'test'
+  ...
+# Subtest: B4 positional shortcut fails on the amended example; genuine public solvers pass
+ok 63 - B4 positional shortcut fails on the amended example; genuine public solvers pass
+  ---
+  duration_ms: 757.7685
+  type: 'test'
+  ...
+# Subtest: B4 fitters receive certificate-free public evidence; fit budgets fail closed
+ok 64 - B4 fitters receive certificate-free public evidence; fit budgets fail closed
+  ---
+  duration_ms: 54.0861
+  type: 'test'
+  ...
+# Subtest: B4 BFS counts unsuccessful candidate-position tests and respects every retained curve
+ok 65 - B4 BFS counts unsuccessful candidate-position tests and respects every retained curve
+  ---
+  duration_ms: 0.4056
+  type: 'test'
+  ...
+# Subtest: B3 resume preserves work at received-unscored and repeated resume is idempotent
+ok 66 - B3 resume preserves work at received-unscored and repeated resume is idempotent
+  ---
+  duration_ms: 298.9913
+  type: 'test'
+  ...
+# Subtest: B3 resume preserves work at before-execution-record and repeated resume is idempotent
+ok 67 - B3 resume preserves work at before-execution-record and repeated resume is idempotent
+  ---
+  duration_ms: 281.38
+  type: 'test'
+  ...
+# Subtest: B3 resume preserves work at after-terminal and repeated resume is idempotent
+ok 68 - B3 resume preserves work at after-terminal and repeated resume is idempotent
+  ---
+  duration_ms: 256.0486
+  type: 'test'
+  ...
+# Subtest: B3 completed final terminal requires no resume event or dispatch
+ok 69 - B3 completed final terminal requires no resume event or dispatch
+  ---
+  duration_ms: 106.974
+  type: 'test'
+  ...
+# Subtest: B3 abandons without repairing partial-final-record
+ok 70 - B3 abandons without repairing partial-final-record
+  ---
+  duration_ms: 85.8079
+  type: 'test'
+  ...
+# Subtest: B3 abandons without repairing changed-source
+ok 71 - B3 abandons without repairing changed-source
+  ---
+  duration_ms: 97.2823
+  type: 'test'
+  ...
+# Subtest: B3 abandons without repairing changed-config
+ok 72 - B3 abandons without repairing changed-config
+  ---
+  duration_ms: 135.1151
+  type: 'test'
+  ...
+# Subtest: B3 abandons without repairing orphan-partial-record
+ok 73 - B3 abandons without repairing orphan-partial-record
+  ---
+  duration_ms: 98.7046
+  type: 'test'
+  ...
+# Subtest: B3 resume retains an unreceived request and advances only to its authorized retry index
+ok 74 - B3 resume retains an unreceived request and advances only to its authorized retry index
+  ---
+  duration_ms: 151.6969
+  type: 'test'
+  ...
+# Subtest: R1 compression success is bound to the trusted instance; contract confusion refuses
+ok 75 - R1 compression success is bound to the trusted instance; contract confusion refuses
+  ---
+  duration_ms: 5.8147
+  type: 'test'
+  ...
+# Subtest: R1 genuine reachability result uses the reachability contract
+ok 76 - R1 genuine reachability result uses the reachability contract
+  ---
+  duration_ms: 108.0936
+  type: 'test'
+  ...
+# Subtest: R2 canonical 78-digit master and exact source bytes survive manifest round trip
+ok 77 - R2 canonical 78-digit master and exact source bytes survive manifest round trip
+  ---
+  duration_ms: 2.0104
+  type: 'test'
+  ...
+# Subtest: R3 all 16 development worlds have identical public/private/altered-certificate audits
+ok 78 - R3 all 16 development worlds have identical public/private/altered-certificate audits
+  ---
+  duration_ms: 852.3913
+  type: 'test'
+  ...
+# Subtest: R4 hypergeometric midpoint noncoverage explains diagnostic-only status
+ok 79 - R4 hypergeometric midpoint noncoverage explains diagnostic-only status
+  ---
+  duration_ms: 2.5896
+  type: 'test'
+  ...
+# Subtest: schema-5 adaptation: every v9 absent protection is now present
+ok 80 - schema-5 adaptation: every v9 absent protection is now present
+  ---
+  duration_ms: 2516.8255
+  type: 'test'
+  ...
+# Subtest: B3 two-phase simplex handles a negative RHS, bounded optimum, infeasible and unbounded problems
+ok 81 - B3 two-phase simplex handles a negative RHS, bounded optimum, infeasible and unbounded problems
+  ---
+  duration_ms: 1.9298
+  type: 'test'
+  ...
+# Subtest: B3 public alphabet permutations preserve every registered public statistic and identifiability count
+ok 82 - B3 public alphabet permutations preserve every registered public statistic and identifiability count
+  ---
+  duration_ms: 397.3819
+  type: 'test'
+  ...
+# Subtest: B3 all proper congruences include the known S3 and Q8 quotients and satisfy both-sided closure
+ok 83 - B3 all proper congruences include the known S3 and Q8 quotients and satisfy both-sided closure
+  ---
+  duration_ms: 10.8539
+  type: 'test'
+  ...
+# Subtest: B3 durable proposal ledger retains defects; independent checker recomputes rounded ceilings and certificates
+ok 84 - B3 durable proposal ledger retains defects; independent checker recomputes rounded ceilings and certificates
+  ---
+  duration_ms: 870.6165
+  type: 'test'
+  ...
+# Subtest: B3 natural control families mark the histogram challenge inapplicable
+ok 85 - B3 natural control families mark the histogram challenge inapplicable
+  ---
+  duration_ms: 284.0086
+  type: 'test'
+  ...
+# Subtest: A1: adjacent masters do not yield shifted windows
+ok 86 - A1: adjacent masters do not yield shifted windows
+  ---
+  duration_ms: 3.1867
+  type: 'test'
+  ...
+# Subtest: master representation is exact, including beyond Number precision
+ok 87 - master representation is exact, including beyond Number precision
+  ---
+  duration_ms: 0.9986
+  type: 'test'
+  ...
+1..87
+# tests 87
+# suites 0
+# pass 87
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16704.185
