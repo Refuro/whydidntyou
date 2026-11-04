@@ -1,0 +1,1531 @@
+{
+  "registration": {
+    "master": "2026110304",
+    "proposalsPerFamily": 512,
+    "families": [
+      "F-count",
+      "F-abelian",
+      "F-nonabelian",
+      "F-monoid"
+    ],
+    "nonabelianVariants": [
+      "S3",
+      "Q8",
+      "D4",
+      "A4"
+    ],
+    "monoidPoints": [
+      3,
+      4
+    ],
+    "policy": "fixed 512 proposals per requested family; variants cycle by proposal index; no replacement; construction for every family finishes before the first portfolio fit",
+    "independentChallenger": "pending external B4 review; this is the builder audit, not an independent challenge or freeze"
+  },
+  "portfolio": {
+    "version": "portfolio-b4-v1",
+    "fitOperations": 2000000,
+    "totalOperations": 60000000,
+    "totalMs": 20000,
+    "workAccounting": "fit: counted assignments, rule/example checks, symbol transitions and law triples; linear algebra precharged a dimension bound; score: actual BFS candidate positions, one unit per cache hit, otherwise declared conservative kernel-work bounds; wall ceiling checked between pair calls",
+    "finiteStateChoicesPerQ": 4096,
+    "grammarRounds": 16,
+    "selector": "highest public training accuracy; ties by registration order; chosen before any sealed scoring",
+    "grammar": "Eq(Fold(T,images,a),Fold(T,images,b)); T ranges over registered cyclic/abelian/group/transformation templates; relations constrain images; first counterexample is added to the active constraints each round",
+    "memoization": "unlabelled (a,b) predictions cached per member across public and sealed sets; cache hits charged one operation",
+    "searchCurves": [
+      {
+        "name": "b2",
+        "maxNodes": 128,
+        "maxPositions": 4096,
+        "lengthSlack": 6
+      },
+      {
+        "name": "4x",
+        "maxNodes": 512,
+        "maxPositions": 16384,
+        "lengthSlack": 6
+      },
+      {
+        "name": "16x",
+        "maxNodes": 2048,
+        "maxPositions": 65536,
+        "lengthSlack": 6
+      }
+    ]
+  },
+  "sourceHash": "1adfd878b5e946443222508f0b88036b34aa737075fb81bd5e28864cdeb63621",
+  "proposed": 2048,
+  "worlds": 1720,
+  "coverageSatisfied": true,
+  "acceptance": {
+    "F-count": {
+      "proposed": 512,
+      "eligible": 428,
+      "constructionValid": 428,
+      "reasons": {
+        "insufficient short consequence rules": 79,
+        "constant invariant cannot supply negative labels": 5
+      },
+      "effectiveClassifications": {
+        "F-count": 512
+      },
+      "eligibilityRate": 0.8359375,
+      "acceptanceRate": 0.8359375
+    },
+    "F-abelian": {
+      "proposed": 512,
+      "eligible": 512,
+      "constructionValid": 512,
+      "reasons": {},
+      "effectiveClassifications": {
+        "F-abelian": 512
+      },
+      "eligibilityRate": 1,
+      "acceptanceRate": 1
+    },
+    "F-nonabelian": {
+      "proposed": 512,
+      "eligible": 485,
+      "constructionValid": 485,
+      "reasons": {
+        "insufficient short consequence rules": 16,
+        "non-identifiable": 9,
+        "constant invariant cannot supply negative labels": 2
+      },
+      "effectiveClassifications": {
+        "F-nonabelian": 380,
+        "F-abelian": 132
+      },
+      "eligibilityRate": 0.947265625,
+      "acceptanceRate": 0.947265625
+    },
+    "F-monoid": {
+      "proposed": 512,
+      "eligible": 429,
+      "constructionValid": 295,
+      "reasons": {
+        "B3: infeasible registered matched string support": 119,
+        "insufficient short consequence rules": 45,
+        "B3: no bounded identity padding word for large challenge stratum": 15,
+        "negative-pair budget exhausted": 22,
+        "non-identifiable": 16
+      },
+      "effectiveClassifications": {
+        "F-monoid": 441,
+        "F-abelian": 71
+      },
+      "eligibilityRate": 0.837890625,
+      "acceptanceRate": 0.576171875
+    }
+  },
+  "byRequested": {
+    "F-count": {
+      "worlds": 428,
+      "members": {
+        "count-linear": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 240624,
+          "fitMs": 23.648900000116555,
+          "scoringMs": 380.71209999940766,
+          "fitUnavailable": 0
+        },
+        "group-full": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 4650196,
+          "fitMs": 178.8484000001481,
+          "scoringMs": 300.5326999997633,
+          "fitUnavailable": 0
+        },
+        "group-quotients": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 2568402,
+          "fitMs": 124.02649999993446,
+          "scoringMs": 298.3653000006743,
+          "fitUnavailable": 0
+        },
+        "monoid-csp": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 5058302,
+          "fitMs": 358.0505000000121,
+          "scoringMs": 296.1802999998472,
+          "fitUnavailable": 0
+        },
+        "joint-coarse": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 215.2549999999996,
+          "naturalAccuracySum": 215.2549999999996,
+          "fitOperations": 6652707,
+          "fitMs": 481.961999999854,
+          "scoringMs": 586.5340000003489,
+          "fitUnavailable": 0
+        },
+        "finite-state": {
+          "worlds": 428,
+          "sealedSuccesses": 319,
+          "naturalSuccesses": 319,
+          "sealedAccuracySum": 374.71999999999997,
+          "naturalAccuracySum": 374.71999999999997,
+          "fitOperations": 26046579,
+          "fitMs": 1018.574099999707,
+          "scoringMs": 463.69200000091223,
+          "fitUnavailable": 106
+        },
+        "rewrite-normal-form": {
+          "worlds": 428,
+          "sealedSuccesses": 15,
+          "naturalSuccesses": 15,
+          "sealedAccuracySum": 294.16999999999996,
+          "naturalAccuracySum": 294.16999999999996,
+          "fitOperations": 4456,
+          "fitMs": 2.742900000041118,
+          "scoringMs": 11695.082899999543,
+          "fitUnavailable": 0
+        },
+        "grammar-cegis": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 3863761,
+          "fitMs": 202.01910000019416,
+          "scoringMs": 295.24239999962447,
+          "fitUnavailable": 0
+        },
+        "nuisance-stumps": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 310.69500000000056,
+          "naturalAccuracySum": 310.69500000000056,
+          "fitOperations": 32179600,
+          "fitMs": 686.0846999999194,
+          "scoringMs": 10479.683500000043,
+          "fitUnavailable": 0
+        },
+        "positional-template": {
+          "worlds": 428,
+          "sealedSuccesses": 250,
+          "naturalSuccesses": 250,
+          "sealedAccuracySum": 339,
+          "naturalAccuracySum": 339,
+          "fitOperations": 1490066,
+          "fitMs": 104.02359999921464,
+          "scoringMs": 208.63200000049255,
+          "fitUnavailable": 178
+        },
+        "bfs-b2": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 215.7249999999995,
+          "naturalAccuracySum": 215.7249999999995,
+          "fitOperations": 4456,
+          "fitMs": 0.4811000001936918,
+          "scoringMs": 3505.0865999995294,
+          "fitUnavailable": 0
+        },
+        "bfs-4x": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 217.4749999999996,
+          "naturalAccuracySum": 217.4749999999996,
+          "fitOperations": 4456,
+          "fitMs": 0.11709999995946418,
+          "scoringMs": 15886.012200000114,
+          "fitUnavailable": 0
+        },
+        "bfs-16x": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 220.77999999999952,
+          "naturalAccuracySum": 220.77999999999952,
+          "fitOperations": 4456,
+          "fitMs": 0.09579999998095445,
+          "scoringMs": 75263.34110000006,
+          "fitUnavailable": 0
+        },
+        "bidirectional": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 218.53499999999948,
+          "naturalAccuracySum": 218.53499999999948,
+          "fitOperations": 4456,
+          "fitMs": 0.13199999966309406,
+          "scoringMs": 3805.9520999996457,
+          "fitUnavailable": 0
+        }
+      },
+      "oracleSuccesses": 428,
+      "selectorSuccesses": 428
+    },
+    "F-abelian": {
+      "worlds": 512,
+      "members": {
+        "count-linear": {
+          "worlds": 512,
+          "sealedSuccesses": 512,
+          "naturalSuccesses": 512,
+          "sealedAccuracySum": 512,
+          "naturalAccuracySum": 512,
+          "fitOperations": 290358,
+          "fitMs": 28.769100000470644,
+          "scoringMs": 458.6089000001084,
+          "fitUnavailable": 0
+        },
+        "group-full": {
+          "worlds": 512,
+          "sealedSuccesses": 512,
+          "naturalSuccesses": 512,
+          "sealedAccuracySum": 512,
+          "naturalAccuracySum": 512,
+          "fitOperations": 11353006,
+          "fitMs": 332.4112000003952,
+          "scoringMs": 355.6731999995973,
+          "fitUnavailable": 0
+        },
+        "group-quotients": {
+          "worlds": 512,
+          "sealedSuccesses": 66,
+          "naturalSuccesses": 66,
+          "sealedAccuracySum": 289,
+          "naturalAccuracySum": 289,
+          "fitOperations": 2152172,
+          "fitMs": 123.55860000003304,
+          "scoringMs": 132.50040000012086,
+          "fitUnavailable": 446
+        },
+        "monoid-csp": {
+          "worlds": 512,
+          "sealedSuccesses": 512,
+          "naturalSuccesses": 512,
+          "sealedAccuracySum": 512,
+          "naturalAccuracySum": 512,
+          "fitOperations": 11552485,
+          "fitMs": 770.6404000008333,
+          "scoringMs": 350.73700000003737,
+          "fitUnavailable": 0
+        },
+        "joint-coarse": {
+          "worlds": 512,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 260.63499999999897,
+          "naturalAccuracySum": 260.63499999999897,
+          "fitOperations": 13521263,
+          "fitMs": 934.9142999993637,
+          "scoringMs": 716.9007000009588,
+          "fitUnavailable": 0
+        },
+        "finite-state": {
+          "worlds": 512,
+          "sealedSuccesses": 70,
+          "naturalSuccesses": 70,
+          "sealedAccuracySum": 296.29999999999995,
+          "naturalAccuracySum": 296.29999999999995,
+          "fitOperations": 97771878,
+          "fitMs": 3060.300600000177,
+          "scoringMs": 207.03100000107952,
+          "fitUnavailable": 429
+        },
+        "rewrite-normal-form": {
+          "worlds": 512,
+          "sealedSuccesses": 24,
+          "naturalSuccesses": 24,
+          "sealedAccuracySum": 333.12999999999994,
+          "naturalAccuracySum": 333.12999999999994,
+          "fitOperations": 5377,
+          "fitMs": 4.245599999892875,
+          "scoringMs": 12318.163299999476,
+          "fitUnavailable": 0
+        },
+        "grammar-cegis": {
+          "worlds": 512,
+          "sealedSuccesses": 512,
+          "naturalSuccesses": 512,
+          "sealedAccuracySum": 512,
+          "naturalAccuracySum": 512,
+          "fitOperations": 14467051,
+          "fitMs": 603.8523999996687,
+          "scoringMs": 352.27220000069065,
+          "fitUnavailable": 0
+        },
+        "nuisance-stumps": {
+          "worlds": 512,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 371.8800000000008,
+          "naturalAccuracySum": 371.8800000000008,
+          "fitOperations": 39394000,
+          "fitMs": 822.6539999993838,
+          "scoringMs": 12698.579300001817,
+          "fitUnavailable": 0
+        },
+        "positional-template": {
+          "worlds": 512,
+          "sealedSuccesses": 364,
+          "naturalSuccesses": 364,
+          "sealedAccuracySum": 438,
+          "naturalAccuracySum": 438,
+          "fitOperations": 2666871,
+          "fitMs": 149.96560000056343,
+          "scoringMs": 280.3427999997075,
+          "fitUnavailable": 148
+        },
+        "bfs-b2": {
+          "worlds": 512,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 261.5249999999996,
+          "naturalAccuracySum": 261.5249999999996,
+          "fitOperations": 5377,
+          "fitMs": 0.7483000007632654,
+          "scoringMs": 4490.879600000306,
+          "fitUnavailable": 0
+        },
+        "bfs-4x": {
+          "worlds": 512,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 266.6249999999995,
+          "naturalAccuracySum": 266.6249999999995,
+          "fitOperations": 5377,
+          "fitMs": 0.1828999998542713,
+          "scoringMs": 21861.15850000127,
+          "fitUnavailable": 0
+        },
+        "bfs-16x": {
+          "worlds": 512,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 274.3849999999995,
+          "naturalAccuracySum": 274.3849999999995,
+          "fitOperations": 5377,
+          "fitMs": 0.1465999997308245,
+          "scoringMs": 106197.31600000021,
+          "fitUnavailable": 0
+        },
+        "bidirectional": {
+          "worlds": 512,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 268.17999999999944,
+          "naturalAccuracySum": 268.17999999999944,
+          "fitOperations": 5377,
+          "fitMs": 0.19729999966511969,
+          "scoringMs": 4788.751000000018,
+          "fitUnavailable": 0
+        }
+      },
+      "oracleSuccesses": 512,
+      "selectorSuccesses": 512
+    },
+    "F-nonabelian": {
+      "worlds": 485,
+      "members": {
+        "count-linear": {
+          "worlds": 485,
+          "sealedSuccesses": 63,
+          "naturalSuccesses": 63,
+          "sealedAccuracySum": 288.2,
+          "naturalAccuracySum": 363.9950000000003,
+          "fitOperations": 274752,
+          "fitMs": 27.406500000026426,
+          "scoringMs": 487.55029999950784,
+          "fitUnavailable": 0
+        },
+        "group-full": {
+          "worlds": 485,
+          "sealedSuccesses": 485,
+          "naturalSuccesses": 485,
+          "sealedAccuracySum": 485,
+          "naturalAccuracySum": 484.99,
+          "fitOperations": 13828158,
+          "fitMs": 420.2036000009102,
+          "scoringMs": 369.1123999989795,
+          "fitUnavailable": 0
+        },
+        "group-quotients": {
+          "worlds": 485,
+          "sealedSuccesses": 47,
+          "naturalSuccesses": 47,
+          "sealedAccuracySum": 266,
+          "naturalAccuracySum": 266,
+          "fitOperations": 1549419,
+          "fitMs": 111.69150000045192,
+          "scoringMs": 115.40530000005674,
+          "fitUnavailable": 438
+        },
+        "monoid-csp": {
+          "worlds": 485,
+          "sealedSuccesses": 485,
+          "naturalSuccesses": 485,
+          "sealedAccuracySum": 485,
+          "naturalAccuracySum": 484.99,
+          "fitOperations": 10535448,
+          "fitMs": 721.7412999996013,
+          "scoringMs": 362.2930999997043,
+          "fitUnavailable": 0
+        },
+        "joint-coarse": {
+          "worlds": 485,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 242.96999999999977,
+          "naturalAccuracySum": 244.6899999999993,
+          "fitOperations": 12385109,
+          "fitMs": 863.3774000007106,
+          "scoringMs": 762.6088999995845,
+          "fitUnavailable": 0
+        },
+        "finite-state": {
+          "worlds": 485,
+          "sealedSuccesses": 253,
+          "naturalSuccesses": 250,
+          "sealedAccuracySum": 369,
+          "naturalAccuracySum": 368.22,
+          "fitOperations": 59826905,
+          "fitMs": 2023.5255000004981,
+          "scoringMs": 463.469000000332,
+          "fitUnavailable": 232
+        },
+        "rewrite-normal-form": {
+          "worlds": 485,
+          "sealedSuccesses": 90,
+          "naturalSuccesses": 24,
+          "sealedAccuracySum": 383.755,
+          "naturalAccuracySum": 328.2449999999998,
+          "fitOperations": 5088,
+          "fitMs": 3.6843000001099426,
+          "scoringMs": 12707.86160000095,
+          "fitUnavailable": 0
+        },
+        "grammar-cegis": {
+          "worlds": 485,
+          "sealedSuccesses": 485,
+          "naturalSuccesses": 485,
+          "sealedAccuracySum": 485,
+          "naturalAccuracySum": 484.99,
+          "fitOperations": 10371889,
+          "fitMs": 421.92190000035043,
+          "scoringMs": 369.95719999982975,
+          "fitUnavailable": 0
+        },
+        "nuisance-stumps": {
+          "worlds": 485,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 266.2750000000001,
+          "naturalAccuracySum": 354.3700000000011,
+          "fitOperations": 37088000,
+          "fitMs": 771.5067999999301,
+          "scoringMs": 13592.995200001445,
+          "fitUnavailable": 0
+        },
+        "positional-template": {
+          "worlds": 485,
+          "sealedSuccesses": 178,
+          "naturalSuccesses": 178,
+          "sealedAccuracySum": 331.5,
+          "naturalAccuracySum": 331.5,
+          "fitOperations": 1373404,
+          "fitMs": 110.26130000014382,
+          "scoringMs": 197.82779999998456,
+          "fitUnavailable": 307
+        },
+        "bfs-b2": {
+          "worlds": 485,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 322.27499999999986,
+          "naturalAccuracySum": 247.25499999999946,
+          "fitOperations": 5088,
+          "fitMs": 0.5772000000870321,
+          "scoringMs": 6490.7165000001405,
+          "fitUnavailable": 0
+        },
+        "bfs-4x": {
+          "worlds": 485,
+          "sealedSuccesses": 11,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 357.91499999999985,
+          "naturalAccuracySum": 251.56999999999942,
+          "fitOperations": 5088,
+          "fitMs": 0.11519999986921903,
+          "scoringMs": 28562.912299999807,
+          "fitUnavailable": 0
+        },
+        "bfs-16x": {
+          "worlds": 485,
+          "sealedSuccesses": 34,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 376.0999999999996,
+          "naturalAccuracySum": 258.0199999999994,
+          "fitOperations": 5088,
+          "fitMs": 0.10020000013173558,
+          "scoringMs": 127781.40549999972,
+          "fitUnavailable": 0
+        },
+        "bidirectional": {
+          "worlds": 485,
+          "sealedSuccesses": 18,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 354.5299999999995,
+          "naturalAccuracySum": 253.19499999999925,
+          "fitOperations": 5088,
+          "fitMs": 0.1478000003407942,
+          "scoringMs": 6637.697600000116,
+          "fitUnavailable": 0
+        }
+      },
+      "oracleSuccesses": 485,
+      "selectorSuccesses": 485
+    },
+    "F-monoid": {
+      "worlds": 295,
+      "members": {
+        "count-linear": {
+          "worlds": 295,
+          "sealedSuccesses": 29,
+          "naturalSuccesses": 29,
+          "sealedAccuracySum": 162.98000000000002,
+          "naturalAccuracySum": 178.64999999999995,
+          "fitOperations": 166752,
+          "fitMs": 17.609000000564265,
+          "scoringMs": 288.9331000002858,
+          "fitUnavailable": 0
+        },
+        "group-full": {
+          "worlds": 295,
+          "sealedSuccesses": 32,
+          "naturalSuccesses": 32,
+          "sealedAccuracySum": 163.5,
+          "naturalAccuracySum": 163.5,
+          "fitOperations": 13149294,
+          "fitMs": 385.8390999999101,
+          "scoringMs": 74.6042999997735,
+          "fitUnavailable": 263
+        },
+        "group-quotients": {
+          "worlds": 295,
+          "sealedSuccesses": 24,
+          "naturalSuccesses": 24,
+          "sealedAccuracySum": 159.5,
+          "naturalAccuracySum": 159.5,
+          "fitOperations": 660761,
+          "fitMs": 69.40069999983825,
+          "scoringMs": 67.97139999982028,
+          "fitUnavailable": 271
+        },
+        "monoid-csp": {
+          "worlds": 295,
+          "sealedSuccesses": 295,
+          "naturalSuccesses": 295,
+          "sealedAccuracySum": 295,
+          "naturalAccuracySum": 294.905,
+          "fitOperations": 10264258,
+          "fitMs": 565.2432999999874,
+          "scoringMs": 221.9571999997861,
+          "fitUnavailable": 0
+        },
+        "joint-coarse": {
+          "worlds": 295,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 147.67,
+          "naturalAccuracySum": 148.70499999999979,
+          "fitOperations": 11349275,
+          "fitMs": 659.3457000004273,
+          "scoringMs": 485.72819999972126,
+          "fitUnavailable": 0
+        },
+        "finite-state": {
+          "worlds": 295,
+          "sealedSuccesses": 243,
+          "naturalSuccesses": 244,
+          "sealedAccuracySum": 269.33,
+          "naturalAccuracySum": 269.23500000000007,
+          "fitOperations": 30253677,
+          "fitMs": 944.8374000003387,
+          "scoringMs": 371.00950000026205,
+          "fitUnavailable": 51
+        },
+        "rewrite-normal-form": {
+          "worlds": 295,
+          "sealedSuccesses": 78,
+          "naturalSuccesses": 13,
+          "sealedAccuracySum": 237.18999999999997,
+          "naturalAccuracySum": 209.80499999999984,
+          "fitOperations": 3088,
+          "fitMs": 2.120499999728054,
+          "scoringMs": 8443.307000000568,
+          "fitUnavailable": 0
+        },
+        "grammar-cegis": {
+          "worlds": 295,
+          "sealedSuccesses": 295,
+          "naturalSuccesses": 295,
+          "sealedAccuracySum": 295,
+          "naturalAccuracySum": 294.905,
+          "fitOperations": 11946382,
+          "fitMs": 417.8295999998518,
+          "scoringMs": 225.64680000090448,
+          "fitUnavailable": 0
+        },
+        "nuisance-stumps": {
+          "worlds": 295,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 153.97,
+          "naturalAccuracySum": 213.98500000000018,
+          "fitOperations": 22172000,
+          "fitMs": 460.4514999999665,
+          "scoringMs": 8336.256499999858,
+          "fitUnavailable": 0
+        },
+        "positional-template": {
+          "worlds": 295,
+          "sealedSuccesses": 17,
+          "naturalSuccesses": 17,
+          "sealedAccuracySum": 156,
+          "naturalAccuracySum": 156,
+          "fitOperations": 407107,
+          "fitMs": 56.17700000030163,
+          "scoringMs": 71.90069999938714,
+          "fitUnavailable": 278
+        },
+        "bfs-b2": {
+          "worlds": 295,
+          "sealedSuccesses": 3,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 197.37999999999997,
+          "naturalAccuracySum": 152.14499999999987,
+          "fitOperations": 3088,
+          "fitMs": 0.38540000046486966,
+          "scoringMs": 5002.930100000172,
+          "fitUnavailable": 0
+        },
+        "bfs-4x": {
+          "worlds": 295,
+          "sealedSuccesses": 8,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 223.00999999999993,
+          "naturalAccuracySum": 156.07499999999993,
+          "fitOperations": 3088,
+          "fitMs": 0.08379999993485399,
+          "scoringMs": 21928.131100000755,
+          "fitUnavailable": 0
+        },
+        "bfs-16x": {
+          "worlds": 295,
+          "sealedSuccesses": 27,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 241.00999999999985,
+          "naturalAccuracySum": 161.9949999999999,
+          "fitOperations": 3088,
+          "fitMs": 0.07440000020142179,
+          "scoringMs": 94297.11660000024,
+          "fitUnavailable": 0
+        },
+        "bidirectional": {
+          "worlds": 295,
+          "sealedSuccesses": 13,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 227.70499999999984,
+          "naturalAccuracySum": 157.435,
+          "fitOperations": 3088,
+          "fitMs": 0.10800000008021016,
+          "scoringMs": 5013.549000000348,
+          "fitUnavailable": 0
+        }
+      },
+      "oracleSuccesses": 295,
+      "selectorSuccesses": 294
+    }
+  },
+  "byEffective": {
+    "F-count": {
+      "worlds": 428,
+      "members": {
+        "count-linear": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 240624,
+          "fitMs": 23.648900000116555,
+          "scoringMs": 380.71209999940766,
+          "fitUnavailable": 0
+        },
+        "group-full": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 4650196,
+          "fitMs": 178.8484000001481,
+          "scoringMs": 300.5326999997633,
+          "fitUnavailable": 0
+        },
+        "group-quotients": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 2568402,
+          "fitMs": 124.02649999993446,
+          "scoringMs": 298.3653000006743,
+          "fitUnavailable": 0
+        },
+        "monoid-csp": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 5058302,
+          "fitMs": 358.0505000000121,
+          "scoringMs": 296.1802999998472,
+          "fitUnavailable": 0
+        },
+        "joint-coarse": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 215.2549999999996,
+          "naturalAccuracySum": 215.2549999999996,
+          "fitOperations": 6652707,
+          "fitMs": 481.961999999854,
+          "scoringMs": 586.5340000003489,
+          "fitUnavailable": 0
+        },
+        "finite-state": {
+          "worlds": 428,
+          "sealedSuccesses": 319,
+          "naturalSuccesses": 319,
+          "sealedAccuracySum": 374.71999999999997,
+          "naturalAccuracySum": 374.71999999999997,
+          "fitOperations": 26046579,
+          "fitMs": 1018.574099999707,
+          "scoringMs": 463.69200000091223,
+          "fitUnavailable": 106
+        },
+        "rewrite-normal-form": {
+          "worlds": 428,
+          "sealedSuccesses": 15,
+          "naturalSuccesses": 15,
+          "sealedAccuracySum": 294.16999999999996,
+          "naturalAccuracySum": 294.16999999999996,
+          "fitOperations": 4456,
+          "fitMs": 2.742900000041118,
+          "scoringMs": 11695.082899999543,
+          "fitUnavailable": 0
+        },
+        "grammar-cegis": {
+          "worlds": 428,
+          "sealedSuccesses": 428,
+          "naturalSuccesses": 428,
+          "sealedAccuracySum": 428,
+          "naturalAccuracySum": 428,
+          "fitOperations": 3863761,
+          "fitMs": 202.01910000019416,
+          "scoringMs": 295.24239999962447,
+          "fitUnavailable": 0
+        },
+        "nuisance-stumps": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 310.69500000000056,
+          "naturalAccuracySum": 310.69500000000056,
+          "fitOperations": 32179600,
+          "fitMs": 686.0846999999194,
+          "scoringMs": 10479.683500000043,
+          "fitUnavailable": 0
+        },
+        "positional-template": {
+          "worlds": 428,
+          "sealedSuccesses": 250,
+          "naturalSuccesses": 250,
+          "sealedAccuracySum": 339,
+          "naturalAccuracySum": 339,
+          "fitOperations": 1490066,
+          "fitMs": 104.02359999921464,
+          "scoringMs": 208.63200000049255,
+          "fitUnavailable": 178
+        },
+        "bfs-b2": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 215.7249999999995,
+          "naturalAccuracySum": 215.7249999999995,
+          "fitOperations": 4456,
+          "fitMs": 0.4811000001936918,
+          "scoringMs": 3505.0865999995294,
+          "fitUnavailable": 0
+        },
+        "bfs-4x": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 217.4749999999996,
+          "naturalAccuracySum": 217.4749999999996,
+          "fitOperations": 4456,
+          "fitMs": 0.11709999995946418,
+          "scoringMs": 15886.012200000114,
+          "fitUnavailable": 0
+        },
+        "bfs-16x": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 220.77999999999952,
+          "naturalAccuracySum": 220.77999999999952,
+          "fitOperations": 4456,
+          "fitMs": 0.09579999998095445,
+          "scoringMs": 75263.34110000006,
+          "fitUnavailable": 0
+        },
+        "bidirectional": {
+          "worlds": 428,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 218.53499999999948,
+          "naturalAccuracySum": 218.53499999999948,
+          "fitOperations": 4456,
+          "fitMs": 0.13199999966309406,
+          "scoringMs": 3805.9520999996457,
+          "fitUnavailable": 0
+        }
+      },
+      "oracleSuccesses": 428,
+      "selectorSuccesses": 428
+    },
+    "F-abelian": {
+      "worlds": 652,
+      "members": {
+        "count-linear": {
+          "worlds": 652,
+          "sealedSuccesses": 604,
+          "naturalSuccesses": 604,
+          "sealedAccuracySum": 643.1800000000013,
+          "naturalAccuracySum": 643.1800000000013,
+          "fitOperations": 369522,
+          "fitMs": 36.754100000835024,
+          "scoringMs": 584.1886000000959,
+          "fitUnavailable": 0
+        },
+        "group-full": {
+          "worlds": 652,
+          "sealedSuccesses": 652,
+          "naturalSuccesses": 652,
+          "sealedAccuracySum": 652,
+          "naturalAccuracySum": 652,
+          "fitOperations": 12298229,
+          "fitMs": 373.47110000034445,
+          "scoringMs": 451.4527999993297,
+          "fitUnavailable": 0
+        },
+        "group-quotients": {
+          "worlds": 652,
+          "sealedSuccesses": 137,
+          "naturalSuccesses": 137,
+          "sealedAccuracySum": 394.5,
+          "naturalAccuracySum": 394.5,
+          "fitOperations": 2713472,
+          "fitMs": 152.7994999999937,
+          "scoringMs": 194.49409999980708,
+          "fitUnavailable": 515
+        },
+        "monoid-csp": {
+          "worlds": 652,
+          "sealedSuccesses": 652,
+          "naturalSuccesses": 652,
+          "sealedAccuracySum": 652,
+          "naturalAccuracySum": 652,
+          "fitOperations": 12876190,
+          "fitMs": 856.0686000010755,
+          "scoringMs": 446.81760000027134,
+          "fitUnavailable": 0
+        },
+        "joint-coarse": {
+          "worlds": 652,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 331.2749999999984,
+          "naturalAccuracySum": 331.2749999999984,
+          "fitOperations": 15357039,
+          "fitMs": 1059.114899999302,
+          "scoringMs": 907.277700000559,
+          "fitUnavailable": 0
+        },
+        "finite-state": {
+          "worlds": 652,
+          "sealedSuccesses": 143,
+          "naturalSuccesses": 143,
+          "sealedAccuracySum": 402.79999999999995,
+          "naturalAccuracySum": 402.79999999999995,
+          "fitOperations": 108147683,
+          "fitMs": 3483.79750000051,
+          "scoringMs": 317.21420000121,
+          "fitUnavailable": 496
+        },
+        "rewrite-normal-form": {
+          "worlds": 652,
+          "sealedSuccesses": 31,
+          "naturalSuccesses": 31,
+          "sealedAccuracySum": 429.5999999999998,
+          "naturalAccuracySum": 429.5999999999998,
+          "fitOperations": 6843,
+          "fitMs": 5.191100000214647,
+          "scoringMs": 15530.208499999906,
+          "fitUnavailable": 0
+        },
+        "grammar-cegis": {
+          "worlds": 652,
+          "sealedSuccesses": 652,
+          "naturalSuccesses": 652,
+          "sealedAccuracySum": 652,
+          "naturalAccuracySum": 652,
+          "fitOperations": 15350531,
+          "fitMs": 652.7067999996798,
+          "scoringMs": 448.05680000106804,
+          "fitUnavailable": 0
+        },
+        "nuisance-stumps": {
+          "worlds": 652,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 471.9850000000015,
+          "naturalAccuracySum": 471.9850000000015,
+          "fitOperations": 49710000,
+          "fitMs": 1039.482999999018,
+          "scoringMs": 16177.008600001776,
+          "fitUnavailable": 0
+        },
+        "positional-template": {
+          "worlds": 652,
+          "sealedSuccesses": 443,
+          "naturalSuccesses": 443,
+          "sealedAccuracySum": 547.5,
+          "naturalAccuracySum": 547.5,
+          "fitOperations": 3095078,
+          "fitMs": 181.42810000081954,
+          "scoringMs": 346.1665999996767,
+          "fitUnavailable": 209
+        },
+        "bfs-b2": {
+          "worlds": 652,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 332.76999999999896,
+          "naturalAccuracySum": 332.76999999999896,
+          "fitOperations": 6843,
+          "fitMs": 0.9024000007339055,
+          "scoringMs": 5607.466600000043,
+          "fitUnavailable": 0
+        },
+        "bfs-4x": {
+          "worlds": 652,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 339.06499999999886,
+          "naturalAccuracySum": 339.06499999999886,
+          "fitOperations": 6843,
+          "fitMs": 0.21699999969860073,
+          "scoringMs": 27083.064900001424,
+          "fitUnavailable": 0
+        },
+        "bfs-16x": {
+          "worlds": 652,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 348.6099999999987,
+          "naturalAccuracySum": 348.6099999999987,
+          "fitOperations": 6843,
+          "fitMs": 0.17299999971874058,
+          "scoringMs": 131049.71429999977,
+          "fitUnavailable": 0
+        },
+        "bidirectional": {
+          "worlds": 652,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 341.07999999999896,
+          "naturalAccuracySum": 341.07999999999896,
+          "fitOperations": 6843,
+          "fitMs": 0.2440999993996229,
+          "scoringMs": 5987.240800000087,
+          "fitUnavailable": 0
+        }
+      },
+      "oracleSuccesses": 652,
+      "selectorSuccesses": 651
+    },
+    "F-nonabelian": {
+      "worlds": 377,
+      "members": {
+        "count-linear": {
+          "worlds": 377,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 188.5,
+          "naturalAccuracySum": 264.29500000000013,
+          "fitOperations": 213516,
+          "fitMs": 21.319199999707052,
+          "scoringMs": 390.2212999994954,
+          "fitUnavailable": 0
+        },
+        "group-full": {
+          "worlds": 377,
+          "sealedSuccesses": 377,
+          "naturalSuccesses": 377,
+          "sealedAccuracySum": 377,
+          "naturalAccuracySum": 376.99,
+          "fitOperations": 13106587,
+          "fitMs": 388.63240000105,
+          "scoringMs": 294.7050999990606,
+          "fitUnavailable": 0
+        },
+        "group-quotients": {
+          "worlds": 377,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 188.5,
+          "naturalAccuracySum": 188.5,
+          "fitOperations": 1149604,
+          "fitMs": 89.67830000036338,
+          "scoringMs": 70.82970000030764,
+          "fitUnavailable": 377
+        },
+        "monoid-csp": {
+          "worlds": 377,
+          "sealedSuccesses": 377,
+          "naturalSuccesses": 377,
+          "sealedAccuracySum": 377,
+          "naturalAccuracySum": 376.99,
+          "fitOperations": 9511229,
+          "fitMs": 654.9438999993872,
+          "scoringMs": 287.5456999993621,
+          "fitUnavailable": 0
+        },
+        "joint-coarse": {
+          "worlds": 377,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 188.5,
+          "naturalAccuracySum": 190.2199999999996,
+          "fitOperations": 10963075,
+          "fitMs": 767.442200000718,
+          "scoringMs": 615.4704999999376,
+          "fitUnavailable": 0
+        },
+        "finite-state": {
+          "worlds": 377,
+          "sealedSuccesses": 201,
+          "naturalSuccesses": 198,
+          "sealedAccuracySum": 289,
+          "naturalAccuracySum": 288.22,
+          "fitOperations": 51627916,
+          "fitMs": 1685.6791000002268,
+          "scoringMs": 380.4980000001233,
+          "fitUnavailable": 176
+        },
+        "rewrite-normal-form": {
+          "worlds": 377,
+          "sealedSuccesses": 85,
+          "naturalSuccesses": 19,
+          "sealedAccuracySum": 310.25000000000006,
+          "naturalAccuracySum": 254.73999999999987,
+          "fitOperations": 3954,
+          "fitMs": 2.932099999859929,
+          "scoringMs": 10188.419800000673,
+          "fitUnavailable": 0
+        },
+        "grammar-cegis": {
+          "worlds": 377,
+          "sealedSuccesses": 377,
+          "naturalSuccesses": 377,
+          "sealedAccuracySum": 377,
+          "naturalAccuracySum": 376.99,
+          "fitOperations": 9700694,
+          "fitMs": 384.67440000035276,
+          "scoringMs": 295.34739999960584,
+          "fitUnavailable": 0
+        },
+        "nuisance-stumps": {
+          "worlds": 377,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 188.63500000000002,
+          "naturalAccuracySum": 276.73000000000053,
+          "fitOperations": 29083600,
+          "fitMs": 603.0402000001777,
+          "scoringMs": 10898.679100001347,
+          "fitUnavailable": 0
+        },
+        "positional-template": {
+          "worlds": 377,
+          "sealedSuccesses": 113,
+          "naturalSuccesses": 113,
+          "sealedAccuracySum": 245,
+          "naturalAccuracySum": 245,
+          "fitOperations": 1032400,
+          "fitMs": 85.39829999986978,
+          "scoringMs": 144.9916999998968,
+          "fitUnavailable": 264
+        },
+        "bfs-b2": {
+          "worlds": 377,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 267.38499999999993,
+          "naturalAccuracySum": 192.36499999999967,
+          "fitOperations": 3954,
+          "fitMs": 0.4627000000764383,
+          "scoringMs": 5635.938000000475,
+          "fitUnavailable": 0
+        },
+        "bfs-4x": {
+          "worlds": 377,
+          "sealedSuccesses": 11,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 302.1500000000001,
+          "naturalAccuracySum": 195.80499999999967,
+          "fitOperations": 3954,
+          "fitMs": 0.0904000000009546,
+          "scoringMs": 24553.110899999723,
+          "fitUnavailable": 0
+        },
+        "bfs-16x": {
+          "worlds": 377,
+          "sealedSuccesses": 34,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 319.0300000000001,
+          "naturalAccuracySum": 200.94999999999962,
+          "fitOperations": 3954,
+          "fitMs": 0.08170000022801105,
+          "scoringMs": 108635.2826,
+          "fitUnavailable": 0
+        },
+        "bidirectional": {
+          "worlds": 377,
+          "sealedSuccesses": 18,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 298.44499999999965,
+          "naturalAccuracySum": 197.1099999999996,
+          "fitOperations": 3954,
+          "fitMs": 0.11240000044927001,
+          "scoringMs": 5720.23600000015,
+          "fitUnavailable": 0
+        }
+      },
+      "oracleSuccesses": 377,
+      "selectorSuccesses": 377
+    },
+    "F-monoid": {
+      "worlds": 263,
+      "members": {
+        "count-linear": {
+          "worlds": 263,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 131.5,
+          "naturalAccuracySum": 147.16999999999996,
+          "fitOperations": 148824,
+          "fitMs": 15.711300000519259,
+          "scoringMs": 260.68240000031074,
+          "fitUnavailable": 0
+        },
+        "group-full": {
+          "worlds": 263,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 131.5,
+          "naturalAccuracySum": 131.5,
+          "fitOperations": 12925642,
+          "fitMs": 376.3503999998211,
+          "scoringMs": 53.23199999995995,
+          "fitUnavailable": 263
+        },
+        "group-quotients": {
+          "worlds": 263,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 131.5,
+          "naturalAccuracySum": 131.5,
+          "fitOperations": 499276,
+          "fitMs": 62.17299999996612,
+          "scoringMs": 50.553299999883166,
+          "fitUnavailable": 263
+        },
+        "monoid-csp": {
+          "worlds": 263,
+          "sealedSuccesses": 263,
+          "naturalSuccesses": 263,
+          "sealedAccuracySum": 263,
+          "naturalAccuracySum": 262.905,
+          "fitOperations": 9964772,
+          "fitMs": 546.6124999999593,
+          "scoringMs": 200.6239999998943,
+          "fitUnavailable": 0
+        },
+        "joint-coarse": {
+          "worlds": 263,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 131.5,
+          "naturalAccuracySum": 132.53499999999988,
+          "fitOperations": 10935533,
+          "fitMs": 631.0803000004817,
+          "scoringMs": 442.48959999976796,
+          "fitUnavailable": 0
+        },
+        "finite-state": {
+          "worlds": 263,
+          "sealedSuccesses": 222,
+          "naturalSuccesses": 223,
+          "sealedAccuracySum": 242.82999999999998,
+          "naturalAccuracySum": 242.735,
+          "fitOperations": 28076861,
+          "fitMs": 859.1869000002771,
+          "scoringMs": 343.79730000034033,
+          "fitUnavailable": 40
+        },
+        "rewrite-normal-form": {
+          "worlds": 263,
+          "sealedSuccesses": 76,
+          "naturalSuccesses": 11,
+          "sealedAccuracySum": 214.225,
+          "naturalAccuracySum": 186.8399999999999,
+          "fitOperations": 2756,
+          "fitMs": 1.9271999996562954,
+          "scoringMs": 7750.7036000004155,
+          "fitUnavailable": 0
+        },
+        "grammar-cegis": {
+          "worlds": 263,
+          "sealedSuccesses": 263,
+          "naturalSuccesses": 263,
+          "sealedAccuracySum": 263,
+          "naturalAccuracySum": 262.905,
+          "fitOperations": 11734097,
+          "fitMs": 406.22269999983837,
+          "scoringMs": 204.472000000751,
+          "fitUnavailable": 0
+        },
+        "nuisance-stumps": {
+          "worlds": 263,
+          "sealedSuccesses": 0,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 131.505,
+          "naturalAccuracySum": 191.52000000000018,
+          "fitOperations": 19860400,
+          "fitMs": 412.0891000000847,
+          "scoringMs": 7552.143299999996,
+          "fitUnavailable": 0
+        },
+        "positional-template": {
+          "worlds": 263,
+          "sealedSuccesses": 3,
+          "naturalSuccesses": 3,
+          "sealedAccuracySum": 133,
+          "naturalAccuracySum": 133,
+          "fitOperations": 319904,
+          "fitMs": 49.57750000031956,
+          "scoringMs": 58.9129999995057,
+          "fitUnavailable": 260
+        },
+        "bfs-b2": {
+          "worlds": 263,
+          "sealedSuccesses": 3,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 181.025,
+          "naturalAccuracySum": 135.79,
+          "fitOperations": 2756,
+          "fitMs": 0.3458000005048234,
+          "scoringMs": 4741.1216000001,
+          "fitUnavailable": 0
+        },
+        "bfs-4x": {
+          "worlds": 263,
+          "sealedSuccesses": 8,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 206.33499999999998,
+          "naturalAccuracySum": 139.4000000000001,
+          "fitOperations": 2756,
+          "fitMs": 0.07449999995878898,
+          "scoringMs": 20716.026100000687,
+          "fitUnavailable": 0
+        },
+        "bfs-16x": {
+          "worlds": 263,
+          "sealedSuccesses": 27,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 223.8549999999999,
+          "naturalAccuracySum": 144.83999999999997,
+          "fitOperations": 2756,
+          "fitMs": 0.06650000011723023,
+          "scoringMs": 88590.84120000039,
+          "fitUnavailable": 0
+        },
+        "bidirectional": {
+          "worlds": 263,
+          "sealedSuccesses": 13,
+          "naturalSuccesses": 0,
+          "sealedAccuracySum": 210.88999999999993,
+          "naturalAccuracySum": 140.62,
+          "fitOperations": 2756,
+          "fitMs": 0.09660000023723114,
+          "scoringMs": 4732.520800000246,
+          "fitUnavailable": 0
+        }
+      },
+      "oracleSuccesses": 263,
+      "selectorSuccesses": 263
+    }
+  },
+  "failures": {
+    "positional-template|no consistent program within registered search": 911,
+    "finite-state|no consistent program within registered search": 808,
+    "group-quotients|no consistent program within registered search": 1155,
+    "finite-state|primitive-operation budget exhausted": 10,
+    "group-full|no consistent program within registered search": 263
+  },
+  "curves": {
+    "F-count|bfs-b2": {
+      "worlds": 428,
+      "accuracySum": 215.7249999999995,
+      "successes": 0,
+      "visitedNodes": 10929556,
+      "testedPositions": 63134267,
+      "maxDepth": 5,
+      "exhaustionSum": 426.27000000000095
+    },
+    "F-count|bfs-4x": {
+      "worlds": 428,
+      "accuracySum": 217.4749999999996,
+      "successes": 0,
+      "visitedNodes": 43577965,
+      "testedPositions": 322849076,
+      "maxDepth": 7,
+      "exhaustionSum": 424.50500000000136
+    },
+    "F-count|bfs-16x": {
+      "worlds": 428,
+      "accuracySum": 220.77999999999952,
+      "successes": 0,
+      "visitedNodes": 173229177,
+      "testedPositions": 1600047382,
+      "maxDepth": 7,
+      "exhaustionSum": 421.1800000000014
+    },
+    "F-abelian|bfs-b2": {
+      "worlds": 512,
+      "accuracySum": 261.5249999999996,
+      "successes": 0,
+      "visitedNodes": 12998782,
+      "testedPositions": 98246785,
+      "maxDepth": 8,
+      "exhaustionSum": 506.3850000000009
+    },
+    "F-abelian|bfs-4x": {
+      "worlds": 512,
+      "accuracySum": 266.6249999999995,
+      "successes": 0,
+      "visitedNodes": 51287380,
+      "testedPositions": 521011257,
+      "maxDepth": 12,
+      "exhaustionSum": 500.9950000000011
+    },
+    "F-abelian|bfs-16x": {
+      "worlds": 512,
+      "accuracySum": 274.3849999999995,
+      "successes": 0,
+      "visitedNodes": 199021505,
+      "testedPositions": 2611766244,
+      "maxDepth": 13,
+      "exhaustionSum": 492.4850000000008
+    },
+    "F-nonabelian|bfs-b2": {
+      "worlds": 485,
+      "accuracySum": 322.27499999999986,
+      "successes": 0,
+      "visitedNodes": 7736142,
+      "testedPositions": 74045322,
+      "maxDepth": 6,
+      "exhaustionSum": 404.40000000000026
+    },
+    "F-nonabelian|bfs-4x": {
+      "worlds": 485,
+      "accuracySum": 357.91499999999985,
+      "successes": 11,
+      "visitedNodes": 28375103,
+      "testedPositions": 346872866,
+      "maxDepth": 9,
+      "exhaustionSum": 367.9500000000003
+    },
+    "F-nonabelian|bfs-16x": {
+      "worlds": 485,
+      "accuracySum": 376.0999999999996,
+      "successes": 34,
+      "visitedNodes": 100950067,
+      "testedPositions": 1637346769,
+      "maxDepth": 11,
+      "exhaustionSum": 345.3000000000004
+    },
+    "F-monoid|bfs-b2": {
+      "worlds": 295,
+      "accuracySum": 197.37999999999997,
+      "successes": 3,
+      "visitedNodes": 3798124,
+      "testedPositions": 63403877,
+      "maxDepth": 8,
+      "exhaustionSum": 245.00500000000002
+    },
+    "F-monoid|bfs-4x": {
+      "worlds": 295,
+      "accuracySum": 223.00999999999993,
+      "successes": 8,
+      "visitedNodes": 13521804,
+      "testedPositions": 281109256,
+      "maxDepth": 10,
+      "exhaustionSum": 219.31500000000003
+    },
+    "F-monoid|bfs-16x": {
+      "worlds": 295,
+      "accuracySum": 241.00999999999985,
+      "successes": 27,
+      "visitedNodes": 45672364,
+      "testedPositions": 1201287379,
+      "maxDepth": 25,
+      "exhaustionSum": 199.61000000000007
+    }
+  },
+  "liveModelCalls": 0
+}

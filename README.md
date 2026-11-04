@@ -33,7 +33,7 @@ Both have a uniform marginal, so frequency coding and context modeling gain noth
 
 ## Measurements (defined before running; see `prereg/`)
 
-The unit of analysis is the independently generated world (seed). Repeats within a world measure noise and are averaged. Pre-registered contrasts are paired by world with bootstrap CIs; per-condition Wilson intervals over trials are shown for orientation only.
+The unit of analysis is the sampled world (seed). Repeat 0 is primary; later repeats are exploratory and remain separate. Unknown arm outcomes produce sample identification intervals. The provider-randomness population upper bound is available only for resolved zero-success evidence; positive or unresolved counts have inference unavailable and the trivial bound 1.
 
 | measurement | plain-language meaning | where |
 |---|---|---|
@@ -114,7 +114,7 @@ src/
   report.js       validates every record against the config and its run log; world-level report -> runs/report-<name>.md
   validate.js     the one typed contract (schema 5) used by writers and readers
   draw-seeds.js   registered seed draw for confirmatory batches
-  bounds.js       registered null-bound calculations (completeness gate + conservative bound)
+  bounds.js       explicit inference status and separately labeled numerical diagnostics
   ideas.js        lexical distinct-idea proxy
   selftest.js     proves the wall
 prereg/           pre-registered key moves and predictions (write before running)
@@ -134,14 +134,29 @@ Code: MIT (see `LICENSE`). Run logs, pre-registration documents and write-ups: C
 
 Each assigned slot owns at most three fresh executions (indices 0–2). Only interruption permits a retry; a completed success or budget-exhausted failure terminates immediately. Setup failure terminates unresolved. One `slot-terminal` links every `slot-execution`. Requests are written before transport, and an unreceived response remains a dispatched record. Run IDs use 16 random bytes.
 
-Reports regenerate requests and instances, validate the full chain, and sum named usage fields across retries. Missing usage is `unknown`. The report and adjacent `.analysis.json` emit completeness gates, hypergeometric upper bounds (binomial approximations shown separately), and sample identification bounds for contrasts with unknown outcomes. Repeats are separate binary endpoint strata, not extra independent worlds. Historical schemas are not silently upgraded.
+Reports regenerate requests and instances, validate the full chain, and sum named usage fields across retries. Missing usage is `unknown`. The report and adjacent `.analysis.json` emit completeness gates, provider zero-success inference, non-inferential hypergeometric/plug-in diagnostics, and sample identification bounds for contrasts with unknown outcomes. Repeats are separate binary endpoint strata, not extra independent worlds. Historical schemas are not silently upgraded.
 
 Adapted review 9: `node test/REVIEW-CHECKS-v9.mjs . docs/REVIEW-EVIDENCE-schema5.json`. The archived reviewer scripts remain unchanged.
 
-## Invariant game — B2 review checkpoint
+## Invariant game — B4 review checkpoint
 
-`src/domains/invariantGame.js` generates finite-invariant rewrite worlds for count, abelian, S3/Q8/D4/A4 and small transformation-monoid families. It includes exact conservation proofs, 200 training pairs, calibration pairs and an exhaustive bounded identifiability audit. `publicEvidence(inst)` supplies the solver view without secret certificates or decoy annotations.
+B2 review findings are repaired. The current generator (`invariantGame-v2-b3`) samples symbol images independently of the public alphabet listing. The B2 implementation and its 16 historical worlds remain available as `invariantGame-b2.js`.
 
-`npm run selftest` also runs the invariant calibration wall: the reference passes every tested family, the count-nullspace solver passes the abelian controls and fails the noncommutative cases, and bounded BFS fails large pairs. These are development checks under explicit budgets. Sealed construction and model-loop integration remain pending the required B2 review; production invariant scoring refuses absent sealed data. See `docs/BUILD-REPORT-v1.md` and `docs/REVIEW-PROMPT-B2.md`.
+B3 adds the durable construction-defect ledger, a certified sealed sampler, the bounded LP and independent realized-ceiling checks, and validated batch resume. B4 implements the solver portfolio, public-only selector, separately labeled oracle portfolio, positional-template control and all registered BFS resource curves. See `docs/BUILD-REPORT-v2.md`, `docs/B4-EVIDENCE/coverage.md` and `docs/REVIEW-PROMPT-B4.md`.
 
-B2 author decisions are recorded in `docs/DECISIONS-B2.md`. Repeat 0 is the primary stratum; later repeats are exploratory and are analyzed separately. Reports distinguish the stochastic zero-success bound from numerical population references. Quantity-requested scoring requires one quantity form, and non-identifiable worlds are construction defects. B3, including the exclusion ledger and batch resume, remains gated on the pending B2 review.
+```powershell
+$env:LLM_MOCK='1'
+npm test
+node src/check-invariant-world.js examples/invariantGame-world-1.json
+node src/portfolio/run.js examples/invariantGame-world-1.json
+# Regenerate the full fixed audit in a NEW directory; existing evidence is not overwritten.
+node src/portfolio/audit.js docs/B4-EVIDENCE-reproduction
+# Resume a compatible incomplete batch. Completed batches are a no-op.
+node src/experiment.js --resume runs/experiment-name.jsonl
+```
+
+Responses are persisted as `received-unscored` before parsing/scoring. Resume binds the prior-state digest and source/config identity, uses archived receipts, and preserves execution indices and budgets. Inconsistent evidence is retained with an adjacent `.disposition.json` abandonment record.
+
+Exact public-source seed conversion: `node src/draw-seeds.js --source-hex <1-to-32-bytes-as-hex> --n 40`. The output records original hex, bytes and canonical decimal. Direct decimal masters allow up to 78 digits and reject aliases, signs and whitespace.
+
+**B4 review stop:** the builder coverage audit is not an independent challenge or a freeze. The independent solver-author challenge remains required. B5 leakage audits, B6 model-loop integration, real-model pilots and Phase 4 remain gated. No real-model calls were made in this build.

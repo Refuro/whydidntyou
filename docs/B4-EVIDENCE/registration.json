@@ -1,0 +1,139 @@
+{
+  "audit": {
+    "master": "2026110304",
+    "proposalsPerFamily": 512,
+    "families": [
+      "F-count",
+      "F-abelian",
+      "F-nonabelian",
+      "F-monoid"
+    ],
+    "nonabelianVariants": [
+      "S3",
+      "Q8",
+      "D4",
+      "A4"
+    ],
+    "monoidPoints": [
+      3,
+      4
+    ],
+    "policy": "fixed 512 proposals per requested family; variants cycle by proposal index; no replacement; construction for every family finishes before the first portfolio fit",
+    "independentChallenger": "pending external B4 review; this is the builder audit, not an independent challenge or freeze"
+  },
+  "portfolio": {
+    "version": "portfolio-b4-v1",
+    "fitOperations": 2000000,
+    "totalOperations": 60000000,
+    "totalMs": 20000,
+    "workAccounting": "fit: counted assignments, rule/example checks, symbol transitions and law triples; linear algebra precharged a dimension bound; score: actual BFS candidate positions, one unit per cache hit, otherwise declared conservative kernel-work bounds; wall ceiling checked between pair calls",
+    "finiteStateChoicesPerQ": 4096,
+    "grammarRounds": 16,
+    "selector": "highest public training accuracy; ties by registration order; chosen before any sealed scoring",
+    "grammar": "Eq(Fold(T,images,a),Fold(T,images,b)); T ranges over registered cyclic/abelian/group/transformation templates; relations constrain images; first counterexample is added to the active constraints each round",
+    "memoization": "unlabelled (a,b) predictions cached per member across public and sealed sets; cache hits charged one operation",
+    "searchCurves": [
+      {
+        "name": "b2",
+        "maxNodes": 128,
+        "maxPositions": 4096,
+        "lengthSlack": 6
+      },
+      {
+        "name": "4x",
+        "maxNodes": 512,
+        "maxPositions": 16384,
+        "lengthSlack": 6
+      },
+      {
+        "name": "16x",
+        "maxNodes": 2048,
+        "maxPositions": 65536,
+        "lengthSlack": 6
+      }
+    ]
+  },
+  "members": [
+    {
+      "id": "count-linear",
+      "language": "Gaussian elimination on rule count differences modulo 2 and 3"
+    },
+    {
+      "id": "group-full",
+      "language": "enumerate symbol homomorphisms into C2..C6, C2xC2, C3xC3, S3, Q8, D4, A4"
+    },
+    {
+      "id": "group-quotients",
+      "language": "same search into all proper quotients of the registered groups"
+    },
+    {
+      "id": "monoid-csp",
+      "language": "backtracking symbol-image CSP over registered finite tables; exhaustive laws, partial rules and examples"
+    },
+    {
+      "id": "joint-coarse",
+      "language": "fit a public finite-table CSP then majority-classify the joint proper-quotient and count tuple"
+    },
+    {
+      "id": "finite-state",
+      "language": "infer complete letter transformations on q=2,3,4 points; retain full product with <=q^q states"
+    },
+    {
+      "id": "rewrite-normal-form",
+      "language": "bounded shortlex-decreasing rewrite normalization"
+    },
+    {
+      "id": "grammar-cegis",
+      "language": "relation-constrained finite fold grammar with public counterexample refinement"
+    },
+    {
+      "id": "nuisance-stumps",
+      "language": "fitted threshold stumps on lengths, histogram L1, edit, LCS, positional agreement and bigram differences"
+    },
+    {
+      "id": "positional-template",
+      "language": "registered ambient templates with their historical generator images at public alphabet positions; free remaining images"
+    },
+    {
+      "id": "bfs-b2",
+      "language": "bounded single-rule FIFO string search",
+      "search": {
+        "name": "b2",
+        "maxNodes": 128,
+        "maxPositions": 4096,
+        "lengthSlack": 6
+      }
+    },
+    {
+      "id": "bfs-4x",
+      "language": "bounded single-rule FIFO string search",
+      "search": {
+        "name": "4x",
+        "maxNodes": 512,
+        "maxPositions": 16384,
+        "lengthSlack": 6
+      }
+    },
+    {
+      "id": "bfs-16x",
+      "language": "bounded single-rule FIFO string search",
+      "search": {
+        "name": "16x",
+        "maxNodes": 2048,
+        "maxPositions": 65536,
+        "lengthSlack": 6
+      }
+    },
+    {
+      "id": "bidirectional",
+      "language": "bounded two-frontier reversible rewrite search",
+      "search": {
+        "name": "b2",
+        "maxNodes": 128,
+        "maxPositions": 4096,
+        "lengthSlack": 6
+      }
+    }
+  ],
+  "sourceHash": "1adfd878b5e946443222508f0b88036b34aa737075fb81bd5e28864cdeb63621"
+}
