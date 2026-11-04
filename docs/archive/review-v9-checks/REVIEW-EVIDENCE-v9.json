@@ -1,0 +1,925 @@
+{
+  "node": "v22.23.4",
+  "root": "C:\\Users\\Refur\\LLMBreakthroughs",
+  "work": "C:\\Users\\Refur\\SonyTv\\whydidntyou-review\\v9-records-hVOaRB",
+  "scope": "Source inspection and ordinary offline record fixtures; no sandbox execution.",
+  "sourceHashes": {
+    "docs/PLAN.md": "d306650961a3d6e2cbd3aea6d637f251a17e4265703744865d1ea3a1adb09b35",
+    "docs/REVIEW-PROMPT-v9.md": "ed1c2b278bcbf05c04cde3e49ff357050c8282b45ab578293fa9bb2a9598bd7f",
+    "package.json": "7d247455ae619875a830f2136fcc01a2ec216a3572ddd95edb9f8df61321d66b",
+    "package-lock.json": "971dc6ff0dbc617e2d01e2dfff465ec8a614624b31f8ac9af06ce65e98571ac8",
+    "src/analyze.js": "cea62c0810d323a81b77910bdb1aacf45e1942b7c09a087071089915f73a183c",
+    "src/bounds.js": "88aba88896ffcacffea93b24355e9761a2ee27e5ce20741f92e5610dede2a2c3",
+    "src/draw-seeds.js": "00a5de58283e9980f4d14ca42875f3b03be0b2b93f5eaf79ef9797c97875081e",
+    "src/experiment.js": "1ac4d24a31f15cc70a1d5db0605cea55c0ef7b460ef6d54ffeb0511c926d0bf7",
+    "src/hints.js": "623d094d8bdc6d6e232969d4d8793675a2b5648cdba76b022f637144c1c84024",
+    "src/ideas.js": "3ad0dc15d5f019c512228bb5567a102d9a3ca1be778840e95bc7f3f32f8bd358",
+    "src/llm.js": "5a6fab7b76b27ea38dec0e8d256ba60762c066ccf7e7055aeca5f78b25a86f01",
+    "src/postmortem.js": "206b16ca41c2b11d652c59ec5238cc3f7113106ec03c76de3f7d5d61c4f011ee",
+    "src/prompt.js": "c85337275c72a8fd6b763d2aa45951501b667b0ee8f93d3d35e56b2bbe69e070",
+    "src/report.js": "79896f349040799ce2bf28ba2b964365c0492ba1956832497224c722a48c437c",
+    "src/rng.js": "5b722e903533c1fa621f6163816c596d5c9e64d0330782a66a43f527af0165fe",
+    "src/run.js": "debc776adf4b5f44750c75a7893a44770ebab01fad6466057b827ee066b9f475",
+    "src/sandbox.js": "ceb6af9cae543c636ffa329ee5c65e6abef25ccad69293ed4d5f431c75aeba7b",
+    "src/selftest.js": "7f4e115d0692f138a2e4db854e70eeb4f14ab7565c6caa0d19d7f236f8e68b91",
+    "src/validate.js": "1d42212360c858e1aeea3f6d742aa66e803895a01aca0ab29c6218d3585f017d",
+    "src/domains/hiddenPeriod.js": "1a422393dce5b869826272e2e74e084934cb2c1bcc58df448da5ea6cd9695b67",
+    "src/domains/index.js": "66ac507758c21c8714f478ccb92e74ba61f989ed9324d444ff02342bcff2a0c4",
+    "src/domains/laggedRule.js": "d7e746575679331f2b8abe5d690a57be346de52e127f251674c623c970e39224"
+  },
+  "cases": [
+    {
+      "id": "writer/valid-parse-failure-run",
+      "passed": true,
+      "requests": 2,
+      "end": {
+        "type": "end",
+        "status": "completed",
+        "success": null,
+        "attemptsUsed": 2,
+        "maxAttempts": 2,
+        "budgetExhausted": true,
+        "reason": null,
+        "endedAt": "2026-11-04T01:06:41.335Z"
+      },
+      "wasmCalls": 0
+    },
+    {
+      "id": "report/valid",
+      "passed": true,
+      "expected": "accept",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/v8-log-baseline",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: log reference values (n/baseline/oracle) differ from the regenerated instance",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/v8-log-length",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: log reference values (n/baseline/oracle) differ from the regenerated instance",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/v8-log-budget",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log budget/model/memory contradict the config",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/v8-generator-version",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log does not describe this slot's instance",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/v8-wrong-hint",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: b|3602914921|0: linked log hint does not match the configured treatment",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/v8-reused-condition",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: b|3602914921|0: linked log was not executed for this slot",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/v8-reused-repeat",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|1: linked log was not executed for this slot",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/v8-completed-as-interrupted",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: trial-failed links a completed run; a completed run cannot be relabeled unresolved",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "experiment/v8-missing-scaffold",
+      "passed": true,
+      "requests": 0,
+      "records": 0,
+      "exit": 1,
+      "stderr": "condition b: scaffold file absent-fixture.md not found (no requests made)"
+    },
+    {
+      "id": "options/v8-k-without-n",
+      "passed": true,
+      "accepted": false,
+      "error": "opts.k=3000 must be at most n/2 (effective n=4000)"
+    },
+    {
+      "id": "options/v8-k-explicit-n",
+      "passed": true,
+      "accepted": false,
+      "error": "opts.k=3000 must be at most n/2 (effective n=4000)"
+    },
+    {
+      "id": "options/L-without-n",
+      "passed": true,
+      "accepted": false,
+      "error": "opts.L=5000 must be at most n (effective n=4000)"
+    },
+    {
+      "id": "experiment/v8-duplicate-seeds",
+      "passed": true,
+      "exit": 1,
+      "requests": 0,
+      "stderr": "config invalid (no requests made): config seeds contain duplicates"
+    },
+    {
+      "id": "report/positive-hint",
+      "passed": true,
+      "expected": "accept",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/positive-scaffold",
+      "passed": true,
+      "expected": "accept",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/positive-summary",
+      "passed": true,
+      "expected": "accept",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/positive-last-code",
+      "passed": true,
+      "expected": "accept",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/wrong-slot-batchId",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log was not executed for this slot",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/wrong-slot-condition",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log was not executed for this slot",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/wrong-slot-seed",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log was not executed for this slot",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/wrong-slot-repeat",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log was not executed for this slot",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/wrong-meta-model",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log budget/model/memory contradict the config",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/wrong-meta-memory",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log budget/model/memory contradict the config",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/wrong-meta-opts",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log does not describe this slot's instance",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/wrong-meta-oracle",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: log reference values (n/baseline/oracle) differ from the regenerated instance",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/wrong-scaffold-hash",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log scaffold does not match the configured treatment",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/wrong-scaffold-path",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log scaffold does not match the configured treatment",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/payload-hint-absent",
+      "passed": false,
+      "expected": "reject",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/payload-scaffold-absent",
+      "passed": false,
+      "expected": "reject",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/payload-memory-wrong",
+      "passed": false,
+      "expected": "reject",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/payload-feedback-wrong",
+      "passed": false,
+      "expected": "reject",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/row-tokens-unbound",
+      "passed": false,
+      "expected": "reject",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "| a | laggedRule | 2 / 2 | 2 | 0% / 0% | 1000000000 |",
+        "- PRIMARY: b − a (laggedRule): 0 pp, bootstrap interval withheld (uninformative: every world difference is identical, 0, n=2). No discordant worlds observed. Inference for this contrast is UNRESOLVED pending the registered bounded-outcome fallback.; n=2 paired worlds",
+        "| a | 21 | 1 | 0% / 0% |",
+        "| a | 29 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "retry/writer-stops-without-two-restarts",
+      "passed": false,
+      "expected": "One interrupted run followed by one fresh completed restart (the transport fails only once)",
+      "requests": 2,
+      "records": [
+        {
+          "type": "experiment-meta"
+        },
+        {
+          "type": "trial-failed",
+          "stage": "interrupted",
+          "runId": "laggedRule-s3602914921-review-offline-interrupted-writer-a-r0-1793754403784"
+        }
+      ],
+      "stderr": ""
+    },
+    {
+      "id": "retry/incomplete-confirmatory-ledger",
+      "passed": true,
+      "exit": 2,
+      "stderr": "refusing: 1 of 1 expected trials are missing and missingPolicy is \"refuse\"; reasons are in runs/experiment-interrupted-writer.missing.json"
+    },
+    {
+      "id": "report/valid-interrupted",
+      "passed": true,
+      "expected": "accept",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 3,
+        "missing": [
+          {
+            "condition": "a",
+            "seed": 3602914921,
+            "repeat": 0,
+            "reason": "offline fixture request failure"
+          }
+        ],
+        "coincidentWorlds": []
+      },
+      "lines": [
+        "Configured: 2 conditions × 2 worlds × 1 repeats × 2 attempts = 4 trials. Present: 3. Missing: 1 — a/s3602914921/r0.",
+        "| a | laggedRule | 1 / 2 | 1 | 0% / 0% | 40 |",
+        "- PRIMARY: b − a: only 1 paired world(s); no interval computed",
+        "| a | 21 | 1 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "report/interrupted-wrong-slot",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: a|3602914921|0: linked log was not executed for this slot",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "report/retry-chain-unrepresentable",
+      "passed": true,
+      "expected": "reject",
+      "exit": 2,
+      "stderr": "refusing: slot a|3602914921|0 has more than one terminal record (trial and/or trial-failed)",
+      "missing": null,
+      "lines": []
+    },
+    {
+      "id": "sampling/recomputed-list",
+      "passed": true,
+      "accepted": true,
+      "error": null,
+      "value": {
+        "missingPolicy": "refuse"
+      }
+    },
+    {
+      "id": "sampling/handpicked-refused",
+      "passed": true,
+      "accepted": false,
+      "error": "confirmatory config (missingPolicy refuse) must declare seedDraw {master, n}; hand-picked seeds are exploratory only"
+    },
+    {
+      "id": "sampling/changed-list-refused",
+      "passed": true,
+      "accepted": false,
+      "error": "config seeds do not equal the registered draw from seedDraw.master"
+    },
+    {
+      "id": "sampling/adjacent-masters",
+      "passed": null,
+      "draw40": [
+        3602914921,
+        632055235,
+        1314401688,
+        2847738937,
+        2128395178,
+        2893227217,
+        1660810690,
+        2681700709,
+        1271605182,
+        2557259536,
+        1904331919,
+        2815140800,
+        1468113550,
+        2067353759,
+        1839638704,
+        4165968561,
+        1945260249,
+        3457257365,
+        3437342611,
+        4189754491,
+        258222983,
+        2122919826,
+        1598644425,
+        886224163,
+        1975887691,
+        1996449502,
+        310594035,
+        1038214805,
+        968819636,
+        3650713275,
+        319292230,
+        2598661908,
+        1678085599,
+        3858624360,
+        3139326783,
+        339446841,
+        3471674521,
+        1522875751,
+        3488889035,
+        183984099
+      ],
+      "adjacent": [
+        632055235,
+        1314401688,
+        2847738937,
+        2128395178,
+        2893227217,
+        1660810690,
+        2681700709,
+        1271605182,
+        2557259536,
+        1904331919,
+        2815140800,
+        1468113550,
+        2067353759,
+        1839638704,
+        4165968561,
+        1945260249,
+        3457257365,
+        3437342611,
+        4189754491,
+        258222983,
+        2122919826,
+        1598644425,
+        886224163,
+        1975887691,
+        1996449502,
+        310594035,
+        1038214805,
+        968819636,
+        3650713275,
+        319292230,
+        2598661908,
+        1678085599,
+        3858624360,
+        3139326783,
+        339446841,
+        3471674521,
+        1522875751,
+        3488889035,
+        183984099,
+        3213819487
+      ],
+      "overlap": 39,
+      "isShiftedWindow": true,
+      "log2NumberOf40Subsets": 1120.8409599138165,
+      "maximumInternalStateBits": 64
+    },
+    {
+      "id": "report/coincident-worlds",
+      "passed": true,
+      "expected": "accept",
+      "exit": 0,
+      "stderr": "",
+      "missing": {
+        "batchId": "batch",
+        "expected": 4,
+        "present": 4,
+        "missing": [],
+        "coincidentWorlds": [
+          {
+            "condition": "a",
+            "seeds": [
+              3602914921,
+              1314401688
+            ],
+            "worldDigest": "54577bb39786db9caf493192f60aff62674b88f23b06c4f302367889664203f2"
+          },
+          {
+            "condition": "a",
+            "seeds": [
+              3602914921,
+              2847738937
+            ],
+            "worldDigest": "54577bb39786db9caf493192f60aff62674b88f23b06c4f302367889664203f2"
+          }
+        ]
+      },
+      "lines": [
+        "Configured: 1 conditions × 4 worlds × 1 repeats × 2 attempts = 4 trials. Present: 4. Missing: 0.",
+        "**Coincident worlds:** 2 pair(s) of seeds generated identical worlds and are retained as independent draws: a: seeds 3602914921 & 1314401688; a: seeds 3602914921 & 2847738937.",
+        "| a | hiddenPeriod | 4 / 4 | 4 | 0% / 0% | 40 |",
+        "| a | 1 | 4 | 0% / 0% |"
+      ]
+    },
+    {
+      "id": "bounds/n100-s0-u10",
+      "passed": true,
+      "actual": {
+        "n": 100,
+        "resolved": 90,
+        "unresolved": 10,
+        "successes": 0,
+        "resolvedOnly": 0.032738033833534574,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 0.1637176232758148,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      },
+      "independentConservative": 0.1637176232758148,
+      "independentResolvedOnly": 0.032738033833534574
+    },
+    {
+      "id": "bounds/n100-s0-u0",
+      "passed": true,
+      "actual": {
+        "n": 100,
+        "resolved": 100,
+        "unresolved": 0,
+        "successes": 0,
+        "resolvedOnly": 0.029513049607039932,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 0.029513049607039876,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      },
+      "independentConservative": 0.029513049607039987,
+      "independentResolvedOnly": 0.029513049607039932
+    },
+    {
+      "id": "bounds/n100-s5-u10",
+      "passed": true,
+      "actual": {
+        "n": 100,
+        "resolved": 90,
+        "unresolved": 10,
+        "successes": 5,
+        "resolvedOnly": 0.11326248923320577,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 0.22153690831851142,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      },
+      "independentConservative": 0.22153690831851142,
+      "independentResolvedOnly": null
+    },
+    {
+      "id": "bounds/n100-s0-u100",
+      "passed": true,
+      "actual": {
+        "n": 100,
+        "resolved": 0,
+        "unresolved": 100,
+        "successes": 0,
+        "resolvedOnly": 1,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 1,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      },
+      "independentConservative": 1,
+      "independentResolvedOnly": null
+    },
+    {
+      "id": "bounds/n1-s0-u0",
+      "passed": true,
+      "actual": {
+        "n": 1,
+        "resolved": 1,
+        "unresolved": 0,
+        "successes": 0,
+        "resolvedOnly": 0.95,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 0.9500000000000001,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      },
+      "independentConservative": 0.95,
+      "independentResolvedOnly": 0.95
+    },
+    {
+      "id": "bounds/n59-s0-u0",
+      "passed": true,
+      "actual": {
+        "n": 59,
+        "resolved": 59,
+        "unresolved": 0,
+        "successes": 0,
+        "resolvedOnly": 0.049507609888227,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 0.049507609888226944,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      },
+      "independentConservative": 0.049507609888226944,
+      "independentResolvedOnly": 0.049507609888227
+    },
+    {
+      "id": "bounds/n32-s0-u0",
+      "passed": true,
+      "actual": {
+        "n": 32,
+        "resolved": 32,
+        "unresolved": 0,
+        "successes": 0,
+        "resolvedOnly": 0.0893681989862648,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 0.08936819898626476,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      },
+      "independentConservative": 0.08936819898626475,
+      "independentResolvedOnly": 0.0893681989862648
+    },
+    {
+      "id": "bounds/n40-s0-u0",
+      "passed": true,
+      "actual": {
+        "n": 40,
+        "resolved": 40,
+        "unresolved": 0,
+        "successes": 0,
+        "resolvedOnly": 0.0721575245055146,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 0.07215752450551455,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      },
+      "independentConservative": 0.07215752450551455,
+      "independentResolvedOnly": 0.0721575245055146
+    },
+    {
+      "id": "bounds/nonzero-without-replacement-counterexample",
+      "passed": null,
+      "M": 79,
+      "K": 77,
+      "n": 2,
+      "p": 0.9746835443037974,
+      "binomialUpperAtOne": 0.9746794344808964,
+      "noncoverage": 0.050308341447582006,
+      "exceedsFivePercent": true
+    },
+    {
+      "id": "bounds/invalid-{\"n\":100,\"successes\":-1,\"unresolved\":0}",
+      "passed": false,
+      "accepted": true,
+      "error": null,
+      "value": {
+        "n": 100,
+        "resolved": 100,
+        "unresolved": 0,
+        "successes": -1,
+        "resolvedOnly": 7.888609052210118e-31,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 7.888609052210118e-31,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      }
+    },
+    {
+      "id": "bounds/invalid-{\"n\":100,\"successes\":0,\"unresolved\":101}",
+      "passed": false,
+      "accepted": true,
+      "error": null,
+      "value": {
+        "n": 100,
+        "resolved": -1,
+        "unresolved": 101,
+        "successes": 0,
+        "resolvedOnly": 1,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 1,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      }
+    },
+    {
+      "id": "bounds/invalid-{\"n\":100.5,\"successes\":0,\"unresolved\":0}",
+      "passed": false,
+      "accepted": true,
+      "error": null,
+      "value": {
+        "n": 100.5,
+        "resolved": 100.5,
+        "unresolved": 0,
+        "successes": 0,
+        "resolvedOnly": 0.029368396087409043,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 0.02936839608740899,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      }
+    },
+    {
+      "id": "bounds/invalid-{\"n\":100,\"successes\":0,\"unresolved\":0,\"alpha\":2}",
+      "passed": false,
+      "accepted": true,
+      "error": null,
+      "value": {
+        "n": 100,
+        "resolved": 100,
+        "unresolved": 0,
+        "successes": 0,
+        "resolvedOnly": -0.006955550056718884,
+        "resolvedOnlyAssumption": "resolution independent of potential outcome (registered missingness assumption; NOT established by disclosure)",
+        "conservative": 7.888609052210118e-31,
+        "conservativeMeaning": "one-sided 95% upper bound on the certified-success rate over all assigned construction-valid worlds, allowing every unresolved world to be a success"
+      }
+    },
+    {
+      "id": "bounds/cdf-endpoints",
+      "passed": false,
+      "cdfZero": "NaN",
+      "cdfAllAtOne": "NaN"
+    },
+    {
+      "id": "rng/source-pin-host-hash",
+      "passed": true,
+      "pin": "97d517b95e4c6c159fc47b2565ee393d90a96d21410c429ed2343e03277869b5",
+      "computed": "97d517b95e4c6c159fc47b2565ee393d90a96d21410c429ed2343e03277869b5",
+      "runtimeSandboxTested": false
+    },
+    {
+      "id": "safety/source-unchanged",
+      "passed": true,
+      "changed": []
+    },
+    {
+      "id": "safety/all-workers-no-wasm",
+      "passed": true,
+      "workerCalls": 4,
+      "totalOfflineRequests": 4,
+      "liveRequests": 0
+    }
+  ],
+  "workerCalls": [
+    {
+      "id": 1,
+      "kind": "run",
+      "requests": 2,
+      "wasmCalls": 0
+    },
+    {
+      "id": 42,
+      "kind": "experiment",
+      "requests": 0,
+      "wasmCalls": 0
+    },
+    {
+      "id": 43,
+      "kind": "experiment",
+      "requests": 0,
+      "wasmCalls": 0
+    },
+    {
+      "id": 120,
+      "kind": "experiment",
+      "requests": 2,
+      "wasmCalls": 0
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 //   node src/run.js --domain laggedRule --seed 1 --attempts 8 --hint "..." --tag hintL2
 //   node src/run.js ... --scaffold scaffolds/reframe.md      (transfer test: generic scaffold appended to system prompt)
 import { appendFileSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { getDomain } from './domains/index.js';
 import { evaluate, isSuccess } from './sandbox.js';
 import { complete, MODEL, MOCK, getLastUsage } from './llm.js';
@@ -13,16 +14,18 @@ export function parseArgs(argv) {
   const a = {}; for (let i = 0; i < argv.length; i++) { if (argv[i].startsWith('--')) { const k = argv[i].slice(2); const v = argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[++i] : true; a[k] = v; } } return a;
 }
 
-export async function runAttempts({ domain, seed, attempts, hint = null, scaffold = null, memory = 'full', opts = {}, tag = '', quiet = false }) {
+export async function runAttempts({ domain, seed, attempts, hint = null, scaffold = null, memory = 'full', opts = {}, slot = null, tag = '', quiet = false }) {
   ({ seed, attempts, memory, opts } = normalizeRunInput({ seed, attempts, memory, opts }));
   if (hint !== null && (typeof hint !== 'string' || !hint)) throw new Error('hint must be null or a non-empty string');
   const d = getDomain(domain);
   const inst = d.make(seed, opts);
-  const system = SYSTEM_BASE + (scaffold ? `\n\n${readFileSync(scaffold, 'utf8')}` : '');
+  const scaffoldText = scaffold ? readFileSync(scaffold, 'utf8') : null;
+  const scaffoldHash = scaffoldText === null ? null : createHash('sha256').update(scaffoldText).digest('hex');
+  const system = SYSTEM_BASE + (scaffoldText !== null ? `\n\n${scaffoldText}` : '');
   mkdirSync('runs', { recursive: true });
   const runId = `${domain}-s${seed}-${MOCK ? 'mock' : MODEL}${tag ? '-' + tag : ''}-${Date.now()}`;
   const logPath = `runs/${runId}.jsonl`;
-  const meta = { type: 'meta', schema: 4, runId, domain, generatorVersion: inst.generatorVersion, seed, model: MOCK ? 'mock' : MODEL, attempts, maxAttempts: attempts, hint, scaffold, memory, opts, system, secret: inst.secret, instanceDigest: inst.instanceDigest, worldDigest: inst.worldDigest, n: inst.n, baseline: inst.baselineBitsPerSym, oracle: inst.oracleBitsPerSym, startedAt: new Date().toISOString() };
+  const meta = { type: 'meta', schema: 4, runId, domain, generatorVersion: inst.generatorVersion, seed, model: MOCK ? 'mock' : MODEL, attempts, maxAttempts: attempts, hint, scaffold, scaffoldHash, slot, memory, opts, system, secret: inst.secret, instanceDigest: inst.instanceDigest, worldDigest: inst.worldDigest, n: inst.n, baseline: inst.baselineBitsPerSym, oracle: inst.oracleBitsPerSym, startedAt: new Date().toISOString() };
   validateMeta(meta);
   appendFileSync(logPath, JSON.stringify(meta) + '\n');
   if (!quiet) console.log(`run ${runId}\n  secret=${JSON.stringify(inst.secret)} baseline=${inst.baselineBitsPerSym} oracle=${inst.oracleBitsPerSym.toFixed(3)} target<=${(inst.baselineBitsPerSym * 0.6).toFixed(2)}`);

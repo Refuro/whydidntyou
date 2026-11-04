@@ -111,7 +111,10 @@ src/
   postmortem.js   reveal + why + classify + log cross-check -> runs/postmortems.jsonl
   analyze.js      per-run analysis; --judge scores key moves
   experiment.js   grid runner -> runs/experiment-<name>.jsonl
-  report.js       aggregates + Wilson CIs -> runs/report-<name>.md
+  report.js       validates every record against the config and its run log; world-level report -> runs/report-<name>.md
+  validate.js     the one typed contract (schema 4) used by writers and readers
+  draw-seeds.js   registered seed draw for confirmatory batches
+  bounds.js       registered null-bound calculations (completeness gate + conservative bound)
   ideas.js        lexical distinct-idea proxy
   selftest.js     proves the wall
 prereg/           pre-registered key moves and predictions (write before running)

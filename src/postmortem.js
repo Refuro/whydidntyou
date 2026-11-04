@@ -8,7 +8,7 @@ import { readFileSync, appendFileSync } from 'node:fs';
 import { getDomain } from './domains/index.js';
 import { complete, MODEL, MOCK, getLastModel } from './llm.js';
 import { parseArgs } from './run.js';
-import { validateRunLog } from './validate.js';
+import { validateRunLog, validateAttempt } from './validate.js';
 import { isSuccess } from './sandbox.js';
 
 const a = parseArgs(process.argv.slice(2));
@@ -23,6 +23,8 @@ attempts.forEach(x => { if (isSuccess(x.result)) refuse(`attempt ${x.attempt} me
 const inst = getDomain(meta.domain).make(meta.seed, meta.opts);
 if (inst.generatorVersion !== meta.generatorVersion) refuse(`generator version changed (${meta.generatorVersion} -> ${inst.generatorVersion})`);
 if (inst.instanceDigest !== meta.instanceDigest || inst.worldDigest !== meta.worldDigest) refuse('regenerated digests do not match the logged ones');
+if (meta.n !== inst.n || meta.baseline !== inst.baselineBitsPerSym || Math.abs(meta.oracle - inst.oracleBitsPerSym) > 1e-9) refuse('log reference values differ from the regenerated instance');
+try { attempts.forEach((x, i) => validateAttempt(x, i, { n: inst.n, baseline: inst.baselineBitsPerSym, oracle: inst.oracleBitsPerSym })); } catch (e) { refuse('attempt arithmetic against regenerated references: ' + e.message); }
 if (JSON.stringify(inst.secret) !== JSON.stringify(meta.secret)) refuse('regenerated secret does not match the logged secret');
 
 // Complete retrospective record from archived pieces.

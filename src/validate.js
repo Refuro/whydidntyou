@@ -38,10 +38,21 @@ export function normalizeRunInput({ seed, attempts, memory, opts }) {
   validateOpts(o);
   return { seed: s, attempts: a, memory: m, opts: o };
 }
+export const OPTION_DEFAULTS = { A: 8, p: 0.85, n: 4000 }; // generator defaults; relative constraints are checked on EFFECTIVE values
 export function validateOpts(o) {
   if (!isPlainObj(o)) fail('opts must be a plain object');
   for (const [k, v] of Object.entries(o)) { const dom = OPTION_DOMAINS[k]; if (!dom) fail(`opts.${k} is not a registered generator option`); if (!dom(v)) fail(`opts.${k}=${JSON.stringify(v)} outside its registered domain`); }
-  if (o.k != null && o.n != null && o.k > o.n / 2) fail('opts.k must be at most n/2');
+  const eff = { ...OPTION_DEFAULTS, ...o };
+  if (o.k != null && o.k > eff.n / 2) fail(`opts.k=${o.k} must be at most n/2 (effective n=${eff.n})`);
+  if (o.L != null && o.L > eff.n) fail(`opts.L=${o.L} must be at most n (effective n=${eff.n})`);
+}
+
+// Registered seed draw: n distinct seeds, uniform without replacement from [0, 2^32-1], from a master seed (splitmix-style hash).
+export function drawSeeds(master, n) {
+  if (!isInt(master) || master < 0 || !isInt(n) || n < 1 || n > 100000) fail('drawSeeds: bad arguments');
+  const out = []; const seen = new Set(); let x = BigInt(master) * 0x9E3779B97F4A7C15n;
+  while (out.length < n) { x = (x + 0x9E3779B97F4A7C15n) & 0xFFFFFFFFFFFFFFFFn; let z = x; z = ((z ^ (z >> 30n)) * 0xBF58476D1CE4E5B9n) & 0xFFFFFFFFFFFFFFFFn; z = ((z ^ (z >> 27n)) * 0x94D049BB133111EBn) & 0xFFFFFFFFFFFFFFFFn; z ^= z >> 31n; const v = Number(z & 0xFFFFFFFFn); if (!seen.has(v)) { seen.add(v); out.push(v); } }
+  return out;
 }
 
 // Whole-experiment configuration contract, used by the writer BEFORE any request and by the reader.
@@ -55,6 +66,10 @@ export function validateConfig(cfg, domainVersions /* {domain: currentVersion} o
   if (!isInt(cfg.attempts) || cfg.attempts < 1 || cfg.attempts > ATTEMPTS_MAX) fail(`config attempts must be an integer in [1,${ATTEMPTS_MAX}]`);
   if (!isInt(cfg.repeats) || cfg.repeats < 1 || cfg.repeats > 100) fail('config repeats must be an integer in [1,100]');
   const mp = cfg.missingPolicy ?? 'refuse'; if (!MISSING_POLICIES.includes(mp)) fail(`config missingPolicy must be ${MISSING_POLICIES.join('|')} (got ${JSON.stringify(cfg.missingPolicy)})`);
+  // Seed draw: confirmatory batches (missingPolicy refuse) must have their seed list produced by the registered draw
+  // procedure (distinct seeds, uniform without replacement from [0, 2^32-1], from a published master seed).
+  if (cfg.seedDraw != null) { if (!isPlainObj(cfg.seedDraw) || !isInt(cfg.seedDraw.master) || cfg.seedDraw.master < 0 || !isInt(cfg.seedDraw.n) || cfg.seedDraw.n !== cfg.seeds.length) fail('config seedDraw must be {master, n} with n equal to the seed count'); const drawn = drawSeeds(cfg.seedDraw.master, cfg.seedDraw.n); if (JSON.stringify(drawn) !== JSON.stringify(cfg.seeds)) fail('config seeds do not equal the registered draw from seedDraw.master'); }
+  else if (mp === 'refuse') fail('confirmatory config (missingPolicy refuse) must declare seedDraw {master, n}; hand-picked seeds are exploratory only');
   if (cfg.memory != null && !MEMORY_MODES.includes(cfg.memory)) fail('config memory invalid');
   if (cfg.generatorVersions != null && !isPlainObj(cfg.generatorVersions)) fail('config generatorVersions must be an object');
   for (const c of cfg.conditions) {
@@ -108,6 +123,9 @@ export function validateMeta(meta) {
   if (!isInt(meta.n) || meta.n < 1 || typeof meta.baseline !== 'number' || typeof meta.oracle !== 'number') fail('meta.n/baseline/oracle missing');
   if (!isHex64(meta.instanceDigest)) fail('meta.instanceDigest invalid'); if (!isHex64(meta.worldDigest)) fail('meta.worldDigest invalid');
   if (meta.hint !== null && !isStr(meta.hint)) fail('meta.hint must be null or a string');
+  if (meta.scaffold !== null && !isStr(meta.scaffold)) fail('meta.scaffold must be null or a path');
+  if (meta.scaffold !== null && !isHex64(meta.scaffoldHash)) fail('meta.scaffoldHash missing for a scaffold run');
+  if (meta.slot !== null) { if (!isPlainObj(meta.slot) || !isStr(meta.slot.batchId) || !isStr(meta.slot.condition) || typeof meta.slot.seed !== 'number' || !isInt(meta.slot.repeat)) fail('meta.slot invalid'); }
 }
 export function validateAttempt(x, i, meta, where = `attempt ${i + 1}`) {
   if (!isPlainObj(x) || x.type !== 'attempt') fail(`${where}: not an attempt record`);
@@ -155,7 +173,9 @@ export function validateTrialFailed(t, cfg, header, condById) {
   if (typeof t.seed !== 'number' || !cfg.seeds.includes(t.seed)) fail('trial-failed seed not in config');
   if (!(isInt(t.repeat) && t.repeat >= 0 && t.repeat < cfg.repeats)) fail('trial-failed repeat out of range');
   if (!isStr(t.reason)) fail('trial-failed lacks a reason');
-  if (t.runId != null && !isStr(t.runId)) fail('trial-failed runId invalid');
+  if (!['setup', 'interrupted'].includes(t.stage)) fail('trial-failed stage must be setup|interrupted');
+  if (t.stage === 'setup') { if (t.runId != null || t.log != null) fail('setup failure cannot carry a run'); }
+  else { if (!isStr(t.runId) || !isStr(t.log)) fail('interrupted trial-failed must link its run log'); }
 }
 // Builds and validates a trial row (writer side) / validates one (reader side).
 export function validateTrial(t, cfg, header, condById) {

@@ -150,6 +150,9 @@ function decode(){ return []; }`;
   let s0 = 0x9E3779B9 | 0, s1 = 0x7F4A7C15 | 0, s2 = 0xF39CC060 | 0, s3 = 0x5CEDC834 | 0;
   const next = () => { let t = s3; t ^= t << 11; t ^= t >>> 8; s3 = s2; s2 = s1; s1 = s0; t ^= s0; t ^= s0 >>> 19; s0 = t; return t >>> 0; };
   let expected = ''; for (let i = 0; i < 16; i++) expected += next().toString(2).padStart(32, '0');
+  const EXPECTED_RNG_SHA256 = '97d517b95e4c6c159fc47b2565ee393d90a96d21410c429ed2343e03277869b5';
+  const h = createHash('sha256').update(expected).digest('hex');
+  if (EXPECTED_RNG_SHA256 !== 'PINNED_RNG_VECTOR' && h !== EXPECTED_RNG_SHA256) { console.error('FAIL: the registered RNG vector changed (host reference and sandbox prelude may have been edited together)'); failed++; }
   if (!r1.ok || !r2.ok) { console.error('FAIL: randomness probe did not run'); failed++; }
   else if (r1.bits !== r2.bits) { console.error('FAIL: Math.random differs across instances created at different times'); failed++; }
   else if (r1.bits.slice(0, 512) !== expected) { console.error('FAIL: Math.random sequence does not match the registered generator'); failed++; }

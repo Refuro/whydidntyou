@@ -4,7 +4,7 @@
 // Contrasts in the config: ["a","b"] (requires identical generator options) or
 // {"a":"...","b":"...","sharedWorld":true} to declare that differing options share the world's other draws.
 import { readFileSync, writeFileSync } from 'node:fs';
-import { validateTrial, validateTrialFailed, validateConfig, validateRunLog } from './validate.js';
+import { validateTrial, validateTrialFailed, validateConfig, validateRunLog, validateAttempt } from './validate.js';
 import { getDomain, domains } from './domains/index.js';
 import { existsSync } from 'node:fs';
 
@@ -27,22 +27,48 @@ const condById = Object.fromEntries(cfg.conditions.map(c => [c.id, c]));
 
 
 // ---- manifest validation: every record must match the config exactly (shared contract in validate.js); one terminal outcome per slot
-const seen = new Set(); const genVersions = {}; const digests = {}; const seedWorld = {}; const coincident = [];
-for (const f of failedTrials) { try { validateTrialFailed(f, cfg, meta, condById); } catch (e) { refuse(e.message); } const k = `${f.condition}|${f.seed}|${f.repeat}`; if (seen.has(k)) refuse(`slot ${k} has more than one terminal record`); seen.add(k); }
+const seen = new Set(); const genVersions = {}; const digests = {}; const seedWorld = {}; const coincident = []; const usedRuns = new Map();
+// Binds a run log to (a) the regenerated instance — the log's reference values are CHECKED against it, and result arithmetic
+// is validated against the regenerated references, never the log's own fields; (b) the configured condition (treatment:
+// hint, scaffold content hash, memory, options); (c) the execution slot (batch, condition, seed, repeat).
+function bindLog(text, inst, row, cond, k) {
+  const lines = text.trim().split('\n').map(l => JSON.parse(l)); const log = validateRunLog(lines); const m = log.meta;
+  if (m.n !== inst.n || m.baseline !== inst.baselineBitsPerSym || Math.abs(m.oracle - inst.oracleBitsPerSym) > 1e-9) throw new Error(`${k}: log reference values (n/baseline/oracle) differ from the regenerated instance`);
+  log.attempts.forEach((x, i) => validateAttempt(x, i, { n: inst.n, baseline: inst.baselineBitsPerSym, oracle: inst.oracleBitsPerSym }));
+  if (m.runId !== row.runId || m.seed !== row.seed || m.domain !== row.domain || m.generatorVersion !== inst.generatorVersion || m.worldDigest !== inst.worldDigest || m.instanceDigest !== inst.instanceDigest || JSON.stringify(m.secret) !== JSON.stringify(inst.secret) || JSON.stringify(m.opts) !== JSON.stringify(cond.opts || {})) throw new Error(`${k}: linked log does not describe this slot's instance`);
+  if (m.maxAttempts !== cfg.attempts || m.model !== meta.model || m.memory !== (cond.memory || cfg.memory || 'full')) throw new Error(`${k}: linked log budget/model/memory contradict the config`);
+  if (m.hint !== (cond.hint ?? null)) throw new Error(`${k}: linked log hint does not match the configured treatment`);
+  const expectedScaffold = (meta.scaffoldHashes || {})[cond.id] ?? null; if (m.scaffoldHash !== expectedScaffold || (m.scaffold ?? null) !== (cond.scaffold ?? null)) throw new Error(`${k}: linked log scaffold does not match the configured treatment`);
+  if (!m.slot || m.slot.batchId !== meta.batchId || m.slot.condition !== row.condition || m.slot.seed !== row.seed || m.slot.repeat !== row.repeat) throw new Error(`${k}: linked log was not executed for this slot`);
+  return log;
+}
+for (const f of failedTrials) {
+  try { validateTrialFailed(f, cfg, meta, condById); } catch (e) { refuse(e.message); }
+  const k = `${f.condition}|${f.seed}|${f.repeat}`; if (seen.has(k)) refuse(`slot ${k} has more than one terminal record`); seen.add(k);
+  if (f.stage === 'interrupted') { // the linked log must really be an interrupted run for this slot
+    if (!existsSync(f.log)) refuse(`${k}: trial-failed links a missing log`);
+    const cond = condById[f.condition]; const inst = getDomain(cond.domain).make(f.seed, cond.opts || {});
+    let log; try { log = bindLog(readFileSync(f.log, 'utf8'), inst, { runId: f.runId, seed: f.seed, domain: cond.domain, condition: f.condition, repeat: f.repeat }, cond, k); } catch (e) { refuse(e.message); }
+    if (log.end.status !== 'interrupted') refuse(`${k}: trial-failed links a ${log.end.status} run; a completed run cannot be relabeled unresolved`);
+    if (usedRuns.has(f.runId)) refuse(`run ${f.runId} reported for more than one slot`); usedRuns.set(f.runId, k);
+  }
+}
 for (const t of trials) {
   try { validateTrial(t, cfg, meta, condById); } catch (e) { refuse(e.message); }
+  const c = condById[t.condition];
   const k = `${t.condition}|${t.seed}|${t.repeat}`; if (seen.has(k)) refuse(`slot ${k} has more than one terminal record (trial and/or trial-failed)`); seen.add(k);
   // bind the summary row to its run log: the log is the evidence, the row is a cache of it
   if (!existsSync(t.log)) refuse(`trial ${k}: linked log ${t.log} not found`);
-  let log; try { log = validateRunLog(readFileSync(t.log, 'utf8').trim().split('\n').map(l => JSON.parse(l))); } catch (e) { refuse(`trial ${k}: linked log invalid: ${e.message}`); }
-  if (log.meta.runId !== t.runId || log.end.status !== 'completed' || log.end.success !== t.success || log.end.attemptsUsed !== t.attemptsUsed || log.meta.worldDigest !== t.worldDigest || log.meta.instanceDigest !== t.instanceDigest || log.meta.seed !== t.seed || log.meta.domain !== t.domain || log.meta.model !== t.model || log.meta.memory !== t.memory || JSON.stringify(log.meta.opts) !== JSON.stringify(t.opts)) refuse(`trial ${k}: summary row contradicts its linked log`);
+  const inst = getDomain(t.domain).make(t.seed, t.opts);
+  let log; try { log = bindLog(readFileSync(t.log, 'utf8'), inst, t, c, k); } catch (e) { refuse(e.message); }
+  if (log.end.status !== 'completed' || log.end.success !== t.success || log.end.attemptsUsed !== t.attemptsUsed) refuse(`trial ${k}: summary row contradicts its linked log`);
+  if (usedRuns.has(t.runId)) refuse(`run ${t.runId} is reported for more than one slot (${usedRuns.get(t.runId)} and ${k}); independent slots need independent executions`); usedRuns.set(t.runId, k);
   (genVersions[t.domain] ||= new Set()).add(t.generatorVersion);
   // Recompute both digests from the generator: the row's digests must be what the generator produces for (seed, options).
-  const inst = getDomain(t.domain).make(t.seed, t.opts);
   if (inst.generatorVersion !== t.generatorVersion) refuse(`trial ${k}: generator version ${t.generatorVersion} is not the current ${inst.generatorVersion}`);
   if (inst.instanceDigest !== t.instanceDigest) refuse(`trial ${k}: instanceDigest does not match the regenerated instance`);
   if (inst.worldDigest !== t.worldDigest) refuse(`trial ${k}: worldDigest does not match the regenerated instance`);
-  if (JSON.stringify(inst.secret) !== JSON.stringify(t.secret) || JSON.stringify(log.meta.secret) !== JSON.stringify(inst.secret)) refuse(`trial ${k}: recorded secret differs from the regenerated instance`);
+  if (JSON.stringify(inst.secret) !== JSON.stringify(t.secret)) refuse(`trial ${k}: recorded secret differs from the regenerated instance`);
   t.secret = inst.secret; // strata use the regenerated secret, never the copied field
   // Sampling policy (PLAN §8): seeds are independent draws WITH replacement; two seeds that generate the same world are
   // coincident independent draws, retained as separate trials and REPORTED, so the independent-draw null bound stays valid.
@@ -65,7 +91,7 @@ for (const [d, v] of Object.entries(genVersions)) {
 const expected = []; for (const c of cfg.conditions) for (const s of cfg.seeds) for (let r = 0; r < cfg.repeats; r++) expected.push({ condition: c.id, seed: s, repeat: r });
 const present = new Set(trials.map(t => `${t.condition}|${t.seed}|${t.repeat}`));
 const missing = expected.filter(e => !present.has(`${e.condition}|${e.seed}|${e.repeat}`)).map(e => ({ ...e, reason: (failedTrials.find(f => f.condition === e.condition && f.seed === e.seed && f.repeat === e.repeat) || {}).reason || 'not started' }));
-// the diagnostic ledger is written BEFORE any inferential refusal, so the reasons are always available
+// the diagnostic ledger is written BEFORE the inferential (missingness) refusal of an otherwise valid batch; malformed records still refuse earlier
 writeFileSync(file.replace(/\.jsonl$/, '') + '.missing.json', JSON.stringify({ batchId: meta.batchId, expected: expected.length, present: trials.length, missing, coincidentWorlds: coincident }, null, 2));
 if (missing.length && MISSING === 'refuse') refuse(`${missing.length} of ${expected.length} expected trials are missing and missingPolicy is "refuse"; reasons are in ${file.replace(/\.jsonl$/, '')}.missing.json`);
 const esc = (s) => String(s).replace(/\|/g, '\\|');
