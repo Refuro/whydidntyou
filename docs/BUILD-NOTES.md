@@ -67,3 +67,11 @@ Base: 08d6ca0. The author explicitly confirmed that the B2 review is still pendi
 - R4: only resolved zero-success evidence receives the registered stochastic inference bound. Positive/unresolved counts return unavailable and bound 1; hypergeometric, resolved-only and population plug-in values are explicitly non-inferential diagnostics. The midpoint counterexample reproduces noncoverage above 5%.
 - Plan edit inventory correction: the earlier §13 sampling-history terminology edit changed coincident worlds to “retained draws and reported”; it was omitted from the earlier inventory. No new PLAN edits in this repair commit.
 - Fixtures: `test/review-b2-repairs.test.js`, plus updated diagnostics and master-shape assertions in existing tests. Historical B2 evidence and reviewer-owned input files are unchanged.
+
+## 2026-11-03 — B3 receipt and resume protocol
+
+- Raw response and usage are fsynced in `received-unscored` before parsing/scoring. Resume deterministically scores that receipt; it never redispatches its request. A dispatched request without a receipt consumes that execution and follows the existing two-retry policy.
+- Schema 5 gains a versioned resume manifest: source/config hashes and preassigned run IDs. Resume validates existing chains and orphan logs before dispatch, appends `resumedFrom`, retains indices/budgets, and is a no-op after all terminals exist. A partial final record or mismatched source/config produces a separate durable abandoned disposition; evidence is not trimmed or repaired.
+- Usage seconds now mean archived transport latency; unknown usage remains unknown. Scoring runtime is not included in provider usage seconds.
+- PLAN edit: §8 replaces the blanket resumed-batch refusal with the validated resume path and explicit abandonment rule.
+- Offline suite: 68/68 pass, including receipt-before-score, orphan log, terminal-boundary interruption, repeated resume, partial batch/run records, and changed source/config. No model calls or new sandbox probes.

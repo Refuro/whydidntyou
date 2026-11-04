@@ -1,5 +1,6 @@
 // The one evidence path used by writer fixtures and report: assignment -> execution logs -> terminal.
-import { readFileSync } from 'node:fs';
+import {readRecords} from './durable.js';
+import {validateResumeIdentity,stateDigest} from './source-identity.js';
 import { getDomain, domains } from './domains/index.js';
 import { validateConfig, validateExecution, validateTrial, validateRunLog, validateAttempt } from './validate.js';
 import { validateRequestArchive, promptBuilderHash } from './provenance.js';
@@ -8,7 +9,7 @@ import { clusterIdeas } from './ideas.js';
 
 export const PROTOCOL = Object.freeze({ retries: 2, transportTimeoutMs: 120000, history: 'fresh on every execution', scheduling: 'condition, seed, repeat; immediate restarts', decoding: 'provider fresh trajectory; no provider retries', endpoint: 'success of the slot procedure (success in the terminating completed run)' });
 export const slotKey = r => `${r.condition}|${r.seed}|${r.repeat}`;
-export const readLog = path => validateRunLog(readFileSync(path,'utf8').trim().split('\n').map(JSON.parse));
+export const readLog = path => validateRunLog(readRecords(path));
 export const chainRef = r => Object.fromEntries(['executionIndex','status','reason','runId','log'].map(k=>[k,r[k]]));
 export const setupResources = () => ({ ...resourcesFromAttempts([]), seconds: 'unknown' });
 const equal = (a,b,label) => { if (JSON.stringify(a)!==JSON.stringify(b)) throw new Error(label); };
@@ -37,6 +38,7 @@ export function validateBatch(records, {loadLog=readLog}={}) {
   const header=records[0];
   if (header?.type!=='experiment-meta'||header.schema!==5||typeof header.batchId!=='string'||!header.batchId||typeof header.model!=='string'||!header.model) throw new Error('one schema-5 experiment header must be first');
   const cfg=header.config;
+  if(header.resumeVersion!==undefined)validateResumeIdentity(header);
   validateConfig(cfg,Object.fromEntries(Object.entries(domains).map(([k,d])=>[k,d.VERSION])));
   if (header.promptBuilderHash!==promptBuilderHash()) throw new Error('batch prompt-builder hash differs from current source');
   equal(header.protocol,PROTOCOL,'batch restart protocol mismatch');
@@ -44,12 +46,14 @@ export function validateBatch(records, {loadLog=readLog}={}) {
   for (const c of cfg.conditions) if (c.scaffold&&!/^[0-9a-f]{64}$/.test(header.scaffoldHashes[c.id])) throw new Error('batch configured scaffold hash missing');
   const conds=Object.fromEntries(cfg.conditions.map(c=>[c.id,c])), slots=new Map(), usedRuns=new Set(), instances=new Map();
   const instance=(c,s)=>{const k=c.id+'|'+s;if(!instances.has(k))instances.set(k,getDomain(c.domain).make(s,c.opts||{}));return instances.get(k);};
-  for (const r of records.slice(1)) {
+  for (const [offset,r] of records.slice(1).entries()) {
+    if(r.type==='batch-resume'){if(r.batchId!==header.batchId||r.resumedFrom!==stateDigest(records.slice(0,offset+1)))throw new Error('resume prefix digest mismatch');continue;}
     if (!['slot-execution','slot-terminal'].includes(r.type)) throw new Error('unknown or duplicate header record');
     const key=slotKey(r), state=slots.get(key)||{chain:[],logs:[],terminal:null};
     if(state.terminal)throw new Error('execution or record after slot terminal');
     if (r.type==='slot-execution') {
       validateExecution(r,cfg,header,conds);
+      if(header.resumeVersion===1&&header.executionPlans?.[key]?.[r.executionIndex]!==r.runId)throw new Error('execution differs from planned run id');
       if(r.executionIndex!==state.chain.length)throw new Error('execution indices must be contiguous starting at zero');
       if(state.chain.length&&state.chain.at(-1).status!=='interrupted')throw new Error('execution after terminal completion/setup failure');
       if(usedRuns.has(r.runId))throw new Error('run reused across executions or slots'); usedRuns.add(r.runId);

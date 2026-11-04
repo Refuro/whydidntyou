@@ -134,6 +134,11 @@ export function validateAttempt(x, i, meta, where = `attempt ${i + 1}`, inst = m
     for (const f of ['raw','result','feedbackText','idea','code','assumption','newObject','usage']) if (x[f] !== null) fail(`${where}: dispatched ${f} must be null`);
     return;
   }
+  if(x.status==='received-unscored'){
+    if(typeof x.raw!=='string')fail(`${where}: receipt raw missing`);
+    for(const f of ['result','feedbackText','idea','code','assumption','newObject'])if(x[f]!==null)fail(`${where}: unscored ${f} must be null`);
+    return;
+  }
   if (x.status !== 'received') fail(`${where}: status must be dispatched|received`);
   if (typeof x.raw !== 'string') fail(`${where}: raw missing`); if (typeof x.feedbackText !== 'string' || !x.feedbackText) fail(`${where}: feedbackText missing`);
   if (typeof x.idea !== 'string') fail(`${where}: idea missing`); if (!(x.code === null || typeof x.code === 'string')) fail(`${where}: code must be null or string`);
@@ -149,8 +154,8 @@ export function validateEnd(end, meta, attempts, inst=getDomain(meta.domain).mak
   if (!RUN_STATUS.includes(end.status)) fail(`end.status must be ${RUN_STATUS.join('|')}`);
   if (!('success' in end)) fail('end.success missing (must be null or an integer)');
   const received = attempts.filter(a => a.status === 'received');
-  const pending = attempts.filter(a => a.status === 'dispatched');
-  if (pending.length > 1 || (pending.length && attempts.at(-1).status !== 'dispatched')) fail('only the last attempt may remain dispatched');
+  const pending = attempts.filter(a => a.status !== 'received');
+  if (pending.length > 1 || (pending.length && attempts.at(-1).status === 'received')) fail('only the last attempt may remain dispatched');
   if (!isInt(end.attemptsUsed) || end.attemptsUsed !== received.length) fail('end.attemptsUsed differs from received responses');
   if (end.requestsDispatched !== attempts.length) fail('end.requestsDispatched differs from archived requests');
   if (attempts.length > meta.maxAttempts) fail(`${attempts.length} attempts exceed the budget ${meta.maxAttempts}`);
@@ -174,14 +179,16 @@ export function validateEnd(end, meta, attempts, inst=getDomain(meta.domain).mak
 }
 // Validates a parsed run log. Returns {meta, attempts, end} or throws.
 export function validateRunLog(lines) {
-  if (!Array.isArray(lines) || lines.length < 2) fail('log has fewer than two records');
-  const meta = lines[0];
-  const hasEnd = lines.at(-1).type === 'end';
-  const attempts = lines.slice(1, hasEnd ? -1 : undefined);
-  if (!hasEnd && attempts.at(-1)?.status !== 'dispatched') fail('unterminated log must end in a dispatched request');
-  const end = hasEnd ? lines.at(-1) : { type: 'end', status: 'interrupted', success: null, attemptsUsed: attempts.length - 1, requestsDispatched: attempts.length, maxAttempts: meta.maxAttempts, budgetExhausted: false, reason: 'process ended with an unreceived dispatched request', inferred: true };
-  validateMeta(meta); const inst=getDomain(meta.domain).make(meta.seed,meta.opts); attempts.forEach((x, i) => validateAttempt(x, i, meta, undefined, inst)); validateEnd(end, meta, attempts, inst);
-  return { meta, attempts, end };
+  if(!Array.isArray(lines)||!lines.length)fail('log has no records');
+  const meta=lines[0];validateMeta(meta);
+  const inst=getDomain(meta.domain).make(meta.seed,meta.opts),hasEnd=lines.at(-1).type==='end';
+  const attempts=lines.slice(1,hasEnd?-1:undefined);
+  attempts.forEach((x,i)=>validateAttempt(x,i,meta,undefined,inst));
+  const first=attempts.findIndex(x=>isSuccess(x.result,inst)),success=first<0?null:first+1;
+  const received=attempts.filter(x=>x.status==='received').length,completed=success!==null||received===meta.maxAttempts;
+  const end=hasEnd?lines.at(-1):{type:'end',status:completed?'completed':'interrupted',success,attemptsUsed:received,requestsDispatched:attempts.length,maxAttempts:meta.maxAttempts,budgetExhausted:completed&&success===null,reason:completed?null:attempts.at(-1)?.status==='dispatched'?'process ended with an unreceived dispatched request':'process ended before completion; archived receipts must be rescored',inferred:true};
+  validateEnd(end,meta,attempts,inst);
+  return {meta,attempts,end,hasEnd};
 }
 
 // Slot and execution records use the same assignment contract on write and read.
