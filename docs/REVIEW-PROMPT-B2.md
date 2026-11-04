@@ -37,3 +37,9 @@ Set `LLM_MOCK=1` in the shell for any harness command. The adapted review script
 Address the open questions in `BUILD-REPORT-v1.md`, particularly the finite-population/decoding premises, repeat strata, monoid subclass, quantity proof route and BFS budgets. State whether B3 can proceed, or list concrete repairs first.
 
 B3 must supply the sampler feasibility program, certified sealed support, nuisance matching, rounding, independent realized-ceiling checks, defect ledger, exported example and checker. B4 must supply the complete challenged portfolio and ≥200-world-per-family coverage audit. The builder must stop again with `REVIEW-PROMPT-B4.md` after B4.
+
+## Author decisions and pre-review follow-up
+
+Read DECISIONS-B2.md before resolving the questions above. The author confirmed the review is still pending and B3 must remain gated. Independent code/document updates implement repeat-0 primary analysis, population sensitivity labels, quantity output conditions and early rejection of non-identifiable worlds. See the dated preregistration addendum and BUILD-NOTES.md. The original B2 evidence is historical; SELFTEST-B2-decisions.json records the follow-up checks.
+
+Review specifically whether the proposal-count sensitivity diagnostic and positive-count approximation labels faithfully implement decision 2, and whether the B3 exclusion ledger and resumedFrom/disposition requirements are carried forward without being prematurely treated as completed. No review finding has yet been supplied or closed.

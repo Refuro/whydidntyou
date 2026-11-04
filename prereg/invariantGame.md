@@ -73,3 +73,16 @@ Each control has a 20-second total sandbox evaluation budget per world. The coun
 - Pure quantity outputs follow from fresh evaluation; completion still depends on the cooperative wall-clock interrupt.
 - The identifiability class fixes the ambient monoid. Uniqueness inside it is not uniqueness across all representations.
 - The small transformation-monoid subclass and the explicit BFS cap limit generality. B4 challenge and budgets must be reviewed before a freeze.
+
+## Addendum 2026-11-03 — author decisions before the B2 review
+
+DECISIONS-B2.md is binding unless the pending B2 review overturns a decision. The author confirmed that B3 remains gated on that review. This addendum supersedes the earlier ambiguity disposition and clarifies the existing output conditions; it does not expand the family, alphabet, support, or budgets.
+
+- Primary stratum: repeat 0, one binary slot-procedure outcome per seed. Repeats 1..r are exploratory within-world variability and are never pooled as worlds. Primary paired contrasts also use repeat 0 only.
+- Sampling population reference: M=2^32. Eligibility is deterministic in the seed, defining a fixed eligible subset M_C. For n<=100, the registered finite-population approximation assumes M_C>=10^6 and uses two decimal places in percent. Proposal/eligible-count estimates produce a second, explicitly plug-in sensitivity figure; they do not establish the true M_C or its lower bound.
+- Provider randomness: one independent Bernoulli slot-procedure draw per seed under the registered protocol. For fully resolved zero successes, the mean-of-products argument gives P(zero)<=(1-mean p)^n. Hypergeometric inversion remains a numerical reference; no exact fixed-K identity is claimed for stochastic decoding, and the zero-success argument alone is not a positive-count coverage proof.
+- Non-identifiable worlds: construction defects, excluded before assignment with seed and reason non-identifiable, never rerolled. The generator now throws a typed defect carrying its audit (generator version invariantGame-v1-b2.1). B3 must persist that defect in its proposal ledger.
+- Unrestricted output evaluates only the classifier. Quantity-requested requires the classifier plus either a functional quantity or a declarative quantityFold. Functional quantities receive bounded empirical conservation over total surrounding-context length <=3; only the declarative route is proved. Both forms together remain invalid. Extra single-form declarations in the unrestricted condition do not add a quantity endpoint.
+- The current monoid subclass, 2–4-letter class, BFS limits and sandbox budgets are accepted starting registrations. Expansion requires a dated amendment before freeze and is allowed only if the B4 portfolio solves every registered family. The independent B4 challenger may propose budget increases before freeze; no post-freeze change is allowed.
+- Decimal master text remains required. Future freeze manifests must record both original public-source hex and its deterministic canonical big-integer decimal conversion.
+- B3 must add validated batch resume with resumedFrom bound to the prior batch-state digest. Inconsistent batches must be abandoned and recorded in the freeze's batch-disposition log. B3 and the B4 review stop remain gated as stated in DECISIONS-B2.md.

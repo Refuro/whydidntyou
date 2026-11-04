@@ -1,0 +1,493 @@
+{
+  "date": "2026-11-03",
+  "status": "passed",
+  "scope": "Independent author-decision updates; B2 review pending; B3 gated",
+  "testSuite": {
+    "tests": 55,
+    "passed": 55,
+    "failed": 0
+  },
+  "originalCompressionSelftest": "passed unchanged",
+  "liveModelCalls": 0,
+  "budgets": {
+    "bfs": {
+      "maxNodes": 128,
+      "maxTransitions": 4096,
+      "lengthSlack": 6,
+      "totalSandboxMs": 20000,
+      "primitiveLanguage": "bounded FIFO enumeration of single-rule string rewrites"
+    },
+    "countNullspace": {
+      "primes": [
+        2,
+        3
+      ],
+      "totalSandboxMs": 20000,
+      "primitiveLanguage": "Gaussian elimination over symbol-count rule differences modulo 2 and 3; equality of all nullspace coordinates"
+    },
+    "reference": {
+      "totalSandboxMs": 20000,
+      "primitiveLanguage": "fold the oracle multiplication table and symbol images; compare final products"
+    }
+  },
+  "sourceHashes": {
+    "src/algebra.js": "97a9e5035ff24e9c62435b5167ee836de0f4e3e1e4210b0232294809ee23d170",
+    "src/analysis.js": "2f3de99b9a0e7cd7d9decefd4490295fda93c3a6fd881ba1c19495de35b7c86e",
+    "src/analyze.js": "cea62c0810d323a81b77910bdb1aacf45e1942b7c09a087071089915f73a183c",
+    "src/bounds.js": "df4622d1f2fce9af98e3a5e7159731e6a985dea72d0ac379e0de251b684d3081",
+    "src/draw-seeds.js": "17189100582993394ab1f7e93e623523dd807b71e3214c6b2eb9d47cef7fcd2e",
+    "src/experiment.js": "6b83257e79d22036a07478b73ee3b496899d3a7634509dcb829a127c4c1b6e62",
+    "src/hints.js": "623d094d8bdc6d6e232969d4d8793675a2b5648cdba76b022f637144c1c84024",
+    "src/ideas.js": "3ad0dc15d5f019c512228bb5567a102d9a3ca1be778840e95bc7f3f32f8bd358",
+    "src/invariant-selftest.js": "2cd21950f9d0bf1e7d0dcaef236db6920f51df99c0ec9fcac1668632bdbf3115",
+    "src/ledger.js": "6e0b19901487b8cfd907e00f53a79f262e96b0795cef344fc385bb836f6f6a3c",
+    "src/llm.js": "72e7a18715d86ad785f8e39db19ff65d438828b533b29dc56b7bfbeeb9759f52",
+    "src/postmortem-binding.js": "200a724f8f02c89d331e0a3ba072224e2573c1a62938ea251cb61ceb9dd383a7",
+    "src/postmortem.js": "37cb5efc5408975a5f813edbb4985ce9bf7a4691d132120013f6935c3114df78",
+    "src/prompt.js": "c85337275c72a8fd6b763d2aa45951501b667b0ee8f93d3d35e56b2bbe69e070",
+    "src/provenance.js": "1d4e2c9a2e19f2db63a6c72c49625b21bd5c8dde0ff9ca47e9b476fdc901d3e3",
+    "src/report.js": "be7c298b24217073c42466247a1abd8e3aa7eafe81104600a69e79334ba83934",
+    "src/resources.js": "7d30998f0f92eb1d56c4a9df23e360dfb6f806b4b79a4729ab1e4608ed92fb9a",
+    "src/rng.js": "5b722e903533c1fa621f6163816c596d5c9e64d0330782a66a43f527af0165fe",
+    "src/run.js": "8b5f2ad72dd1b520037844c4b15f092d5b1f0a3c3953416de9604ce1dce94eca",
+    "src/sandbox.js": "d1e81df25999caee53cc71ea89dcd75cffa87db46667e6f538d6fd5c6d89c06e",
+    "src/selftest.js": "7f4e115d0692f138a2e4db854e70eeb4f14ab7565c6caa0d19d7f236f8e68b91",
+    "src/validate.js": "f1068081dd50075c3208d5f5795087036b9e6b6bc77c2f3eb65ac6bb572fee51",
+    "src/baselines/invariant-wall.js": "38a1a8e0f5e97565e19ac510728a111dfbf91642fb76aaa95de7178c244ff6eb",
+    "src/domains/hiddenPeriod.js": "d7e2ef01e84f5b584c0f3110cec7ce6f4e8c17488135dd41c0a3d42d5194b70b",
+    "src/domains/index.js": "66ac507758c21c8714f478ccb92e74ba61f989ed9324d444ff02342bcff2a0c4",
+    "src/domains/invariantGame.js": "95fecb82cdb980a5eb4ea32a36247bace147fe2be6b27832b67e582120cad4ee",
+    "src/domains/laggedRule.js": "725ace36e8278abb278a6421a4e2842fdc96ce857820fe063ef6cfe616d344b4",
+    "src/verifiers/reachability.js": "f68a84d89f4dcbad430a8901b8947cf3f9e4f506a37a7461d6e1a78c6c4db569"
+  },
+  "rows": [
+    {
+      "seed": 1,
+      "family": "F-count",
+      "worldDigest": "419bacf36c823c614aacc2bffcc17742775e3c51b73dd0d3f044032cedc81099",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-abelian",
+      "worldDigest": "e6848c33d05772f91c0f9bb71c50bb4b4879ff5387507bf7dba3db88f8ee986f",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-nonabelian",
+      "algebra": "S3",
+      "worldDigest": "7ddf55cc84dd88ca5b723677d93d75580a5c2bccc60bc7b6035b3a54c5e18d7b",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.65,
+          "success": false,
+          "smallAccuracy": 0.6,
+          "largeAccuracy": 0.7
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-nonabelian",
+      "algebra": "Q8",
+      "worldDigest": "09c6e66c0089d237b5e29a19ffc85c7d997afd617130ccedca51067e757ee2db",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.75,
+          "success": false,
+          "smallAccuracy": 0.75,
+          "largeAccuracy": 0.75
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-nonabelian",
+      "algebra": "D4",
+      "worldDigest": "19ab11ecb994550c343d582cf8c296decdeb5fb90cc09298eff7442b4b8f8cfe",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.7125,
+          "success": false,
+          "smallAccuracy": 0.675,
+          "largeAccuracy": 0.75
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-nonabelian",
+      "algebra": "A4",
+      "worldDigest": "50b7bf0dbacf407a037f33f5fe6cc7543deb9fe028351e0602bebc8b81bc0217",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.6875,
+          "success": false,
+          "smallAccuracy": 0.7,
+          "largeAccuracy": 0.675
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-monoid",
+      "points": 3,
+      "worldDigest": "95bc6cf9d57d044e5d3a7d8ec2aa3e6ddb7a6fc62fb36ce7b2fe8a026aa16989",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "family": "F-monoid",
+      "points": 4,
+      "worldDigest": "80aa879823ab97fb9d949cfda69b880edf214fc311d2c30aabd3d8b0d6eca830",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.6875,
+          "success": false,
+          "smallAccuracy": 0.65,
+          "largeAccuracy": 0.725
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-count",
+      "worldDigest": "806fd219ab50cbd7ae19d65f4cbb506da4c8f2684c05e1d455615535ad1f9c80",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-abelian",
+      "worldDigest": "af0830066f69a280e1ebdb36ae64aee93a6795640b5828ac0bca910bcd43abdc",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-nonabelian",
+      "algebra": "S3",
+      "worldDigest": "075e55083a1d67919460fa4b251de00a8ecb70ab198b19da1d96293ec6ecef1e",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.625,
+          "success": false,
+          "smallAccuracy": 0.625,
+          "largeAccuracy": 0.625
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-nonabelian",
+      "algebra": "Q8",
+      "worldDigest": "1d7626e919a5aa22ea10e1d3c8c53f6f132d1c5247db852bd1a6633fde076578",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.7375,
+          "success": false,
+          "smallAccuracy": 0.75,
+          "largeAccuracy": 0.725
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-nonabelian",
+      "algebra": "D4",
+      "worldDigest": "4e4037e7078b402e44d96070c5b977087c243f827b97699ea61e8b659fd69221",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.675,
+          "success": false,
+          "smallAccuracy": 0.65,
+          "largeAccuracy": 0.7
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-nonabelian",
+      "algebra": "A4",
+      "worldDigest": "2db7bc7a250e2b1f5fde4141d3708e9610d5955312e964ac36ff22f7d164eb93",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.7375,
+          "success": false,
+          "smallAccuracy": 0.75,
+          "largeAccuracy": 0.725
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-monoid",
+      "points": 3,
+      "worldDigest": "e18786d06290db0ce57a9b535b77656ffc8962728106a1b0c52396dcad89d4bf",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "family": "F-monoid",
+      "points": 4,
+      "worldDigest": "194f7e47507fb459c8ce77399721f9cec81da1dcff5fcb392b94ce6f7b5fbe5c",
+      "recoverable": true,
+      "scores": {
+        "reference": {
+          "accuracy": 1,
+          "success": true,
+          "smallAccuracy": 1,
+          "largeAccuracy": 1
+        },
+        "countNullspace": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": 0.5,
+          "largeAccuracy": 0.5
+        },
+        "bfs": {
+          "accuracy": 0.5,
+          "success": false,
+          "smallAccuracy": null,
+          "largeAccuracy": 0.5
+        }
+      }
+    }
+  ]
+}

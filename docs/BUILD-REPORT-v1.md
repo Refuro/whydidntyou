@@ -69,3 +69,9 @@ Every plan edit is listed by section in `BUILD-NOTES.md`. The append-only prereg
 - Is an explicit recover/resume command required for whole-batch process termination before confirmatory operation?
 
 Review instructions are in `REVIEW-PROMPT-B2.md`. Work stops here pending that review.
+
+## Follow-up: author decisions applied while B2 review is pending
+
+On 2026-11-03, the author supplied DECISIONS-B2.md and explicitly confirmed that the B2 review is still pending. Independent decision updates now label and isolate repeat 0 as primary, show the registered population reference beside an eligible-population plug-in diagnostic, state the stochastic zero-success assumptions without a fixed-K identity, distinguish classifier-only and quantity-requested scoring, and refuse non-identifiable worlds before assignment. The initial algebra class and budgets remain unchanged. The preregistration was updated only by a dated addendum.
+
+The updated suite passes 55 tests. This follow-up supersedes the corresponding open questions above. The required B3 defect ledger, batch resume/disposition handling, and B6 prompt wiring remain pending the review; B3 has not started. Final selftest evidence is saved separately so the original B2 evidence remains intact.
