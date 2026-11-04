@@ -6,14 +6,14 @@ import {durableAppend,readRecords} from './durable.js';
 import {digest,sourceIdentity} from './source-identity.js';
 export const worldHash=value=>digest(JSON.stringify(value));
 export function sealWorld(inst,sealed){
-  const worldDigest=worldHash({generatorWorldDigest:inst.worldDigest,sealedPairs:sealed.pairs,naturalSealedPairs:sealed.naturalPairs});
-  return {...inst,generatorWorldDigest:inst.worldDigest,worldDigest,instanceDigest:worldHash({seed:inst.seed,worldDigest}),sealedPairs:sealed.pairs,naturalSealedPairs:sealed.naturalPairs,sealedStatus:'constructed',sealedConstruction:sealed};
+  const samplerVersion=sealed.registration.version,worldDigest=worldHash({generatorWorldDigest:inst.worldDigest,samplerVersion,sealedPairs:sealed.pairs,naturalSealedPairs:sealed.naturalPairs});
+  return {...inst,samplerVersion,generatorWorldDigest:inst.worldDigest,worldDigest,instanceDigest:worldHash({seed:inst.seed,worldDigest}),sealedPairs:sealed.pairs,naturalSealedPairs:sealed.naturalPairs,sealedStatus:'constructed',sealedConstruction:sealed};
 }
 export function buildCorpus(path,proposals,{retainWorlds=true,onProgress=null}={}){
   if(existsSync(path))throw new Error('construction ledger already exists');
   if(proposals.some(p=>p.opts?.images!==undefined))throw new Error('registered corpus forbids image overrides');
   mkdirSync(dirname(path),{recursive:true});
-  durableAppend(path,{type:'construction-meta',version:1,sourceHash:sourceIdentity(),proposals,policy:'every fixed proposal retained; no replacements; construction completes before solvers'},{exclusive:true});
+  durableAppend(path,{type:'construction-meta',version:1,samplerVersion:'sealed-matched-padded-v2',sourceHash:sourceIdentity(),proposals,policy:'every fixed proposal retained; no replacements; construction completes before solvers'},{exclusive:true});
   const accepted=[];
   for(const [index,p]of proposals.entries()){
     const requestedFamily=p.opts?.family??'F-nonabelian';
