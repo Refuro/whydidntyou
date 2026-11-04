@@ -11,6 +11,8 @@
 import { mulberry32, randInt, derangement } from '../rng.js';
 import { assertSeed, validateOpts } from '../validate.js';
 import { createHash } from 'node:crypto';
+import { compressionContract } from '../sandbox.js';
+export const contract = compressionContract;
 
 export const VERSION = 'laggedRule-v2';
 export const name = 'laggedRule';
@@ -46,7 +48,7 @@ export function make(seed, opts = {}) {
   };
 
   return {
-    family: name, generatorVersion: VERSION, seed, A, n,
+    family: name, generatorVersion: VERSION, seed, A, n, contract,
     secret: { k, g, p },
     sample, test,
     // provenance digest: includes the seed label. worldDigest: seed-independent content identity over the effective

@@ -74,7 +74,7 @@ export async function runSide(code, mode, { A, dataJson, bits, n }, timeoutMs) {
 }
 function errText(e) { try { if (e && typeof e === 'object') return `${e.name || 'Error'}: ${String(e.message || '').slice(0, 300)}`; return String(e).slice(0, 300); } catch { return 'unprintable error'; } }
 
-export async function evaluate(code, inst, { timeoutMs = 10000 } = {}) {
+export async function evaluateCompression(code, inst, { timeoutMs = 10000 } = {}) {
   try {
     if (typeof code !== 'string' || code.length > 2_000_000) return { ok: false, stage: 'load', error: 'code missing or too large' };
     const A = inst.A, data = inst.test;
@@ -93,4 +93,39 @@ export async function evaluate(code, inst, { timeoutMs = 10000 } = {}) {
 }
 
 export const SUCCESS_RATIO = 0.6;
-export function isSuccess(r) { return !!(r && r.ok && r.ratioToBaseline <= SUCCESS_RATIO); }
+export const compressionContract = Object.freeze({ name: 'compression', score: evaluateCompression });
+export async function evaluate(code, inst, options = {}) {
+  try {
+    if (typeof code !== 'string' || code.length > 2_000_000) return { ok: false, stage: 'load', error: 'code missing or too large' };
+    return await (inst.contract ?? compressionContract).score(code, inst, { ...options, runProgram });
+  } catch (e) { return { ok: false, stage: 'verify', error: 'host boundary: ' + String(e?.message || e).slice(0,200) }; }
+}
+export function isSuccess(r) { return !!(r && r.ok && (r.contract === 'reachability' ? r.accuracy >= .95 : r.ratioToBaseline <= SUCCESS_RATIO)); }
+
+// Generic contract call: fresh canonical state for EACH pair or quantity state.
+// Only the unlabelled arguments enter the sandbox. The caller owns the total budget.
+export async function runProgram(code, input, timeoutMs) {
+  let rt, vm;
+  try {
+    const Q = await newQuickJSWASMModule(); rt = Q.newRuntime();
+    rt.setMemoryLimit(MEMORY_LIMIT); rt.setMaxStackSize(STACK_LIMIT);
+    rt.setInterruptHandler(shouldInterruptAfterDeadline(Date.now() + timeoutMs));
+    vm = rt.newContext({ intrinsics: INTRINSICS });
+    for (const [source, file] of [[PRELUDE,'prelude.js'],[code,'submission.js']]) {
+      const r = vm.evalCode(source,file); if (r.error) { r.error.dispose(); return {ok:false,stage:'load',error:'submission failed to load within budget'}; } r.value.dispose();
+    }
+    const h = vm.newString(JSON.stringify(input)); vm.setProp(vm.global,'__inputJson',h); h.dispose();
+    const r = vm.evalCode(`(function(){const x=JSON.parse(__inputJson);let value;
+      if(x.op==='inspect')value={hasReachable:typeof reachable==='function',hasQuantity:typeof quantity==='function',fold:typeof quantityFold==='undefined'?null:quantityFold};
+      else if(x.op==='reachable')value=reachable(x.a,x.b);
+      else if(x.op==='quantity')value=quantity(x.state);
+      else throw new Error('unknown contract operation');
+      return JSON.stringify({ok:true,value});})()`, 'contract.js');
+    if(r.error){r.error.dispose();return {ok:false,stage:'verify',error:'contract evaluation failed within budget'};}
+    const out=vm.dump(r.value);r.value.dispose();
+    if(typeof out!=='string')return {ok:false,stage:'verify',error:'contract produced non-string output'};
+    const parsed=JSON.parse(out);if(parsed?.ok!==true||!Object.hasOwn(parsed,'value'))return {ok:false,stage:'verify',error:'contract produced invalid output'};
+    return parsed;
+  } catch(e) { return {ok:false,stage:'verify',error:'host boundary: '+String(e?.message||e).slice(0,200)}; }
+  finally {try{vm?.dispose();}catch{}try{rt?.dispose();}catch{}}
+}
