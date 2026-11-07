@@ -1,5 +1,7 @@
 # whydidntyou
 
+**THIS IS IN PROGRESS, Conclusions have not been drawn, it's on hold as I'm prioritizing a project called felix, do not attempt to draw any conclusions based on my preliminary setup thus far.**
+
 **Can a language model independently re-make a breakthrough humans already made? If it fails, why? What was the gap between what it tried and the solution?**
 
 That is what this repo tries to measure.
